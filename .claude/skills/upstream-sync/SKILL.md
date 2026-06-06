@@ -17,16 +17,20 @@ description: 同步 upstream hibiken/asynq 到這個 team fork(module path 已�
 
 ```bash
 git status --porcelain        # 必須是 clean worktree
-git checkout main && git pull origin main
+git checkout main && git pull --ff-only origin main
 git remote get-url upstream || git remote add upstream https://github.com/hibiken/asynq.git
 ```
+
+`--ff-only` 是必要的:預設 pull 在 divergence 時會報錯或(若使用者設了 `pull.rebase=true`)默默 rebase——後者直接違反本 skill 的「永不 rebase main」。
 
 ### 2. 偵測 upstream 更新,並更新鏡像分支
 
 ```bash
 git fetch upstream --tags
-git rev-list --count master..upstream/master
+git rev-list --count --first-parent master..upstream/master
 ```
+
+(`--first-parent` 讓計數符合人類直覺;不加的話 merge commits 會展開,例如 10 個 PR merge 報 31。寫進 PR body / FORK.md 的數字以 first-parent 為準。)
 
 - 為 `0` → 回報「已與 upstream 同步」,**流程到此結束**
 - 大於 0 → 先更新鏡像,再列出這次 sync 的內容:
@@ -41,7 +45,8 @@ git log --oneline main..master        # 這次要合入 main 的 upstream commit
 ### 3. 建立 sync branch 並 merge
 
 ```bash
-git checkout -b sync/upstream-$(date +%Y%m%d) main
+SYNC_BRANCH=sync/upstream-$(date +%Y%m%d)   # 只算一次,後續步驟都用變數(跨午夜不會分岔)
+git checkout -b "$SYNC_BRANCH" main
 git merge master
 ```
 
@@ -53,10 +58,13 @@ git merge master
 |---|---|
 | `go.mod` / `x/go.mod` / `tools/go.mod` | **保留 fork 的** `module github.com/austinyuch/asynq...` 行、`replace => ../` 區塊、較新的 Go/toolchain 版本;**採用 upstream 的**新增依賴,之後跑 `go mod tidy` 收斂 `go.sum` |
 | `README.md` / `tools/asynq/README.md` | **保留 fork 的** import path(austinyuch)、Valkey 說明;**採用 upstream 的**新內容段落 |
-| `.github/workflows/*.yml` | **保留 fork 的** `valkey/valkey` image 與 Go 版本矩陣;**採用 upstream 的**新 job/step |
+| `.github/workflows/*.yml` | **保留 fork 的** `valkey/valkey` image、Go 版本、最小化 trigger;**採用 upstream 的**新 job/step |
 | `server_test.go` | **保留 fork 的** goleak ignore 清單(go-redis 新背景 goroutine);**採用 upstream 的**新測試 |
+| 任何 `*_test.go` / `*.go` 的 import 區塊 | 直接**採 upstream 側**(hibiken path 也沒關係)——step 5 的 rename script 會兜底改成 austinyuch,這是最機械、最不易出錯的解法 |
 
 不在表內的衝突:優先理解 upstream 意圖,必要時對照 `FORK.md` 判斷哪邊是 intentional divergence。
+
+衝突解完後 `git commit`(完成 merge commit)再進下一步。
 
 ### 5. 重新套用 module-path rename
 
@@ -66,7 +74,7 @@ upstream 新增的檔案 import 的是 `github.com/hibiken/asynq`,merge 後必�
 bash .claude/skills/upstream-sync/scripts/reapply-module-path.sh
 ```
 
-script 結束時會輸出殘留的 hibiken import 數量,必須為 0 才能繼續。
+script 結束時會輸出殘留的 hibiken import 數量,必須為 0 才能繼續。若 script 有改動檔案,連同 step 6 `go mod tidy` 產生的變更一起 `git commit -m "Re-apply module path rename after upstream sync"`——不可留 uncommitted 變更進 step 9,否則 push 出去的是不完整的 branch。
 
 ### 6. 建置驗證(三個 module 全過才算過)
 
@@ -94,14 +102,18 @@ go test -count=1 $(go list ./internal/... | grep -v /rdb)      # 其餘 internal
 
 ### 8. 更新 FORK.md
 
-在 sync log 加一列:日期、合入的 upstream commit(short hash)、解掉的衝突、測試結果。若這次 sync 改變了 divergence 清單(fork-only 修改被 upstream 收編、或新增了 fork-only 改動),同步更新差異表。
+在 sync log 加一列:日期、合入的 upstream commit(short hash)、解掉的衝突、測試結果,然後 `git commit`。若這次 sync 改變了 divergence 清單(fork-only 修改被 upstream 收編、或新增了 fork-only 改動),同步更新差異表。
 
 ### 9. PR → main
 
+確認 `git status --porcelain` 乾淨(所有步驟的變更都已 commit)後:
+
 ```bash
-git push -u origin sync/upstream-$(date +%Y%m%d)
-gh pr create --base main --title "Sync upstream $(date +%Y%m%d)" --body "<upstream commits 摘要 + 測試結果>"
+git push -u origin "$(git branch --show-current)"
+gh pr create --repo austinyuch/asynq --base main --title "Sync upstream $(date +%Y%m%d)" --body "<upstream commits 摘要 + 測試結果>"
 ```
+
+(`gh` 在 fork 上預設指向 upstream repo,`--repo` 不可省。)
 
 CI(Valkey-backed build.yml)綠了才 merge。merge 後視需要打 tag:
 

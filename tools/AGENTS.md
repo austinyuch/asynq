@@ -33,5 +33,5 @@ tools/
 ```bash
 cd tools && go build -v ./...
 cd tools && go test -race -v ./...
-go install github.com/hibiken/asynq/tools/asynq@latest
+go install github.com/austinyuch/asynq/tools/asynq@latest
 ```
