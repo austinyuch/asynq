@@ -15,7 +15,13 @@ Team-maintained fork of [hibiken/asynq](https://github.com/hibiken/asynq).
 go get github.com/austinyuch/asynq
 ```
 
-Upstream sync 流程見 repo-local skill:`.claude/skills/upstream-sync/`。
+Upstream sync 流程見 repo-local skill:`.agents/skills/upstream-sync/`。
+
+Agent 工作目錄採 `.agents/` 為 canonical source:`.claude/.kiro/.codex` 下的 `skills/`、`specs/` 是 symlink(gitignored),各 agent 的設定/權限檔維持實體檔案。fresh clone 後用 `cross-agents-symlink-bridge` skill 重建,或手動:
+
+```bash
+for a in .claude .kiro .codex; do mkdir -p $a && ln -sfn ../.agents/skills $a/skills && ln -sfn ../.agents/specs $a/specs; done
+```
 
 ## Intentional divergence from upstream
 
@@ -29,7 +35,7 @@ Upstream sync 流程見 repo-local skill:`.claude/skills/upstream-sync/`。
 | CI | `redis:7` → `valkey/valkey:9.1.0`(build.yml / benchstat.yml) | 改用 Valkey 驗證 |
 | `server_test.go` | goleak 額外 ignore `maintnotifications.(*CircuitBreakerManager).cleanupLoop` | go-redis 9.20 新背景 goroutine |
 | Docs | README / CONTRIBUTING / tools README 提及 Valkey;import 範例改 fork path | 反映 fork 現況 |
-| 其他 | `AGENTS.md` 知識庫、`.claude/skills/upstream-sync/` | 團隊維運工具 |
+| 其他 | `AGENTS.md` 知識庫、`.agents/skills/upstream-sync/` | 團隊維運工具 |
 
 註:generated `internal/proto/asynq.pb.go` 的 raw descriptor 內仍含舊 go_package 字串(runtime 無影響);下次重新 protoc 時會自然更新。
 
