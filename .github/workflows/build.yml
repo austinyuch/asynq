@@ -1,17 +1,22 @@
 name: build
 
-on: [push, pull_request]
+# CI 最小化策略:權威測試 gate 在 local(Valkey 全套,見 .claude/skills/upstream-sync/)。
+# CI 只在 PR → main 時做最後防線;單一 Go 版本、單一 job。
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        go-version: [1.24.x, 1.25.x]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     services:
       redis:
-        image: redis:7
+        image: valkey/valkey:9.1.0
         ports:
           - 6379:6379
     steps:
@@ -20,65 +25,20 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: ${{ matrix.go-version }}
-          cache: false
+          go-version: 1.26.x
+          cache: true
 
-      - name: Build core module
-        run: go build -v ./...
-
-      - name: Build x module
-        run: cd x && go build -v ./... && cd ..
+      - name: Build all modules
+        run: |
+          go build ./...
+          (cd x && go build ./...)
+          (cd tools && go build ./...)
 
       - name: Test core module
-        run: go test -race -v -coverprofile=coverage.txt -covermode=atomic ./...
+        run: go test -race ./...
 
       - name: Test x module
-        run: cd x && go test -race -v ./... && cd ..
-
-      - name: Benchmark Test
-        run: go test -run=^$ -bench=. -loglevel=debug ./...
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
-
-  build-tool:
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        go-version: [1.24.x, 1.25.x]
-    runs-on: ${{ matrix.os }}
-    services:
-      redis:
-        image: redis:7
-        ports:
-          - 6379:6379
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: ${{ matrix.go-version }}
-          cache: false
-
-      - name: Build tools module
-        run: cd tools && go build -v ./... && cd ..
+        run: cd x && go test -race ./...
 
       - name: Test tools module
-        run: cd tools && go test -race -v ./... && cd ..
-
-  golangci:
-    name: lint
-    runs-on: ubuntu-latest
-    if: false
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: stable
-
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
-        with:
-          version: v1.61
+        run: cd tools && go test -race ./...

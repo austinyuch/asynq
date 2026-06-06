@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Gitter chat](https://badges.gitter.im/go-asynq/gitter.svg)](https://gitter.im/go-asynq/community)
 
-Asynq is a Go library for queueing tasks and processing them asynchronously with workers. It's backed by [Redis](https://redis.io/) and is designed to be scalable yet easy to get started.
+Asynq is a Go library for queueing tasks and processing them asynchronously with workers. It's backed by Redis-compatible servers such as [Valkey](https://valkey.io/) and [Redis](https://redis.io/), and is designed to be scalable yet easy to get started.
 
 Highlevel overview of how Asynq works:
 
@@ -64,7 +64,7 @@ Initialize your project by creating a folder and then running `go mod init githu
 go get -u github.com/hibiken/asynq
 ```
 
-Make sure you're running a Redis server locally or from a [Docker](https://hub.docker.com/_/redis) container. Version `4.0` or higher is required.
+Make sure you're running a Valkey or Redis server locally or from a Docker container such as `valkey/valkey:9.1.0`. Version `4.0` or higher of the Redis-compatible protocol is required.
 
 Next, write a package that encapsulates task creation and task handling.
 

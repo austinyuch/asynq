@@ -9,7 +9,7 @@ Have a look at our [issue tracker](https://github.com/hibiken/asynq/issues). If 
 describing your problem (or a very similar one) there, please open a new issue with
 the following details:
 
-- Which versions of Go and Redis are you using?
+- Which versions of Go and Valkey/Redis are you using?
 - What are you trying to accomplish?
 - What is the full error you are seeing?
 - How can we reproduce this?
