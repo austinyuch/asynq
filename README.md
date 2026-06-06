@@ -61,7 +61,7 @@ Make sure you have Go installed ([download](https://golang.org/dl/)). The **last
 Initialize your project by creating a folder and then running `go mod init github.com/your/repo` ([learn more](https://blog.golang.org/using-go-modules)) inside the folder. Then install Asynq library with the [`go get`](https://golang.org/cmd/go/#hdr-Add_dependencies_to_current_module_and_install_them) command:
 
 ```sh
-go get -u github.com/hibiken/asynq
+go get -u github.com/austinyuch/asynq
 ```
 
 Make sure you're running a Valkey or Redis server locally or from a Docker container such as `valkey/valkey:9.1.0`. Version `4.0` or higher of the Redis-compatible protocol is required.
@@ -77,7 +77,7 @@ import (
     "fmt"
     "log"
     "time"
-    "github.com/hibiken/asynq"
+    "github.com/austinyuch/asynq"
 )
 
 // A list of task types.
@@ -164,7 +164,7 @@ import (
     "log"
     "time"
 
-    "github.com/hibiken/asynq"
+    "github.com/austinyuch/asynq"
     "your/app/package/tasks"
 )
 
@@ -229,7 +229,7 @@ package main
 import (
     "log"
 
-    "github.com/hibiken/asynq"
+    "github.com/austinyuch/asynq"
     "your/app/package/tasks"
 )
 
@@ -297,7 +297,7 @@ Asynq ships with a command line tool to inspect the state of queues and tasks.
 To install the CLI tool, run the following command:
 
 ```sh
-go install github.com/hibiken/asynq/tools/asynq@latest
+go install github.com/austinyuch/asynq/tools/asynq@latest
 ```
 
 Here's an example of running the `asynq dash` command:

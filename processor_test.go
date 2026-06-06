@@ -16,12 +16,12 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	"github.com/hibiken/asynq/internal/base"
-	"github.com/hibiken/asynq/internal/errors"
-	"github.com/hibiken/asynq/internal/log"
-	"github.com/hibiken/asynq/internal/rdb"
-	h "github.com/hibiken/asynq/internal/testutil"
-	"github.com/hibiken/asynq/internal/timeutil"
+	"github.com/austinyuch/asynq/internal/base"
+	"github.com/austinyuch/asynq/internal/errors"
+	"github.com/austinyuch/asynq/internal/log"
+	"github.com/austinyuch/asynq/internal/rdb"
+	h "github.com/austinyuch/asynq/internal/testutil"
+	"github.com/austinyuch/asynq/internal/timeutil"
 )
 
 var taskCmpOpts = []cmp.Option{

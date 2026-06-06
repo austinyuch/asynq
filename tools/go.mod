@@ -1,4 +1,4 @@
-module github.com/hibiken/asynq/tools
+module github.com/austinyuch/asynq/tools
 
 go 1.25.0
 
@@ -6,8 +6,8 @@ toolchain go1.26.4
 
 require (
 	github.com/MakeNowJust/heredoc/v2 v2.0.1
-	github.com/hibiken/asynq v0.26.0
-	github.com/hibiken/asynq/x v0.0.0-20260514123454-785bb7208cb0
+	github.com/austinyuch/asynq v0.26.0
+	github.com/austinyuch/asynq/x v0.0.0-20260514123454-785bb7208cb0
 	github.com/fatih/color v1.19.0
 	github.com/gdamore/tcell/v2 v2.13.10
 	github.com/google/go-cmp v0.7.0
@@ -55,3 +55,7 @@ require (
 	google.golang.org/protobuf v1.36.11 // indirect
 )
 
+replace (
+	github.com/austinyuch/asynq => ../
+	github.com/austinyuch/asynq/x => ../x
+)

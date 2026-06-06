@@ -13,9 +13,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/hibiken/asynq/internal/base"
-	"github.com/hibiken/asynq/internal/errors"
-	"github.com/hibiken/asynq/internal/rdb"
+	"github.com/austinyuch/asynq/internal/base"
+	"github.com/austinyuch/asynq/internal/errors"
+	"github.com/austinyuch/asynq/internal/rdb"
 	"github.com/redis/go-redis/v9"
 )
 

@@ -1,11 +1,11 @@
-module github.com/hibiken/asynq/x
+module github.com/austinyuch/asynq/x
 
 go 1.25.0
 
 toolchain go1.26.4
 
 require (
-	github.com/hibiken/asynq v0.26.0
+	github.com/austinyuch/asynq v0.26.0
 	github.com/google/uuid v1.6.0
 	github.com/prometheus/client_golang v1.23.2
 	github.com/redis/go-redis/v9 v9.20.0
@@ -27,3 +27,4 @@ require (
 	google.golang.org/protobuf v1.36.11 // indirect
 )
 
+replace github.com/austinyuch/asynq => ../
