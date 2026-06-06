@@ -31,3 +31,22 @@ vendor
 temp/
 go.work
 go.work.sum
+
+# cross-agents symlink bridge: claude-md begin
+CLAUDE.md
+internal/CLAUDE.md
+internal/rdb/CLAUDE.md
+tools/asynq/CLAUDE.md
+tools/asynq/cmd/CLAUDE.md
+tools/CLAUDE.md
+x/CLAUDE.md
+# cross-agents symlink bridge: claude-md end
+
+# cross-agents symlink bridge: managed begin
+.claude/skills
+.kiro/skills
+.codex/skills
+.claude/specs
+.kiro/specs
+.codex/specs
+# cross-agents symlink bridge: managed end

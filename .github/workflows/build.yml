@@ -1,6 +1,6 @@
 name: build
 
-# CI 最小化策略:權威測試 gate 在 local(Valkey 全套,見 .claude/skills/upstream-sync/)。
+# CI 最小化策略:權威測試 gate 在 local(Valkey 全套,見 .agents/skills/upstream-sync/)。
 # CI 只在 PR → main 時做最後防線;單一 Go 版本、單一 job。
 on:
   pull_request:

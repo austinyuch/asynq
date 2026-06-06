@@ -71,7 +71,7 @@ git merge master
 upstream 新增的檔案 import 的是 `github.com/hibiken/asynq`,merge 後必須重套 rename。執行 idempotent script:
 
 ```bash
-bash .claude/skills/upstream-sync/scripts/reapply-module-path.sh
+bash .agents/skills/upstream-sync/scripts/reapply-module-path.sh
 ```
 
 script 結束時會輸出殘留的 hibiken import 數量,必須為 0 才能繼續。若 script 有改動檔案,連同 step 6 `go mod tidy` 產生的變更一起 `git commit -m "Re-apply module path rename after upstream sync"`——不可留 uncommitted 變更進 step 9,否則 push 出去的是不完整的 branch。
