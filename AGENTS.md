@@ -1,8 +1,8 @@
 # PROJECT KNOWLEDGE BASE
 
-**Generated:** 2026-06-05T01:31:50+08:00
-**Commit:** 785bb72
-**Branch:** fix/security-hardenining-trial
+**Generated:** 2026-06-05T01:31:50+08:00(governance memo updated 2026-06-07)
+**Commit:** 34305f9
+**Branch:** main
 
 ## OVERVIEW
 Asynq is a Redis-backed Go task queue library. This repo is multi-module: the root module is the core library, `x/` contains extensions, and `tools/` contains user-facing binaries.
@@ -74,7 +74,21 @@ make proto
 make lint
 ```
 
+## FORK GOVERNANCE & DOC MEMO
+這是 hibiken/asynq 的 team fork(module path = `github.com/austinyuch/asynq`)。動 git/release/sync/文件前先看:
+
+| 文件 | 用途 |
+|---|---|
+| `FORK.md` | branch model(`main` 消費 / `master` 鏡像)、divergence 清單、release tags、sync log |
+| `.agents/specs/SPECS.md` | spec registry(SPEC-001~007,含證據連結) |
+| `.agents/specs/NEXT_STEPS.md` | 唯一權威 handoff path |
+| `.agents/specs/ISSUE_LOG.md` | 未歸屬問題 + resolved 追溯 |
+| `.agents/specs/RTM.md` | 需求 → spec → 驗證證據 矩陣 |
+| `.agents/skills/upstream-sync/` | upstream 同步 pipeline(canonical;`.claude/.kiro/.codex` 下為 symlink) |
+| `docs/MANUAL_GENERATION_GUIDE.md` | 使用手冊(`docs/manual/{lang}/index.html`)的生成/再生筆記 |
+| `docs/REVIEW_GENERATION_GUIDE.md` | review 文件(`docs/review/index.html`)的生成/再生筆記 |
+
 ## NOTES
-- Supported Go policy in docs is “last two Go versions”; modules currently pin `go 1.25.11` with `toolchain go1.26.4`.
+- Supported Go policy in docs is “last two Go versions”; modules currently pin `go 1.25.0` with `toolchain go1.26.4`.
 - `README.md` explicitly warns that some Lua scripts may not be compatible with Redis Cluster.
 - The highest-coupling code lives in `internal/rdb/`, `inspector.go`, `processor.go`, and `server.go`.

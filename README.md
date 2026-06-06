@@ -10,6 +10,8 @@
 
 Asynq is a Go library for queueing tasks and processing them asynchronously with workers. It's backed by Redis-compatible servers such as [Valkey](https://valkey.io/) and [Redis](https://redis.io/), and is designed to be scalable yet easy to get started.
 
+> 📌 **Team fork** of [hibiken/asynq](https://github.com/hibiken/asynq) — module path `github.com/austinyuch/asynq`. Governance / branch model / release tags: [FORK.md](FORK.md) · User manual: [docs/manual/](docs/manual/) · Project review: [docs/review/](docs/review/)
+
 Highlevel overview of how Asynq works:
 
 - Client puts tasks on a queue
