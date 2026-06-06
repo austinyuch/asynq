@@ -6,8 +6,8 @@ toolchain go1.26.4
 
 require (
 	github.com/MakeNowJust/heredoc/v2 v2.0.1
-	github.com/austinyuch/asynq v0.26.0
-	github.com/austinyuch/asynq/x v0.0.0-20260514123454-785bb7208cb0
+	github.com/austinyuch/asynq v0.26.0-team.1
+	github.com/austinyuch/asynq/x v0.1.0-team.1
 	github.com/fatih/color v1.19.0
 	github.com/gdamore/tcell/v2 v2.13.10
 	github.com/google/go-cmp v0.7.0
@@ -53,9 +53,4 @@ require (
 	golang.org/x/text v0.31.0 // indirect
 	golang.org/x/time v0.15.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
-)
-
-replace (
-	github.com/austinyuch/asynq => ../
-	github.com/austinyuch/asynq/x => ../x
 )
