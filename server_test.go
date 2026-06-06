@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hibiken/asynq/internal/rdb"
-	"github.com/hibiken/asynq/internal/testbroker"
-	"github.com/hibiken/asynq/internal/testutil"
+	"github.com/austinyuch/asynq/internal/rdb"
+	"github.com/austinyuch/asynq/internal/testbroker"
+	"github.com/austinyuch/asynq/internal/testutil"
 
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/goleak"
@@ -45,8 +45,9 @@ func testServer(t *testing.T, c *Client, srv *Server) {
 
 func TestServer(t *testing.T) {
 	// https://github.com/go-redis/redis/issues/1029
-	ignoreOpt := goleak.IgnoreTopFunction("github.com/redis/go-redis/v9/internal/pool.(*ConnPool).reaper")
-	defer goleak.VerifyNone(t, ignoreOpt)
+	ignorePoolReaper := goleak.IgnoreTopFunction("github.com/redis/go-redis/v9/internal/pool.(*ConnPool).reaper")
+	ignoreCircuitBreakerCleanup := goleak.IgnoreTopFunction("github.com/redis/go-redis/v9/maintnotifications.(*CircuitBreakerManager).cleanupLoop")
+	defer goleak.VerifyNone(t, ignorePoolReaper, ignoreCircuitBreakerCleanup)
 
 	redisConnOpt := getRedisConnOpt(t)
 	c := NewClient(redisConnOpt)
@@ -61,8 +62,9 @@ func TestServer(t *testing.T) {
 
 func TestServerFromRedisClient(t *testing.T) {
 	// https://github.com/go-redis/redis/issues/1029
-	ignoreOpt := goleak.IgnoreTopFunction("github.com/redis/go-redis/v9/internal/pool.(*ConnPool).reaper")
-	defer goleak.VerifyNone(t, ignoreOpt)
+	ignorePoolReaper := goleak.IgnoreTopFunction("github.com/redis/go-redis/v9/internal/pool.(*ConnPool).reaper")
+	ignoreCircuitBreakerCleanup := goleak.IgnoreTopFunction("github.com/redis/go-redis/v9/maintnotifications.(*CircuitBreakerManager).cleanupLoop")
+	defer goleak.VerifyNone(t, ignorePoolReaper, ignoreCircuitBreakerCleanup)
 
 	redisConnOpt := getRedisConnOpt(t)
 	redisClient := redisConnOpt.MakeRedisClient().(redis.UniversalClient)
@@ -82,8 +84,9 @@ func TestServerFromRedisClient(t *testing.T) {
 
 func TestServerRun(t *testing.T) {
 	// https://github.com/go-redis/redis/issues/1029
-	ignoreOpt := goleak.IgnoreTopFunction("github.com/redis/go-redis/v9/internal/pool.(*ConnPool).reaper")
-	defer goleak.VerifyNone(t, ignoreOpt)
+	ignorePoolReaper := goleak.IgnoreTopFunction("github.com/redis/go-redis/v9/internal/pool.(*ConnPool).reaper")
+	ignoreCircuitBreakerCleanup := goleak.IgnoreTopFunction("github.com/redis/go-redis/v9/maintnotifications.(*CircuitBreakerManager).cleanupLoop")
+	defer goleak.VerifyNone(t, ignorePoolReaper, ignoreCircuitBreakerCleanup)
 
 	srv := NewServer(getRedisConnOpt(t), Config{LogLevel: testLogLevel})
 

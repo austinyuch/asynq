@@ -12,7 +12,7 @@ Asynq CLI is a command line tool to monitor the queues and tasks managed by `asy
 
 In order to use the tool, compile it using the following command:
 
-    go install github.com/hibiken/asynq/tools/asynq@latest
+    go install github.com/austinyuch/asynq/tools/asynq@latest
 
 This will create the asynq executable under your `$GOPATH/bin` directory.
 
@@ -30,10 +30,10 @@ To view details on any command, use `asynq help <command> <subcommand>`.
 
 ### Global flags
 
-Asynq CLI needs to connect to a redis-server to inspect the state of queues and tasks. Use flags to specify the options to connect to the redis-server used by your application.
+Asynq CLI needs to connect to a Valkey or Redis server to inspect the state of queues and tasks. Use flags to specify the options to connect to the server used by your application.
 To connect to a redis cluster, pass `--cluster` and `--cluster_addrs` flags.
 
-By default, CLI will try to connect to a redis server running at `localhost:6379`.
+By default, CLI will try to connect to a Valkey or Redis server running at `localhost:6379`.
 
 ```
       --config string          config file to set flag defaut values (default is $HOME/.asynq.yaml)

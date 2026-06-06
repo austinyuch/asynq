@@ -4,7 +4,8 @@
 
 name: benchstat
 
-on: [pull_request]
+# 手動觸發 only — benchmark 走 local(go test -bench),CI 不自動燒
+on: [workflow_dispatch]
 
 jobs:
   incoming:
@@ -12,7 +13,7 @@ jobs:
     if: false
     services:
       redis:
-        image: redis:7
+        image: valkey/valkey:9.1.0
         ports:
           - 6379:6379
     steps:
@@ -21,7 +22,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.23.x
+          go-version: 1.25.x
       - name: Benchmark
         run: go test -run=^$ -bench=. -count=5 -timeout=60m ./... | tee -a new.txt
       - name: Upload Benchmark
@@ -35,7 +36,7 @@ jobs:
     if: false
     services:
       redis:
-        image: redis:7
+        image: valkey/valkey:9.1.0
         ports:
           - 6379:6379
     steps:
@@ -46,7 +47,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.23.x
+          go-version: 1.25.x
       - name: Benchmark
         run: go test -run=^$ -bench=. -count=5 -timeout=60m ./... | tee -a old.txt
       - name: Upload Benchmark
@@ -65,7 +66,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.23.x
+          go-version: 1.25.x
       - name: Install benchstat
         run: go get -u golang.org/x/perf/cmd/benchstat
       - name: Download Incoming

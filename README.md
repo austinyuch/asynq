@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Gitter chat](https://badges.gitter.im/go-asynq/gitter.svg)](https://gitter.im/go-asynq/community)
 
-Asynq is a Go library for queueing tasks and processing them asynchronously with workers. It's backed by [Redis](https://redis.io/) and is designed to be scalable yet easy to get started.
+Asynq is a Go library for queueing tasks and processing them asynchronously with workers. It's backed by Redis-compatible servers such as [Valkey](https://valkey.io/) and [Redis](https://redis.io/), and is designed to be scalable yet easy to get started.
 
 Highlevel overview of how Asynq works:
 
@@ -61,10 +61,10 @@ Make sure you have Go installed ([download](https://golang.org/dl/)). The **last
 Initialize your project by creating a folder and then running `go mod init github.com/your/repo` ([learn more](https://blog.golang.org/using-go-modules)) inside the folder. Then install Asynq library with the [`go get`](https://golang.org/cmd/go/#hdr-Add_dependencies_to_current_module_and_install_them) command:
 
 ```sh
-go get -u github.com/hibiken/asynq
+go get -u github.com/austinyuch/asynq
 ```
 
-Make sure you're running a Redis server locally or from a [Docker](https://hub.docker.com/_/redis) container. Version `4.0` or higher is required.
+Make sure you're running a Valkey or Redis server locally or from a Docker container such as `valkey/valkey:9.1.0`. Version `4.0` or higher of the Redis-compatible protocol is required.
 
 Next, write a package that encapsulates task creation and task handling.
 
@@ -77,7 +77,7 @@ import (
     "fmt"
     "log"
     "time"
-    "github.com/hibiken/asynq"
+    "github.com/austinyuch/asynq"
 )
 
 // A list of task types.
@@ -164,7 +164,7 @@ import (
     "log"
     "time"
 
-    "github.com/hibiken/asynq"
+    "github.com/austinyuch/asynq"
     "your/app/package/tasks"
 )
 
@@ -229,7 +229,7 @@ package main
 import (
     "log"
 
-    "github.com/hibiken/asynq"
+    "github.com/austinyuch/asynq"
     "your/app/package/tasks"
 )
 
@@ -297,7 +297,7 @@ Asynq ships with a command line tool to inspect the state of queues and tasks.
 To install the CLI tool, run the following command:
 
 ```sh
-go install github.com/hibiken/asynq/tools/asynq@latest
+go install github.com/austinyuch/asynq/tools/asynq@latest
 ```
 
 Here's an example of running the `asynq dash` command:

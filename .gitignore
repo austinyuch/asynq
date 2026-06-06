@@ -25,3 +25,7 @@ vendor
 # Ignore editor config files
 .vscode
 .idea
+
+# Local tooling artifacts (not for version control)
+.code-review/
+temp/
