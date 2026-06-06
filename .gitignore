@@ -29,3 +29,5 @@ vendor
 # Local tooling artifacts (not for version control)
 .code-review/
 temp/
+go.work
+go.work.sum

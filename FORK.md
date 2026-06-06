@@ -22,7 +22,8 @@ Upstream sync 流程見 repo-local skill:`.claude/skills/upstream-sync/`。
 | 範圍 | 內容 | 原因 |
 |---|---|---|
 | Module path | `github.com/hibiken/asynq` → `github.com/austinyuch/asynq`(root / `x` / `tools` 三個 module + 全部 import + proto `go_package`) | 下游直接 require,免 `replace` |
-| `x/go.mod`, `tools/go.mod` | require fork path + `replace => ../`(local dev) | multi-module repo 內部一致性 |
+| `x/go.mod` | require fork path(tagged)+ `replace => ../`(local dev;consumer 會忽略 replace) | multi-module repo 內部一致性 |
+| `tools/go.mod` | require fork tags,**無 replace**(`go install ...@tag` 拒絕含 replace 的 module)。本地開發 tools 對 root/x HEAD 時用 `go work init . x tools`(`go.work` 已 gitignore) | 支援遠端 `go install` |
 | Dependencies | go-redis v9.20.0、protobuf v1.36.11、x/sys v0.45.0、x/time v0.15.0;tools: prometheus/client_golang v1.23.2、cobra v1.10.2、viper v1.21.0、tcell v2.13.10 等 | security hardening / CVE 面收斂 |
 | Go toolchain | `go 1.25.0` + `toolchain go1.26.4`;CI matrix 1.25.x / 1.26.x | 跟上 supported releases |
 | CI | `redis:7` → `valkey/valkey:9.1.0`(build.yml / benchstat.yml) | 改用 Valkey 驗證 |
@@ -44,4 +45,6 @@ Multi-module repo,tag 需帶目錄前綴:`vX.Y.Z-team.N`、`x/vX.Y.Z-team.N`、`
 
 | Tag | 對應 upstream | 說明 |
 |---|---|---|
-| (尚未發佈) | | |
+| `v0.26.0-team.1` | `v0.26.0`(base `785bb72`) | 首個 fork release:security hardening + module rename |
+| `x/v0.1.0-team.1` | —(upstream 無 x tags) | x module 首個 tag;require root `v0.26.0-team.1` |
+| `tools/v0.26.0-team.1` | —(upstream 無 tools tags) | CLI;require root + x tags,無 replace,可 `go install` |
