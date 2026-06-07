@@ -35,11 +35,13 @@ git config core.hooksPath githooks   # 啟用 pre-push govulncheck
 | Go toolchain | `go 1.25.0` + `toolchain go1.26.4`;CI matrix 1.25.x / 1.26.x | 跟上 supported releases |
 | CI | `redis:7` → `valkey/valkey:9.1.0`(build.yml / benchstat.yml) | 改用 Valkey 驗證 |
 | `server_test.go` | goleak 額外 ignore `maintnotifications.(*CircuitBreakerManager).cleanupLoop` | go-redis 9.20 新背景 goroutine |
+| `client_test.go` | group entries 的 `Z.Score` 比較加 `h.EquateInt64Approx(2)`(兩處) | 修跨秒 timing flake(SPEC-008;CI 首次真跑全套時曝露) |
+| `internal/proto/asynq.pb.go` | `make proto` 重生(protoc 3.21.12 + protoc-gen-go 1.36.11),descriptor 為 fork path | IL-001 結案(SPEC-008) |
+| `docs/assets/dash.gif` | fork 環境重攝(6 frames 真實 dash 導覽,Valkey 9.1.0) | 取代 upstream 動畫;visual evidence 誠實化(SPEC-008) |
 | Docs | README / CONTRIBUTING / tools README 提及 Valkey;import 範例改 fork path | 反映 fork 現況 |
 | 其他 | `AGENTS.md` 知識庫、`.agents/skills/upstream-sync/` | 團隊維運工具 |
 | Git hooks | `githooks/pre-push` 對 root / `x` / `tools` 各跑 `govulncheck ./...`;啟用:`git config core.hooksPath githooks`(per-clone,不入版控) | 驗證走 local,CI 精簡 |
 
-註:generated `internal/proto/asynq.pb.go` 的 raw descriptor 內仍含舊 go_package 字串(runtime 無影響);下次重新 protoc 時會自然更新。
 
 ## Sync log
 

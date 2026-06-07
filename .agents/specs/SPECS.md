@@ -11,7 +11,7 @@
 | SPEC-005 | CI 最小化 + main branch protection | ✅ completed (2026-06-07) | `cf30d82`(workflow)、protection API、PR #5 觸發驗證(`build` pass 27s) | `.github/workflows/build.yml` 註解 |
 | SPEC-006 | Cross-agents symlink bridge(`.agents/` canonical) | ✅ completed (2026-06-07) | `39a2ee5` PR #6 | `FORK.md` agent workspace 節 |
 | SPEC-007 | User manual + project review 文件生成 | ✅ completed (2026-06-07) | PR #7(13da155);headless 渲染驗證、evidence 全 live、claim cap 落實 | `docs/MANUAL_GENERATION_GUIDE.md`、`docs/REVIEW_GENERATION_GUIDE.md` |
-| SPEC-008 | Gap closeout:IL-001(proto 重生)、IL-003(visual evidence)、首份 runtime-backed review 裁決 | ✅ completed (2026-06-07) | 全套測試綠(root 205s / rdb / x / tools,Valkey 9.1.0)、dash ANSI→PNG 實擷、`make proto` 驗證 | `.agents/specs/SPEC-008-gap-closeout/review.md`(**readiness 裁決權威**) |
+| SPEC-008 | Gap closeout:IL-001(proto 重生)、IL-003(visual evidence)、首份 runtime-backed review 裁決、cluster 驗證、CI flake 修復、dash.gif 重攝 | ✅ completed (2026-06-07) | PR #11(`acae113`);全套測試綠(standalone + 3-node cluster,Valkey 9.1.0)、dash ANSI→PNG/gif 實擷、`make proto` 驗證、CI `build` pass 3m59s | `.agents/specs/SPEC-008-gap-closeout/review.md`(**readiness 裁決權威**) |
 
 ## External contract 依賴
 
