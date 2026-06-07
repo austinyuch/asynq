@@ -113,7 +113,7 @@ git push -u origin "$(git branch --show-current)"
 gh pr create --repo austinyuch/asynq --base main --title "Sync upstream $(date +%Y%m%d)" --body "<upstream commits 摘要 + 測試結果>"
 ```
 
-(`gh` 在 fork 上預設指向 upstream repo,`--repo` 不可省。)
+(`gh` 在 fork 上預設指向 upstream repo,`--repo` 不可省。這不限於 sync PR——**這個 repo 的任何 `gh pr create` 都必須帶 `--repo austinyuch/asynq`**,否則 PR 會開到 upstream `hibiken/asynq`,造成對外噪音。2026-06-07 曾誤開 hibiken/asynq#1143,已關閉。)
 
 CI(Valkey-backed build.yml)綠了才 merge。merge 後視需要打 tag:
 
@@ -127,6 +127,7 @@ git push origin --tags
 ## 絕對不做
 
 - force-push 或 rebase `main`(下游 go.sum 記著 commit hash,改寫歷史會弄壞所有消費者)
+- `gh pr create` 不帶 `--repo austinyuch/asynq`(fork 上 gh 預設開到 upstream `hibiken/asynq`)
 - 把團隊 commit 放進 `master`(它是 upstream 鏡像;污染後 `--ff-only` 會永久失敗)
 - 在測試未全綠時 merge sync PR
 - 繞過 local-infra registry 直接起容器
