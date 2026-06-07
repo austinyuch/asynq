@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asynq 使用手冊 — austinyuch/asynq(team fork)</title>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral', themeVariables: { fontSize: '15px' } });
+</script>
+<style>
+  :root{--ink:#1a2332;--muted:#4a5568;--accent:#0f6ab4;--ok:#1d7a4f;--warn-bg:#fff7e6;--warn-bd:#d97706;--gap-bg:#fdf2f2;--gap-bd:#b91c1c;--card:#ffffff;--bg:#f4f6f9;--term-bg:#1e293b;--term-ink:#e6edf6}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:16px;line-height:1.7}
+  .layout{display:flex;min-height:100vh}
+  nav{width:248px;flex-shrink:0;background:#10243a;color:#dbe7f3;padding:24px 0;position:sticky;top:0;height:100vh;overflow-y:auto}
+  nav h1{font-size:17px;padding:0 20px;margin:0 0 4px;color:#fff}
+  nav .ver{font-size:12.5px;padding:0 20px;color:#9fb8cf;margin-bottom:18px}
+  nav a{display:block;color:#cfe0ef;text-decoration:none;padding:9px 20px;font-size:14.5px;border-left:3px solid transparent}
+  nav a:hover,nav a.on{background:#173455;border-left-color:#5fb0e8;color:#fff}
+  nav .lang{margin:18px 20px 0;font-size:13.5px}
+  nav .lang a{display:inline;padding:2px 8px;border:1px solid #3c5a78;border-radius:6px}
+  main{flex:1;max-width:980px;padding:36px 44px 80px}
+  h2{font-size:24px;margin:42px 0 10px;border-bottom:2px solid #d7e0ea;padding-bottom:8px}
+  h3{font-size:18.5px;margin:26px 0 8px}
+  .card{background:var(--card);border:1px solid #dde5ee;border-radius:10px;box-shadow:0 1px 3px rgba(16,36,58,.08);padding:20px 24px;margin:16px 0}
+  pre{background:var(--term-bg);color:var(--term-ink);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.55;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  p>code,li>code,td>code{background:#e8eef5;color:#0b3a66;padding:1px 6px;border-radius:4px;font-size:14px}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14.5px;background:#fff}
+  th{background:#10243a;color:#fff;text-align:left;padding:9px 12px;font-weight:600}
+  td{border:1px solid #d7e0ea;padding:8px 12px;vertical-align:top}
+  .cap{font-size:13px;color:var(--muted);background:#eef3f8;border:1px solid #d7e0ea;border-top:none;border-radius:0 0 8px 8px;padding:8px 14px;margin:-14px 0 18px}
+  .cap b{color:var(--ink)}
+  .alert{border-left:5px solid var(--warn-bd);background:var(--warn-bg);padding:12px 16px;border-radius:6px;margin:14px 0;font-size:14.5px}
+  .gap{border-left:5px solid var(--gap-bd);background:var(--gap-bg);padding:12px 16px;border-radius:6px;margin:14px 0;font-size:14.5px}
+  .ok{border-left:5px solid var(--ok);background:#effaf3;padding:12px 16px;border-radius:6px;margin:14px 0;font-size:14.5px}
+  .dl{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:7px 14px;border-radius:7px;font-size:14px;margin:4px 6px 4px 0}
+  .dl:hover{background:#0b5694}
+  .tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;margin-right:6px}
+  .tag.full{background:#d9f2e4;color:#14532d}.tag.na{background:#e5e7eb;color:#374151}.tag.gapt{background:#fee2e2;color:#7f1d1d}
+  .mermaid{background:#fff;border:1px solid #dde5ee;border-radius:10px;padding:14px;margin:14px 0}
+  @media (max-width:880px){.layout{flex-direction:column}nav{width:100%;height:auto;position:static}main{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>Asynq 使用手冊</h1>
+  <div class="ver">team fork:austinyuch/asynq<br>v0.26.0-team.1 · 2026-06-07</div>
+  <a href="#intro">1. 系統簡介</a>
+  <a href="#start">2. Getting Started</a>
+  <a href="#flow-a">3. 流程 A:Enqueue 與 Worker</a>
+  <a href="#flow-b">4. 流程 B:狀態生命週期</a>
+  <a href="#flow-c">5. 流程 C:CLI 維運</a>
+  <a href="#flow-d">6. 流程 D:Prometheus 監控</a>
+  <a href="#gaps">7. 視覺素材 Gap 盤點</a>
+  <div class="lang">語言:<a href="../en/index.html">EN</a> <b>繁中</b> · <a href="../zh-tw/index.md">Markdown 版</a></div>
+</nav>
+<main>
+
+<div class="alert">⚠️ <b>Evidence 範圍聲明</b>:本手冊產品面分類為 <b>Backend / Tool / CLI Dominant</b>;所有 evidence 標籤(Evidence Source / Coverage Tier)描述<b>該節該輸出</b>的證據強度,不構成產品整體 production 狀態;readiness 裁決權威在 <code>docs/review/</code> 的 review 文件。所有命令輸出均為 fork 環境(Valkey 9.1.0)真實擷取,可由 seed 程式重現。</div>
+
+<h2 id="intro">1. 系統簡介</h2>
+<div class="card">
+<p>Asynq 是 Go 的分散式任務佇列 library,以 Redis 相容伺服器(本 fork 以 <b>Valkey</b> 驗證)為後端。三個使用入口:</p>
+<table>
+<tr><th>角色</th><th>入口</th></tr>
+<tr><td>應用開發者(enqueue / worker)</td><td>root module:<code>Client</code>、<code>Server</code>、<code>ServeMux</code>、<code>Inspector</code></td></tr>
+<tr><td>維運(查詢/操作佇列)</td><td>CLI:<code>tools/asynq</code></td></tr>
+<tr><td>監控</td><td><code>tools/metrics_exporter</code>(Prometheus)、<code>x/metrics</code> collector</td></tr>
+</table>
+<p>Fork 治理(branch model、release tags、upstream sync)見 <a href="../../../FORK.md">FORK.md</a>。</p>
+</div>
+
+<h2 id="start">2. Getting Started / Starter Assets</h2>
+<div class="card">
+<h3>安裝(真實可執行,已 e2e 驗證)</h3>
+<pre><code># Library
+go get github.com/austinyuch/asynq@v0.26.0-team.1
+
+# CLI(tools module 無 replace,可直接 go install)
+go install github.com/austinyuch/asynq/tools/asynq@tools/v0.26.0-team.1
+
+# 本地 Valkey(版本同 CI)
+docker run -d --name asynq-valkey -p 6379:6379 valkey/valkey:9.1.0</code></pre>
+<h3>Starter assets(git-tracked,可直接下載)</h3>
+<p>
+<a class="dl" href="../demo/main.go" download>⬇ demo/main.go(canonical seed 程式)</a>
+<a class="dl" href="../assets/getting-started-demo-seed-01.txt" download>⬇ seed 真實輸出</a>
+</p>
+<p>執行 seed(資料寫入 <b>DB 13</b>,與測試套件隔離、可重複執行):</p>
+<pre><code>go run ./docs/manual/demo -redis_addr=localhost:6379</code></pre>
+</div>
+
+<h2 id="flow-a">3. 流程 A:Enqueue 與 Worker 處理</h2>
+<div class="card">
+<p><b>情境</b>:應用程式把耗時工作丟進佇列,worker 以 <code>critical:default:low = 6:3:1</code> 權重消費。最小骨架:</p>
+<pre><code>client := asynq.NewClient(asynq.RedisClientOpt{Addr: "localhost:6379"})
+info, _ := client.Enqueue(asynq.NewTask("email:welcome", payload), asynq.Queue("critical"))
+
+srv := asynq.NewServer(opt, asynq.Config{
+    Concurrency: 4,
+    Queues:      map[string]int{"critical": 6, "default": 3, "low": 1},
+})
+mux := asynq.NewServeMux()
+mux.HandleFunc("email:welcome", handleWelcomeEmail)
+srv.Run(mux)</code></pre>
+<p>真實執行結果(節錄):</p>
+<pre><code>== 1. Enqueue real workloads =====================================
+  enqueued id=b4221de8 type=email:welcome    queue=critical state=pending
+  enqueued id=966c11ff type=report:generate  queue=low      state=scheduled
+  duplicate rejected: cleanup:tmp -&gt; task already exists
+  enqueued id=61539754 type=billing:charge   queue=critical state=pending
+
+== 2. Process with a real worker Server =========================
+  processed email:welcome  user=1001 locale=zh-TW
+  processed image:resize   width=640 src=s3://demo-bucket/cat.png</code></pre>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed(無 review.md 裁決)· 完整輸出:<a href="../assets/getting-started-demo-seed-01.txt" download>下載</a></div>
+<p><b>重點</b>:<code>Unique(time.Hour)</code> 的第二次 enqueue 被真實拒絕;<code>ProcessIn(2h)</code> 任務直接落在 <code>scheduled</code>。</p>
+</div>
+
+<h2 id="flow-b">4. 流程 B:任務狀態生命週期</h2>
+<div class="card">
+<div class="mermaid">
+stateDiagram-v2
+    [*] --> pending: Enqueue
+    [*] --> scheduled: Enqueue + ProcessIn/ProcessAt
+    scheduled --> pending: 時間到
+    pending --> active: worker 取出
+    active --> [*]: 成功
+    active --> retry: handler error
+    retry --> pending: 退避時間到
+    retry --> archived: 重試耗盡
+    archived --> pending: CLI task run(人工重派)
+</div>
+<p>真實 Inspector 統計(<code>billing:charge</code> MaxRetry=0,一次失敗即 archived):</p>
+<pre><code>  queue          size   pending    active    sched  archived  processed
+  critical          1         0         0        0         1          4
+  default           0         0         0        0         0          2
+  low               1         0         0        1         0          1
+
+== 4. Archived task detail (retry exhausted) =====================
+  id=61539754 type=billing:charge last_err="card declined" retried=0/0</code></pre>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed</div>
+</div>
+
+<h2 id="flow-c">5. 流程 C:CLI 查詢與維運</h2>
+<div class="card">
+<table>
+<tr><th>命令</th><th>用途</th><th>真實輸出</th></tr>
+<tr><td><code>asynq --uri localhost:6379 --db 13 stats</code></td><td>全域統計</td><td><a href="../assets/cli-stats-01.txt" download>下載</a></td></tr>
+<tr><td><code>asynq … queue ls</code></td><td>列出佇列</td><td><a href="../assets/cli-queue-ls-01.txt" download>下載</a></td></tr>
+<tr><td><code>asynq … task ls --queue critical --state archived</code></td><td>列出封存任務(含最後錯誤)</td><td><a href="../assets/cli-task-ls-archived-01.txt" download>下載</a></td></tr>
+</table>
+<p><code>stats</code> 真實輸出節錄:</p>
+<pre><code>Daily Stats 2026-06-06 UTC
+processed  failed  error rate
+---------  ------  ----------
+7          1       14.29%
+
+Redis Info
+version  uptime  connections  memory usage  peak memory usage
+-------  ------  -----------  ------------  -----------------
+7.2.4    0 days  2            1.76MB        1.77MB</code></pre>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed</div>
+<div class="ok">💡 <b>Valkey 相容性證據</b>:<code>version 7.2.4</code> 是 Valkey 9.1.0 回報的 Redis 相容版本 — CLI 對 Valkey 後端完全照常工作。</div>
+<p>封存任務真實樣貌(<code>Last Error</code> 直接給出失敗原因,用於排錯):</p>
+<pre><code>ID                                    Type            Payload                Last Error
+61539754-…-7fc8a2cbf790               billing:charge  {"invoice":"INV-042"}  card declined</code></pre>
+<p>常用後續:<code>asynq task run</code>(重派)、<code>asynq task delete</code>、<code>asynq queue pause</code>。</p>
+</div>
+
+<h2 id="flow-d">6. 流程 D:Prometheus 監控</h2>
+<div class="card">
+<pre><code>go run ./tools/metrics_exporter -redis-addr=localhost:6379 -redis-db=13 -port=9876
+curl -s localhost:9876/metrics | grep '^asynq_'</code></pre>
+<p>真實 payload 節錄(完整 36 series 可下載):</p>
+<pre><code>asynq_queue_size{queue="critical"} 1
+asynq_queue_latency_seconds{queue="default"} 0
+asynq_tasks_enqueued_total{queue="critical",state="archived"} 1
+asynq_queue_memory_usage_approx_bytes{queue="critical"} 488</code></pre>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live HTTP payload(<code>GET /metrics</code>)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed · <a href="../assets/monitoring-metrics-curl-01.txt" download>下載完整 payload</a></div>
+<p><code>archived=1</code> 與流程 B 的 Inspector、流程 C 的 CLI 輸出<b>三方一致</b> — 同一份 demo 資料貫穿全部 surface。</p>
+</div>
+
+<h2 id="gaps">7. 視覺素材 Gap 盤點</h2>
+<div class="card">
+<table>
+<tr><th>項目</th><th>狀態</th><th>Code</th></tr>
+<tr><td><code>asynq dash</code> 互動 TUI</td><td>無頭環境無法擷取 TUI 畫面;功能以 CLI 文字輸出佐證,TUI 視覺未評估</td><td><span class="tag na">DEMO_NOT_ASSESSED</span></td></tr>
+<tr><td><code>docs/assets/</code>(dash.gif、asynqmon-*.png)</td><td><b>承襲 upstream 素材</b>,非 fork 環境(Valkey)重攝;僅為示意</td><td><span class="tag gapt">ARTIFACT_HONESTY_GAP</span></td></tr>
+<tr><td>Asynqmon Web UI</td><td>外部專案,不在本 repo 驗證範圍</td><td><span class="tag na">illustrative reference</span></td></tr>
+</table>
+<div class="ok"><b>Gaps resolved since last check</b>(基線 2026-06-07,首次生成):<br>
+✅ 手冊 evidence 全面改為 fork 環境真實輸出(先前僅有承襲 upstream 的素材)<br>
+✅ ISSUE_LOG IL-R01(CI 觸發)、IL-R02(<code>go install</code>)、IL-R03(rename 漏網)已解 — 本手冊安裝指令因此真實可執行<br>
+⏳ 仍 open:IL-003(visual 缺口,上表前兩列)</div>
+<div class="gap">⚠️ 本頁 Mermaid 圖由 CDN 渲染;離線開啟時生命週期圖不顯示(文字內容不受影響)。Markdown 版(<a href="index.md">index.md</a>)為純文字備查來源。</div>
+</div>
+
+<p style="color:var(--muted);font-size:13.5px;margin-top:40px">再生方式:<a href="../../MANUAL_GENERATION_GUIDE.md">docs/MANUAL_GENERATION_GUIDE.md</a> · English: <a href="../en/index.html">en/index.html</a></p>
+</main>
+</div>
+</body>
+</html>

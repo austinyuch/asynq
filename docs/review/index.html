@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Review — Asynq team fork(austinyuch/asynq)</title>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral', themeVariables: { fontSize: '15px' } });
+</script>
+<style>
+  :root{--ink:#1a2332;--muted:#4a5568;--accent:#0f6ab4;--hero1:#0a0e1a;--hero2:#10243a;--ok:#1d7a4f;--card:#fff;--bg:#f4f6f9;--term:#1e293b;--term-ink:#e6edf6}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:16px;line-height:1.7}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  header{background:linear-gradient(135deg,var(--hero1),var(--hero2) 70%,#15406b);color:#fff;padding:56px 0 44px}
+  header h1{font-size:34px;margin:0 0 8px}
+  header .sub{font-size:18px;color:#bcd3e8;max-width:760px}
+  .stats{display:flex;gap:18px;margin-top:30px;flex-wrap:wrap}
+  .stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:16px 24px;min-width:200px}
+  .stat .n{font-size:30px;font-weight:800;color:#7cc4f5}
+  .stat .l{font-size:13.5px;color:#c8dbec}
+  h2{font-size:25px;margin:46px 0 14px;border-bottom:2px solid #d7e0ea;padding-bottom:8px}
+  h3{font-size:18px;margin:20px 0 8px}
+  .card{background:var(--card);border:1px solid #dde5ee;border-radius:10px;box-shadow:0 1px 3px rgba(16,36,58,.08);padding:20px 24px;margin:14px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:820px){.grid2{grid-template-columns:1fr}}
+  pre{background:var(--term);color:var(--term-ink);padding:13px 15px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.55}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  p>code,li>code,td>code{background:#e8eef5;color:#0b3a66;padding:1px 6px;border-radius:4px;font-size:14px}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:14.5px;background:#fff}
+  th{background:#10243a;color:#fff;text-align:left;padding:9px 12px}
+  td{border:1px solid #d7e0ea;padding:8px 12px;vertical-align:top}
+  .ev{font-size:12.5px;color:var(--muted);background:#eef3f8;border:1px solid #d7e0ea;border-radius:8px;padding:8px 12px;margin-top:10px}
+  .ev b{color:var(--ink)}
+  .tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;margin-right:6px}
+  .tag.full{background:#d9f2e4;color:#14532d}.tag.na{background:#e5e7eb;color:#374151}.tag.gov{background:#dbeafe;color:#1e3a8a}.tag.gapt{background:#fee2e2;color:#7f1d1d}
+  .alert{border-left:5px solid #d97706;background:#fff7e6;padding:12px 16px;border-radius:6px;margin:14px 0;font-size:14.5px}
+  .ok{border-left:5px solid var(--ok);background:#effaf3;padding:12px 16px;border-radius:6px;margin:14px 0;font-size:14.5px}
+  details{border:1px solid #dde5ee;border-radius:8px;background:#fff;margin:8px 0;padding:0}
+  summary{cursor:pointer;font-weight:600;padding:12px 16px;font-size:15px}
+  details>div{padding:0 16px 14px;color:var(--muted);font-size:14.5px}
+  .pr{background:#fffdf5;border:1px solid #e8ddb5;border-radius:10px;padding:24px 28px;font-size:15.5px}
+  .pr h3{margin-top:0}
+  .mermaid{background:#fff;border:1px solid #dde5ee;border-radius:10px;padding:14px;margin:14px 0}
+  .timeline{list-style:none;padding:0;margin:14px 0}
+  .timeline li{border-left:3px solid var(--accent);padding:4px 0 16px 18px;margin-left:8px;position:relative}
+  .timeline li::before{content:'';width:11px;height:11px;border-radius:50%;background:var(--accent);position:absolute;left:-7px;top:10px}
+  footer{color:var(--muted);font-size:13.5px;padding:30px 0 50px}
+  @media print{header{background:#10243a}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <h1>Asynq Team Fork — Project Review</h1>
+  <div class="sub">github.com/<b>austinyuch/asynq</b>:供團隊所有專案使用的 Go 分散式任務佇列(security-hardened、Valkey-validated、可審計的 upstream 同步治理)</div>
+  <div class="stats">
+    <div class="stat"><div class="n">3</div><div class="l">release tags 已發佈並經消費端 e2e 驗證(go get / go install)</div></div>
+    <div class="stat"><div class="n">6</div><div class="l">PRs 經 protected main + required CI check 合入(2026-06-07)</div></div>
+    <div class="stat"><div class="n">200s+</div><div class="l">全套整合測試綠(Valkey 9.1.0 + Go 1.26,local 權威 gate)</div></div>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+<div class="alert">⚠️ <b>Claim Cap 聲明</b>:本 repo 尚無正式 <code>review.md</code> 裁決,因此所有功能卡片的 <b>Readiness State 一律 not_assessed</b>。<code>SPECS.md</code> 的 ✅ 是 <b>governance 完成度</b>(有 PR / tag / e2e 證據),不等於 live-demo readiness verdict。本頁所有命令輸出均為 fork 環境(Valkey 9.1.0,registry-governed allocation)真實擷取;evidence 標籤皆為 section-level。</div>
+
+<h2>1. Value Proposition(雙視角)</h2>
+<div class="grid2">
+<div class="card"><h3>🏢 內部管理者視角</h3>
+<ul>
+<li><b>供應鏈風險收斂</b>:依賴全面升級(go-redis 9.20、protobuf 1.36.11、Go 1.26 toolchain),CVE 面縮小;<code>tools/go.sum</code> 砍掉 ~330 行陳舊傳遞依賴</li>
+<li><b>維運成本極低</b>:CI 單 job 27-28s、只在 PR→main 觸發(成本指示落實);權威測試 gate 在 local,GitHub Actions 帳單趨近零</li>
+<li><b>可審計治理</b>:`main`(消費)/`master`(upstream 鏡像)分離、protected branch、FORK.md divergence 全記錄、upstream-sync skill 經 dry-run eval 驗證</li>
+</ul></div>
+<div class="card"><h3>🌐 下游專案 / 外部視角</h3>
+<ul>
+<li><b>一行導入</b>:<code>go get github.com/austinyuch/asynq@v0.26.0-team.1</code> — 無需 replace directive,版本顯式鎖定(pre-release suffix 防誤升)</li>
+<li><b>Valkey 相容性已驗證</b>:CLI/Library/exporter 對 Valkey 9.1.0 全套真實測試;CLI 回報 compat <code>version 7.2.4</code></li>
+<li><b>與 upstream 不脫節</b>:鏡像分支 + 9 步 sync pipeline,upstream 修正可控週期合入</li>
+</ul></div>
+</div>
+
+<h2>2. Amazon Backwards Press Release</h2>
+<div class="card pr">
+<h3>團隊宣布推出 austinyuch/asynq v0.26.0-team.1 — 讓所有內部 Go 專案安全消費經硬化驗證的任務佇列</h3>
+<p><i>台北,2026 年 6 月 7 日</i> — 團隊今天宣布其維護的 Asynq fork 首個正式版本,一個對 Valkey 完整驗證、依賴全面硬化、且與上游保持可審計同步的 Go 任務佇列 library。</p>
+<p>「過去每個專案各自 pin 上游版本,安全升級要全員重複勞動;現在硬化一次、全團隊受益,而且每一個 divergence 都有紀錄可查。」— 維護團隊</p>
+<p><b>痛點</b>:直接依賴上游意味著安全補丁節奏不可控、Redis→Valkey 遷移相容性無人驗證、以及 fork 後與上游漸行漸遠的歷史教訓。</p>
+<p><b>解法</b>:module path 改名讓下游以普通依賴方式消費(免 replace);`master` 維持 upstream 純鏡像,sync 走經 eval 驗證的 9 步 pipeline;全套整合測試在 Valkey 9.1.0 上作為權威 gate。</p>
+<p><b>取得方式</b>:<code>go get github.com/austinyuch/asynq@v0.26.0-team.1</code>;CLI:<code>go install github.com/austinyuch/asynq/tools/asynq@tools/v0.26.0-team.1</code>(均經 e2e 驗證)。</p>
+</div>
+
+<h2>3. FAQ</h2>
+<h3>內部管理者</h3>
+<details><summary>Q:這個 fork 需要多少人力維護?</summary><div>常態接近零:CI 全自動 gate、upstream sync 由 repo-local skill 引導(偵測→merge→rename 兜底→測試→PR),單次 sync 約一個工作時段。divergence 刻意保持小(deps/CI/docs),減少衝突面。</div></details>
+<details><summary>Q:導入後節省什麼成本?</summary><div>安全升級從「N 個專案 × 每次」變成「1 次 fork 升級 + 下游 bump 版本號」;CI 成本依指示壓到單 job 27-28s 且只在 PR 觸發。</div></details>
+<details><summary>Q:供應鏈安全如何確保?</summary><div>protected main(PR + required check)、master 鏡像 ff-only 不可污染、tags 不可移動、release train 順序(root→x→tools)保證 require 可解析;go.sum 完整鎖定。</div></details>
+<h3>下游專案 / 外部</h3>
+<details><summary>Q:與直接用 hibiken/asynq 差在哪?</summary><div>功能 API 完全相同(目前與 upstream 0 commit 差距);差異在治理:依賴較新(go-redis 9.20 vs 9.14)、Valkey 驗證、版本由團隊控制節奏。</div></details>
+<details><summary>Q:支援哪些整合?</summary><div>與 upstream 相同:Redis/Valkey(standalone/cluster/sentinel)、Prometheus(x/metrics + exporter)、cron 式週期任務;Web UI 可外接 Asynqmon(外部專案,未在 fork 驗證範圍)。</div></details>
+<details><summary>Q:未來 6 個月路線?</summary><div>backlog hint(非承諾,見 NEXT_STEPS.md):跟隨 upstream release 週期 sync;有新功能合入時依 release train 慣例出 v0.26.x-team.N。</div></details>
+<h3>使用者</h3>
+<details><summary>Q:導入前後改善什麼痛點?</summary><div>導入前:背景工作自製 goroutine + cron,重試/封存/觀測全靠手寫。導入後:enqueue 一行、重試/唯一性/排程是內建選項、失敗任務 CLI 一眼可查(<code>task ls --state archived</code> 直接給出 last error)、Prometheus 指標開箱即用 — 本頁第 4 節全部有真實輸出佐證。</div></details>
+
+<h2>4. Core Features(evidence-backed)</h2>
+
+<div class="card"><h3>📬 任務佇列核心:enqueue → weighted worker</h3>
+<p>多佇列權重消費(<code>critical:default:low = 6:3:1</code>)、並行 worker、unique 任務真實拒絕重複:</p>
+<pre><code>  enqueued id=b4221de8 type=email:welcome    queue=critical state=pending
+  duplicate rejected: cleanup:tmp -&gt; task already exists
+  processed email:welcome  user=1001 locale=zh-TW</code></pre>
+<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed · <b>Source Ref:</b> <a href="../manual/assets/getting-started-demo-seed-01.txt">manual/assets/getting-started-demo-seed-01.txt</a>、SPECS.md SPEC-001</div></div>
+
+<div class="card"><h3>♻️ 失敗處理:retry → archive 生命週期</h3>
+<p>handler 失敗自動退避重試,耗盡後封存且保留最後錯誤(<code>billing:charge</code> 示範):</p>
+<pre><code>  queue          size   pending    active    sched  archived  processed
+  critical          1         0         0        0         1          4
+  id=61539754 type=billing:charge last_err="card declined" retried=0/0</code></pre>
+<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed · <b>Source Ref:</b> 同上 + <a href="../manual/assets/cli-task-ls-archived-01.txt">cli-task-ls-archived-01.txt</a></div></div>
+
+<div class="card"><h3>🖥️ CLI 維運(對 Valkey 後端)</h3>
+<p><code>asynq stats</code> 真實輸出 — 當日錯誤率與 Valkey 的 Redis 相容版本一目了然:</p>
+<pre><code>Daily Stats 2026-06-06 UTC
+processed  failed  error rate
+7          1       14.29%
+Redis Info: version 7.2.4(= Valkey 9.1.0 相容層)</code></pre>
+<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed · <b>Source Ref:</b> <a href="../manual/assets/cli-stats-01.txt">cli-stats-01.txt</a></div></div>
+
+<div class="card"><h3>📈 Prometheus 監控(真實 HTTP 服務)</h3>
+<p><code>tools/metrics_exporter</code> 於 governed allocation port 9876 運行,36 個 asynq series:</p>
+<pre><code>asynq_queue_size{queue="critical"} 1
+asynq_tasks_enqueued_total{queue="critical",state="archived"} 1</code></pre>
+<p>與 Inspector / CLI 數據<b>三方一致</b>(同一 seed 資料集)。</p>
+<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live HTTP payload(<code>GET /metrics</code>)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed · <b>Source Ref:</b> <a href="../manual/assets/monitoring-metrics-curl-01.txt">monitoring-metrics-curl-01.txt</a></div></div>
+
+<div class="card"><h3>🛡️ Fork 治理與供應鏈(governance surface)</h3>
+<p>release train(root→x→tools tags)、消費端 e2e(<code>go get</code> 編譯執行 / <code>go install</code> → <code>asynq version 0.26.0</code>)、CI required check 實測觸發(27-28s pass)、upstream-sync skill 經模擬 31-commit delta 的 dry-run eval。</p>
+<div class="ev"><span class="tag gov">governance</span><b>Evidence Source:</b> merged PRs #1-#6、tags、CI runs、eval 報告 · <b>Coverage Tier:</b> full-integration(governance lane)· <b>Readiness State:</b> not_assessed(無 review.md)· <b>Source Ref:</b> FORK.md、.agents/specs/SPECS.md(SPEC-001~006)、RTM.md</div></div>
+
+<div class="card"><h3>🎛️ 互動式 Dashboard(asynq dash TUI)</h3>
+<p>佇列即時監看 TUI。<b>保守措辭</b>:本 review 產生於無頭環境,TUI 視覺未經擷取驗證;其底層 Inspector API 由上方各節 live evidence 覆蓋。</p>
+<div class="ev"><span class="tag na">not_assessed</span><b>Evidence Source:</b> static_placeholder(無截圖)· <b>Coverage Tier:</b> not_assessed · <b>Readiness State:</b> not_assessed · <b>Fallback Reason:</b> headless environment,TUI 無法截圖 · <b>Code:</b> DEMO_NOT_ASSESSED · <b>Source Ref:</b> ISSUE_LOG.md IL-003</div></div>
+
+<h2>5. UX Flow</h2>
+<div class="mermaid">
+flowchart LR
+    A[應用程式<br>Client.Enqueue] -->|critical/default/low| B[(Valkey / Redis)]
+    B --> C[Worker Server<br>ServeMux handlers]
+    C -->|成功| D[完成]
+    C -->|失敗| E[retry 退避]
+    E -->|耗盡| F[archived<br>CLI 可重派]
+    B --> G[asynq CLI<br>stats / task ls]
+    B --> H[metrics_exporter<br>:9876 /metrics] --> I[Prometheus / Grafana]
+</div>
+
+<h2>6. Gap Analysis</h2>
+<div class="grid2">
+<div class="card"><h3>✅ 已解決(since 2026-06-07 基線)</h3>
+<ul>
+<li>fork 的 CI 事件觸發被 GitHub 抑制(IL-R01)→ 已啟用並以 PR #5 實測</li>
+<li><code>go install</code> 因 replace 不可用(IL-R02)→ PR #4 移除 replace + e2e 驗證</li>
+<li>module rename 漏網:Makefile protoc / README badge / AGENTS 範例(IL-R03)→ audit gate 抓出並修復</li>
+<li>review/manual evidence 從「無」到「全部 fork 環境真實輸出」</li>
+</ul></div>
+<div class="card"><h3>⏳ 待解決(severity)</h3>
+<ul>
+<li><span class="tag gapt">ARTIFACT_HONESTY_GAP</span><b>Medium</b>:`docs/assets/` 視覺素材全承襲 upstream,未在 Valkey 環境重攝(IL-003)</li>
+<li><span class="tag na">DEMO_NOT_ASSESSED</span><b>Low</b>:dash TUI 視覺未評估(無頭環境限制)</li>
+<li><b>Low</b>:`asynq.pb.go` raw descriptor 殘留舊 go_package 字串,下次 protoc 自然解(IL-001)</li>
+<li><b>Low</b>:正式 review.md 裁決機制未建立 → 本頁 readiness 全面 claim cap</li>
+</ul></div>
+</div>
+
+<h2>7. Roadmap(backlog hint,非承諾)</h2>
+<ul class="timeline">
+<li><b>已完成(2026-06-07)</b>:hardening → rename → 治理 → release train v0.26.0-team.1 → 文件(manual + review)</li>
+<li><b>持續</b>:upstream 有更新時走 upstream-sync pipeline(目前 0 behind);sync 後出 v0.26.x-team.N</li>
+<li><b>候選</b>(NEXT_STEPS/ISSUE_LOG hint):fork 環境重攝視覺素材、review.md 正式裁決流程</li>
+</ul>
+
+<footer>生成:2026-06-07 · 版本基準 v0.26.0-team.1(main@34305f9 起算的 docs branch)· 來源:.agents/specs/*、FORK.md、docs/manual/assets/*(均 fork 環境真實擷取)· 再生方式:<a href="../REVIEW_GENERATION_GUIDE.md">docs/REVIEW_GENERATION_GUIDE.md</a></footer>
+</div>
+</body>
+</html>
