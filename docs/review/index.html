@@ -64,7 +64,7 @@
 
 <div class="wrap">
 
-<div class="alert">⚠️ <b>Claim Cap 聲明</b>:本 repo 尚無正式 <code>review.md</code> 裁決,因此所有功能卡片的 <b>Readiness State 一律 not_assessed</b>。<code>SPECS.md</code> 的 ✅ 是 <b>governance 完成度</b>(有 PR / tag / e2e 證據),不等於 live-demo readiness verdict。本頁所有命令輸出均為 fork 環境(Valkey 9.1.0,registry-governed allocation)真實擷取;evidence 標籤皆為 section-level。</div>
+<div class="ok">✅ <b>Readiness 裁決機制已建立(2026-06-07)</b>:首份 runtime-backed 裁決 <a href="../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a> 已對明列 surfaces 出具 verdict(全套測試綠 + live captures)。本頁功能卡片的 Readiness State 自此<b>沿用該裁決</b>;未列入裁決範圍者維持 not_assessed。<code>SPECS.md</code> 的 ✅ 仍僅指 governance 完成度。本頁所有命令輸出均為 fork 環境(Valkey 9.1.0,registry-governed allocation)真實擷取;evidence 標籤皆為 section-level。</div>
 
 <h2>1. Value Proposition(雙視角)</h2>
 <div class="grid2">
@@ -112,14 +112,14 @@
 <pre><code>  enqueued id=d93d6fc7 type=email:welcome    queue=critical state=pending
   duplicate rejected: cleanup:tmp -&gt; task already exists
   processed email:welcome  user=1001 locale=zh-TW</code></pre>
-<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed · <b>Source Ref:</b> <a href="../manual/assets/getting-started-demo-seed-01.txt">manual/assets/getting-started-demo-seed-01.txt</a>、SPECS.md SPEC-001</div></div>
+<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b>(<a href="../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>) · <b>Source Ref:</b> <a href="../manual/assets/getting-started-demo-seed-01.txt">manual/assets/getting-started-demo-seed-01.txt</a>、SPECS.md SPEC-001</div></div>
 
 <div class="card"><h3>♻️ 失敗處理:retry → archive 生命週期</h3>
 <p>handler 失敗自動退避重試,耗盡後封存且保留最後錯誤(<code>billing:charge</code> 示範):</p>
 <pre><code>  queue          size   pending    active    sched  archived  processed
   critical          1         0         0        0         1          4
   id=c301e025 type=billing:charge last_err="card declined" retried=0/0</code></pre>
-<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed · <b>Source Ref:</b> 同上 + <a href="../manual/assets/cli-task-ls-archived-01.txt">cli-task-ls-archived-01.txt</a></div></div>
+<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b>(<a href="../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>) · <b>Source Ref:</b> 同上 + <a href="../manual/assets/cli-task-ls-archived-01.txt">cli-task-ls-archived-01.txt</a></div></div>
 
 <div class="card"><h3>🖥️ CLI 維運(對 Valkey 後端)</h3>
 <p><code>asynq stats</code> 真實輸出 — 當日錯誤率與 Valkey 的 Redis 相容版本一目了然:</p>
@@ -127,29 +127,30 @@
 processed  failed  error rate
 7          1       14.29%
 Redis Info: version 7.2.4(= Valkey 9.1.0 相容層)</code></pre>
-<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed · <b>Source Ref:</b> <a href="../manual/assets/cli-stats-01.txt">cli-stats-01.txt</a></div></div>
+<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b>(<a href="../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>) · <b>Source Ref:</b> <a href="../manual/assets/cli-stats-01.txt">cli-stats-01.txt</a></div></div>
 
 <div class="card"><h3>📈 Prometheus 監控(真實 HTTP 服務)</h3>
 <p><code>tools/metrics_exporter</code> 於 governed allocation port 9876 運行,36 個 asynq series:</p>
 <pre><code>asynq_queue_size{queue="critical"} 1
 asynq_tasks_enqueued_total{queue="critical",state="archived"} 1</code></pre>
 <p>與 Inspector / CLI / dash TUI 數據<b>四方一致</b>(同一 seed 資料集)。</p>
-<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live HTTP payload(<code>GET /metrics</code>)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed · <b>Source Ref:</b> <a href="../manual/assets/monitoring-metrics-curl-01.txt">monitoring-metrics-curl-01.txt</a></div></div>
+<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live HTTP payload(<code>GET /metrics</code>)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b>(<a href="../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>) · <b>Source Ref:</b> <a href="../manual/assets/monitoring-metrics-curl-01.txt">monitoring-metrics-curl-01.txt</a></div></div>
 
 <div class="card"><h3>🛡️ Fork 治理與供應鏈(governance surface)</h3>
 <p>release train(root→x→tools tags)、消費端 e2e(<code>go get</code> 編譯執行 / <code>go install</code> → <code>asynq version 0.26.0</code>)、CI required check 實測觸發(27-44s pass,最近 3 runs 全綠)、upstream-sync skill 經模擬 31-commit delta 的 dry-run eval、<code>govulncheck</code> pre-push hook(三 module 實跑全綠)。</p>
-<div class="ev"><span class="tag gov">governance</span><b>Evidence Source:</b> merged PRs #1-#9、tags、CI runs、eval 報告 · <b>Coverage Tier:</b> full-integration(governance lane)· <b>Readiness State:</b> not_assessed(無 review.md)· <b>Source Ref:</b> FORK.md、.agents/specs/SPECS.md(SPEC-001~007)+ RTM R-09、RTM.md</div></div>
+<div class="ev"><span class="tag gov">governance</span><b>Evidence Source:</b> merged PRs #1-#9、tags、CI runs、eval 報告 · <b>Coverage Tier:</b> full-integration(governance lane)· <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b>(governance lane,<a href="../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008</a>)· <b>Source Ref:</b> FORK.md、.agents/specs/SPECS.md(SPEC-001~007)+ RTM R-09、RTM.md</div></div>
 
 <div class="card"><h3>🎛️ 互動式 Dashboard(asynq dash TUI)</h3>
-<p>佇列即時監看 TUI。本次再生<b>首次取得文字層真實擷取</b>(tmux capture-pane,fork 環境):</p>
+<p>佇列即時監看 TUI。文字層 + 圖形(色彩)層皆已 fork 環境實擷(tmux capture-pane -e → PNG):</p>
+<img src="../manual/assets/cli-dash-queues-01.png" alt="asynq dash — Queues 主畫面(fork 環境真實擷取)" style="width:100%;border-radius:8px;box-shadow:0 2px 8px rgba(16,36,58,.18);margin:6px 0 8px">
 <pre><code>=== Queues ===
 critical |▇ 1
 default  | 0
 low      |▇ 1
 Queue        State     Size     Latency     MemoryUsage     Processed     Failed     ErrorRate
 critical     RUN          1          0s           488 B             4          1          0.25</code></pre>
-<p><b>保守措辭</b>:擷取限於文字層(數據與排版);色彩/游標等圖形呈現仍未評估。</p>
-<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live TUI text capture(tmux capture-pane,seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level,文字層)· <b>Readiness State:</b> not_assessed · <b>Code:</b> ARTIFACT_HONESTY_GAP(已縮小至圖形層)· <b>Source Ref:</b> <a href="../manual/assets/cli-dash-queues-01.txt">cli-dash-queues-01.txt</a>、<a href="../manual/assets/cli-dash-queue-detail-01.txt">cli-dash-queue-detail-01.txt</a>、ISSUE_LOG.md IL-003</div></div>
+<p><b>呈現揭露</b>:PNG 的文字/排版/色彩 100% 來自 dash 真實 ANSI 輸出;外層視窗框為呈現性質包裝。</p>
+<div class="ev"><span class="tag full">full-integration</span><b>Evidence Source:</b> live TUI text capture(tmux capture-pane,seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level,文字層)· <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b>(<a href="../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>) · <b>Source Ref:</b> <a href="../manual/assets/cli-dash-queues-01.txt">cli-dash-queues-01.txt</a>、<a href="../manual/assets/cli-dash-queue-detail-01.txt">cli-dash-queue-detail-01.txt</a>、ISSUE_LOG.md IL-003</div></div>
 
 <h2>5. UX Flow</h2>
 <div class="mermaid">
@@ -171,25 +172,30 @@ flowchart LR
 <li><b>dash TUI 首次取得 fork 環境真實擷取</b>(tmux ×2)→ IL-003 dash 部分縮小為「僅圖形層」</li>
 <li><code>gh pr create</code> 預設指向 upstream,曾誤開 hibiken#1143(IL-R04)→ <code>--repo</code> 鐵則寫入 AGENTS.md + skill</li>
 <li>govulncheck 無自動 gate → <code>githooks/pre-push</code> 三 module 掃描(PR #9,RTM R-09)</li>
+<li><b>IL-001 結案</b>:<code>make proto</code> 重生 pb.go,descriptor austinyuch path,全套測試綠(SPEC-008)</li>
+<li><b>IL-003 結案</b>:dash 圖形層 ANSI→PNG 實擷 + <code>docs/assets/</code> 逐檔 disposition(SPEC-008)</li>
+<li><b>review.md 裁決機制落地</b>:首份 runtime-backed verdict(SPEC-008),本頁 readiness 自此有權威來源</li>
+<li><b>Cluster mode 首次驗證</b>:3-node Valkey 9.1.0 cluster,root 公開 API 全套綠(209.96s)+ x/rate 綠;rdb 原始層 5 例外已定性(IL-004)</li>
+<li><b>dash.gif fork 重攝</b>:6 frames 真實導覽動畫取代 upstream 素材</li>
+<li><b>CI flake 修復</b>:client_test Z.Score 精確比較跨秒爆 → EquateInt64Approx(2),×3 驗證</li>
 <li>較早基線:IL-R01(CI 觸發)、IL-R02(go install)、IL-R03(rename 漏網)、evidence 從無到全真實</li>
 </ul></div>
 <div class="card"><h3>⏳ 待解決(severity)</h3>
 <ul>
-<li><span class="tag gapt">ARTIFACT_HONESTY_GAP</span><b>Medium</b>:`docs/assets/` 視覺素材全承襲 upstream,未在 Valkey 環境重攝(IL-003 殘餘)</li>
-<li><span class="tag gapt">ARTIFACT_HONESTY_GAP</span><b>Low</b>:dash TUI 僅圖形層(色彩/游標)未擷取;文字層已有 live capture</li>
-<li><b>Low</b>:`asynq.pb.go` raw descriptor 殘留舊 go_package 字串,下次 protoc 自然解(IL-001)</li>
-<li><b>Low</b>:正式 review.md 裁決機制未建立 → 本頁 readiness 全面 claim cap</li>
+<li><b>Low</b>:cluster mode 下 `internal/rdb` 5 個 ID-conflict 測試 CROSSSLOT(空 Queue 測試建構痕跡,IL-004;公開 API 層 cluster 全綠)</li>
+
+<li><b>Low</b>:review.md 裁決與 commit 範圍綁定(main@9373c92 起);重大程式碼變動後需重跑權威 gate 再引用</li>
 </ul></div>
 </div>
 
 <h2>7. Roadmap(backlog hint,非承諾)</h2>
 <ul class="timeline">
-<li><b>已完成(2026-06-07)</b>:hardening → rename → 治理 → release train v0.26.0-team.1 → 文件(manual + review)→ govulncheck pre-push hook(PR #9)→ 文件再生 #2(assets 補齊 + dash TUI 擷取)</li>
+<li><b>已完成(2026-06-07)</b>:hardening → rename → 治理 → release train v0.26.0-team.1 → 文件(manual + review)→ govulncheck hook(PR #9)→ 文件再生 #2 → <b>gap closeout(SPEC-008:IL-001/IL-003 結案 + 首份 review.md 裁決)</b></li>
 <li><b>持續</b>:upstream 有更新時走 upstream-sync pipeline(目前 0 behind);sync 後出 v0.26.x-team.N</li>
-<li><b>候選</b>(NEXT_STEPS/ISSUE_LOG hint):fork 環境重攝 `docs/assets/` 視覺素材(IL-003 殘餘)、review.md 正式裁決流程</li>
+<li><b>候選</b>(NEXT_STEPS hint):upstream sync 週期執行;IL-004 可考慮回饋 upstream(rdb 測試補 Queue 欄位)</li>
 </ul>
 
-<footer>生成:2026-06-07(再生 #2)· 版本基準 v0.26.0-team.1(main@45c2a2f 起算的 docs branch)· 來源:.agents/specs/*、FORK.md、docs/manual/assets/*(均 fork 環境真實擷取)· 再生方式:<a href="../REVIEW_GENERATION_GUIDE.md">docs/REVIEW_GENERATION_GUIDE.md</a></footer>
+<footer>生成:2026-06-07(再生 #3 / gap closeout)· 版本基準 v0.26.0-team.1(main@45c2a2f 起算的 docs branch)· 來源:.agents/specs/*、FORK.md、docs/manual/assets/*(均 fork 環境真實擷取)· 再生方式:<a href="../REVIEW_GENERATION_GUIDE.md">docs/REVIEW_GENERATION_GUIDE.md</a></footer>
 </div>
 </body>
 </html>

@@ -60,7 +60,7 @@
 </nav>
 <main>
 
-<div class="alert">⚠️ <b>Evidence scope statement</b>: this manual is classified <b>Backend / Tool / CLI Dominant</b>; every evidence label (Evidence Source / Coverage Tier) describes <b>that section's output only</b> and never implies product-level production status; readiness verdicts belong to the review documents under <code>docs/review/</code>. All command outputs were captured live in the fork environment (Valkey 9.1.0) and are reproducible via the seed program.</div>
+<div class="alert">⚠️ <b>Evidence scope statement</b>: this manual is classified <b>Backend / Tool / CLI Dominant</b>; every evidence label (Evidence Source / Coverage Tier) describes <b>that section's output only</b> and never implies product-level production status; readiness verdict authority = <a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a> (first runtime-backed verdict, 2026-06-07); this manual only adopts its verdicts. All command outputs were captured live in the fork environment (Valkey 9.1.0) and are reproducible via the seed program.</div>
 
 <h2 id="intro">1. Overview</h2>
 <div class="card">
@@ -117,7 +117,7 @@ srv.Run(mux)</code></pre>
 == 2. Process with a real worker Server =========================
   processed email:welcome  user=1001 locale=zh-TW
   processed image:resize   width=640 src=s3://demo-bucket/cat.png</code></pre>
-<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output (seeded demo data) · <b>Coverage Tier:</b> full-integration (section-level) · <b>Readiness State:</b> not_assessed (no review.md verdict) · full output: <a href="../assets/getting-started-demo-seed-01.txt" download>download</a></div>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output (seeded demo data) · <b>Coverage Tier:</b> full-integration (section-level) · <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b> (<a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>) · full output: <a href="../assets/getting-started-demo-seed-01.txt" download>download</a></div>
 <p><b>Highlights</b>: the second <code>Unique(time.Hour)</code> enqueue is genuinely rejected; the <code>ProcessIn(2h)</code> task lands directly in <code>scheduled</code>.</p>
 </div>
 
@@ -143,7 +143,7 @@ stateDiagram-v2
 
 == 4. Archived task detail (retry exhausted) =====================
   id=c301e025 type=billing:charge last_err="card declined" retried=0/0</code></pre>
-<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output (seeded demo data) · <b>Coverage Tier:</b> full-integration (section-level) · <b>Readiness State:</b> not_assessed</div>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output (seeded demo data) · <b>Coverage Tier:</b> full-integration (section-level) · <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b> (<a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>)</div>
 </div>
 
 <h2 id="flow-c">5. Flow C: CLI Operations</h2>
@@ -164,7 +164,7 @@ Redis Info
 version  uptime  connections  memory usage  peak memory usage
 -------  ------  -----------  ------------  -----------------
 7.2.4    0 days  1            1.78MB        1.80MB</code></pre>
-<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output (seeded demo data) · <b>Coverage Tier:</b> full-integration (section-level) · <b>Readiness State:</b> not_assessed</div>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output (seeded demo data) · <b>Coverage Tier:</b> full-integration (section-level) · <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b> (<a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>)</div>
 <div class="ok">💡 <b>Valkey compatibility evidence</b>: <code>version 7.2.4</code> is Valkey 9.1.0's reported Redis-compat version — the CLI works against a Valkey backend unchanged.</div>
 <p>Real archived task (the <code>Last Error</code> column gives the failure cause for debugging):</p>
 <pre><code>ID                                    Type            Payload                Last Error
@@ -176,7 +176,10 @@ c301e025-…-14036a48a049               billing:charge  {"invoice":"INV-042"}  c
 <div class="card">
 <p><b>Scenario</b>: operators want a live view of queue depth and error rate without re-running <code>stats</code>.</p>
 <pre><code>asynq --uri localhost:6379 --db 13 dash</code></pre>
-<p>Main screen, captured live via tmux <code>capture-pane</code> (2026-06-07):</p>
+<p>Main screen, captured live via tmux <code>capture-pane -e</code> (2026-06-07; PNG rendered from the real ANSI color sequences):</p>
+<img src="../assets/cli-dash-queues-01.png" alt="asynq dash — Queues main screen (live fork-environment capture)" style="width:100%;border-radius:8px;box-shadow:0 2px 8px rgba(16,36,58,.18);margin:6px 0 2px">
+<div class="cap"><b>Figure:</b> dash Queues main screen — text, layout, and colors come 100% from real ANSI output; outer window frame is presentational. Text version: <a href="../assets/cli-dash-queues-01.txt" download>download</a></div>
+<p>Same screen, text layer:</p>
 <pre><code>=== Queues ===
 
 critical |▇ 1
@@ -188,6 +191,9 @@ critical     RUN          1          0s           488 B             4          1
 default      RUN          0          0s             0 B             2          0          0.00
 low          RUN          1          0s           448 B             1          0          0.00</code></pre>
 <p>Select a queue and press Enter for the Queue Summary:</p>
+<img src="../assets/cli-dash-queue-detail-01.png" alt="asynq dash — Queue Summary: critical" style="width:100%;border-radius:8px;box-shadow:0 2px 8px rgba(16,36,58,.18);margin:6px 0 2px">
+<div class="cap"><b>Figure:</b> Queue Summary (critical) — Archived:1 consistent across all surfaces. Text version: <a href="../assets/cli-dash-queue-detail-01.txt" download>download</a></div>
+<p>Same screen, text layer:</p>
 <pre><code>=== Queue Summary ===
 
 Name      critical
@@ -198,8 +204,8 @@ MemUsage  488 B
 === Tasks ===
 
 Active:0    Pending:0    Aggregating:0    Scheduled:0    Retry:0    Archived:1    Completed:0</code></pre>
-<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live TUI text capture (tmux capture-pane, seeded demo data) · <b>Coverage Tier:</b> full-integration (section-level, text content) · <b>Readiness State:</b> not_assessed · <a href="../assets/cli-dash-queues-01.txt" download>download main screen</a> <a href="../assets/cli-dash-queue-detail-01.txt" download>download Queue Summary</a></div>
-<div class="alert">⚠️ This captures the TUI's <b>text layer</b>: numbers and layout are real dash output; colors/cursor rendering are outside the capture scope (<code>ARTIFACT_HONESTY_GAP</code> narrowed, see section 8).</div>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live TUI capture (tmux capture-pane -e, seeded demo data; PNG rendered from real ANSI) · <b>Coverage Tier:</b> full-integration (section-level) · <b>Readiness State:</b> PASS (<a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>)</div>
+<div class="alert">⚠️ <b>Presentation disclosure</b>: text, layout, and colors in the PNG come 100% from dash's real ANSI output; the outer window frame (titlebar) is presentational wrapping, not part of the TUI.</div>
 </div>
 
 <h2 id="flow-e">7. Flow E: Prometheus Monitoring</h2>
@@ -211,7 +217,7 @@ curl -s localhost:9876/metrics | grep '^asynq_'</code></pre>
 asynq_queue_latency_seconds{queue="default"} 0
 asynq_tasks_enqueued_total{queue="critical",state="archived"} 1
 asynq_queue_memory_usage_approx_bytes{queue="critical"} 488</code></pre>
-<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live HTTP payload (<code>GET /metrics</code>) · <b>Coverage Tier:</b> full-integration (section-level) · <b>Readiness State:</b> not_assessed · <a href="../assets/monitoring-metrics-curl-01.txt" download>download full payload</a></div>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live HTTP payload (<code>GET /metrics</code>) · <b>Coverage Tier:</b> full-integration (section-level) · <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b> (<a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>) · <a href="../assets/monitoring-metrics-curl-01.txt" download>download full payload</a></div>
 <p><code>archived=1</code> matches Flow B's Inspector stats and Flow C's CLI output — <b>three-way consistency</b> from one seeded dataset across every surface.</p>
 </div>
 
@@ -219,11 +225,16 @@ asynq_queue_memory_usage_approx_bytes{queue="critical"} 488</code></pre>
 <div class="card">
 <table>
 <tr><th>Item</th><th>Status</th><th>Code</th></tr>
-<tr><td><code>asynq dash</code> interactive TUI</td><td><b>Text layer now captured live</b> (tmux capture-pane, Flow D); color/graphics rendering still not assessed</td><td><span class="tag gapt">ARTIFACT_HONESTY_GAP</span> (narrowed)</td></tr>
-<tr><td><code>docs/assets/</code>(dash.gif、asynqmon-*.png)</td><td><b>Inherited from upstream</b>, not re-captured in the fork (Valkey) environment; illustrative only</td><td><span class="tag gapt">ARTIFACT_HONESTY_GAP</span></td></tr>
+<tr><td><code>asynq dash</code> interactive TUI</td><td><b>Text + graphics (color) layers both captured live</b> (tmux capture-pane -e → PNG, Flow D)</td><td><span class="tag full">resolved</span> (regen #3)</td></tr>
+<tr><td>9 unreferenced files in <code>docs/assets/</code></td><td><b>Upstream legacy, zero references</b>; retained for clean syncs, never used as evidence</td><td><span class="tag na">legacy (documented)</span></td></tr>
+<tr><td><code>docs/assets/dash.gif</code></td><td><b>Re-shot in the fork environment</b> (6 frames of real dash navigation, Valkey 9.1.0)</td><td><span class="tag full">resolved</span> (fork re-shoot)</td></tr>
 <tr><td>Asynqmon Web UI</td><td>External project, out of scope for this repo's verification</td><td><span class="tag na">illustrative reference</span></td></tr>
 </table>
-<div class="ok"><b>Gaps resolved since last check</b> (previous check: 2026-06-07 first generation; this run: 2026-06-07 regen #2):<br>
+<div class="ok"><b>Gaps resolved since last check</b> (this run: 2026-06-07 regen #3 / gap closeout):<br>
+✅ <b>dash TUI graphics layer</b>: real ANSI colors via tmux capture-pane -e → PNG ×2; dash part of IL-003 fully resolved<br>
+✅ <b>Per-file disposition of <code>docs/assets/</code></b>: 9 files unreferenced (legacy), dash.gif is upstream animated demo — IL-003 closed<br>
+✅ <b>IL-001</b>: <code>make proto</code> regenerated pb.go; descriptor now carries the austinyuch path (full suite green)<br>
+<b>Earlier (regen #2)</b>:<br>
 ✅ <b><code>assets/*.txt</code> evidence files had never been committed</b> (manual links were dead) — this run adds 7 git-tracked assets; every download link now works<br>
 ✅ <b>First live fork-environment captures of the <code>asynq dash</code> TUI</b> (tmux ×2: Queues main screen + Queue Summary) — IL-003's dash part narrows to "graphics layer only"<br>
 ✅ All numbers regenerated 2026-06-07 under the governed allocation; four surfaces (seed/CLI/dash/exporter) mutually consistent<br>

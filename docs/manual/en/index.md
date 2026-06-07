@@ -2,7 +2,7 @@
 
 > Version baseline: `v0.26.0-team.1` (2026-06-07, regeneration #2). Every output in this manual was **captured live in the fork environment** (Valkey 9.1.0 + real API) and is reproducible via [`docs/manual/demo/main.go`](../demo/main.go); regeneration steps: [`docs/MANUAL_GENERATION_GUIDE.md`](../../MANUAL_GENERATION_GUIDE.md).
 >
-> Product surface classification: **Backend / Tool / CLI Dominant** — evidence is command output, not browser screenshots. Readiness verdicts belong to the review documents (`docs/review/`); this manual makes no production-readiness claims of its own.
+> Product surface classification: **Backend / Tool / CLI Dominant** — evidence is command output, not browser screenshots. Readiness verdict authority = [`SPEC-008 review.md`](../../../.agents/specs/SPEC-008-gap-closeout/review.md) (first runtime-backed verdict, 2026-06-07); this manual only adopts its verdicts, never self-claims.
 
 ## Contents
 
@@ -83,7 +83,7 @@ Real run (excerpt from [`assets/getting-started-demo-seed-01.txt`](../assets/get
   processed image:resize   width=640 src=s3://demo-bucket/cat.png
 ```
 
-> Evidence Source: live command output (seeded demo data) / Coverage Tier: full-integration (section-level) / Readiness State: not_assessed (no review.md verdict)
+> Evidence Source: live command output (seeded demo data) / Coverage Tier: full-integration (section-level) / Readiness State: **PASS** ([SPEC-008 review.md](../../../.agents/specs/SPEC-008-gap-closeout/review.md))
 
 Note the **real** unique-option rejection (`task already exists`) and the `ProcessIn(2h)` task landing directly in `scheduled`.
 
@@ -114,7 +114,7 @@ Real Inspector statistics after seeding (`billing:charge` has MaxRetry=0, so one
   id=c301e025 type=billing:charge last_err="card declined" retried=0/0
 ```
 
-> Evidence Source: live command output (seeded demo data) / Coverage Tier: full-integration (section-level) / Readiness State: not_assessed
+> Evidence Source: live command output (seeded demo data) / Coverage Tier: full-integration (section-level) / Readiness State: **PASS** ([SPEC-008 review.md](../../../.agents/specs/SPEC-008-gap-closeout/review.md))
 
 ## 5. Flow C: CLI Operations
 
@@ -138,7 +138,7 @@ version  uptime  connections  memory usage  peak memory usage
 7.2.4    0 days  1            1.78MB        1.80MB
 ```
 
-> Evidence Source: live command output (seeded demo data) / Coverage Tier: full-integration (section-level) / Readiness State: not_assessed
+> Evidence Source: live command output (seeded demo data) / Coverage Tier: full-integration (section-level) / Readiness State: **PASS** ([SPEC-008 review.md](../../../.agents/specs/SPEC-008-gap-closeout/review.md))
 >
 > 💡 **Valkey compatibility evidence**: `version 7.2.4` is Valkey 9.1.0's reported Redis-compat version — the CLI works against Valkey unchanged.
 
@@ -152,7 +152,11 @@ Follow-up operations: `asynq task run --queue critical --id <ID>` (requeue), `as
 asynq --uri localhost:6379 --db 13 dash
 ```
 
-Main screen, captured live via tmux `capture-pane` (2026-06-07; full file: [`assets/cli-dash-queues-01.txt`](../assets/cli-dash-queues-01.txt)):
+Main screen, captured live via tmux `capture-pane` (2026-06-07; color PNG rendered from the same ANSI capture):
+
+![asynq dash — Queues main screen (live fork-environment capture)](../assets/cli-dash-queues-01.png)
+
+Text version (full file: [`assets/cli-dash-queues-01.txt`](../assets/cli-dash-queues-01.txt)):
 
 ```text
 === Queues ===
@@ -167,7 +171,11 @@ default      RUN          0          0s             0 B             2          0
 low          RUN          1          0s           448 B             1          0          0.00
 ```
 
-Select a queue and press Enter for the Queue Summary ([`assets/cli-dash-queue-detail-01.txt`](../assets/cli-dash-queue-detail-01.txt)):
+Select a queue and press Enter for the Queue Summary:
+
+![asynq dash — Queue Summary: critical](../assets/cli-dash-queue-detail-01.png)
+
+Text version ([`assets/cli-dash-queue-detail-01.txt`](../assets/cli-dash-queue-detail-01.txt)):
 
 ```text
 === Queue Summary ===
@@ -182,9 +190,9 @@ MemUsage  488 B
 Active:0    Pending:0    Aggregating:0    Scheduled:0    Retry:0    Archived:1    Completed:0
 ```
 
-> Evidence Source: live TUI text capture (tmux capture-pane, seeded demo data) / Coverage Tier: full-integration (section-level, text content) / Readiness State: not_assessed
+> Evidence Source: live TUI capture (tmux capture-pane -e, seeded demo data; PNG rendered from the real ANSI color sequences) / Coverage Tier: full-integration (section-level) / Readiness State: **PASS** ([SPEC-008 review.md](../../../.agents/specs/SPEC-008-gap-closeout/review.md))
 >
-> ⚠️ This captures the TUI's **text layer**: numbers and layout are real dash output; colors/cursor rendering are outside the capture scope (`ARTIFACT_HONESTY_GAP` narrowed, see section 8).
+> ⚠️ **Presentation disclosure**: text, layout, and colors in the PNG come 100% from dash's real ANSI output; the outer window frame (titlebar) is presentational wrapping, not part of the TUI.
 
 ## 7. Flow E: Prometheus Monitoring
 
@@ -201,7 +209,7 @@ asynq_tasks_enqueued_total{queue="critical",state="archived"} 1
 asynq_queue_memory_usage_approx_bytes{queue="critical"} 488
 ```
 
-> Evidence Source: live HTTP payload (`GET /metrics`) / Coverage Tier: full-integration (section-level) / Readiness State: not_assessed
+> Evidence Source: live HTTP payload (`GET /metrics`) / Coverage Tier: full-integration (section-level) / Readiness State: **PASS** ([SPEC-008 review.md](../../../.agents/specs/SPEC-008-gap-closeout/review.md))
 
 The archived counter matches Flow B's Inspector stats, Flow C's CLI output, and Flow D's dash screen — the same seeded dataset is consistent across all four surfaces.
 
@@ -209,11 +217,18 @@ The archived counter matches Flow B's Inspector stats, Flow C's CLI output, and 
 
 | Item | Status | Code |
 |---|---|---|
-| `asynq dash` interactive TUI | **Text layer now captured live** (tmux capture-pane, Flow D); color/graphics rendering still not assessed | `ARTIFACT_HONESTY_GAP` (narrowed) |
-| `docs/assets/` (dash.gif, asynqmon-*.png, …) | **Inherited from upstream**, not re-captured in the fork (Valkey) environment | `ARTIFACT_HONESTY_GAP` |
+| `asynq dash` interactive TUI | **Text + graphics (color) layers both captured live** (tmux capture-pane -e → PNG, Flow D) | resolved (2026-06-07 regen #3) |
+| 9 unreferenced files in `docs/assets/` (asynq_*.gif, asynqmon-*.png, overview/task-queue/cluster.png, demo.gif) | **Upstream legacy, zero references**; retained for clean upstream syncs, never used as evidence | legacy (documented disposition) |
+| `docs/assets/dash.gif` | **Re-shot in the fork environment** (6 frames of real dash navigation: Queues → select → Queue Summary → back; Valkey 9.1.0, seeded data) | resolved (fork re-shoot) |
 | Asynqmon Web UI | External project, out of scope for this repo's verification | illustrative reference |
 
-**Gaps resolved since last check** (previous check: 2026-06-07 first generation; this run: 2026-06-07 regeneration #2):
+**Gaps resolved since last check** (this run: 2026-06-07 regen #3 / gap closeout):
+
+- ✅ **dash TUI graphics layer**: real ANSI color sequences captured via `tmux capture-pane -e` and rendered to PNG ×2 — the dash part of IL-003 fully resolved
+- ✅ **Per-file disposition of `docs/assets/`**: 9 files unreferenced (legacy, kept for sync cleanliness), `dash.gif` is README's upstream animated demo (fork-authoritative visuals live in this manual) — IL-003 closed
+- ✅ Stale `go_package` string in `internal/proto/asynq.pb.go` (IL-001) → regenerated via `make proto`, descriptor now carries the austinyuch path
+
+**Earlier (2026-06-07 regen #2)**:
 
 - ✅ **`assets/*.txt` evidence files had never been committed** (manual links were dead) — this run adds 7 git-tracked assets; every evidence link now downloads
 - ✅ **First live fork-environment captures of the `asynq dash` TUI** (tmux capture-pane ×2: Queues main screen + Queue Summary) — the dash part of IL-003 narrows from "no capture at all" to "graphics layer only"

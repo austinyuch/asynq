@@ -40,12 +40,20 @@ cd tools && go build -o /tmp/asynq-cli ./asynq && cd ..
 curl -s localhost:9876/metrics | grep -E '^asynq_' | head -25 \
   > docs/manual/assets/monitoring-metrics-curl-01.txt
 
-# 4. dash TUI 文字層擷取(tmux;無頭環境也可行)
+# 4. dash TUI 擷取(tmux;無頭環境也可行)
+#    -p = 文字層;-e -p = 含 ANSI 色彩(供 PNG 渲染)
 tmux new-session -d -s asynqdash -x 110 -y 30 "/tmp/asynq-cli --uri localhost:16381 --db 13 dash"
 sleep 4 && tmux capture-pane -t asynqdash -p > docs/manual/assets/cli-dash-queues-01.txt
+tmux capture-pane -t asynqdash -e -p > /tmp/dash-queues.ansi
 tmux send-keys -t asynqdash Down && sleep 1 && tmux send-keys -t asynqdash Enter && sleep 2
 tmux capture-pane -t asynqdash -p > docs/manual/assets/cli-dash-queue-detail-01.txt
+tmux capture-pane -t asynqdash -e -p > /tmp/dash-detail.ansi
 tmux kill-session -t asynqdash
+# 4b. ANSI → PNG:SGR→HTML 轉換(自寫小工具或 ansi2html)+ Playwright deviceScaleFactor:2 截圖
+#     輸出 docs/manual/assets/cli-dash-*.png;PNG 外框(titlebar)屬呈現性質,需在 evidence 揭露
+# 4c. dash.gif fork 重攝(docs/assets/dash.gif,README 引用):
+#     dash --refresh 2s 起 tmux,依導覽序列(Down/Enter/Down/Escape/…)擷取 6 個 -e frames
+#     → 各自渲染 PNG(deviceScaleFactor:1)→ ffmpeg -framerate 0.8 + palettegen 組 gif
 
 # 5. 重寫 docs/manual/{zh-tw,en}/index.{md,html}(四象限輸出,引用上述 assets)
 # 6. 結束後 release registry instance
@@ -57,18 +65,24 @@ tmux kill-session -t asynqdash
 
 - **Evidence Source**:`live command output (seeded demo data)` / `live HTTP payload` / `upstream-sourced asset`
 - **Coverage Tier**:`full-integration`(真實服務 + 真實 API)/ `not_assessed`
-- **Readiness State**:沿用 `.agents/specs/SPECS.md`;無 review.md 裁決的一律 `not_assessed`
+- **Readiness State**:沿用 `.agents/specs/**/review.md` 裁決(首份:`SPEC-008-gap-closeout/review.md`,2026-06-07);未列入裁決範圍的一律 `not_assessed`
 
 ## Visual Gap 狀態(隨每次再生更新)
 
 | Gap | 狀態 | Code |
 |---|---|---|
-| `asynq dash` TUI 畫面 | **文字層已實擷**(tmux capture-pane ×2,再生命令第 4 步);色彩/游標等圖形層仍未擷取 | `ARTIFACT_HONESTY_GAP`(範圍縮小) |
-| `docs/assets/*.gif/png`(dash.gif、asynqmon 截圖等) | 全部承襲 upstream,非 fork 環境(Valkey)重攝 | `ARTIFACT_HONESTY_GAP` |
+| `asynq dash` TUI 畫面 | **文字層 + 圖形(色彩)層皆已實擷**(再生命令第 4/4b 步) | resolved(SPEC-008) |
+| `docs/assets/` 9 個未引用檔 | upstream 歷史遺留、零引用;保留利於 sync,不作 evidence | legacy(documented) |
+| `docs/assets/dash.gif` | **已以 fork 環境重攝**(6 frames 真實導覽,再生命令 4c 步) | resolved(fork re-shoot) |
 | Asynqmon Web UI | 外部專案,不在本 repo 範圍 | 手冊以外部工具引用 |
 
 ### Gaps resolved since last check
 
+- 2026-06-07(再生 #3 / gap closeout,SPEC-008):
+  - ✅ dash 圖形層:`capture-pane -e` ANSI → PNG ×2(IL-003 dash 部分結案)
+  - ✅ `docs/assets/` 逐檔 disposition 完成,IL-003 結案(→ ISSUE_LOG IL-R06)
+  - ✅ IL-001 結案:`make proto` 重生(→ IL-R05)
+  - ✅ readiness 裁決機制落地:`SPEC-008-gap-closeout/review.md`;manual evidence 的 Readiness State 自此沿用裁決
 - 2026-06-07(再生 #2):
   - ✅ **`docs/manual/assets/*.txt` 此前從未 commit**(guide 宣稱的檔案結構與 repo 實況不符,手冊內連結為死連結)— 本次補齊 7 個 git-tracked assets
   - ✅ **dash TUI 首次取得文字層真實擷取**(tmux capture-pane;命令已納入上方再生序列)— IL-003 的 dash 部分縮小為「僅圖形層」

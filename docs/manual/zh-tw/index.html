@@ -60,7 +60,7 @@
 </nav>
 <main>
 
-<div class="alert">⚠️ <b>Evidence 範圍聲明</b>:本手冊產品面分類為 <b>Backend / Tool / CLI Dominant</b>;所有 evidence 標籤(Evidence Source / Coverage Tier)描述<b>該節該輸出</b>的證據強度,不構成產品整體 production 狀態;readiness 裁決權威在 <code>docs/review/</code> 的 review 文件。所有命令輸出均為 fork 環境(Valkey 9.1.0)真實擷取,可由 seed 程式重現。</div>
+<div class="alert">⚠️ <b>Evidence 範圍聲明</b>:本手冊產品面分類為 <b>Backend / Tool / CLI Dominant</b>;所有 evidence 標籤(Evidence Source / Coverage Tier)描述<b>該節該輸出</b>的證據強度,不構成產品整體 production 狀態;readiness 裁決權威 = <a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>(2026-06-07 首份 runtime-backed 裁決),本手冊僅沿用其 verdict。所有命令輸出均為 fork 環境(Valkey 9.1.0)真實擷取,可由 seed 程式重現。</div>
 
 <h2 id="intro">1. 系統簡介</h2>
 <div class="card">
@@ -117,7 +117,7 @@ srv.Run(mux)</code></pre>
 == 2. Process with a real worker Server =========================
   processed email:welcome  user=1001 locale=zh-TW
   processed image:resize   width=640 src=s3://demo-bucket/cat.png</code></pre>
-<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed(無 review.md 裁決)· 完整輸出:<a href="../assets/getting-started-demo-seed-01.txt" download>下載</a></div>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b>(<a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>)· 完整輸出:<a href="../assets/getting-started-demo-seed-01.txt" download>下載</a></div>
 <p><b>重點</b>:<code>Unique(time.Hour)</code> 的第二次 enqueue 被真實拒絕;<code>ProcessIn(2h)</code> 任務直接落在 <code>scheduled</code>。</p>
 </div>
 
@@ -143,7 +143,7 @@ stateDiagram-v2
 
 == 4. Archived task detail (retry exhausted) =====================
   id=c301e025 type=billing:charge last_err="card declined" retried=0/0</code></pre>
-<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed</div>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b>(<a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>)</div>
 </div>
 
 <h2 id="flow-c">5. 流程 C:CLI 查詢與維運</h2>
@@ -164,7 +164,7 @@ Redis Info
 version  uptime  connections  memory usage  peak memory usage
 -------  ------  -----------  ------------  -----------------
 7.2.4    0 days  1            1.78MB        1.80MB</code></pre>
-<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed</div>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b>(<a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>)</div>
 <div class="ok">💡 <b>Valkey 相容性證據</b>:<code>version 7.2.4</code> 是 Valkey 9.1.0 回報的 Redis 相容版本 — CLI 對 Valkey 後端完全照常工作。</div>
 <p>封存任務真實樣貌(<code>Last Error</code> 直接給出失敗原因,用於排錯):</p>
 <pre><code>ID                                    Type            Payload                Last Error
@@ -176,7 +176,10 @@ c301e025-…-14036a48a049               billing:charge  {"invoice":"INV-042"}  c
 <div class="card">
 <p><b>情境</b>:維運人員要即時盯佇列深度、錯誤率,不想反覆敲 <code>stats</code>。</p>
 <pre><code>asynq --uri localhost:6379 --db 13 dash</code></pre>
-<p>主畫面真實擷取(tmux <code>capture-pane</code>,2026-06-07):</p>
+<p>主畫面真實擷取(tmux <code>capture-pane -e</code>,2026-06-07;PNG 由真實 ANSI 色彩序列渲染):</p>
+<img src="../assets/cli-dash-queues-01.png" alt="asynq dash — Queues 主畫面(fork 環境真實擷取)" style="width:100%;border-radius:8px;box-shadow:0 2px 8px rgba(16,36,58,.18);margin:6px 0 2px">
+<div class="cap"><b>圖:</b>dash Queues 主畫面 — 文字、排版、色彩 100% 來自真實 ANSI 輸出;外層視窗框為呈現性質包裝。文字版:<a href="../assets/cli-dash-queues-01.txt" download>下載</a></div>
+<p>同畫面文字層:</p>
 <pre><code>=== Queues ===
 
 critical |▇ 1
@@ -188,6 +191,9 @@ critical     RUN          1          0s           488 B             4          1
 default      RUN          0          0s             0 B             2          0          0.00
 low          RUN          1          0s           448 B             1          0          0.00</code></pre>
 <p>選定佇列按 Enter 進入 Queue Summary:</p>
+<img src="../assets/cli-dash-queue-detail-01.png" alt="asynq dash — Queue Summary: critical" style="width:100%;border-radius:8px;box-shadow:0 2px 8px rgba(16,36,58,.18);margin:6px 0 2px">
+<div class="cap"><b>圖:</b>Queue Summary(critical)— Archived:1 與各 surface 一致。文字版:<a href="../assets/cli-dash-queue-detail-01.txt" download>下載</a></div>
+<p>同畫面文字層:</p>
 <pre><code>=== Queue Summary ===
 
 Name      critical
@@ -198,8 +204,8 @@ MemUsage  488 B
 === Tasks ===
 
 Active:0    Pending:0    Aggregating:0    Scheduled:0    Retry:0    Archived:1    Completed:0</code></pre>
-<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live TUI text capture(tmux capture-pane,seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level,文字內容)· <b>Readiness State:</b> not_assessed · <a href="../assets/cli-dash-queues-01.txt" download>下載主畫面</a> <a href="../assets/cli-dash-queue-detail-01.txt" download>下載 Queue Summary</a></div>
-<div class="alert">⚠️ 此為 TUI 的<b>文字層</b>真實擷取:數據與排版皆為 dash 實際輸出;色彩/游標等圖形呈現不在擷取範圍(<code>ARTIFACT_HONESTY_GAP</code> 範圍縮小,見第 8 節)。</div>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live TUI capture(tmux capture-pane -e,seeded demo data;PNG 由真實 ANSI 渲染)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> PASS(<a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>)</div>
+<div class="alert">⚠️ <b>呈現揭露</b>:PNG 中的文字、排版、色彩 100% 來自 dash 真實輸出的 ANSI 序列;外層視窗框(titlebar)為呈現性質包裝,非 TUI 本體。</div>
 </div>
 
 <h2 id="flow-e">7. 流程 E:Prometheus 監控</h2>
@@ -211,7 +217,7 @@ curl -s localhost:9876/metrics | grep '^asynq_'</code></pre>
 asynq_queue_latency_seconds{queue="default"} 0
 asynq_tasks_enqueued_total{queue="critical",state="archived"} 1
 asynq_queue_memory_usage_approx_bytes{queue="critical"} 488</code></pre>
-<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live HTTP payload(<code>GET /metrics</code>)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed · <a href="../assets/monitoring-metrics-curl-01.txt" download>下載完整 payload</a></div>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live HTTP payload(<code>GET /metrics</code>)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> <b style="color:#1d7a4f">PASS</b>(<a href="../../../.agents/specs/SPEC-008-gap-closeout/review.md">SPEC-008 review.md</a>) · <a href="../assets/monitoring-metrics-curl-01.txt" download>下載完整 payload</a></div>
 <p><code>archived=1</code> 與流程 B 的 Inspector、流程 C 的 CLI、流程 D 的 dash 畫面<b>四方一致</b> — 同一份 demo 資料貫穿全部 surface。</p>
 </div>
 
@@ -219,11 +225,16 @@ asynq_queue_memory_usage_approx_bytes{queue="critical"} 488</code></pre>
 <div class="card">
 <table>
 <tr><th>項目</th><th>狀態</th><th>Code</th></tr>
-<tr><td><code>asynq dash</code> 互動 TUI</td><td><b>文字層已實擷</b>(tmux capture-pane,見流程 D);色彩/游標等圖形呈現仍未評估</td><td><span class="tag gapt">ARTIFACT_HONESTY_GAP</span>(範圍縮小)</td></tr>
-<tr><td><code>docs/assets/</code>(dash.gif、asynqmon-*.png)</td><td><b>承襲 upstream 素材</b>,非 fork 環境(Valkey)重攝;僅為示意</td><td><span class="tag gapt">ARTIFACT_HONESTY_GAP</span></td></tr>
+<tr><td><code>asynq dash</code> 互動 TUI</td><td><b>文字層 + 圖形(色彩)層皆已實擷</b>(tmux capture-pane -e → PNG,見流程 D)</td><td><span class="tag full">resolved</span>(再生 #3)</td></tr>
+<tr><td><code>docs/assets/</code> 內 9 個未引用檔</td><td><b>upstream 歷史遺留、零引用</b>;保留以利 sync 乾淨,不作為 evidence</td><td><span class="tag na">legacy(documented)</span></td></tr>
+<tr><td><code>docs/assets/dash.gif</code></td><td><b>已以 fork 環境重攝</b>(6 frames 真實 dash 導覽,Valkey 9.1.0)</td><td><span class="tag full">resolved</span>(fork re-shoot)</td></tr>
 <tr><td>Asynqmon Web UI</td><td>外部專案,不在本 repo 驗證範圍</td><td><span class="tag na">illustrative reference</span></td></tr>
 </table>
-<div class="ok"><b>Gaps resolved since last check</b>(上次 check:2026-06-07 首次生成;本次:2026-06-07 再生 #2):<br>
+<div class="ok"><b>Gaps resolved since last check</b>(本次:2026-06-07 再生 #3 / gap closeout):<br>
+✅ <b>dash TUI 圖形層</b>:tmux capture-pane -e 取真實 ANSI 色彩 → PNG ×2,IL-003 dash 部分完全解決<br>
+✅ <b><code>docs/assets/</code> 逐檔 disposition</b>:9 檔零引用(legacy)、dash.gif 為 upstream 動畫示意 — IL-003 結案<br>
+✅ <b>IL-001</b>:<code>make proto</code> 重生 pb.go,descriptor 已為 austinyuch path(全套測試綠)<br>
+<b>較早(再生 #2)</b>:<br>
 ✅ <b><code>assets/*.txt</code> evidence 檔此前從未 commit</b>(手冊連結為死連結)— 本次補齊 7 個 git-tracked assets,所有下載連結可用<br>
 ✅ <b><code>asynq dash</code> TUI 首次取得 fork 環境真實擷取</b>(tmux ×2:Queues 主畫面 + Queue Summary)— IL-003 的 dash 部分縮小為「僅圖形層未擷取」<br>
 ✅ 全部數據以 2026-06-07 governed allocation 重產,四個 surface(seed/CLI/dash/exporter)互相一致<br>
