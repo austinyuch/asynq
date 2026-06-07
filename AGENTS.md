@@ -88,6 +88,8 @@ make lint
 | `docs/MANUAL_GENERATION_GUIDE.md` | 使用手冊(`docs/manual/{lang}/index.html`)的生成/再生筆記 |
 | `docs/REVIEW_GENERATION_GUIDE.md` | review 文件(`docs/review/index.html`)的生成/再生筆記 |
 
+**PR 鐵則**:fork 上 `gh pr create` 預設指向 upstream `hibiken/asynq`——任何 PR 都必須帶 `--repo austinyuch/asynq`,否則會誤開到 upstream(2026-06-07 曾發生,#1143 已關閉)。
+
 ## NOTES
 - Supported Go policy in docs is “last two Go versions”; modules currently pin `go 1.25.0` with `toolchain go1.26.4`.
 - `README.md` explicitly warns that some Lua scripts may not be compatible with Redis Cluster.
