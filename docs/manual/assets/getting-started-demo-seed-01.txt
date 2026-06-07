@@ -1,0 +1,32 @@
+== 1. Enqueue real workloads =====================================
+  enqueued id=d93d6fc7 type=email:welcome    queue=critical state=pending
+  enqueued id=aa78f8d4 type=email:welcome    queue=critical state=pending
+  enqueued id=87b178ec type=email:welcome    queue=critical state=pending
+  enqueued id=e7e10b4d type=image:resize     queue=default  state=pending
+  enqueued id=a62f63b9 type=image:resize     queue=default  state=pending
+  enqueued id=c5e3e65c type=report:generate  queue=low      state=scheduled
+  enqueued id=8ccfcad5 type=cleanup:tmp      queue=low      state=pending
+  duplicate rejected: cleanup:tmp -> task already exists
+  enqueued id=c301e025 type=billing:charge   queue=critical state=pending
+
+== 2. Process with a real worker Server =========================
+  processed email:welcome  user=1001 locale=zh-TW
+  processed cleanup:tmp
+  processed email:welcome  user=1002 locale=zh-TW
+  processed email:welcome  user=1003 locale=zh-TW
+  processed image:resize   width=640 src=s3://demo-bucket/cat.png
+  processed image:resize   width=1280 src=s3://demo-bucket/cat.png
+
+== 3. Inspector: real queue statistics ===========================
+  queue          size   pending    active    sched  archived  processed
+  critical          1         0         0        0         1          4
+  default           0         0         0        0         0          2
+  low               1         0         0        1         0          1
+
+== 4. Archived task detail (retry exhausted) =====================
+  id=c301e025 type=billing:charge last_err="card declined" retried=0/0
+
+== 5. Scheduled task detail ======================================
+  id=c5e3e65c type=report:generate next_process_at=2026-06-07T14:58:56+08:00
+
+demo seed complete: data remains in DB 13 for CLI / exporter inspection

@@ -40,8 +40,15 @@ cd tools && go build -o /tmp/asynq-cli ./asynq && cd ..
 curl -s localhost:9876/metrics | grep -E '^asynq_' | head -25 \
   > docs/manual/assets/monitoring-metrics-curl-01.txt
 
-# 4. 重寫 docs/manual/{zh-tw,en}/index.{md,html}(四象限輸出,引用上述 assets)
-# 5. 結束後 release registry instance
+# 4. dash TUI 文字層擷取(tmux;無頭環境也可行)
+tmux new-session -d -s asynqdash -x 110 -y 30 "/tmp/asynq-cli --uri localhost:16381 --db 13 dash"
+sleep 4 && tmux capture-pane -t asynqdash -p > docs/manual/assets/cli-dash-queues-01.txt
+tmux send-keys -t asynqdash Down && sleep 1 && tmux send-keys -t asynqdash Enter && sleep 2
+tmux capture-pane -t asynqdash -p > docs/manual/assets/cli-dash-queue-detail-01.txt
+tmux kill-session -t asynqdash
+
+# 5. 重寫 docs/manual/{zh-tw,en}/index.{md,html}(四象限輸出,引用上述 assets)
+# 6. 結束後 release registry instance
 ```
 
 ## Evidence Metadata 慣例
@@ -56,12 +63,16 @@ curl -s localhost:9876/metrics | grep -E '^asynq_' | head -25 \
 
 | Gap | 狀態 | Code |
 |---|---|---|
-| `asynq dash` TUI 畫面 | 無頭環境無法截圖;以 CLI 文字輸出替代 | `DEMO_NOT_ASSESSED` |
+| `asynq dash` TUI 畫面 | **文字層已實擷**(tmux capture-pane ×2,再生命令第 4 步);色彩/游標等圖形層仍未擷取 | `ARTIFACT_HONESTY_GAP`(範圍縮小) |
 | `docs/assets/*.gif/png`(dash.gif、asynqmon 截圖等) | 全部承襲 upstream,非 fork 環境(Valkey)重攝 | `ARTIFACT_HONESTY_GAP` |
 | Asynqmon Web UI | 外部專案,不在本 repo 範圍 | 手冊以外部工具引用 |
 
 ### Gaps resolved since last check
 
+- 2026-06-07(再生 #2):
+  - ✅ **`docs/manual/assets/*.txt` 此前從未 commit**(guide 宣稱的檔案結構與 repo 實況不符,手冊內連結為死連結)— 本次補齊 7 個 git-tracked assets
+  - ✅ **dash TUI 首次取得文字層真實擷取**(tmux capture-pane;命令已納入上方再生序列)— IL-003 的 dash 部分縮小為「僅圖形層」
+  - ✅ 全部 evidence 以 governed allocation 重產,四 surface(seed/CLI/dash/exporter)數據一致
 - 2026-06-07(首次生成,基線):manual 全部 evidence 改為 fork 環境真實輸出(Valkey 9.1.0 + 真實 API),取代「引用 upstream README 素材」的初始狀態。對應 `ISSUE_LOG.md` IL-R01~R03 已解(CI 觸發、go install、rename 漏網)。IL-003(visual 缺口)仍 open。
 
 ## 檔案結構

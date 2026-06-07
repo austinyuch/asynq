@@ -1,0 +1,30 @@
+=== Queue Summary ===
+
+Name      critical
+Size      1
+Latency   0s
+MemUsage  488 B
+
+
+=== Tasks ===
+
+Active:0    Pending:0    Aggregating:0    Scheduled:0    Retry:0    Archived:1    Completed:0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?>: Help    <Ctrl+C>: Exit

@@ -1,6 +1,6 @@
 # Asynq User Manual (team fork: austinyuch/asynq)
 
-> Version baseline: `v0.26.0-team.1` (2026-06-07). Every output in this manual was **captured live in the fork environment** (Valkey 9.1.0 + real API) and is reproducible via [`docs/manual/demo/main.go`](../demo/main.go); regeneration steps: [`docs/MANUAL_GENERATION_GUIDE.md`](../../MANUAL_GENERATION_GUIDE.md).
+> Version baseline: `v0.26.0-team.1` (2026-06-07, regeneration #2). Every output in this manual was **captured live in the fork environment** (Valkey 9.1.0 + real API) and is reproducible via [`docs/manual/demo/main.go`](../demo/main.go); regeneration steps: [`docs/MANUAL_GENERATION_GUIDE.md`](../../MANUAL_GENERATION_GUIDE.md).
 >
 > Product surface classification: **Backend / Tool / CLI Dominant** — evidence is command output, not browser screenshots. Readiness verdicts belong to the review documents (`docs/review/`); this manual makes no production-readiness claims of its own.
 
@@ -11,8 +11,9 @@
 3. [Flow A: Enqueue & Worker Processing](#3-flow-a-enqueue--worker-processing)
 4. [Flow B: Task State Lifecycle](#4-flow-b-task-state-lifecycle)
 5. [Flow C: CLI Operations](#5-flow-c-cli-operations)
-6. [Flow D: Prometheus Monitoring](#6-flow-d-prometheus-monitoring)
-7. [Visual Evidence Gap Inventory](#7-visual-evidence-gap-inventory)
+6. [Flow D: Interactive Dashboard (`asynq dash`)](#6-flow-d-interactive-dashboard-asynq-dash)
+7. [Flow E: Prometheus Monitoring](#7-flow-e-prometheus-monitoring)
+8. [Visual Evidence Gap Inventory](#8-visual-evidence-gap-inventory)
 
 ---
 
@@ -72,10 +73,10 @@ Real run (excerpt from [`assets/getting-started-demo-seed-01.txt`](../assets/get
 
 ```text
 == 1. Enqueue real workloads =====================================
-  enqueued id=b4221de8 type=email:welcome    queue=critical state=pending
-  enqueued id=966c11ff type=report:generate  queue=low      state=scheduled
+  enqueued id=d93d6fc7 type=email:welcome    queue=critical state=pending
+  enqueued id=c5e3e65c type=report:generate  queue=low      state=scheduled
   duplicate rejected: cleanup:tmp -> task already exists
-  enqueued id=61539754 type=billing:charge   queue=critical state=pending
+  enqueued id=c301e025 type=billing:charge   queue=critical state=pending
 
 == 2. Process with a real worker Server =========================
   processed email:welcome  user=1001 locale=zh-TW
@@ -110,7 +111,7 @@ Real Inspector statistics after seeding (`billing:charge` has MaxRetry=0, so one
   low               1         0         0        1         0          1
 
 == 4. Archived task detail (retry exhausted) =====================
-  id=61539754 type=billing:charge last_err="card declined" retried=0/0
+  id=c301e025 type=billing:charge last_err="card declined" retried=0/0
 ```
 
 > Evidence Source: live command output (seeded demo data) / Coverage Tier: full-integration (section-level) / Readiness State: not_assessed
@@ -126,7 +127,7 @@ Real Inspector statistics after seeding (`billing:charge` has MaxRetry=0, so one
 `stats` excerpt:
 
 ```text
-Daily Stats 2026-06-06 UTC
+Daily Stats 2026-06-07 UTC
 processed  failed  error rate
 ---------  ------  ----------
 7          1       14.29%
@@ -134,7 +135,7 @@ processed  failed  error rate
 Redis Info
 version  uptime  connections  memory usage  peak memory usage
 -------  ------  -----------  ------------  -----------------
-7.2.4    0 days  2            1.76MB        1.77MB
+7.2.4    0 days  1            1.78MB        1.80MB
 ```
 
 > Evidence Source: live command output (seeded demo data) / Coverage Tier: full-integration (section-level) / Readiness State: not_assessed
@@ -143,7 +144,49 @@ version  uptime  connections  memory usage  peak memory usage
 
 Follow-up operations: `asynq task run --queue critical --id <ID>` (requeue), `asynq task delete ...`, `asynq queue pause <name>`.
 
-## 6. Flow D: Prometheus Monitoring
+## 6. Flow D: Interactive Dashboard (`asynq dash`)
+
+**Scenario**: operators want a live view of queue depth and error rate without re-running `stats`.
+
+```bash
+asynq --uri localhost:6379 --db 13 dash
+```
+
+Main screen, captured live via tmux `capture-pane` (2026-06-07; full file: [`assets/cli-dash-queues-01.txt`](../assets/cli-dash-queues-01.txt)):
+
+```text
+=== Queues ===
+
+critical |▇ 1
+default  | 0
+low      |▇ 1
+
+Queue        State     Size     Latency     MemoryUsage     Processed     Failed     ErrorRate
+critical     RUN          1          0s           488 B             4          1          0.25
+default      RUN          0          0s             0 B             2          0          0.00
+low          RUN          1          0s           448 B             1          0          0.00
+```
+
+Select a queue and press Enter for the Queue Summary ([`assets/cli-dash-queue-detail-01.txt`](../assets/cli-dash-queue-detail-01.txt)):
+
+```text
+=== Queue Summary ===
+
+Name      critical
+Size      1
+Latency   0s
+MemUsage  488 B
+
+=== Tasks ===
+
+Active:0    Pending:0    Aggregating:0    Scheduled:0    Retry:0    Archived:1    Completed:0
+```
+
+> Evidence Source: live TUI text capture (tmux capture-pane, seeded demo data) / Coverage Tier: full-integration (section-level, text content) / Readiness State: not_assessed
+>
+> ⚠️ This captures the TUI's **text layer**: numbers and layout are real dash output; colors/cursor rendering are outside the capture scope (`ARTIFACT_HONESTY_GAP` narrowed, see section 8).
+
+## 7. Flow E: Prometheus Monitoring
 
 ```bash
 go run ./tools/metrics_exporter -redis-addr=localhost:6379 -redis-db=13 -port=9876
@@ -160,21 +203,22 @@ asynq_queue_memory_usage_approx_bytes{queue="critical"} 488
 
 > Evidence Source: live HTTP payload (`GET /metrics`) / Coverage Tier: full-integration (section-level) / Readiness State: not_assessed
 
-The archived counter matches Flow B's Inspector stats and Flow C's CLI output — the same seeded dataset is consistent across all three surfaces.
+The archived counter matches Flow B's Inspector stats, Flow C's CLI output, and Flow D's dash screen — the same seeded dataset is consistent across all four surfaces.
 
-## 7. Visual Evidence Gap Inventory
+## 8. Visual Evidence Gap Inventory
 
 | Item | Status | Code |
 |---|---|---|
-| `asynq dash` interactive TUI | Generated in a headless environment; functionality evidenced by CLI text output, TUI visuals **not assessed** | `DEMO_NOT_ASSESSED` |
+| `asynq dash` interactive TUI | **Text layer now captured live** (tmux capture-pane, Flow D); color/graphics rendering still not assessed | `ARTIFACT_HONESTY_GAP` (narrowed) |
 | `docs/assets/` (dash.gif, asynqmon-*.png, …) | **Inherited from upstream**, not re-captured in the fork (Valkey) environment | `ARTIFACT_HONESTY_GAP` |
 | Asynqmon Web UI | External project, out of scope for this repo's verification | illustrative reference |
 
-**Gaps resolved since last check** (baseline 2026-06-07, first generation):
+**Gaps resolved since last check** (previous check: 2026-06-07 first generation; this run: 2026-06-07 regeneration #2):
 
-- ✅ All manual evidence now captured live in the fork environment (previously only upstream-inherited README assets existed)
-- ✅ `ISSUE_LOG.md` IL-R01 (CI triggers), IL-R02 (`go install` support), IL-R03 (rename stragglers) — their resolution makes this manual's install commands actually executable
-- ⏳ Still open: IL-003 (visual gap, first two rows above)
+- ✅ **`assets/*.txt` evidence files had never been committed** (manual links were dead) — this run adds 7 git-tracked assets; every evidence link now downloads
+- ✅ **First live fork-environment captures of the `asynq dash` TUI** (tmux capture-pane ×2: Queues main screen + Queue Summary) — the dash part of IL-003 narrows from "no capture at all" to "graphics layer only"
+- ✅ All numbers regenerated 2026-06-07 under the governed allocation; four surfaces (seed/CLI/dash/exporter) are mutually consistent
+- ⏳ Still open: IL-003 remainder (`docs/assets/` upstream media not re-shot; dash graphics layer)
 
 ---
 
