@@ -32,12 +32,14 @@ Review 文件的所有數據引用 `docs/manual/assets/*.txt`(由 `docs/manual/d
 
 | Gap | 狀態 | Code |
 |---|---|---|
-| `asynq dash` TUI 視覺 | 無頭環境未評估;feature card 以保守措辭呈現 | `DEMO_NOT_ASSESSED` |
+| `asynq dash` TUI 視覺 | **文字層已實擷**(tmux capture-pane,引用 manual assets);圖形層(色彩/游標)仍未評估 | `ARTIFACT_HONESTY_GAP`(範圍縮小) |
 | upstream 承襲的 `docs/assets/` 視覺素材 | 未在 fork 環境重攝,review 不引用它們作為 evidence | `ARTIFACT_HONESTY_GAP` |
 | 正式 review.md 裁決 | 不存在 → 全卡片 readiness `not_assessed` | claim cap 生效 |
 
-### Gaps resolved since last check(基線 2026-06-07,首次生成)
+### Gaps resolved since last check(上次:2026-06-07 首次生成;本次:2026-06-07 再生 #2)
 
-- ✅ review 文件存在且全部 evidence 來自 fork 環境真實輸出(此前無 review 文件)
-- ✅ 服務啟動走 registry 治理(Valkey 16381 + exporter 9876),非 ad-hoc
-- ⏳ open:同上表三項
+- ✅ dash TUI feature card 從 `static_placeholder / DEMO_NOT_ASSESSED` 升級為 live TUI text capture(引用 `docs/manual/assets/cli-dash-*.txt`)
+- ✅ review 引用的 manual assets 此前從未 commit(死連結)— 已隨 manual 再生 #2 補齊
+- ✅ governance delta 反映 PR #9(govulncheck pre-push hook、`gh pr create --repo` 鐵則 / IL-R04)
+- 首次生成基線:review 文件存在且全部 evidence 來自 fork 環境真實輸出;服務啟動走 registry 治理(Valkey 16381 + exporter 9876)
+- ⏳ open:上表後兩項 + dash 圖形層
