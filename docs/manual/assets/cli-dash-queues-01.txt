@@ -1,0 +1,30 @@
+=== Queues ===
+
+critical |▇ 1
+default  | 0
+low      |▇ 1
+
+active=▇ pending=▇ aggregating=▇ scheduled=▇ retry=▇ archived=▇ completed=▇
+
+Queue        State     Size     Latency     MemoryUsage     Processed     Failed     ErrorRate
+critical     RUN          1          0s           488 B             4          1          0.25
+default      RUN          0          0s             0 B             2          0          0.00
+low          RUN          1          0s           448 B             1          0          0.00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?>: Help    <Ctrl+C>: Exit

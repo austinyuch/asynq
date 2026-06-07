@@ -47,14 +47,15 @@
 <div class="layout">
 <nav>
   <h1>Asynq 使用手冊</h1>
-  <div class="ver">team fork:austinyuch/asynq<br>v0.26.0-team.1 · 2026-06-07</div>
+  <div class="ver">team fork:austinyuch/asynq<br>v0.26.0-team.1 · 2026-06-07(再生 #2)</div>
   <a href="#intro">1. 系統簡介</a>
   <a href="#start">2. Getting Started</a>
   <a href="#flow-a">3. 流程 A:Enqueue 與 Worker</a>
   <a href="#flow-b">4. 流程 B:狀態生命週期</a>
   <a href="#flow-c">5. 流程 C:CLI 維運</a>
-  <a href="#flow-d">6. 流程 D:Prometheus 監控</a>
-  <a href="#gaps">7. 視覺素材 Gap 盤點</a>
+  <a href="#flow-d">6. 流程 D:互動 Dashboard</a>
+  <a href="#flow-e">7. 流程 E:Prometheus 監控</a>
+  <a href="#gaps">8. 視覺素材 Gap 盤點</a>
   <div class="lang">語言:<a href="../en/index.html">EN</a> <b>繁中</b> · <a href="../zh-tw/index.md">Markdown 版</a></div>
 </nav>
 <main>
@@ -108,10 +109,10 @@ mux.HandleFunc("email:welcome", handleWelcomeEmail)
 srv.Run(mux)</code></pre>
 <p>真實執行結果(節錄):</p>
 <pre><code>== 1. Enqueue real workloads =====================================
-  enqueued id=b4221de8 type=email:welcome    queue=critical state=pending
-  enqueued id=966c11ff type=report:generate  queue=low      state=scheduled
+  enqueued id=d93d6fc7 type=email:welcome    queue=critical state=pending
+  enqueued id=c5e3e65c type=report:generate  queue=low      state=scheduled
   duplicate rejected: cleanup:tmp -&gt; task already exists
-  enqueued id=61539754 type=billing:charge   queue=critical state=pending
+  enqueued id=c301e025 type=billing:charge   queue=critical state=pending
 
 == 2. Process with a real worker Server =========================
   processed email:welcome  user=1001 locale=zh-TW
@@ -141,7 +142,7 @@ stateDiagram-v2
   low               1         0         0        1         0          1
 
 == 4. Archived task detail (retry exhausted) =====================
-  id=61539754 type=billing:charge last_err="card declined" retried=0/0</code></pre>
+  id=c301e025 type=billing:charge last_err="card declined" retried=0/0</code></pre>
 <div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed</div>
 </div>
 
@@ -154,7 +155,7 @@ stateDiagram-v2
 <tr><td><code>asynq … task ls --queue critical --state archived</code></td><td>列出封存任務(含最後錯誤)</td><td><a href="../assets/cli-task-ls-archived-01.txt" download>下載</a></td></tr>
 </table>
 <p><code>stats</code> 真實輸出節錄:</p>
-<pre><code>Daily Stats 2026-06-06 UTC
+<pre><code>Daily Stats 2026-06-07 UTC
 processed  failed  error rate
 ---------  ------  ----------
 7          1       14.29%
@@ -162,16 +163,46 @@ processed  failed  error rate
 Redis Info
 version  uptime  connections  memory usage  peak memory usage
 -------  ------  -----------  ------------  -----------------
-7.2.4    0 days  2            1.76MB        1.77MB</code></pre>
+7.2.4    0 days  1            1.78MB        1.80MB</code></pre>
 <div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output(seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed</div>
 <div class="ok">💡 <b>Valkey 相容性證據</b>:<code>version 7.2.4</code> 是 Valkey 9.1.0 回報的 Redis 相容版本 — CLI 對 Valkey 後端完全照常工作。</div>
 <p>封存任務真實樣貌(<code>Last Error</code> 直接給出失敗原因,用於排錯):</p>
 <pre><code>ID                                    Type            Payload                Last Error
-61539754-…-7fc8a2cbf790               billing:charge  {"invoice":"INV-042"}  card declined</code></pre>
+c301e025-…-14036a48a049               billing:charge  {"invoice":"INV-042"}  card declined</code></pre>
 <p>常用後續:<code>asynq task run</code>(重派)、<code>asynq task delete</code>、<code>asynq queue pause</code>。</p>
 </div>
 
-<h2 id="flow-d">6. 流程 D:Prometheus 監控</h2>
+<h2 id="flow-d">6. 流程 D:互動 Dashboard(<code>asynq dash</code>)</h2>
+<div class="card">
+<p><b>情境</b>:維運人員要即時盯佇列深度、錯誤率,不想反覆敲 <code>stats</code>。</p>
+<pre><code>asynq --uri localhost:6379 --db 13 dash</code></pre>
+<p>主畫面真實擷取(tmux <code>capture-pane</code>,2026-06-07):</p>
+<pre><code>=== Queues ===
+
+critical |▇ 1
+default  | 0
+low      |▇ 1
+
+Queue        State     Size     Latency     MemoryUsage     Processed     Failed     ErrorRate
+critical     RUN          1          0s           488 B             4          1          0.25
+default      RUN          0          0s             0 B             2          0          0.00
+low          RUN          1          0s           448 B             1          0          0.00</code></pre>
+<p>選定佇列按 Enter 進入 Queue Summary:</p>
+<pre><code>=== Queue Summary ===
+
+Name      critical
+Size      1
+Latency   0s
+MemUsage  488 B
+
+=== Tasks ===
+
+Active:0    Pending:0    Aggregating:0    Scheduled:0    Retry:0    Archived:1    Completed:0</code></pre>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live TUI text capture(tmux capture-pane,seeded demo data)· <b>Coverage Tier:</b> full-integration(section-level,文字內容)· <b>Readiness State:</b> not_assessed · <a href="../assets/cli-dash-queues-01.txt" download>下載主畫面</a> <a href="../assets/cli-dash-queue-detail-01.txt" download>下載 Queue Summary</a></div>
+<div class="alert">⚠️ 此為 TUI 的<b>文字層</b>真實擷取:數據與排版皆為 dash 實際輸出;色彩/游標等圖形呈現不在擷取範圍(<code>ARTIFACT_HONESTY_GAP</code> 範圍縮小,見第 8 節)。</div>
+</div>
+
+<h2 id="flow-e">7. 流程 E:Prometheus 監控</h2>
 <div class="card">
 <pre><code>go run ./tools/metrics_exporter -redis-addr=localhost:6379 -redis-db=13 -port=9876
 curl -s localhost:9876/metrics | grep '^asynq_'</code></pre>
@@ -181,21 +212,22 @@ asynq_queue_latency_seconds{queue="default"} 0
 asynq_tasks_enqueued_total{queue="critical",state="archived"} 1
 asynq_queue_memory_usage_approx_bytes{queue="critical"} 488</code></pre>
 <div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live HTTP payload(<code>GET /metrics</code>)· <b>Coverage Tier:</b> full-integration(section-level)· <b>Readiness State:</b> not_assessed · <a href="../assets/monitoring-metrics-curl-01.txt" download>下載完整 payload</a></div>
-<p><code>archived=1</code> 與流程 B 的 Inspector、流程 C 的 CLI 輸出<b>三方一致</b> — 同一份 demo 資料貫穿全部 surface。</p>
+<p><code>archived=1</code> 與流程 B 的 Inspector、流程 C 的 CLI、流程 D 的 dash 畫面<b>四方一致</b> — 同一份 demo 資料貫穿全部 surface。</p>
 </div>
 
-<h2 id="gaps">7. 視覺素材 Gap 盤點</h2>
+<h2 id="gaps">8. 視覺素材 Gap 盤點</h2>
 <div class="card">
 <table>
 <tr><th>項目</th><th>狀態</th><th>Code</th></tr>
-<tr><td><code>asynq dash</code> 互動 TUI</td><td>無頭環境無法擷取 TUI 畫面;功能以 CLI 文字輸出佐證,TUI 視覺未評估</td><td><span class="tag na">DEMO_NOT_ASSESSED</span></td></tr>
+<tr><td><code>asynq dash</code> 互動 TUI</td><td><b>文字層已實擷</b>(tmux capture-pane,見流程 D);色彩/游標等圖形呈現仍未評估</td><td><span class="tag gapt">ARTIFACT_HONESTY_GAP</span>(範圍縮小)</td></tr>
 <tr><td><code>docs/assets/</code>(dash.gif、asynqmon-*.png)</td><td><b>承襲 upstream 素材</b>,非 fork 環境(Valkey)重攝;僅為示意</td><td><span class="tag gapt">ARTIFACT_HONESTY_GAP</span></td></tr>
 <tr><td>Asynqmon Web UI</td><td>外部專案,不在本 repo 驗證範圍</td><td><span class="tag na">illustrative reference</span></td></tr>
 </table>
-<div class="ok"><b>Gaps resolved since last check</b>(基線 2026-06-07,首次生成):<br>
-✅ 手冊 evidence 全面改為 fork 環境真實輸出(先前僅有承襲 upstream 的素材)<br>
-✅ ISSUE_LOG IL-R01(CI 觸發)、IL-R02(<code>go install</code>)、IL-R03(rename 漏網)已解 — 本手冊安裝指令因此真實可執行<br>
-⏳ 仍 open:IL-003(visual 缺口,上表前兩列)</div>
+<div class="ok"><b>Gaps resolved since last check</b>(上次 check:2026-06-07 首次生成;本次:2026-06-07 再生 #2):<br>
+✅ <b><code>assets/*.txt</code> evidence 檔此前從未 commit</b>(手冊連結為死連結)— 本次補齊 7 個 git-tracked assets,所有下載連結可用<br>
+✅ <b><code>asynq dash</code> TUI 首次取得 fork 環境真實擷取</b>(tmux ×2:Queues 主畫面 + Queue Summary)— IL-003 的 dash 部分縮小為「僅圖形層未擷取」<br>
+✅ 全部數據以 2026-06-07 governed allocation 重產,四個 surface(seed/CLI/dash/exporter)互相一致<br>
+⏳ 仍 open:IL-003 殘餘(<code>docs/assets/</code> upstream 素材未重攝;dash 圖形層)</div>
 <div class="gap">⚠️ 本頁 Mermaid 圖由 CDN 渲染;離線開啟時生命週期圖不顯示(文字內容不受影響)。Markdown 版(<a href="index.md">index.md</a>)為純文字備查來源。</div>
 </div>
 

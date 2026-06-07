@@ -47,14 +47,15 @@
 <div class="layout">
 <nav>
   <h1>Asynq User Manual</h1>
-  <div class="ver">team fork: austinyuch/asynq<br>v0.26.0-team.1 · 2026-06-07</div>
+  <div class="ver">team fork: austinyuch/asynq<br>v0.26.0-team.1 · 2026-06-07 (regen #2)</div>
   <a href="#intro">1. Overview</a>
   <a href="#start">2. Getting Started</a>
   <a href="#flow-a">3. Flow A: Enqueue &amp; Worker</a>
   <a href="#flow-b">4. Flow B: Task Lifecycle</a>
   <a href="#flow-c">5. Flow C: CLI Operations</a>
-  <a href="#flow-d">6. Flow D: Prometheus Monitoring</a>
-  <a href="#gaps">7. Visual Gap Inventory</a>
+  <a href="#flow-d">6. Flow D: Interactive Dashboard</a>
+  <a href="#flow-e">7. Flow E: Prometheus Monitoring</a>
+  <a href="#gaps">8. Visual Gap Inventory</a>
   <div class="lang">Language: <b>EN</b> <a href="../zh-tw/index.html">繁中</a> · <a href="../en/index.md">Markdown source</a></div>
 </nav>
 <main>
@@ -108,10 +109,10 @@ mux.HandleFunc("email:welcome", handleWelcomeEmail)
 srv.Run(mux)</code></pre>
 <p>Real run (excerpt):</p>
 <pre><code>== 1. Enqueue real workloads =====================================
-  enqueued id=b4221de8 type=email:welcome    queue=critical state=pending
-  enqueued id=966c11ff type=report:generate  queue=low      state=scheduled
+  enqueued id=d93d6fc7 type=email:welcome    queue=critical state=pending
+  enqueued id=c5e3e65c type=report:generate  queue=low      state=scheduled
   duplicate rejected: cleanup:tmp -&gt; task already exists
-  enqueued id=61539754 type=billing:charge   queue=critical state=pending
+  enqueued id=c301e025 type=billing:charge   queue=critical state=pending
 
 == 2. Process with a real worker Server =========================
   processed email:welcome  user=1001 locale=zh-TW
@@ -141,7 +142,7 @@ stateDiagram-v2
   low               1         0         0        1         0          1
 
 == 4. Archived task detail (retry exhausted) =====================
-  id=61539754 type=billing:charge last_err="card declined" retried=0/0</code></pre>
+  id=c301e025 type=billing:charge last_err="card declined" retried=0/0</code></pre>
 <div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output (seeded demo data) · <b>Coverage Tier:</b> full-integration (section-level) · <b>Readiness State:</b> not_assessed</div>
 </div>
 
@@ -154,7 +155,7 @@ stateDiagram-v2
 <tr><td><code>asynq … task ls --queue critical --state archived</code></td><td>List archived tasks with last error</td><td><a href="../assets/cli-task-ls-archived-01.txt" download>download</a></td></tr>
 </table>
 <p><code>stats</code> excerpt:</p>
-<pre><code>Daily Stats 2026-06-06 UTC
+<pre><code>Daily Stats 2026-06-07 UTC
 processed  failed  error rate
 ---------  ------  ----------
 7          1       14.29%
@@ -162,16 +163,46 @@ processed  failed  error rate
 Redis Info
 version  uptime  connections  memory usage  peak memory usage
 -------  ------  -----------  ------------  -----------------
-7.2.4    0 days  2            1.76MB        1.77MB</code></pre>
+7.2.4    0 days  1            1.78MB        1.80MB</code></pre>
 <div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live command output (seeded demo data) · <b>Coverage Tier:</b> full-integration (section-level) · <b>Readiness State:</b> not_assessed</div>
 <div class="ok">💡 <b>Valkey compatibility evidence</b>: <code>version 7.2.4</code> is Valkey 9.1.0's reported Redis-compat version — the CLI works against a Valkey backend unchanged.</div>
 <p>Real archived task (the <code>Last Error</code> column gives the failure cause for debugging):</p>
 <pre><code>ID                                    Type            Payload                Last Error
-61539754-…-7fc8a2cbf790               billing:charge  {"invoice":"INV-042"}  card declined</code></pre>
+c301e025-…-14036a48a049               billing:charge  {"invoice":"INV-042"}  card declined</code></pre>
 <p>Follow-ups: <code>asynq task run</code> (requeue), <code>asynq task delete</code>, <code>asynq queue pause</code>.</p>
 </div>
 
-<h2 id="flow-d">6. Flow D: Prometheus Monitoring</h2>
+<h2 id="flow-d">6. Flow D: Interactive Dashboard (<code>asynq dash</code>)</h2>
+<div class="card">
+<p><b>Scenario</b>: operators want a live view of queue depth and error rate without re-running <code>stats</code>.</p>
+<pre><code>asynq --uri localhost:6379 --db 13 dash</code></pre>
+<p>Main screen, captured live via tmux <code>capture-pane</code> (2026-06-07):</p>
+<pre><code>=== Queues ===
+
+critical |▇ 1
+default  | 0
+low      |▇ 1
+
+Queue        State     Size     Latency     MemoryUsage     Processed     Failed     ErrorRate
+critical     RUN          1          0s           488 B             4          1          0.25
+default      RUN          0          0s             0 B             2          0          0.00
+low          RUN          1          0s           448 B             1          0          0.00</code></pre>
+<p>Select a queue and press Enter for the Queue Summary:</p>
+<pre><code>=== Queue Summary ===
+
+Name      critical
+Size      1
+Latency   0s
+MemUsage  488 B
+
+=== Tasks ===
+
+Active:0    Pending:0    Aggregating:0    Scheduled:0    Retry:0    Archived:1    Completed:0</code></pre>
+<div class="cap"><span class="tag full">full-integration</span><b>Evidence Source:</b> live TUI text capture (tmux capture-pane, seeded demo data) · <b>Coverage Tier:</b> full-integration (section-level, text content) · <b>Readiness State:</b> not_assessed · <a href="../assets/cli-dash-queues-01.txt" download>download main screen</a> <a href="../assets/cli-dash-queue-detail-01.txt" download>download Queue Summary</a></div>
+<div class="alert">⚠️ This captures the TUI's <b>text layer</b>: numbers and layout are real dash output; colors/cursor rendering are outside the capture scope (<code>ARTIFACT_HONESTY_GAP</code> narrowed, see section 8).</div>
+</div>
+
+<h2 id="flow-e">7. Flow E: Prometheus Monitoring</h2>
 <div class="card">
 <pre><code>go run ./tools/metrics_exporter -redis-addr=localhost:6379 -redis-db=13 -port=9876
 curl -s localhost:9876/metrics | grep '^asynq_'</code></pre>
@@ -184,18 +215,19 @@ asynq_queue_memory_usage_approx_bytes{queue="critical"} 488</code></pre>
 <p><code>archived=1</code> matches Flow B's Inspector stats and Flow C's CLI output — <b>three-way consistency</b> from one seeded dataset across every surface.</p>
 </div>
 
-<h2 id="gaps">7. Visual Evidence Gap Inventory</h2>
+<h2 id="gaps">8. Visual Evidence Gap Inventory</h2>
 <div class="card">
 <table>
 <tr><th>Item</th><th>Status</th><th>Code</th></tr>
-<tr><td><code>asynq dash</code> 互動 TUI</td><td>Headless environment — TUI cannot be captured; functionality evidenced by CLI text output, TUI visuals not assessed</td><td><span class="tag na">DEMO_NOT_ASSESSED</span></td></tr>
+<tr><td><code>asynq dash</code> interactive TUI</td><td><b>Text layer now captured live</b> (tmux capture-pane, Flow D); color/graphics rendering still not assessed</td><td><span class="tag gapt">ARTIFACT_HONESTY_GAP</span> (narrowed)</td></tr>
 <tr><td><code>docs/assets/</code>(dash.gif、asynqmon-*.png)</td><td><b>Inherited from upstream</b>, not re-captured in the fork (Valkey) environment; illustrative only</td><td><span class="tag gapt">ARTIFACT_HONESTY_GAP</span></td></tr>
 <tr><td>Asynqmon Web UI</td><td>External project, out of scope for this repo's verification</td><td><span class="tag na">illustrative reference</span></td></tr>
 </table>
-<div class="ok"><b>Gaps resolved since last check</b> (baseline 2026-06-07, first generation):<br>
-✅ All manual evidence now captured live in the fork environment (previously only upstream-inherited assets)<br>
-✅ ISSUE_LOG IL-R01 (CI triggers), IL-R02 (<code>go install</code>), IL-R03 (rename stragglers) resolved — which is what makes this manual's install commands actually executable<br>
-⏳ Still open: IL-003 (visual gap, first two rows above)</div>
+<div class="ok"><b>Gaps resolved since last check</b> (previous check: 2026-06-07 first generation; this run: 2026-06-07 regen #2):<br>
+✅ <b><code>assets/*.txt</code> evidence files had never been committed</b> (manual links were dead) — this run adds 7 git-tracked assets; every download link now works<br>
+✅ <b>First live fork-environment captures of the <code>asynq dash</code> TUI</b> (tmux ×2: Queues main screen + Queue Summary) — IL-003's dash part narrows to "graphics layer only"<br>
+✅ All numbers regenerated 2026-06-07 under the governed allocation; four surfaces (seed/CLI/dash/exporter) mutually consistent<br>
+⏳ Still open: IL-003 remainder (<code>docs/assets/</code> upstream media not re-shot; dash graphics layer)</div>
 <div class="gap">⚠️ The Mermaid diagram renders via CDN; offline, the lifecycle diagram will not display (text content unaffected). The Markdown version (<a href="index.md">index.md</a>) is the plain-text source of record.</div>
 </div>
 
