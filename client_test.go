@@ -632,7 +632,8 @@ func TestClientEnqueueWithGroupOption(t *testing.T) {
 		for qname, groups := range tc.wantGroups {
 			for groupKey, want := range groups {
 				got := h.GetGroupEntries(t, r, qname, groupKey)
-				if diff := cmp.Diff(want, got, h.IgnoreIDOpt, cmpopts.EquateEmpty()); diff != "" {
+				zScoreCmpOpt := h.EquateInt64Approx(2) // allow for 2 seconds margin in Z.Score
+				if diff := cmp.Diff(want, got, h.IgnoreIDOpt, cmpopts.EquateEmpty(), zScoreCmpOpt); diff != "" {
 					t.Errorf("%s;\nmismatch found in %q; (-want,+got)\n%s", tc.desc, base.GroupKey(qname, groupKey), diff)
 				}
 			}
@@ -1720,7 +1721,8 @@ func TestClientEnqueueWithHeadersAndGroup(t *testing.T) {
 		for qname, groups := range tc.wantGroups {
 			for groupKey, want := range groups {
 				got := h.GetGroupEntries(t, r, qname, groupKey)
-				if diff := cmp.Diff(want, got, h.IgnoreIDOpt, cmpopts.EquateEmpty()); diff != "" {
+				zScoreCmpOpt := h.EquateInt64Approx(2) // allow for 2 seconds margin in Z.Score
+				if diff := cmp.Diff(want, got, h.IgnoreIDOpt, cmpopts.EquateEmpty(), zScoreCmpOpt); diff != "" {
 					t.Errorf("%s;\nmismatch found in %q; (-want,+got)\n%s", tc.desc, base.GroupKey(qname, groupKey), diff)
 				}
 			}

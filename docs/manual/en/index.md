@@ -219,7 +219,7 @@ The archived counter matches Flow B's Inspector stats, Flow C's CLI output, and 
 |---|---|---|
 | `asynq dash` interactive TUI | **Text + graphics (color) layers both captured live** (tmux capture-pane -e → PNG, Flow D) | resolved (2026-06-07 regen #3) |
 | 9 unreferenced files in `docs/assets/` (asynq_*.gif, asynqmon-*.png, overview/task-queue/cluster.png, demo.gif) | **Upstream legacy, zero references**; retained for clean upstream syncs, never used as evidence | legacy (documented disposition) |
-| `docs/assets/dash.gif` | README's only repo-local visual (upstream animated demo); the fork's authoritative visual evidence is Flow D's PNG/txt in this manual | upstream demo (fork evidence established) |
+| `docs/assets/dash.gif` | **Re-shot in the fork environment** (6 frames of real dash navigation: Queues → select → Queue Summary → back; Valkey 9.1.0, seeded data) | resolved (fork re-shoot) |
 | Asynqmon Web UI | External project, out of scope for this repo's verification | illustrative reference |
 
 **Gaps resolved since last check** (this run: 2026-06-07 regen #3 / gap closeout):

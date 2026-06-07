@@ -51,6 +51,9 @@ tmux capture-pane -t asynqdash -e -p > /tmp/dash-detail.ansi
 tmux kill-session -t asynqdash
 # 4b. ANSI → PNG:SGR→HTML 轉換(自寫小工具或 ansi2html)+ Playwright deviceScaleFactor:2 截圖
 #     輸出 docs/manual/assets/cli-dash-*.png;PNG 外框(titlebar)屬呈現性質,需在 evidence 揭露
+# 4c. dash.gif fork 重攝(docs/assets/dash.gif,README 引用):
+#     dash --refresh 2s 起 tmux,依導覽序列(Down/Enter/Down/Escape/…)擷取 6 個 -e frames
+#     → 各自渲染 PNG(deviceScaleFactor:1)→ ffmpeg -framerate 0.8 + palettegen 組 gif
 
 # 5. 重寫 docs/manual/{zh-tw,en}/index.{md,html}(四象限輸出,引用上述 assets)
 # 6. 結束後 release registry instance
@@ -70,7 +73,7 @@ tmux kill-session -t asynqdash
 |---|---|---|
 | `asynq dash` TUI 畫面 | **文字層 + 圖形(色彩)層皆已實擷**(再生命令第 4/4b 步) | resolved(SPEC-008) |
 | `docs/assets/` 9 個未引用檔 | upstream 歷史遺留、零引用;保留利於 sync,不作 evidence | legacy(documented) |
-| `docs/assets/dash.gif` | README 唯一 repo-local 視覺(upstream 動畫示意);fork 權威視覺在 manual 流程 D | upstream demo |
+| `docs/assets/dash.gif` | **已以 fork 環境重攝**(6 frames 真實導覽,再生命令 4c 步) | resolved(fork re-shoot) |
 | Asynqmon Web UI | 外部專案,不在本 repo 範圍 | 手冊以外部工具引用 |
 
 ### Gaps resolved since last check

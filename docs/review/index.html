@@ -175,12 +175,15 @@ flowchart LR
 <li><b>IL-001 結案</b>:<code>make proto</code> 重生 pb.go,descriptor austinyuch path,全套測試綠(SPEC-008)</li>
 <li><b>IL-003 結案</b>:dash 圖形層 ANSI→PNG 實擷 + <code>docs/assets/</code> 逐檔 disposition(SPEC-008)</li>
 <li><b>review.md 裁決機制落地</b>:首份 runtime-backed verdict(SPEC-008),本頁 readiness 自此有權威來源</li>
+<li><b>Cluster mode 首次驗證</b>:3-node Valkey 9.1.0 cluster,root 公開 API 全套綠(209.96s)+ x/rate 綠;rdb 原始層 5 例外已定性(IL-004)</li>
+<li><b>dash.gif fork 重攝</b>:6 frames 真實導覽動畫取代 upstream 素材</li>
+<li><b>CI flake 修復</b>:client_test Z.Score 精確比較跨秒爆 → EquateInt64Approx(2),×3 驗證</li>
 <li>較早基線:IL-R01(CI 觸發)、IL-R02(go install)、IL-R03(rename 漏網)、evidence 從無到全真實</li>
 </ul></div>
 <div class="card"><h3>⏳ 待解決(severity)</h3>
 <ul>
-<li><b>Low</b>:Redis Cluster mode 未在 fork 環境驗證(裁決明列 not_assessed;README 既有警告維持)</li>
-<li><b>Low</b>:`docs/assets/dash.gif` 仍為 upstream 動畫(README 示意用);fork 權威視覺已在 manual 流程 D</li>
+<li><b>Low</b>:cluster mode 下 `internal/rdb` 5 個 ID-conflict 測試 CROSSSLOT(空 Queue 測試建構痕跡,IL-004;公開 API 層 cluster 全綠)</li>
+
 <li><b>Low</b>:review.md 裁決與 commit 範圍綁定(main@9373c92 起);重大程式碼變動後需重跑權威 gate 再引用</li>
 </ul></div>
 </div>
@@ -189,7 +192,7 @@ flowchart LR
 <ul class="timeline">
 <li><b>已完成(2026-06-07)</b>:hardening → rename → 治理 → release train v0.26.0-team.1 → 文件(manual + review)→ govulncheck hook(PR #9)→ 文件再生 #2 → <b>gap closeout(SPEC-008:IL-001/IL-003 結案 + 首份 review.md 裁決)</b></li>
 <li><b>持續</b>:upstream 有更新時走 upstream-sync pipeline(目前 0 behind);sync 後出 v0.26.x-team.N</li>
-<li><b>候選</b>(NEXT_STEPS hint):upstream sync 週期執行;Cluster mode 驗證(若有需求)</li>
+<li><b>候選</b>(NEXT_STEPS hint):upstream sync 週期執行;IL-004 可考慮回饋 upstream(rdb 測試補 Queue 欄位)</li>
 </ul>
 
 <footer>生成:2026-06-07(再生 #3 / gap closeout)· 版本基準 v0.26.0-team.1(main@45c2a2f 起算的 docs branch)· 來源:.agents/specs/*、FORK.md、docs/manual/assets/*(均 fork 環境真實擷取)· 再生方式:<a href="../REVIEW_GENERATION_GUIDE.md">docs/REVIEW_GENERATION_GUIDE.md</a></footer>

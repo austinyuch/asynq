@@ -18,7 +18,10 @@
 | `x/rate` semaphore | **PASS** | `go test -race ./...`(x module)綠,Valkey-backed |
 | 下游消費(`go get` / `go install`) | **PASS** | 消費端 e2e(2026-06-07,RTM R-02):`go get @v0.26.0-team.1` 編譯執行、`go install` → `asynq version 0.26.0` |
 | proto 重生(`make proto`,IL-001) | **PASS** | descriptor `hibiken`→0 / `austinyuch`→1;重生後全套測試綠 |
-| Redis Cluster mode | **not_assessed** | fork 環境僅驗證 standalone;README 既有 Lua/cluster 相容性警告維持 |
+| dash.gif(README 視覺) | **PASS** | fork 環境重攝:6 frames 真實導覽(Queues→選列→Queue Summary→返回),Valkey 9.1.0 + seed 資料 |
+| CI flake:`TestClientEnqueue*` Z.Score 精確比較跨秒爆 | **PASS(fixed)** | `client_test.go` 兩處加 `h.EquateInt64Approx(2)`(對齊 inspect_test idiom);`-count=3` 驗證綠 |
+| Redis Cluster mode(公開 API 層) | **PASS** | root 全套 `go test -race -redis_cluster` 綠(209.96s)+ `x/rate` 綠;3-node Valkey 9.1.0 cluster(governed instance `asynq-test-valkey-cluster`) |
+| Redis Cluster mode(`internal/rdb` 原始層) | **CONDITIONAL** | 5 個 `*TaskIdConflictError` 測試 CROSSSLOT fail — 測試直接構造空 `Queue` 的 TaskMessage,產生空 hash tag `{}`(cluster 規範中不生效);公開 API 必設非空 queue,不會踩到此路徑。README 的 Lua/cluster 警告維持 |
 | Asynqmon Web UI | **out_of_scope** | 外部專案,不在本 repo 驗證範圍 |
 
 ## 裁決邊界(claim cap 仍適用之處)

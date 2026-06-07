@@ -239,7 +239,7 @@ asynq_queue_memory_usage_approx_bytes{queue="critical"} 488
 |---|---|---|
 | `asynq dash` 互動 TUI | **文字層 + 圖形(色彩)層皆已實擷**(tmux capture-pane -e → PNG,見流程 D) | resolved(2026-06-07 再生 #3) |
 | `docs/assets/` 內 9 個未引用檔(asynq_*.gif、asynqmon-*.png、overview/task-queue/cluster.png、demo.gif) | **upstream 歷史遺留、零引用**;保留以利 upstream sync 乾淨,不作為任何 evidence | legacy(documented disposition) |
-| `docs/assets/dash.gif` | README 唯一 repo-local 視覺(upstream 動畫示意);fork 環境的權威視覺證據為本手冊流程 D 的 PNG/txt | upstream demo(fork 證據已另立) |
+| `docs/assets/dash.gif` | **已以 fork 環境重攝**(6 frames 真實 dash 導覽:Queues → 選列 → Queue Summary → 返回;Valkey 9.1.0,seed 資料) | resolved(fork re-shoot) |
 | Asynqmon Web UI | 外部專案([hibiken/asynqmon](https://github.com/hibiken/asynqmon)),不在本 repo 驗證範圍 | illustrative reference |
 
 **Gaps resolved since last check**(本次:2026-06-07 再生 #3 / gap closeout):
