@@ -13,3 +13,4 @@
 | R-07 | 「回到 .agents 為主,skills/specs symlink,設定檔實體」 | SPEC-006 | cross-agents bridge | PR #6;`.claude/.kiro/.codex` symlinks 驗證解析、`settings.local.json` 實體未追蹤 |
 | R-08 | 「manual + review 文件,real data/API,gap 盤點」 | SPEC-007 | `docs/manual/`、`docs/review/` + 兩份 guide | 本 branch;證據見各文件「資料來源」節 |
 | R-09 | 「govulncheck 加入 pre-push hook」 | —(direct change,PR #9) | `githooks/pre-push`(root/x/tools 三 module)+ `core.hooksPath` 啟用法載於 FORK.md | PR #9 merge `45c2a2f`;hook 於 push 時實際觸發,三 module 均 No vulnerabilities found |
+| R-10 | 「fix them」(open gaps:IL-001、IL-003、review 裁決機制) | SPEC-008 | `make proto` 重生、dash ANSI→PNG 實擷、`docs/assets/` disposition、首份 review.md | SPEC-008 review.md(全套測試綠 + live captures);ISSUE_LOG IL-R05/R06 |
