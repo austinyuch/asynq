@@ -21,6 +21,7 @@ Agent 工作目錄採 `.agents/` 為 canonical source:`.claude/.kiro/.codex` 下
 
 ```bash
 for a in .claude .kiro .codex; do mkdir -p $a && ln -sfn ../.agents/skills $a/skills && ln -sfn ../.agents/specs $a/specs; done
+git config core.hooksPath githooks   # 啟用 pre-push govulncheck
 ```
 
 ## Intentional divergence from upstream
@@ -36,6 +37,7 @@ for a in .claude .kiro .codex; do mkdir -p $a && ln -sfn ../.agents/skills $a/sk
 | `server_test.go` | goleak 額外 ignore `maintnotifications.(*CircuitBreakerManager).cleanupLoop` | go-redis 9.20 新背景 goroutine |
 | Docs | README / CONTRIBUTING / tools README 提及 Valkey;import 範例改 fork path | 反映 fork 現況 |
 | 其他 | `AGENTS.md` 知識庫、`.agents/skills/upstream-sync/` | 團隊維運工具 |
+| Git hooks | `githooks/pre-push` 對 root / `x` / `tools` 各跑 `govulncheck ./...`;啟用:`git config core.hooksPath githooks`(per-clone,不入版控) | 驗證走 local,CI 精簡 |
 
 註:generated `internal/proto/asynq.pb.go` 的 raw descriptor 內仍含舊 go_package 字串(runtime 無影響);下次重新 protoc 時會自然更新。
 
