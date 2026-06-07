@@ -10,7 +10,7 @@
 | SPEC-004 | Release train v0.26.0-team.1(root / x / tools 三 tags + go install 支援) | ✅ completed (2026-06-07) | PR #3 #4;tags `v0.26.0-team.1`、`x/v0.1.0-team.1`、`tools/v0.26.0-team.1`;消費端 e2e 驗證(go get / go install) | `FORK.md` Release tags 表 |
 | SPEC-005 | CI 最小化 + main branch protection | ✅ completed (2026-06-07) | `cf30d82`(workflow)、protection API、PR #5 觸發驗證(`build` pass 27s) | `.github/workflows/build.yml` 註解 |
 | SPEC-006 | Cross-agents symlink bridge(`.agents/` canonical) | ✅ completed (2026-06-07) | `39a2ee5` PR #6 | `FORK.md` agent workspace 節 |
-| SPEC-007 | User manual + project review 文件生成 | 🔄 in progress | branch `docs/manual-review-generation` | `docs/MANUAL_GENERATION_GUIDE.md`、`docs/REVIEW_GENERATION_GUIDE.md` |
+| SPEC-007 | User manual + project review 文件生成 | ✅ completed (2026-06-07) | PR #7(13da155);headless 渲染驗證、evidence 全 live、claim cap 落實 | `docs/MANUAL_GENERATION_GUIDE.md`、`docs/REVIEW_GENERATION_GUIDE.md` |
 
 ## External contract 依賴
 

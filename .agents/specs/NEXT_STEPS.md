@@ -6,9 +6,8 @@
 
 | # | 項目 | 來源 | 條件 / 時機 |
 |---|---|---|---|
-| 1 | 完成 SPEC-007:manual(`docs/manual/`)與 review(`docs/review/`)文件生成 + 兩份 generation guide | 使用者要求 2026-06-07 | branch `docs/manual-review-generation`,PR 進 main |
-| 2 | 下次 upstream 有更新時執行 upstream-sync skill(`.agents/skills/upstream-sync/`) | SPEC-003 | 週期性檢查或 upstream release;目前 0 behind(base `785bb72`) |
-| 3 | 下次 release 時依 FORK.md 慣例打 `v0.26.x-team.N`(x/tools 視 require 變動跟進,先 root 後 x 後 tools) | SPEC-004 | 有新功能/sync 合入後 |
+| 1 | 下次 upstream 有更新時執行 upstream-sync skill(`.agents/skills/upstream-sync/`) | SPEC-003 | 週期性檢查或 upstream release;目前 0 behind(base `785bb72`) |
+| 2 | 下次 release 時依 FORK.md 慣例打 `v0.26.x-team.N`(x/tools 視 require 變動跟進,先 root 後 x 後 tools) | SPEC-004 | 有新功能/sync 合入後 |
 
 ## Parked(明確不做,除非條件改變)
 
