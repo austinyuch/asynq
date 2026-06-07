@@ -17,3 +17,4 @@
 | IL-R01 | 2026-06-07 | fork 的事件觸發 workflows 被 GitHub 抑制(`pull_request` 不產生 run,dispatch 可繞過,易誤判) | 使用者於 Actions 頁按 enable;PR #5 驗證 `build` pass |
 | IL-R02 | 2026-06-07 | `tools/go.mod` 含 replace 導致 `go install @tag` 不可用 | PR #4 移除 replace、require 真實 tags;`go install ...@tools/v0.26.0-team.1` e2e 驗證通過 |
 | IL-R03 | 2026-06-07 | rename 漏網:Makefile protoc `--go_opt=module`、README build badge、tools/AGENTS.md install 範例 | reapply script 新增 audit gate 抓出,PR #2 修復 |
+| IL-R04 | 2026-06-07 | fork 上 `gh pr create` 預設指向 upstream,曾誤開 hibiken/asynq#1143(已關閉留言) | PR #9:`--repo austinyuch/asynq` 鐵則寫入 AGENTS.md + upstream-sync SKILL.md「絕對不做」清單 |

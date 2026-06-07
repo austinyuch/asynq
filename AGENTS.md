@@ -49,6 +49,7 @@ asynq/
 - `make proto` regenerates `internal/proto/asynq.pb.go` from `internal/proto/asynq.proto`.
 - CLI config defaults live in `$HOME/.asynq.(yml|json)` and global Redis/TLS flag handling is centralized in `tools/asynq/cmd/root.go`.
 - `internal/base` owns Redis key construction and task state primitives; reuse it before adding new shared helpers.
+- `githooks/pre-push` runs `govulncheck ./...` across root/`x`/`tools`; enable per-clone with `git config core.hooksPath githooks`(詳見 `FORK.md` divergence 表).
 
 ## ANTI-PATTERNS (THIS PROJECT)
 - Do not assume root `go test ./...` covers `x/` or `tools/`.
