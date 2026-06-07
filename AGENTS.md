@@ -81,7 +81,8 @@ make lint
 | 文件 | 用途 |
 |---|---|
 | `FORK.md` | branch model(`main` 消費 / `master` 鏡像)、divergence 清單、release tags、sync log |
-| `.agents/specs/SPECS.md` | spec registry(SPEC-001~007,含證據連結) |
+| `.agents/specs/SPECS.md` | spec registry(SPEC-001~008,含證據連結) |
+| `.agents/specs/SPEC-008-gap-closeout/review.md` | **readiness 裁決權威**(首份 runtime-backed verdict;manual/review 的 Readiness State 沿用此處) |
 | `.agents/specs/NEXT_STEPS.md` | 唯一權威 handoff path |
 | `.agents/specs/ISSUE_LOG.md` | 未歸屬問題 + resolved 追溯 |
 | `.agents/specs/RTM.md` | 需求 → spec → 驗證證據 矩陣 |
