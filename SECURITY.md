@@ -14,6 +14,12 @@ their own import paths and are still covered by consumers' normal `govulncheck`
 runs — only this fork's **own code** is outside automated advisory coverage, and
 that gap is what this policy addresses.
 
+This file is the reporter-facing summary of the shared, canonical governance
+convention co-adopted by the consuming repos —
+`austinyuch/sandbox-station` › `.agents/specs/security-hardening/asynq-fork-security-convention.md`
+(mirrored by `ai-multi-agent-coordinator`). That document is the authoritative
+source for maintainers; if the two ever differ, the canonical convention wins.
+
 ## Reporting a vulnerability
 
 Please report security issues **privately** — do not open a public issue or PR
