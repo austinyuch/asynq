@@ -9,7 +9,8 @@
 
 ## Readiness Claim Cap(本專案的具體界線)
 
-- 本 repo 目前**沒有** `.agents/specs/**/review.md` 正式裁決 → 所有功能卡片 `Readiness State: not_assessed`
+- 裁決權威 = `.agents/specs/**/review.md`;**首份**:`SPEC-008-gap-closeout/review.md`(2026-06-07,runtime-backed)。功能卡片的 Readiness State 沿用裁決;未列入裁決範圍 → `not_assessed`
+- 裁決與 commit 範圍綁定;重大程式碼變動後應重跑裁決內的權威 gate 再引用
 - `SPECS.md` 的 ✅ completed 是 **governance 完成度**(有 PR/tag/e2e 證據),不是 live-demo readiness verdict;review 文件引用時必須標明這個區別
 - `NEXT_STEPS.md` / RTM 只能當 backlog/traceability hint,不可反推 readiness
 - 可以陳述的「事實級」evidence:消費端 `go get`/`go install` e2e 輸出、CI run pass、全套測試綠、dry-run eval verdict — 引用時附 Source Ref
@@ -32,12 +33,21 @@ Review 文件的所有數據引用 `docs/manual/assets/*.txt`(由 `docs/manual/d
 
 | Gap | 狀態 | Code |
 |---|---|---|
-| `asynq dash` TUI 視覺 | 無頭環境未評估;feature card 以保守措辭呈現 | `DEMO_NOT_ASSESSED` |
-| upstream 承襲的 `docs/assets/` 視覺素材 | 未在 fork 環境重攝,review 不引用它們作為 evidence | `ARTIFACT_HONESTY_GAP` |
-| 正式 review.md 裁決 | 不存在 → 全卡片 readiness `not_assessed` | claim cap 生效 |
+| `asynq dash` TUI 視覺 | 文字 + 圖形層皆實擷(引用 manual assets txt/png) | resolved(SPEC-008) |
+| `docs/assets/` upstream 素材 | 逐檔 disposition 完成(9 檔零引用 legacy、dash.gif upstream 示意) | documented |
+| 正式 review.md 裁決 | **已建立**:`SPEC-008-gap-closeout/review.md` | 裁決機制生效 |
+| Redis Cluster mode | 裁決明列 not_assessed | 殘餘(低) |
 
-### Gaps resolved since last check(基線 2026-06-07,首次生成)
+### Gaps resolved since last check(本次:2026-06-07 再生 #3 / gap closeout)
 
-- ✅ review 文件存在且全部 evidence 來自 fork 環境真實輸出(此前無 review 文件)
-- ✅ 服務啟動走 registry 治理(Valkey 16381 + exporter 9876),非 ad-hoc
-- ⏳ open:同上表三項
+- ✅ review.md 裁決機制落地(SPEC-008);本文件 readiness 自此有權威來源,claim cap 解除至裁決範圍
+- ✅ dash 卡片升級為文字+圖形層 live capture(含 PNG)
+- ✅ IL-001 / IL-003 結案反映於 Gap Analysis
+
+### 較早(2026-06-07 再生 #2)
+
+- ✅ dash TUI feature card 從 `static_placeholder / DEMO_NOT_ASSESSED` 升級為 live TUI text capture(引用 `docs/manual/assets/cli-dash-*.txt`)
+- ✅ review 引用的 manual assets 此前從未 commit(死連結)— 已隨 manual 再生 #2 補齊
+- ✅ governance delta 反映 PR #9(govulncheck pre-push hook、`gh pr create --repo` 鐵則 / IL-R04)
+- 首次生成基線:review 文件存在且全部 evidence 來自 fork 環境真實輸出;服務啟動走 registry 治理(Valkey 16381 + exporter 9876)
+- ⏳ open:上表後兩項 + dash 圖形層

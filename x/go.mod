@@ -1,8 +1,6 @@
 module github.com/austinyuch/asynq/x
 
-go 1.25.0
-
-toolchain go1.26.4
+go 1.26.4
 
 require (
 	github.com/austinyuch/asynq v0.26.0-team.1

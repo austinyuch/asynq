@@ -1,8 +1,8 @@
 # Asynq 使用手冊(team fork:austinyuch/asynq)
 
-> 版本基準:`v0.26.0-team.1`(2026-06-07)。本手冊所有輸出均為 **fork 環境真實擷取**(Valkey 9.1.0 + 真實 API),可由 [`docs/manual/demo/main.go`](../demo/main.go) 重現;再生方式見 [`docs/MANUAL_GENERATION_GUIDE.md`](../../MANUAL_GENERATION_GUIDE.md)。
+> 版本基準:`v0.26.0-team.1`(2026-06-07,第 2 次再生)。本手冊所有輸出均為 **fork 環境真實擷取**(Valkey 9.1.0 + 真實 API),可由 [`docs/manual/demo/main.go`](../demo/main.go) 重現;再生方式見 [`docs/MANUAL_GENERATION_GUIDE.md`](../../MANUAL_GENERATION_GUIDE.md)。
 >
-> 產品操作面分類:**Backend / Tool / CLI Dominant** — evidence 以命令輸出為主,非瀏覽器截圖。Readiness 裁決權威在 review 文件(見 `docs/review/`),本手冊不自行宣稱 production-ready。
+> 產品操作面分類:**Backend / Tool / CLI Dominant** — evidence 以命令輸出為主,非瀏覽器截圖。Readiness 裁決權威 = [`SPEC-008 review.md`](../../../.agents/specs/SPEC-008-gap-closeout/review.md)(2026-06-07 首份 runtime-backed 裁決);本手冊僅沿用其 verdict,不自行宣稱。
 
 ## 目錄
 
@@ -11,8 +11,9 @@
 3. [流程 A:Enqueue 與 Worker 處理](#3-流程-aenqueue-與-worker-處理)
 4. [流程 B:任務狀態生命週期](#4-流程-b任務狀態生命週期)
 5. [流程 C:CLI 查詢與維運](#5-流程-ccli-查詢與維運)
-6. [流程 D:Prometheus 監控](#6-流程-dprometheus-監控)
-7. [視覺素材 Gap 盤點](#7-視覺素材-gap-盤點)
+6. [流程 D:互動 Dashboard(`asynq dash`)](#6-流程-d互動-dashboardasynq-dash)
+7. [流程 E:Prometheus 監控](#7-流程-eprometheus-監控)
+8. [視覺素材 Gap 盤點](#8-視覺素材-gap-盤點)
 
 ---
 
@@ -79,17 +80,17 @@ srv.Run(mux)
 
 ```text
 == 1. Enqueue real workloads =====================================
-  enqueued id=b4221de8 type=email:welcome    queue=critical state=pending
-  enqueued id=966c11ff type=report:generate  queue=low      state=scheduled
+  enqueued id=d93d6fc7 type=email:welcome    queue=critical state=pending
+  enqueued id=c5e3e65c type=report:generate  queue=low      state=scheduled
   duplicate rejected: cleanup:tmp -> task already exists
-  enqueued id=61539754 type=billing:charge   queue=critical state=pending
+  enqueued id=c301e025 type=billing:charge   queue=critical state=pending
 
 == 2. Process with a real worker Server =========================
   processed email:welcome  user=1001 locale=zh-TW
   processed image:resize   width=640 src=s3://demo-bucket/cat.png
 ```
 
-> Evidence Source:live command output(seeded demo data)/ Coverage Tier:full-integration(section-level)/ Readiness State:not_assessed(無 review.md 裁決)
+> Evidence Source:live command output(seeded demo data)/ Coverage Tier:full-integration(section-level)/ Readiness State:**PASS**([SPEC-008 review.md](../../../.agents/specs/SPEC-008-gap-closeout/review.md))
 
 **重點解讀**:`Unique(time.Hour)` 的第二次 enqueue 被真實拒絕(`task already exists`);`ProcessIn(2h)` 的任務直接落在 `scheduled` 狀態。
 
@@ -117,10 +118,10 @@ stateDiagram-v2
   low               1         0         0        1         0          1
 
 == 4. Archived task detail (retry exhausted) =====================
-  id=61539754 type=billing:charge last_err="card declined" retried=0/0
+  id=c301e025 type=billing:charge last_err="card declined" retried=0/0
 ```
 
-> Evidence Source:live command output(seeded demo data)/ Coverage Tier:full-integration(section-level)/ Readiness State:not_assessed
+> Evidence Source:live command output(seeded demo data)/ Coverage Tier:full-integration(section-level)/ Readiness State:**PASS**([SPEC-008 review.md](../../../.agents/specs/SPEC-008-gap-closeout/review.md))
 
 ## 5. 流程 C:CLI 查詢與維運
 
@@ -135,7 +136,7 @@ stateDiagram-v2
 `stats` 真實輸出節錄:
 
 ```text
-Daily Stats 2026-06-06 UTC
+Daily Stats 2026-06-07 UTC
 processed  failed  error rate
 ---------  ------  ----------
 7          1       14.29%
@@ -143,10 +144,10 @@ processed  failed  error rate
 Redis Info
 version  uptime  connections  memory usage  peak memory usage
 -------  ------  -----------  ------------  -----------------
-7.2.4    0 days  2            1.76MB        1.77MB
+7.2.4    0 days  1            1.78MB        1.80MB
 ```
 
-> Evidence Source:live command output(seeded demo data)/ Coverage Tier:full-integration(section-level)/ Readiness State:not_assessed
+> Evidence Source:live command output(seeded demo data)/ Coverage Tier:full-integration(section-level)/ Readiness State:**PASS**([SPEC-008 review.md](../../../.agents/specs/SPEC-008-gap-closeout/review.md))
 >
 > 💡 **Valkey 相容性證據**:`version 7.2.4` 是 Valkey 9.1.0 回報的 Redis 相容版本 — CLI 對 Valkey 後端完全照常工作。
 
@@ -154,12 +155,62 @@ version  uptime  connections  memory usage  peak memory usage
 
 ```text
 ID                                    Type            Payload                Last Error
-61539754-d18e-4a93-8fa8-7fc8a2cbf790  billing:charge  {"invoice":"INV-042"}  card declined
+c301e025-d273-4d63-942e-14036a48a049  billing:charge  {"invoice":"INV-042"}  card declined
 ```
 
 常用後續操作:`asynq task run --queue critical --id <ID>`(重派)、`asynq task delete ...`(刪除)、`asynq queue pause <name>`(暫停消費)。
 
-## 6. 流程 D:Prometheus 監控
+## 6. 流程 D:互動 Dashboard(`asynq dash`)
+
+**情境**:維運人員要即時盯佇列深度、錯誤率,不想反覆敲 `stats`。
+
+```bash
+asynq --uri localhost:6379 --db 13 dash
+```
+
+主畫面真實擷取(tmux `capture-pane`,2026-06-07;含色彩之 PNG 由同次 ANSI 擷取渲染):
+
+![asynq dash — Queues 主畫面(fork 環境真實擷取)](../assets/cli-dash-queues-01.png)
+
+文字版(完整檔見 [`assets/cli-dash-queues-01.txt`](../assets/cli-dash-queues-01.txt)):
+
+```text
+=== Queues ===
+
+critical |▇ 1
+default  | 0
+low      |▇ 1
+
+Queue        State     Size     Latency     MemoryUsage     Processed     Failed     ErrorRate
+critical     RUN          1          0s           488 B             4          1          0.25
+default      RUN          0          0s             0 B             2          0          0.00
+low          RUN          1          0s           448 B             1          0          0.00
+```
+
+選定佇列按 Enter 進入 Queue Summary:
+
+![asynq dash — Queue Summary: critical](../assets/cli-dash-queue-detail-01.png)
+
+文字版(擷取見 [`assets/cli-dash-queue-detail-01.txt`](../assets/cli-dash-queue-detail-01.txt)):
+
+```text
+=== Queue Summary ===
+
+Name      critical
+Size      1
+Latency   0s
+MemUsage  488 B
+
+=== Tasks ===
+
+Active:0    Pending:0    Aggregating:0    Scheduled:0    Retry:0    Archived:1    Completed:0
+```
+
+> Evidence Source:live TUI capture(tmux capture-pane -e,seeded demo data;PNG 由真實 ANSI 色彩序列渲染)/ Coverage Tier:full-integration(section-level)/ Readiness State:**PASS**([SPEC-008 review.md](../../../.agents/specs/SPEC-008-gap-closeout/review.md))
+>
+> ⚠️ **呈現揭露**:PNG 中的文字、排版、色彩 100% 來自 dash 真實輸出的 ANSI 序列;外層視窗框(titlebar)為呈現性質的包裝,非 TUI 本體。
+
+## 7. 流程 E:Prometheus 監控
 
 **情境**:SRE 要把佇列深度、失敗率接進 Prometheus/Grafana。
 
@@ -178,23 +229,31 @@ asynq_tasks_enqueued_total{queue="critical",state="archived"} 1
 asynq_queue_memory_usage_approx_bytes{queue="critical"} 488
 ```
 
-> Evidence Source:live HTTP payload(`GET /metrics`)/ Coverage Tier:full-integration(section-level)/ Readiness State:not_assessed
+> Evidence Source:live HTTP payload(`GET /metrics`)/ Coverage Tier:full-integration(section-level)/ Readiness State:**PASS**([SPEC-008 review.md](../../../.agents/specs/SPEC-008-gap-closeout/review.md))
 
-注意 `asynq_tasks_enqueued_total{...state="archived"} 1` 與流程 B 的 Inspector 統計、流程 C 的 CLI 輸出**三方一致** — 同一份 demo 資料貫穿全部 surface。
+注意 `asynq_tasks_enqueued_total{...state="archived"} 1` 與流程 B 的 Inspector 統計、流程 C 的 CLI 輸出、流程 D 的 dash 畫面**四方一致** — 同一份 demo 資料貫穿全部 surface。
 
-## 7. 視覺素材 Gap 盤點
+## 8. 視覺素材 Gap 盤點
 
 | 項目 | 狀態 | Code |
 |---|---|---|
-| `asynq dash` 互動 TUI | 本手冊產生於無頭環境,無法擷取 TUI 畫面;功能以 CLI 文字輸出佐證,TUI 視覺**未評估** | `DEMO_NOT_ASSESSED` |
-| `docs/assets/`(dash.gif、asynqmon-*.png 等) | **承襲 upstream 的素材**,非 fork 環境(Valkey)重攝;README 引用它們僅為示意 | `ARTIFACT_HONESTY_GAP` |
+| `asynq dash` 互動 TUI | **文字層 + 圖形(色彩)層皆已實擷**(tmux capture-pane -e → PNG,見流程 D) | resolved(2026-06-07 再生 #3) |
+| `docs/assets/` 內 9 個未引用檔(asynq_*.gif、asynqmon-*.png、overview/task-queue/cluster.png、demo.gif) | **upstream 歷史遺留、零引用**;保留以利 upstream sync 乾淨,不作為任何 evidence | legacy(documented disposition) |
+| `docs/assets/dash.gif` | **已以 fork 環境重攝**(6 frames 真實 dash 導覽:Queues → 選列 → Queue Summary → 返回;Valkey 9.1.0,seed 資料) | resolved(fork re-shoot) |
 | Asynqmon Web UI | 外部專案([hibiken/asynqmon](https://github.com/hibiken/asynqmon)),不在本 repo 驗證範圍 | illustrative reference |
 
-**Gaps resolved since last check**(基線 2026-06-07,首次生成):
+**Gaps resolved since last check**(本次:2026-06-07 再生 #3 / gap closeout):
 
-- ✅ 手冊 evidence 全面改為 fork 環境真實輸出(先前僅有承襲 upstream 的 README 素材)
-- ✅ `ISSUE_LOG.md` IL-R01(CI 事件觸發)、IL-R02(`go install` 支援)、IL-R03(rename 漏網)— 解決過程使本手冊的安裝指令成為真實可執行
-- ⏳ 仍 open:IL-003(visual 缺口,即上表前兩列)
+- ✅ **dash TUI 圖形層**:以 `tmux capture-pane -e` 取得真實 ANSI 色彩序列並渲染為 PNG ×2 — IL-003 的 dash 部分完全解決
+- ✅ **`docs/assets/` 逐檔 disposition**:9 檔零引用(legacy,保留利於 sync)、`dash.gif` 為 README upstream 動畫示意(fork 權威視覺在本手冊)— IL-003 結案
+- ✅ `internal/proto/asynq.pb.go` 殘留舊 go_package 字串(IL-001)→ `make proto` 重生,descriptor 已為 austinyuch path
+
+**較早(2026-06-07 再生 #2)**:
+
+- ✅ **`assets/*.txt` evidence 檔案此前從未 commit**(手冊內連結為死連結)— 本次補齊 7 個 git-tracked assets,手冊連結全部可下載
+- ✅ **`asynq dash` TUI 首次取得 fork 環境真實擷取**(tmux capture-pane ×2:Queues 主畫面 + Queue Summary)— IL-003 的 dash 部分由「完全無擷取」縮小為「僅圖形層未擷取」
+- ✅ 全部數據以 2026-06-07 governed allocation 重新產生,四個 surface(seed/CLI/dash/exporter)數據互相一致
+- ⏳ 仍 open:IL-003 殘餘(`docs/assets/` upstream 素材未重攝;dash 圖形層)
 
 ---
 
