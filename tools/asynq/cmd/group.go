@@ -15,7 +15,7 @@ func init() {
 	rootCmd.AddCommand(groupCmd)
 	groupCmd.AddCommand(groupListCmd)
 	groupListCmd.Flags().StringP("queue", "q", "", "queue to inspect")
-	groupListCmd.MarkFlagRequired("queue")
+	_ = groupListCmd.MarkFlagRequired("queue")
 }
 
 var groupCmd = &cobra.Command{

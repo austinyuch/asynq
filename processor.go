@@ -181,7 +181,9 @@ func (p *processor) exec() {
 			// Sleep to avoid slamming redis and let scheduler move tasks into queues.
 			// Note: We are not using blocking pop operation and polling queues instead.
 			// This adds significant load to redis.
-			jitter := rand.N(p.taskCheckInterval)
+			// Jitter only de-synchronizes pollers across processes; it guards no
+			// secret, so math/rand is the right tool here.
+			jitter := rand.N(p.taskCheckInterval) // #nosec G404 -- poll jitter, not security-sensitive
 			time.Sleep(p.taskCheckInterval/2 + jitter)
 			<-p.sema // release token
 			return

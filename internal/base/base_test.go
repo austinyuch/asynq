@@ -10,6 +10,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"math"
 	"sync"
 	"testing"
 	"time"
@@ -18,6 +19,60 @@ import (
 	"github.com/google/uuid"
 	"github.com/austinyuch/asynq/internal/timeutil"
 )
+
+func TestToInt32Saturates(t *testing.T) {
+	tests := []struct {
+		name string
+		in   int
+		want int32
+	}{
+		{"zero", 0, 0},
+		{"small positive", 42, 42},
+		{"small negative", -42, -42},
+		{"max int32 boundary", math.MaxInt32, math.MaxInt32},
+		{"min int32 boundary", math.MinInt32, math.MinInt32},
+		// Without saturation these wrap: MaxInt32+1 becomes MinInt32, turning a
+		// huge retry count into a negative one and inverting retried < retry.
+		{"just above max saturates", math.MaxInt32 + 1, math.MaxInt32},
+		{"just below min saturates", math.MinInt32 - 1, math.MinInt32},
+		{"max int saturates", math.MaxInt, math.MaxInt32},
+		{"min int saturates", math.MinInt, math.MinInt32},
+	}
+
+	for _, tc := range tests {
+		if got := toInt32(tc.in); got != tc.want {
+			t.Errorf("%s: toInt32(%d) = %d, want %d", tc.name, tc.in, got, tc.want)
+		}
+	}
+}
+
+// TestEncodeMessageClampsRetryCounts guards the encode path itself, not just the
+// helper: a wrapped Retry would come back negative and break retry accounting.
+func TestEncodeMessageClampsRetryCounts(t *testing.T) {
+	msg := &TaskMessage{
+		Type:    "foo",
+		ID:      uuid.NewString(),
+		Queue:   "default",
+		Retry:   math.MaxInt,
+		Retried: math.MaxInt,
+	}
+
+	encoded, err := EncodeMessage(msg)
+	if err != nil {
+		t.Fatalf("EncodeMessage returned error: %v", err)
+	}
+	decoded, err := DecodeMessage(encoded)
+	if err != nil {
+		t.Fatalf("DecodeMessage returned error: %v", err)
+	}
+
+	if decoded.Retry != math.MaxInt32 {
+		t.Errorf("Retry = %d, want %d (saturated, not wrapped)", decoded.Retry, math.MaxInt32)
+	}
+	if decoded.Retried != math.MaxInt32 {
+		t.Errorf("Retried = %d, want %d (saturated, not wrapped)", decoded.Retried, math.MaxInt32)
+	}
+}
 
 func TestTaskKey(t *testing.T) {
 	id := uuid.NewString()

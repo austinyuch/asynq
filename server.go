@@ -400,7 +400,9 @@ func toInternalLogLevel(l LogLevel) log.Level {
 // It uses exponential back-off strategy to calculate the retry delay.
 func DefaultRetryDelayFunc(n int, e error, t *Task) time.Duration {
 	// Formula taken from https://github.com/mperham/sidekiq.
-	s := int(math.Pow(float64(n), 4)) + 15 + (rand.IntN(30) * (n + 1))
+	// Retry jitter only spreads reattempts in time; it guards no secret and is
+	// not an unpredictability requirement, so math/rand is the right tool.
+	s := int(math.Pow(float64(n), 4)) + 15 + (rand.IntN(30) * (n + 1)) // #nosec G404 -- backoff jitter, not security-sensitive
 	return time.Duration(s) * time.Second
 }
 
@@ -748,7 +750,8 @@ func (srv *Server) Shutdown() {
 	srv.wg.Wait()
 
 	if !srv.sharedConnection {
-		srv.broker.Close()
+		// Final shutdown step; nothing downstream can react to a Close error.
+		_ = srv.broker.Close()
 	}
 	srv.logger.Info("Exiting")
 }

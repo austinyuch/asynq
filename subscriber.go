@@ -76,7 +76,8 @@ func (s *subscriber) start(wg *sync.WaitGroup) {
 		for {
 			select {
 			case <-s.done:
-				pubsub.Close()
+				// Shutting down: a Close error changes nothing we can act on.
+				_ = pubsub.Close()
 				s.logger.Debug("Subscriber done")
 				return
 			case msg := <-cancelCh:
