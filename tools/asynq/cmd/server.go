@@ -71,7 +71,7 @@ func serverList(cmd *cobra.Command, args []string) error {
 	cols := []string{"Host", "PID", "State", "Active Workers", "Queues", "Started"}
 	printRows := func(w io.Writer, tmpl string) {
 		for _, info := range servers {
-			fmt.Fprintf(w, tmpl,
+			_, _ = fmt.Fprintf(w, tmpl,
 				info.Host, info.PID, info.Status,
 				fmt.Sprintf("%d/%d", info.ActiveWorkerCount, info.Concurrency),
 				formatQueues(info.Queues), timeAgo(info.Started))

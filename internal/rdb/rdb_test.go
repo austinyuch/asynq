@@ -64,7 +64,7 @@ func setup(tb testing.TB) (r *RDB) {
 
 func TestEnqueue(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	t1 := h.NewTaskMessage("send_email", h.JSON(map[string]interface{}{"to": "exampleuser@gmail.com", "from": "noreply@example.com"}))
 	t2 := h.NewTaskMessageWithQueue("generate_csv", h.JSON(map[string]interface{}{}), "csv")
 	t3 := h.NewTaskMessageWithQueue("sync", nil, "low")
@@ -126,7 +126,7 @@ func TestEnqueue(t *testing.T) {
 
 func TestEnqueueTaskIdConflictError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	m1 := base.TaskMessage{
 		ID:      "custom_id",
@@ -162,7 +162,7 @@ func TestEnqueueTaskIdConflictError(t *testing.T) {
 
 func TestBatchEnqueue(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	t1 := h.NewTaskMessage("send_email", h.JSON(map[string]interface{}{"to": "user@example.com"}))
 	t2 := h.NewTaskMessageWithQueue("generate_csv", h.JSON(map[string]interface{}{}), "csv")
@@ -312,7 +312,7 @@ func TestBatchEnqueue(t *testing.T) {
 
 func TestEnqueueQueueCache(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	t1 := h.NewTaskMessageWithQueue("sync1", nil, "low")
 
 	enqueueTime := time.Now()
@@ -365,7 +365,7 @@ func TestEnqueueQueueCache(t *testing.T) {
 
 func TestEnqueueUnique(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := base.TaskMessage{
 		ID:        uuid.NewString(),
 		Type:      "email",
@@ -459,7 +459,7 @@ func TestEnqueueUnique(t *testing.T) {
 
 func TestEnqueueUniqueTaskIdConflictError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	m1 := base.TaskMessage{
 		ID:        "custom_id",
@@ -498,7 +498,7 @@ func TestEnqueueUniqueTaskIdConflictError(t *testing.T) {
 
 func TestDequeue(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
 	t1 := &base.TaskMessage{
@@ -646,7 +646,7 @@ func TestDequeue(t *testing.T) {
 
 func TestDequeueError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	tests := []struct {
 		pending     map[string][]*base.TaskMessage
@@ -736,7 +736,7 @@ func TestDequeueError(t *testing.T) {
 
 func TestDequeueIgnoresPausedQueues(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	t1 := &base.TaskMessage{
 		ID:       uuid.NewString(),
 		Type:     "send_email",
@@ -849,7 +849,7 @@ func TestDequeueIgnoresPausedQueues(t *testing.T) {
 
 func TestDone(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	t1 := &base.TaskMessage{
 		ID:       uuid.NewString(),
@@ -1005,7 +1005,7 @@ func TestDone(t *testing.T) {
 // Make sure that processed_total counter wraps to 1 when reaching int64 max value.
 func TestDoneWithMaxCounter(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	msg := &base.TaskMessage{
 		ID:       uuid.NewString(),
 		Type:     "foo",
@@ -1040,7 +1040,7 @@ func TestDoneWithMaxCounter(t *testing.T) {
 
 func TestMarkAsComplete(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
 	t1 := &base.TaskMessage{
@@ -1226,7 +1226,7 @@ func TestMarkAsComplete(t *testing.T) {
 
 func TestRequeue(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	t1 := &base.TaskMessage{
 		ID:      uuid.NewString(),
@@ -1372,7 +1372,7 @@ func TestRequeue(t *testing.T) {
 
 func TestAddToGroup(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
@@ -1439,7 +1439,7 @@ func TestAddToGroup(t *testing.T) {
 
 func TestAddToGroupeTaskIdConflictError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	ctx := context.Background()
 	m1 := base.TaskMessage{
@@ -1479,7 +1479,7 @@ func TestAddToGroupeTaskIdConflictError(t *testing.T) {
 
 func TestAddToGroupUnique(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
@@ -1562,7 +1562,7 @@ func TestAddToGroupUnique(t *testing.T) {
 
 func TestAddToGroupUniqueTaskIdConflictError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	ctx := context.Background()
 	m1 := base.TaskMessage{
@@ -1603,7 +1603,7 @@ func TestAddToGroupUniqueTaskIdConflictError(t *testing.T) {
 
 func TestSchedule(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	msg := h.NewTaskMessage("send_email", h.JSON(map[string]interface{}{"subject": "hello"}))
 	tests := []struct {
 		msg       *base.TaskMessage
@@ -1661,7 +1661,7 @@ func TestSchedule(t *testing.T) {
 
 func TestScheduleTaskIdConflictError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	m1 := base.TaskMessage{
 		ID:        "custom_id",
@@ -1700,7 +1700,7 @@ func TestScheduleTaskIdConflictError(t *testing.T) {
 
 func TestScheduleUnique(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := base.TaskMessage{
 		ID:        uuid.NewString(),
 		Type:      "email",
@@ -1786,7 +1786,7 @@ func TestScheduleUnique(t *testing.T) {
 
 func TestScheduleUniqueTaskIdConflictError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	m1 := base.TaskMessage{
 		ID:        "custom_id",
@@ -1826,7 +1826,7 @@ func TestScheduleUniqueTaskIdConflictError(t *testing.T) {
 
 func TestRetry(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
 	t1 := &base.TaskMessage{
@@ -1997,7 +1997,7 @@ func TestRetry(t *testing.T) {
 
 func TestRetryWithNonFailureError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
 	t1 := &base.TaskMessage{
@@ -2164,7 +2164,7 @@ func TestRetryWithNonFailureError(t *testing.T) {
 
 func TestArchive(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
 	t1 := &base.TaskMessage{
@@ -2375,7 +2375,7 @@ func TestArchive(t *testing.T) {
 
 func TestArchiveTrim(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
 
@@ -2532,7 +2532,7 @@ func TestArchiveTrim(t *testing.T) {
 
 func TestForwardIfReadyWithGroup(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
@@ -2676,7 +2676,7 @@ func TestForwardIfReadyWithGroup(t *testing.T) {
 
 func TestForwardIfReady(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	t1 := h.NewTaskMessage("send_email", nil)
 	t2 := h.NewTaskMessage("generate_csv", nil)
 	t3 := h.NewTaskMessage("gen_thumbnail", nil)
@@ -2836,7 +2836,7 @@ func newCompletedTask(qname, typename string, payload []byte, completedAt time.T
 
 func TestDeleteExpiredCompletedTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	secondAgo := now.Add(-time.Second)
 	hourFromNow := now.Add(time.Hour)
@@ -2981,7 +2981,7 @@ func TestListLeaseExpired(t *testing.T) {
 	}
 
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	for _, tc := range tests {
 		h.FlushDB(t, r.client)
 		h.SeedAllLease(t, r.client, tc.lease)
@@ -3001,7 +3001,7 @@ func TestListLeaseExpired(t *testing.T) {
 
 func TestExtendLease(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
 
@@ -3109,7 +3109,7 @@ func TestExtendLease(t *testing.T) {
 
 func TestWriteServerState(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	var (
 		host     = "localhost"
@@ -3175,7 +3175,7 @@ func TestWriteServerState(t *testing.T) {
 
 func TestWriteServerStateWithWorkers(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	var (
 		host     = "127.0.0.1"
@@ -3283,7 +3283,7 @@ func TestWriteServerStateWithWorkers(t *testing.T) {
 
 func TestClearServerState(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	var (
 		host     = "127.0.0.1"
@@ -3384,7 +3384,7 @@ func TestClearServerState(t *testing.T) {
 
 func TestCancelationPubSub(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	pubsub, err := r.CancelationPubSub()
 	if err != nil {
@@ -3415,7 +3415,7 @@ func TestCancelationPubSub(t *testing.T) {
 	// allow for message to reach subscribers.
 	time.Sleep(time.Second)
 
-	pubsub.Close()
+	_ = pubsub.Close()
 
 	mu.Lock()
 	if diff := cmp.Diff(publish, received, h.SortStringSliceOpt); diff != "" {
@@ -3432,13 +3432,13 @@ func TestCancelationPubSubReceiveError(t *testing.T) {
 		Addr: "localhost:0", // invalid port — connection will fail
 	})
 	r := NewRDB(client)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	pubsub, err := r.CancelationPubSub()
 	if err == nil {
 		// If no error, we must clean up the pubsub.
 		if pubsub != nil {
-			pubsub.Close()
+			_ = pubsub.Close()
 		}
 		t.Fatal("(*RDB).CancelationPubSub() expected to return an error when redis is unreachable")
 	}
@@ -3449,7 +3449,7 @@ func TestCancelationPubSubReceiveError(t *testing.T) {
 
 func TestWriteResult(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	tests := []struct {
 		qname  string
@@ -3485,7 +3485,7 @@ func TestWriteResult(t *testing.T) {
 
 func TestAggregationCheck(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
@@ -3839,7 +3839,7 @@ func TestAggregationCheck(t *testing.T) {
 
 func TestDeleteAggregationSet(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	now := time.Now()
 	setID := uuid.NewString()
@@ -3967,7 +3967,7 @@ func TestDeleteAggregationSet(t *testing.T) {
 
 func TestDeleteAggregationSetError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	now := time.Now()
 	setID := uuid.NewString()
@@ -4054,7 +4054,7 @@ func TestDeleteAggregationSetError(t *testing.T) {
 
 func TestReclaimStaleAggregationSets(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	now := time.Now()
 	r.SetClock(timeutil.NewSimulatedClock(now))
@@ -4141,7 +4141,7 @@ func TestReclaimStaleAggregationSets(t *testing.T) {
 
 func TestListGroups(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	now := time.Now()
 	m1 := h.NewTaskMessageBuilder().SetQueue("default").SetGroup("foo").Build()

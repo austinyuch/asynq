@@ -51,7 +51,7 @@ func TestServer(t *testing.T) {
 
 	redisConnOpt := getRedisConnOpt(t)
 	c := NewClient(redisConnOpt)
-	defer c.Close()
+	defer func() { _ = c.Close() }()
 	srv := NewServer(redisConnOpt, Config{
 		Concurrency: 10,
 		LogLevel:    testLogLevel,

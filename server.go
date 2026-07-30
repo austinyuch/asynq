@@ -711,7 +711,7 @@ func (srv *Server) start() error {
 	case srvStateActive:
 		return fmt.Errorf("asynq: the server is already running")
 	case srvStateStopped:
-		return fmt.Errorf("asynq: the server is in the stopped state. Waiting for shutdown.")
+		return fmt.Errorf("asynq: the server is in the stopped state; waiting for shutdown")
 	case srvStateClosed:
 		return ErrServerClosed
 	}

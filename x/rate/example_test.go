@@ -32,7 +32,7 @@ func ExampleNewSemaphore() {
 		}
 
 		// Make sure to release the token once we're done.
-		defer sema.Release(ctx)
+		defer func() { _ = sema.Release(ctx) }()
 
 		// Process task
 		return nil

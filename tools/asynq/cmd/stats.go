@@ -153,11 +153,11 @@ func stats(cmd *cobra.Command, args []string) error {
 func printStatsByState(s *AggregateStats) {
 	format := strings.Repeat("%v\t", 7) + "\n"
 	tw := new(tabwriter.Writer).Init(os.Stdout, 0, 8, 2, ' ', 0)
-	fmt.Fprintf(tw, format, "active", "pending", "aggregating", "scheduled", "retry", "archived", "completed")
+	_, _ = fmt.Fprintf(tw, format, "active", "pending", "aggregating", "scheduled", "retry", "archived", "completed")
 	width := maxInt(9 /* defaultWidth */, maxWidthOf(s.Active, s.Pending, s.Aggregating, s.Scheduled, s.Retry, s.Archived, s.Completed)) // length of widest column
 	sep := strings.Repeat("-", width)
-	fmt.Fprintf(tw, format, sep, sep, sep, sep, sep, sep, sep)
-	fmt.Fprintf(tw, format, s.Active, s.Pending, s.Aggregating, s.Scheduled, s.Retry, s.Archived, s.Completed)
+	_, _ = fmt.Fprintf(tw, format, sep, sep, sep, sep, sep, sep, sep)
+	_, _ = fmt.Fprintf(tw, format, s.Active, s.Pending, s.Aggregating, s.Scheduled, s.Retry, s.Archived, s.Completed)
 	_ = tw.Flush()
 }
 
@@ -197,9 +197,9 @@ func printStatsByQueue(stats []*rdb.Stats) {
 	}
 	format := strings.Repeat("%v\t", len(headers)) + "\n"
 	tw := new(tabwriter.Writer).Init(os.Stdout, 0, 8, 2, ' ', 0)
-	fmt.Fprintf(tw, format, toInterfaceSlice(headers)...)
-	fmt.Fprintf(tw, format, toInterfaceSlice(seps)...)
-	fmt.Fprintf(tw, format, toInterfaceSlice(counts)...)
+	_, _ = fmt.Fprintf(tw, format, toInterfaceSlice(headers)...)
+	_, _ = fmt.Fprintf(tw, format, toInterfaceSlice(seps)...)
+	_, _ = fmt.Fprintf(tw, format, toInterfaceSlice(counts)...)
 	_ = tw.Flush()
 }
 
@@ -215,24 +215,24 @@ func queueTitle(s *rdb.Stats) string {
 func printSuccessFailureStats(s *AggregateStats) {
 	format := strings.Repeat("%v\t", 3) + "\n"
 	tw := new(tabwriter.Writer).Init(os.Stdout, 0, 8, 2, ' ', 0)
-	fmt.Fprintf(tw, format, "processed", "failed", "error rate")
-	fmt.Fprintf(tw, format, "---------", "------", "----------")
+	_, _ = fmt.Fprintf(tw, format, "processed", "failed", "error rate")
+	_, _ = fmt.Fprintf(tw, format, "---------", "------", "----------")
 	var errrate string
 	if s.Processed == 0 {
 		errrate = "N/A"
 	} else {
 		errrate = fmt.Sprintf("%.2f%%", float64(s.Failed)/float64(s.Processed)*100)
 	}
-	fmt.Fprintf(tw, format, s.Processed, s.Failed, errrate)
+	_, _ = fmt.Fprintf(tw, format, s.Processed, s.Failed, errrate)
 	_ = tw.Flush()
 }
 
 func printInfo(info map[string]string) {
 	format := strings.Repeat("%v\t", 5) + "\n"
 	tw := new(tabwriter.Writer).Init(os.Stdout, 0, 8, 2, ' ', 0)
-	fmt.Fprintf(tw, format, "version", "uptime", "connections", "memory usage", "peak memory usage")
-	fmt.Fprintf(tw, format, "-------", "------", "-----------", "------------", "-----------------")
-	fmt.Fprintf(tw, format,
+	_, _ = fmt.Fprintf(tw, format, "version", "uptime", "connections", "memory usage", "peak memory usage")
+	_, _ = fmt.Fprintf(tw, format, "-------", "------", "-----------", "------------", "-----------------")
+	_, _ = fmt.Fprintf(tw, format,
 		info["redis_version"],
 		fmt.Sprintf("%s days", info["uptime_in_days"]),
 		info["connected_clients"],
@@ -246,7 +246,7 @@ func printClusterInfo(info map[string]string) {
 	printTable(
 		[]string{"State", "Known Nodes", "Cluster Size"},
 		func(w io.Writer, tmpl string) {
-			fmt.Fprintf(w, tmpl,
+			_, _ = fmt.Fprintf(w, tmpl,
 				strings.ToUpper(info["cluster_state"]),
 				info["cluster_known_nodes"],
 				info["cluster_size"],

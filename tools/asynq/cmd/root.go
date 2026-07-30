@@ -191,25 +191,25 @@ func rootHelpFunc(cmd *cobra.Command, args []string) {
 		if e.Title != "" {
 			// If there is a title, add indentation to each line in the body
 			_, _ = bold.Fprintln(out, e.Title)
-			fmt.Fprintln(out, indent(e.Body, 2 /* spaces */))
+			_, _ = fmt.Fprintln(out, indent(e.Body, 2 /* spaces */))
 		} else {
 			// If there is no title, print the body as is
-			fmt.Fprintln(out, e.Body)
+			_, _ = fmt.Fprintln(out, e.Body)
 		}
-		fmt.Fprintln(out)
+		_, _ = fmt.Fprintln(out)
 	}
 }
 
 func rootUsageFunc(cmd *cobra.Command) error {
 	out := cmd.OutOrStdout()
-	fmt.Fprintf(out, "Usage: %s", cmd.UseLine())
+	_, _ = fmt.Fprintf(out, "Usage: %s", cmd.UseLine())
 	if subcmds := cmd.Commands(); len(subcmds) > 0 {
-		fmt.Fprint(out, "\n\nAvailable commands:\n")
+		_, _ = fmt.Fprint(out, "\n\nAvailable commands:\n")
 		for _, c := range subcmds {
 			if c.Hidden {
 				continue
 			}
-			fmt.Fprintf(out, "  %s\n", c.Name())
+			_, _ = fmt.Fprintf(out, "  %s\n", c.Name())
 		}
 	}
 
@@ -219,9 +219,9 @@ func rootUsageFunc(cmd *cobra.Command) error {
 	})
 	adjustPadding(localFlags...)
 	if len(localFlags) > 0 {
-		fmt.Fprint(out, "\n\nFlags:\n")
+		_, _ = fmt.Fprint(out, "\n\nFlags:\n")
 		for _, l := range localFlags {
-			fmt.Fprintf(out, "  %s\n", l.String())
+			_, _ = fmt.Fprintf(out, "  %s\n", l.String())
 		}
 	}
 	return nil
@@ -229,18 +229,18 @@ func rootUsageFunc(cmd *cobra.Command) error {
 
 func printSubcommandSuggestions(cmd *cobra.Command, arg string) {
 	out := cmd.OutOrStdout()
-	fmt.Fprintf(out, "unknown command %q for %q\n", arg, cmd.CommandPath())
+	_, _ = fmt.Fprintf(out, "unknown command %q for %q\n", arg, cmd.CommandPath())
 	if cmd.SuggestionsMinimumDistance <= 0 {
 		cmd.SuggestionsMinimumDistance = 2
 	}
 	candidates := cmd.SuggestionsFor(arg)
 	if len(candidates) > 0 {
-		fmt.Fprint(out, "\nDid you mean this?\n")
+		_, _ = fmt.Fprint(out, "\nDid you mean this?\n")
 		for _, c := range candidates {
-			fmt.Fprintf(out, "\t%s\n", c)
+			_, _ = fmt.Fprintf(out, "\t%s\n", c)
 		}
 	}
-	fmt.Fprintln(out)
+	_, _ = fmt.Fprintln(out)
 	_ = rootUsageFunc(cmd)
 }
 
@@ -263,12 +263,6 @@ func rpad(s string, padding int) string {
 	return fmt.Sprintf(tmpl, s)
 }
 
-// lpad adds padding to the left of a string.
-func lpad(s string, padding int) string {
-	tmpl := fmt.Sprintf("%%%ds ", padding)
-	return fmt.Sprintf(tmpl, s)
-}
-
 // indent indents the given text by given spaces.
 func indent(text string, space int) string {
 	if len(text) == 0 {
@@ -283,17 +277,6 @@ func indent(text string, space int) string {
 		}
 		b.WriteRune(r)
 		lastRune = r
-	}
-	return b.String()
-}
-
-// dedent removes any indentation from the given text.
-func dedent(text string) string {
-	lines := strings.Split(text, "\n")
-	var b strings.Builder
-	for _, l := range lines {
-		b.WriteString(strings.TrimLeftFunc(l, unicode.IsSpace))
-		b.WriteRune('\n')
 	}
 	return b.String()
 }
@@ -468,8 +451,8 @@ func printTable(cols []string, printRows func(w io.Writer, tmpl string)) {
 		headers = append(headers, name)
 		seps = append(seps, strings.Repeat("-", len(name)))
 	}
-	fmt.Fprintf(tw, format, headers...)
-	fmt.Fprintf(tw, format, seps...)
+	_, _ = fmt.Fprintf(tw, format, headers...)
+	_, _ = fmt.Fprintf(tw, format, seps...)
 	printRows(tw, format)
 	_ = tw.Flush()
 }

@@ -64,12 +64,13 @@ func (h *keyEventHandler) goBack() {
 		d     = h.drawer
 		f     = h.fetcher
 	)
-	if state.view == viewTypeHelp {
+	switch state.view {
+	case viewTypeHelp:
 		state.view = state.prevView // exit help
 		f.Fetch(state)
 		h.resetTicker()
 		d.Draw(state)
-	} else if state.view == viewTypeQueueDetails {
+	case viewTypeQueueDetails:
 		// if task modal is open close it; otherwise go back to the previous view
 		if state.taskID != "" {
 			state.taskID = ""
@@ -81,7 +82,7 @@ func (h *keyEventHandler) goBack() {
 			h.resetTicker()
 			d.Draw(state)
 		}
-	} else {
+	default:
 		h.quit()
 	}
 }

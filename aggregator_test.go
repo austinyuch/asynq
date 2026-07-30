@@ -17,7 +17,7 @@ import (
 
 func TestAggregator(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	rdbClient := rdb.NewRDB(r)
 	client := Client{broker: rdbClient}
 

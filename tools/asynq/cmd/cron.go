@@ -71,7 +71,7 @@ func cronList(cmd *cobra.Command, args []string) error {
 	cols := []string{"EntryID", "Spec", "Type", "Payload", "Options", "Next", "Prev"}
 	printRows := func(w io.Writer, tmpl string) {
 		for _, e := range entries {
-			fmt.Fprintf(w, tmpl, e.ID, e.Spec, e.Task.Type(), sprintBytes(e.Task.Payload()), e.Opts,
+			_, _ = fmt.Fprintf(w, tmpl, e.ID, e.Spec, e.Task.Type(), sprintBytes(e.Task.Payload()), e.Opts,
 				nextEnqueue(e.Next), prevEnqueue(e.Prev))
 		}
 	}
@@ -81,7 +81,7 @@ func cronList(cmd *cobra.Command, args []string) error {
 
 // Returns a string describing when the next enqueue will happen.
 func nextEnqueue(nextEnqueueAt time.Time) string {
-	d := nextEnqueueAt.Sub(time.Now()).Round(time.Second)
+	d := time.Until(nextEnqueueAt).Round(time.Second)
 	if d < 0 {
 		return "Now"
 	}
@@ -128,7 +128,7 @@ func cronHistory(cmd *cobra.Command, args []string) error {
 		cols := []string{"TaskID", "EnqueuedAt"}
 		printRows := func(w io.Writer, tmpl string) {
 			for _, e := range events {
-				fmt.Fprintf(w, tmpl, e.TaskID, e.EnqueuedAt)
+				_, _ = fmt.Fprintf(w, tmpl, e.TaskID, e.EnqueuedAt)
 			}
 		}
 		printTable(cols, printRows)

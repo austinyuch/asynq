@@ -85,7 +85,7 @@ func newProcessorForTest(t *testing.T, r *rdb.RDB, h Handler) *processor {
 
 func TestProcessorSuccessWithSingleQueue(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	rdbClient := rdb.NewRDB(r)
 
 	m1 := h.NewTaskMessage("task1", nil)
@@ -167,7 +167,7 @@ func TestProcessorSuccessWithMultipleQueues(t *testing.T) {
 		t3 = NewTask(m3.Type, m3.Payload)
 		t4 = NewTask(m4.Type, m4.Payload)
 	)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	tests := []struct {
 		pending       map[string][]*base.TaskMessage
@@ -228,7 +228,7 @@ func TestProcessorSuccessWithMultipleQueues(t *testing.T) {
 // https://github.com/hibiken/asynq/issues/166
 func TestProcessTasksWithLargeNumberInPayload(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	rdbClient := rdb.NewRDB(r)
 
 	m1 := h.NewTaskMessage("large_number", h.JSON(map[string]interface{}{"data": 111111111111111111}))
@@ -284,7 +284,7 @@ func TestProcessTasksWithLargeNumberInPayload(t *testing.T) {
 
 func TestProcessorRetry(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	rdbClient := rdb.NewRDB(r)
 
 	m1 := h.NewTaskMessage("send_email", nil)
@@ -440,7 +440,7 @@ func TestProcessorRetry(t *testing.T) {
 
 func TestProcessorMarkAsComplete(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	rdbClient := rdb.NewRDB(r)
 
 	msg1 := h.NewTaskMessage("one", nil)
@@ -517,7 +517,7 @@ func TestProcessorMarkAsComplete(t *testing.T) {
 // and the lease expires
 func TestProcessorWithExpiredLease(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	rdbClient := rdb.NewRDB(r)
 
 	m1 := h.NewTaskMessage("task1", nil)
@@ -674,7 +674,7 @@ func TestProcessorWithStrictPriority(t *testing.T) {
 		t6 = NewTask(m6.Type, m6.Payload)
 		t7 = NewTask(m7.Type, m7.Payload)
 	)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	tests := []struct {
 		pending       map[string][]*base.TaskMessage // initial queues state
