@@ -190,7 +190,7 @@ func rootHelpFunc(cmd *cobra.Command, args []string) {
 	for _, e := range helpEntries {
 		if e.Title != "" {
 			// If there is a title, add indentation to each line in the body
-			bold.Fprintln(out, e.Title)
+			_, _ = bold.Fprintln(out, e.Title)
 			fmt.Fprintln(out, indent(e.Body, 2 /* spaces */))
 		} else {
 			// If there is no title, print the body as is
@@ -241,7 +241,7 @@ func printSubcommandSuggestions(cmd *cobra.Command, arg string) {
 		}
 	}
 	fmt.Fprintln(out)
-	rootUsageFunc(cmd)
+	_ = rootUsageFunc(cmd)
 }
 
 func adjustPadding(lines ...*displayLine) {
@@ -320,17 +320,18 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&tlsServerName, "tls_server",
 		"", "Server name for TLS validation")
 	rootCmd.PersistentFlags().BoolVar(&insecure, "insecure",
-		false, "Allow insecure TLS connection by skipping cert validation")
-	// Bind flags with config.
-	viper.BindPFlag("uri", rootCmd.PersistentFlags().Lookup("uri"))
-	viper.BindPFlag("db", rootCmd.PersistentFlags().Lookup("db"))
-	viper.BindPFlag("password", rootCmd.PersistentFlags().Lookup("password"))
-	viper.BindPFlag("username", rootCmd.PersistentFlags().Lookup("username"))
-	viper.BindPFlag("cluster", rootCmd.PersistentFlags().Lookup("cluster"))
-	viper.BindPFlag("cluster_addrs", rootCmd.PersistentFlags().Lookup("cluster_addrs"))
-	viper.BindPFlag("tls", rootCmd.PersistentFlags().Lookup("tls"))
-	viper.BindPFlag("tls_server", rootCmd.PersistentFlags().Lookup("tls_server"))
-	viper.BindPFlag("insecure", rootCmd.PersistentFlags().Lookup("insecure"))
+		false, "Skip TLS certificate validation (DANGEROUS: disables MITM protection; for self-signed certs only)")
+	// Bind flags with config. BindPFlag only errors on a nil flag, which cannot
+	// happen here because each flag is registered immediately above.
+	_ = viper.BindPFlag("uri", rootCmd.PersistentFlags().Lookup("uri"))
+	_ = viper.BindPFlag("db", rootCmd.PersistentFlags().Lookup("db"))
+	_ = viper.BindPFlag("password", rootCmd.PersistentFlags().Lookup("password"))
+	_ = viper.BindPFlag("username", rootCmd.PersistentFlags().Lookup("username"))
+	_ = viper.BindPFlag("cluster", rootCmd.PersistentFlags().Lookup("cluster"))
+	_ = viper.BindPFlag("cluster_addrs", rootCmd.PersistentFlags().Lookup("cluster_addrs"))
+	_ = viper.BindPFlag("tls", rootCmd.PersistentFlags().Lookup("tls"))
+	_ = viper.BindPFlag("tls_server", rootCmd.PersistentFlags().Lookup("tls_server"))
+	_ = viper.BindPFlag("insecure", rootCmd.PersistentFlags().Lookup("insecure"))
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -411,14 +412,26 @@ func getRedisConnOpt() asynq.RedisConnOpt {
 	}
 }
 
+// getTLSConfig builds the TLS config for the Redis connection.
+//
+// InsecureSkipVerify is driven solely by the --insecure flag, which defaults to
+// false and exists as a deliberate operator escape hatch for self-signed certs
+// (the same role as curl's -k). It is never enabled implicitly, so the certificate
+// validation bypass is always an explicit, logged-in-shell-history choice.
 func getTLSConfig() *tls.Config {
-	tlsServer := viper.GetString("tls_server")
-	if tlsServer != "" {
-		return &tls.Config{ServerName: tlsServer, InsecureSkipVerify: viper.GetBool("insecure")}
+	// #nosec G402 -- skip-verify is opt-in via --insecure (default false), never implicit
+	cfg := &tls.Config{
+		MinVersion:         tls.VersionTLS12,
+		InsecureSkipVerify: viper.GetBool("insecure"),
+	}
+
+	if tlsServer := viper.GetString("tls_server"); tlsServer != "" {
+		cfg.ServerName = tlsServer
+		return cfg
 	}
 
 	if viper.GetBool("tls") {
-		return &tls.Config{InsecureSkipVerify: viper.GetBool("insecure")}
+		return cfg
 	}
 
 	return nil
@@ -458,7 +471,7 @@ func printTable(cols []string, printRows func(w io.Writer, tmpl string)) {
 	fmt.Fprintf(tw, format, headers...)
 	fmt.Fprintf(tw, format, seps...)
 	printRows(tw, format)
-	tw.Flush()
+	_ = tw.Flush()
 }
 
 // sprintBytes returns a string representation of the given byte slice if data is printable.

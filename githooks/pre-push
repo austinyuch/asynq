@@ -1,15 +1,57 @@
 #!/usr/bin/env bash
-# pre-push: run govulncheck across all three modules (root / x / tools).
-# Enable with: git config core.hooksPath githooks
+# pre-push: local shift-left security gate (SBOM + CVE + KEV) across all three
+# modules (root / x / tools).
+#
+# Enable with: git config core.hooksPath githooks   (or: make security-hooks)
+#
+# Blocks the push when a finding is CISA KEV-listed, or when govulncheck reports
+# a call-reachable vulnerability that already has a fix available. Findings that
+# are unreachable, or reachable with no fix published yet, are reported as
+# warnings and do not block.
+#
+# Escape hatches:
+#   ASYNQ_SKIP_SECURITY=1 git push    skip this gate for one push
+#   git push --no-verify              skip all hooks
 set -euo pipefail
 
 repo_root="$(git rev-parse --show-toplevel)"
 
-# GUI/IDE git clients may not have GOPATH/bin on PATH.
-if ! command -v govulncheck >/dev/null 2>&1; then
-  PATH="$PATH:$(go env GOPATH)/bin"
+if [ "${ASYNQ_SKIP_SECURITY:-0}" = "1" ]; then
+  echo "pre-push: ASYNQ_SKIP_SECURITY=1 -- skipping the local security gate" >&2
+  exit 0
 fi
-if ! command -v govulncheck >/dev/null 2>&1; then
+
+# GUI/IDE git clients may not have GOPATH/bin or ~/.local/bin on PATH.
+export PATH="$PATH:$HOME/.local/bin:$(go env GOPATH 2>/dev/null || echo "$HOME/go")/bin"
+
+have() { command -v "$1" >/dev/null 2>&1; }
+
+# The full pipeline needs trivy (SBOM), gosec (SAST), jq, python3, and the
+# kev-sbom-correlation skill bundle. If any is missing we fall back to the plain
+# govulncheck gate rather than failing open, so this hook never provides less
+# than it used to.
+skill_present=0
+for dir in "${KEV_SBOM_SKILL_DIR:-}" \
+           "$repo_root/.agents/skills/kev-sbom-correlation" \
+           "$HOME/.claude/skills/kev-sbom-correlation" \
+           "$HOME/.kiro/skills/kev-sbom-correlation" \
+           "$HOME/.codex/skills/kev-sbom-correlation"; do
+  [ -n "$dir" ] || continue
+  if [ -f "$dir/scripts/security_cve_kev_correlate.py" ]; then
+    skill_present=1
+    break
+  fi
+done
+
+if have trivy && have govulncheck && have gosec && have jq && have python3 &&
+   [ "$skill_present" -eq 1 ]; then
+  exec "$repo_root/scripts/security/run.sh"
+fi
+
+echo "pre-push: full SBOM/CVE/KEV pipeline unavailable; falling back to govulncheck only." >&2
+echo "pre-push: run 'make security-tools' to restore the full local gate." >&2
+
+if ! have govulncheck; then
   echo "pre-push: govulncheck not found; install with:" >&2
   echo "  go install golang.org/x/vuln/cmd/govulncheck@latest" >&2
   exit 1

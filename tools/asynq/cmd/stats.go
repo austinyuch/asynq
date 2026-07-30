@@ -127,23 +127,23 @@ func stats(cmd *cobra.Command, args []string) error {
 	}
 
 	bold := color.New(color.Bold)
-	bold.Println("Task Count by State")
+	_, _ = bold.Println("Task Count by State")
 	printStatsByState(&aggStats)
 	fmt.Println()
 
-	bold.Println("Task Count by Queue")
+	_, _ = bold.Println("Task Count by Queue")
 	printStatsByQueue(stats)
 	fmt.Println()
 
-	bold.Printf("Daily Stats %s UTC\n", aggStats.Timestamp.UTC().Format("2006-01-02"))
+	_, _ = bold.Printf("Daily Stats %s UTC\n", aggStats.Timestamp.UTC().Format("2006-01-02"))
 	printSuccessFailureStats(&aggStats)
 	fmt.Println()
 
 	if useRedisCluster {
-		bold.Println("Redis Cluster Info")
+		_, _ = bold.Println("Redis Cluster Info")
 		printClusterInfo(info)
 	} else {
-		bold.Println("Redis Info")
+		_, _ = bold.Println("Redis Info")
 		printInfo(info)
 	}
 	fmt.Println()
@@ -158,7 +158,7 @@ func printStatsByState(s *AggregateStats) {
 	sep := strings.Repeat("-", width)
 	fmt.Fprintf(tw, format, sep, sep, sep, sep, sep, sep, sep)
 	fmt.Fprintf(tw, format, s.Active, s.Pending, s.Aggregating, s.Scheduled, s.Retry, s.Archived, s.Completed)
-	tw.Flush()
+	_ = tw.Flush()
 }
 
 // numDigits returns the number of digits in n.
@@ -200,7 +200,7 @@ func printStatsByQueue(stats []*rdb.Stats) {
 	fmt.Fprintf(tw, format, toInterfaceSlice(headers)...)
 	fmt.Fprintf(tw, format, toInterfaceSlice(seps)...)
 	fmt.Fprintf(tw, format, toInterfaceSlice(counts)...)
-	tw.Flush()
+	_ = tw.Flush()
 }
 
 func queueTitle(s *rdb.Stats) string {
@@ -224,7 +224,7 @@ func printSuccessFailureStats(s *AggregateStats) {
 		errrate = fmt.Sprintf("%.2f%%", float64(s.Failed)/float64(s.Processed)*100)
 	}
 	fmt.Fprintf(tw, format, s.Processed, s.Failed, errrate)
-	tw.Flush()
+	_ = tw.Flush()
 }
 
 func printInfo(info map[string]string) {
@@ -239,7 +239,7 @@ func printInfo(info map[string]string) {
 		fmt.Sprintf("%sB", info["used_memory_human"]),
 		fmt.Sprintf("%sB", info["used_memory_peak_human"]),
 	)
-	tw.Flush()
+	_ = tw.Flush()
 }
 
 func printClusterInfo(info map[string]string) {

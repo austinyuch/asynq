@@ -7,9 +7,10 @@ package base
 
 import (
 	"context"
-	"crypto/md5"
+	"crypto/md5" // #nosec G501 -- dedup content address only; see UniqueKey
 	"encoding/hex"
 	"fmt"
+	"math"
 	"strings"
 	"sync"
 	"time"
@@ -197,11 +198,19 @@ func SchedulerHistoryKey(entryID string) string {
 }
 
 // UniqueKey returns a redis key with the given type, payload, and queue name.
+//
+// The digest here is a content address for task deduplication, not a security
+// primitive: it is never used to authenticate, sign, or protect a secret. The
+// algorithm is part of the on-the-wire key format, so changing it would strand
+// the unique keys of tasks already enqueued in Redis during a rolling upgrade.
+// See docs/SECURITY_LOCAL_CI.md for the accepted residual risk (a caller who
+// fully controls payload bytes could force a collision and have one of two
+// distinct tasks suppressed as a duplicate).
 func UniqueKey(qname, tasktype string, payload []byte) string {
 	if payload == nil {
 		return QueueKeyPrefix(qname) + "unique:" + tasktype + ":"
 	}
-	checksum := md5.Sum(payload)
+	checksum := md5.Sum(payload) // #nosec G401 -- content address for dedup, not a security primitive; see doc comment
 	return QueueKeyPrefix(qname) + "unique:" + tasktype + ":" + hex.EncodeToString(checksum[:])
 }
 
@@ -299,6 +308,23 @@ type TaskMessage struct {
 	CompletedAt int64
 }
 
+// toInt32 narrows n to int32, saturating at the int32 bounds instead of wrapping.
+//
+// int is 64 bits on every platform asynq supports, so a bare int32(n) silently
+// wraps: a retry count above math.MaxInt32 comes back negative and defeats the
+// retried < retry comparisons that drive the retry state machine. Every field
+// converted through here is a count, a PID, or a priority — all monotonic in n —
+// so clamping preserves the intended ordering where wrapping destroys it.
+func toInt32(n int) int32 {
+	if n > math.MaxInt32 {
+		return math.MaxInt32
+	}
+	if n < math.MinInt32 {
+		return math.MinInt32
+	}
+	return int32(n)
+}
+
 // EncodeMessage marshals the given task message and returns an encoded bytes.
 func EncodeMessage(msg *TaskMessage) ([]byte, error) {
 	if msg == nil {
@@ -310,8 +336,8 @@ func EncodeMessage(msg *TaskMessage) ([]byte, error) {
 		Headers:      msg.Headers,
 		Id:           msg.ID,
 		Queue:        msg.Queue,
-		Retry:        int32(msg.Retry),
-		Retried:      int32(msg.Retried),
+		Retry:        toInt32(msg.Retry),
+		Retried:      toInt32(msg.Retried),
 		ErrorMsg:     msg.ErrorMsg,
 		LastFailedAt: msg.LastFailedAt,
 		Timeout:      msg.Timeout,
@@ -382,20 +408,20 @@ func EncodeServerInfo(info *ServerInfo) ([]byte, error) {
 	}
 	queues := make(map[string]int32, len(info.Queues))
 	for q, p := range info.Queues {
-		queues[q] = int32(p)
+		queues[q] = toInt32(p)
 	}
 	started := timestamppb.New(info.Started)
 
 	return proto.Marshal(&pb.ServerInfo{
 		Host:              info.Host,
-		Pid:               int32(info.PID),
+		Pid:               toInt32(info.PID),
 		ServerId:          info.ServerID,
-		Concurrency:       int32(info.Concurrency),
+		Concurrency:       toInt32(info.Concurrency),
 		Queues:            queues,
 		StrictPriority:    info.StrictPriority,
 		Status:            info.Status,
 		StartTime:         started,
-		ActiveWorkerCount: int32(info.ActiveWorkerCount),
+		ActiveWorkerCount: toInt32(info.ActiveWorkerCount),
 	})
 }
 
@@ -447,7 +473,7 @@ func EncodeWorkerInfo(info *WorkerInfo) ([]byte, error) {
 
 	return proto.Marshal(&pb.WorkerInfo{
 		Host:        info.Host,
-		Pid:         int32(info.PID),
+		Pid:         toInt32(info.PID),
 		ServerId:    info.ServerID,
 		TaskId:      info.ID,
 		TaskType:    info.Type,

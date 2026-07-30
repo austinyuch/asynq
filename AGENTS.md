@@ -93,6 +93,6 @@ make lint
 **PR 鐵則**:fork 上 `gh pr create` 預設指向 upstream `hibiken/asynq`——任何 PR 都必須帶 `--repo austinyuch/asynq`,否則會誤開到 upstream(2026-06-07 曾發生,#1143 已關閉)。
 
 ## NOTES
-- Supported Go policy in docs is “last two Go versions”; modules currently pin `go 1.25.0` with `toolchain go1.26.4`.
+- All three modules declare `go 1.26` (minor series, no patch pin and no `toolchain` line); CI sets `go-version: 1.26.x`. Docs still state a “last two Go versions” support policy, which `go 1.26` does not satisfy for 1.25 consumers — that is a known, accepted divergence, not an oversight.
 - `README.md` explicitly warns that some Lua scripts may not be compatible with Redis Cluster.
 - The highest-coupling code lives in `internal/rdb/`, `inspector.go`, `processor.go`, and `server.go`.

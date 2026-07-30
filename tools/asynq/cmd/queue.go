@@ -165,12 +165,12 @@ func queueInspect(cmd *cobra.Command, args []string) error {
 
 func printQueueInfo(info *asynq.QueueInfo) {
 	bold := color.New(color.Bold)
-	bold.Println("Queue Info")
+	_, _ = bold.Println("Queue Info")
 	fmt.Printf("Name:   %s\n", info.Queue)
 	fmt.Printf("Size:   %d\n", info.Size)
 	fmt.Printf("Groups: %d\n", info.Groups)
 	fmt.Printf("Paused: %t\n\n", info.Paused)
-	bold.Println("Task Count by State")
+	_, _ = bold.Println("Task Count by State")
 	printTable(
 		[]string{"active", "pending", "aggregating", "scheduled", "retry", "archived", "completed"},
 		func(w io.Writer, tmpl string) {
@@ -178,7 +178,7 @@ func printQueueInfo(info *asynq.QueueInfo) {
 		},
 	)
 	fmt.Println()
-	bold.Printf("Daily Stats %s UTC\n", info.Timestamp.UTC().Format("2006-01-02"))
+	_, _ = bold.Printf("Daily Stats %s UTC\n", info.Timestamp.UTC().Format("2006-01-02"))
 	printTable(
 		[]string{"processed", "failed", "error rate"},
 		func(w io.Writer, tmpl string) {

@@ -20,6 +20,28 @@ convention co-adopted by the consuming repos —
 (mirrored by `ai-multi-agent-coordinator`). That document is the authoritative
 source for maintainers; if the two ever differ, the canonical convention wins.
 
+## Local security CI (shift-left)
+
+Because this fork's own import path is outside automated advisory coverage, the
+dependency-security signal is generated **locally, before push**, by a `pre-push`
+gate that runs SBOM generation, CVE scanning, SAST, and CISA KEV correlation across
+all three modules:
+
+```bash
+make security-tools && make security-hooks   # one-time setup
+make security                                # run it now
+```
+
+It blocks a push on a KEV-listed (actively exploited) CVE, a call-reachable
+vulnerability that already has a fix, or a HIGH-severity SAST finding, and writes a
+reviewable fix plan applied with `make security-fix`. Dependency findings correlate
+to KEV by CVE id; SAST findings correlate by CWE weakness class, which ranks what
+to fix first and is not an exploitability claim.
+
+See [`docs/SECURITY_LOCAL_CI.md`](docs/SECURITY_LOCAL_CI.md) for the policy, the
+evidence layout, the SAST suppression inventory, and the limits of what the results
+prove.
+
 ## Reporting a vulnerability
 
 Please report security issues **privately** — do not open a public issue or PR
