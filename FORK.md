@@ -54,6 +54,17 @@ git config core.hooksPath githooks   # 啟用 pre-push govulncheck
 
 Multi-module repo,tag 需帶目錄前綴:`vX.Y.Z-team.N`、`x/vX.Y.Z-team.N`、`tools/vX.Y.Z-team.N`。
 
+`X.Y.Z` 鎖 upstream base(不動),`N` 是 fork 迭代;upstream 升版時重新從 `-team.1` 起算(`x` 的 base 是 fork 自選,upstream 無 x tags)。module path 已改名,版本命名空間與 upstream 完全隔離 —— 下游解析 fork path 永遠看不到 `hibiken/asynq` 的 tag,所以**不需要**用降階版號去避開撞號。Go 也不接受「再低一階」:`v0.26.0.1`(第四段數字)與 `v0.26.0+team.3`(build metadata)都是 `invalid version`。
+
+**兩條鐵則**(`-team.N` 是 semver prerelease,以下皆為實測行為):
+
+1. **永遠不要在 fork 上打乾淨的 `vX.Y.Z` tag。** prerelease 排序低於同名 release,而 Go 的 `@latest` / `@upgrade` 一律優先 release、即使 prerelease 版號更高。tags 為 `v0.26.0-team.1 / -team.2 / v0.27.0 / v0.28.0-team.3` 時 `@latest` 解析為 `v0.27.0`,`v0.28.0-team.3` 完全看不見。一旦打了 bare tag,**所有 `-team.N` 會同時從 `@latest` 與 `go get -u` 消失**(明確 pin 仍可安裝,但自動升級路徑斷掉)。這是單向門。
+2. **`.N` 前面的點是語意必要,不是風格。** semver numeric identifier 走數值比較、alphanumeric 走字典序:`-team.10` > `-team.9`(正確),但 `-team10` < `-team9`(反了)。N 跨過 9 時只有 dotted 形式安全。
+
+正常路徑(consumer 釘 `-team.1` 時)實測可用:`@latest` / `@upgrade` / `@patch` 皆解析到 `v0.26.0-team.2`,`go list -m -u` 顯示 `v0.26.0-team.1 [v0.26.0-team.2]`。
+
+> Dependabot 對 Go modules 預設略過 prerelease,所以 `-team.N` 這個格式本身不保證會被自動提 PR。下游傳播請以下方 notification 為主,不要假設有自動化。
+
 | Tag | 對應 upstream | 說明 |
 |---|---|---|
 | `v0.26.0-team.1` | `v0.26.0`(base `785bb72`) | 首個 fork release:security hardening + module rename |
