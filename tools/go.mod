@@ -1,6 +1,6 @@
 module github.com/austinyuch/asynq/tools
 
-go 1.26.4
+go 1.26
 
 require (
 	github.com/MakeNowJust/heredoc/v2 v2.0.1
