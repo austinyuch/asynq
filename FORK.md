@@ -59,3 +59,10 @@ Multi-module repo,tag 需帶目錄前綴:`vX.Y.Z-team.N`、`x/vX.Y.Z-team.N`、`
 | `v0.26.0-team.1` | `v0.26.0`(base `785bb72`) | 首個 fork release:security hardening + module rename |
 | `x/v0.1.0-team.1` | —(upstream 無 x tags) | x module 首個 tag;require root `v0.26.0-team.1` |
 | `tools/v0.26.0-team.1` | —(upstream 無 tools tags) | CLI;require root + x tags,無 replace,可 `go install` |
+| `v0.26.0-team.2` | `v0.26.0`(base 未變) | security release(PR #16):deps latest(x/text ≥ v0.39.0 清 CVE-2026-56852)、gosec 66 → 0(含 CWE-190 `int32` wrap 真 bug)、local SBOM/CVE/KEV/SAST gate、`go 1.26` |
+| `x/v0.1.0-team.2` | —(upstream 無 x tags) | require root `v0.26.0-team.2`;`go 1.26`、prometheus/client_golang v1.24.1 |
+| `tools/v0.26.0-team.2` | —(upstream 無 tools tags) | require root `v0.26.0-team.2` + x `v0.1.0-team.2`;CLI TLS `MinVersion` 1.2、exporter HTTP timeouts、48 處 error discard |
+
+Release 順序(multi-module 相依,不可顛倒):先 tag root → bump `x/go.mod` require 後 tag x → bump `tools/go.mod` requires 後 tag tools。每個 module 一個 release PR(沿用 team.1 的 PR #2/#3/#4 先例)。
+
+> **Downstream notification 是 release 的必要步驟**,不是可選項:`SECURITY.md` 要求 security release 直接通知已知 consumer 並要求 re-pin `go.mod` + 重跑 `govulncheck`。fork 的 import path 不在自動 advisory 覆蓋內,所以這一步沒有自動化替代品。
