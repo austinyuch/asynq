@@ -26,7 +26,7 @@ import (
 // Phase3: Simulate Server shutdown;
 func TestHeartbeater(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	rdbClient := rdb.NewRDB(r)
 
 	now := time.Now()
@@ -321,7 +321,7 @@ func TestHeartbeaterWithRedisDown(t *testing.T) {
 		}
 	}()
 	r := rdb.NewRDB(setup(t))
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	testBroker := testbroker.NewTestBroker(r)
 	state := &serverState{value: srvStateActive}
 	hb := newHeartbeater(heartbeaterParams{

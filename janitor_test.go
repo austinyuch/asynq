@@ -23,7 +23,7 @@ func newCompletedTask(qname, tasktype string, payload []byte, completedAt time.T
 
 func TestJanitor(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	rdbClient := rdb.NewRDB(r)
 	const interval = 1 * time.Second
 	const batchSize = 100

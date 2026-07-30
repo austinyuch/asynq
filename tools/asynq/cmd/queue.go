@@ -135,7 +135,7 @@ func queueList(cmd *cobra.Command, args []string) error {
 			[]string{"Queue", "Cluster KeySlot", "Cluster Nodes"},
 			func(w io.Writer, tmpl string) {
 				for _, q := range qs {
-					fmt.Fprintf(w, tmpl, q.name, q.keyslot, q.nodes)
+					_, _ = fmt.Fprintf(w, tmpl, q.name, q.keyslot, q.nodes)
 				}
 			},
 		)
@@ -174,7 +174,7 @@ func printQueueInfo(info *asynq.QueueInfo) {
 	printTable(
 		[]string{"active", "pending", "aggregating", "scheduled", "retry", "archived", "completed"},
 		func(w io.Writer, tmpl string) {
-			fmt.Fprintf(w, tmpl, info.Active, info.Pending, info.Aggregating, info.Scheduled, info.Retry, info.Archived, info.Completed)
+			_, _ = fmt.Fprintf(w, tmpl, info.Active, info.Pending, info.Aggregating, info.Scheduled, info.Retry, info.Archived, info.Completed)
 		},
 	)
 	fmt.Println()
@@ -188,7 +188,7 @@ func printQueueInfo(info *asynq.QueueInfo) {
 			} else {
 				errRate = fmt.Sprintf("%.2f%%", float64(info.Failed)/float64(info.Processed)*100)
 			}
-			fmt.Fprintf(w, tmpl, info.Processed, info.Failed, errRate)
+			_, _ = fmt.Fprintf(w, tmpl, info.Processed, info.Failed, errRate)
 		},
 	)
 }
@@ -225,7 +225,7 @@ func printDailyStats(stats []*asynq.DailyStats) {
 				} else {
 					errRate = fmt.Sprintf("%.2f%%", float64(s.Failed)/float64(s.Processed)*100)
 				}
-				fmt.Fprintf(w, tmpl, s.Date.Format("2006-01-02"), s.Processed, s.Failed, errRate)
+				_, _ = fmt.Fprintf(w, tmpl, s.Date.Format("2006-01-02"), s.Processed, s.Failed, errRate)
 			}
 		},
 	)

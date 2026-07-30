@@ -46,7 +46,7 @@ func main() {
 	flushDemoDB(opt)
 
 	client := asynq.NewClient(opt)
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	fmt.Println("== 1. Enqueue real workloads =====================================")
 	enqueue := func(task *asynq.Task, opts ...asynq.Option) {
@@ -115,7 +115,7 @@ func main() {
 	fmt.Println()
 	fmt.Println("== 3. Inspector: real queue statistics ===========================")
 	insp := asynq.NewInspector(opt)
-	defer insp.Close()
+	defer func() { _ = insp.Close() }()
 	queues, err := insp.Queues()
 	if err != nil {
 		log.Fatal(err)

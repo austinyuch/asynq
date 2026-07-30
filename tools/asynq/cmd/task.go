@@ -267,7 +267,7 @@ func listActiveTasks(qname string, pageNum, pageSize int) error {
 		[]string{"ID", "Type", "Payload"},
 		func(w io.Writer, tmpl string) {
 			for _, t := range tasks {
-				fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload))
+				_, _ = fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload))
 			}
 		},
 	)
@@ -288,7 +288,7 @@ func listPendingTasks(qname string, pageNum, pageSize int) error {
 		[]string{"ID", "Type", "Payload"},
 		func(w io.Writer, tmpl string) {
 			for _, t := range tasks {
-				fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload))
+				_, _ = fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload))
 			}
 		},
 	)
@@ -309,7 +309,7 @@ func listScheduledTasks(qname string, pageNum, pageSize int) error {
 		[]string{"ID", "Type", "Payload", "Process In"},
 		func(w io.Writer, tmpl string) {
 			for _, t := range tasks {
-				fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload), formatProcessAt(t.NextProcessAt))
+				_, _ = fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload), formatProcessAt(t.NextProcessAt))
 			}
 		},
 	)
@@ -320,7 +320,7 @@ func listScheduledTasks(qname string, pageNum, pageSize int) error {
 // If processAt time is in the past, returns "right now".
 // If processAt time is in the future, returns "in xxx" where xxx is the duration from now.
 func formatProcessAt(processAt time.Time) string {
-	d := processAt.Sub(time.Now())
+	d := time.Until(processAt)
 	if d < 0 {
 		return "right now"
 	}
@@ -341,7 +341,7 @@ func listRetryTasks(qname string, pageNum, pageSize int) error {
 		[]string{"ID", "Type", "Payload", "Next Retry", "Last Error", "Last Failed", "Retried", "Max Retry"},
 		func(w io.Writer, tmpl string) {
 			for _, t := range tasks {
-				fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload), formatProcessAt(t.NextProcessAt),
+				_, _ = fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload), formatProcessAt(t.NextProcessAt),
 					t.LastErr, formatPastTime(t.LastFailedAt), t.Retried, t.MaxRetry)
 			}
 		},
@@ -363,7 +363,7 @@ func listArchivedTasks(qname string, pageNum, pageSize int) error {
 		[]string{"ID", "Type", "Payload", "Last Failed", "Last Error"},
 		func(w io.Writer, tmpl string) {
 			for _, t := range tasks {
-				fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload), formatPastTime(t.LastFailedAt), t.LastErr)
+				_, _ = fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload), formatPastTime(t.LastFailedAt), t.LastErr)
 			}
 		})
 	return nil
@@ -383,7 +383,7 @@ func listCompletedTasks(qname string, pageNum, pageSize int) error {
 		[]string{"ID", "Type", "Payload", "CompletedAt", "Result"},
 		func(w io.Writer, tmpl string) {
 			for _, t := range tasks {
-				fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload), formatPastTime(t.CompletedAt), sprintBytes(t.Result))
+				_, _ = fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload), formatPastTime(t.CompletedAt), sprintBytes(t.Result))
 			}
 		})
 	return nil
@@ -403,7 +403,7 @@ func listAggregatingTasks(qname, group string, pageNum, pageSize int) error {
 		[]string{"ID", "Type", "Payload", "Group"},
 		func(w io.Writer, tmpl string) {
 			for _, t := range tasks {
-				fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload), t.Group)
+				_, _ = fmt.Fprintf(w, tmpl, t.ID, t.Type, sprintBytes(t.Payload), t.Group)
 			}
 		},
 	)
@@ -470,7 +470,7 @@ func formatNextProcessAt(processAt time.Time) string {
 	if processAt.Before(time.Now()) {
 		return "now"
 	}
-	return fmt.Sprintf("%s (in %v)", processAt.Format(time.UnixDate), processAt.Sub(time.Now()).Round(time.Second))
+	return fmt.Sprintf("%s (in %v)", processAt.Format(time.UnixDate), time.Until(processAt).Round(time.Second))
 }
 
 // formatPastTime takes t which is time in the past and returns a user-friendly string.

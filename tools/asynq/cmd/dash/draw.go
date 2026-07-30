@@ -489,7 +489,7 @@ func drawTaskStateBreakdown(d *ScreenDrawer, style tcell.Style, state *State) {
 		if state.taskState == ts {
 			s = s.Bold(true).Underline(true)
 		}
-		d.Print(fmt.Sprintf("%s:%d", strings.Title(ts.String()), getTaskCount(state.selectedQueue, ts)), s)
+		d.Print(fmt.Sprintf("%s:%d", titleCase(ts.String()), getTaskCount(state.selectedQueue, ts)), s)
 		d.Print(pad, style)
 	}
 	d.NL()
@@ -654,15 +654,20 @@ func withModal(d *ScreenDrawer, rowPrintFns []func(d *modalRowDrawer)) {
 	d.NL()
 }
 
-func adjustWidth(s string, width int) string {
-	sw := runewidth.StringWidth(s)
-	if sw > width {
-		return truncate(s, width)
+// titleCase upper-cases the first rune of s.
+//
+// This replaces strings.Title, which is deprecated for mishandling Unicode word
+// boundaries. The x/text/cases replacement it points to would pull a direct
+// dependency into this module for no benefit here: the only inputs are task
+// state names ("active", "pending", ...), which are single lowercase ASCII
+// words, so first-rune upper-casing is exactly equivalent.
+func titleCase(s string) string {
+	if s == "" {
+		return s
 	}
-	var b strings.Builder
-	b.WriteString(s)
-	b.WriteString(strings.Repeat(" ", width-sw))
-	return b.String()
+	r := []rune(s)
+	r[0] = unicode.ToUpper(r[0])
+	return string(r)
 }
 
 // truncates s if s exceeds max length.

@@ -52,14 +52,14 @@ func testInspectorQueues(t *testing.T, inspector *Inspector, r redis.UniversalCl
 
 func TestInspectorQueues(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	inspector := NewInspector(getRedisConnOpt(t))
 	testInspectorQueues(t, inspector, r)
 }
 
 func TestInspectorFromRedisClientQueues(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	redisClient := getRedisConnOpt(t).MakeRedisClient().(redis.UniversalClient)
 	inspector := NewInspectorFromRedisClient(redisClient)
 	testInspectorQueues(t, inspector, r)
@@ -67,9 +67,9 @@ func TestInspectorFromRedisClientQueues(t *testing.T) {
 
 func TestInspectorDeleteQueue(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	inspector := NewInspector(getRedisConnOpt(t))
-	defer inspector.Close()
+	defer func() { _ = inspector.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -156,9 +156,9 @@ func TestInspectorDeleteQueue(t *testing.T) {
 
 func TestInspectorDeleteQueueErrorQueueNotEmpty(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	inspector := NewInspector(getRedisConnOpt(t))
-	defer inspector.Close()
+	defer func() { _ = inspector.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -212,9 +212,9 @@ func TestInspectorDeleteQueueErrorQueueNotEmpty(t *testing.T) {
 
 func TestInspectorDeleteQueueErrorQueueNotFound(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	inspector := NewInspector(getRedisConnOpt(t))
-	defer inspector.Close()
+	defer func() { _ = inspector.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -268,7 +268,7 @@ func TestInspectorDeleteQueueErrorQueueNotFound(t *testing.T) {
 
 func TestInspectorGetQueueInfo(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessage("task3", nil)
@@ -423,7 +423,7 @@ func TestInspectorGetQueueInfo(t *testing.T) {
 
 func TestInspectorHistory(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now().UTC()
 	inspector := NewInspector(getRedisConnOpt(t))
 
@@ -482,7 +482,7 @@ func createPendingTask(msg *base.TaskMessage) *TaskInfo {
 
 func TestInspectorGetTaskInfo(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	m1 := h.NewTaskMessageWithQueue("task1", nil, "default")
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "default")
@@ -606,7 +606,7 @@ func TestInspectorGetTaskInfo(t *testing.T) {
 
 func TestInspectorGetTaskInfoError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	m1 := h.NewTaskMessageWithQueue("task1", nil, "default")
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "default")
@@ -686,7 +686,7 @@ func TestInspectorGetTaskInfoError(t *testing.T) {
 
 func TestInspectorListPendingTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "critical")
@@ -764,7 +764,7 @@ func newOrphanedTaskInfo(msg *base.TaskMessage) *TaskInfo {
 
 func TestInspectorListActiveTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -854,7 +854,7 @@ func createScheduledTask(z base.Z) *TaskInfo {
 
 func TestInspectorListScheduledTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessage("task3", nil)
@@ -924,7 +924,7 @@ func createRetryTask(z base.Z) *TaskInfo {
 
 func TestInspectorListRetryTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessage("task3", nil)
@@ -995,7 +995,7 @@ func createArchivedTask(z base.Z) *TaskInfo {
 
 func TestInspectorListArchivedTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessage("task3", nil)
@@ -1072,7 +1072,7 @@ func createCompletedTask(z base.Z) *TaskInfo {
 
 func TestInspectorListCompletedTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	m1 := newCompletedTaskMessage("task1", "default", 1*time.Hour, now.Add(-3*time.Minute))     // Expires in 57 mins
 	m2 := newCompletedTaskMessage("task2", "default", 30*time.Minute, now.Add(-10*time.Minute)) // Expires in 20 mins
@@ -1133,7 +1133,7 @@ func TestInspectorListCompletedTasks(t *testing.T) {
 
 func TestInspectorListAggregatingTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 
 	m1 := h.NewTaskMessageBuilder().SetType("task1").SetQueue("default").SetGroup("group1").Build()
@@ -1239,7 +1239,7 @@ func TestInspectorListPagination(t *testing.T) {
 			h.NewTaskMessage(fmt.Sprintf("task%d", i), nil))
 	}
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	h.SeedPendingQueue(t, r, msgs, base.DefaultQueueName)
 
 	inspector := NewInspector(getRedisConnOpt(t))
@@ -1297,7 +1297,7 @@ func TestInspectorListPagination(t *testing.T) {
 
 func TestInspectorListTasksQueueNotFoundError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 
 	inspector := NewInspector(getRedisConnOpt(t))
 
@@ -1340,7 +1340,7 @@ func TestInspectorListTasksQueueNotFoundError(t *testing.T) {
 
 func TestInspectorDeleteAllPendingTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessage("task3", nil)
@@ -1404,7 +1404,7 @@ func TestInspectorDeleteAllPendingTasks(t *testing.T) {
 
 func TestInspectorDeleteAllScheduledTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessage("task3", nil)
@@ -1470,7 +1470,7 @@ func TestInspectorDeleteAllScheduledTasks(t *testing.T) {
 
 func TestInspectorDeleteAllRetryTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessage("task3", nil)
@@ -1536,7 +1536,7 @@ func TestInspectorDeleteAllRetryTasks(t *testing.T) {
 
 func TestInspectorDeleteAllArchivedTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessage("task3", nil)
@@ -1602,7 +1602,7 @@ func TestInspectorDeleteAllArchivedTasks(t *testing.T) {
 
 func TestInspectorDeleteAllCompletedTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	now := time.Now()
 	m1 := newCompletedTaskMessage("task1", "default", 30*time.Minute, now.Add(-2*time.Minute))
 	m2 := newCompletedTaskMessage("task2", "default", 30*time.Minute, now.Add(-5*time.Minute))
@@ -1668,7 +1668,7 @@ func TestInspectorDeleteAllCompletedTasks(t *testing.T) {
 
 func TestInspectorArchiveAllPendingTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessage("task3", nil)
@@ -1779,7 +1779,7 @@ func TestInspectorArchiveAllPendingTasks(t *testing.T) {
 
 func TestInspectorArchiveAllScheduledTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessage("task3", nil)
@@ -1909,7 +1909,7 @@ func TestInspectorArchiveAllScheduledTasks(t *testing.T) {
 
 func TestInspectorArchiveAllRetryTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessage("task3", nil)
@@ -2023,7 +2023,7 @@ func TestInspectorArchiveAllRetryTasks(t *testing.T) {
 
 func TestInspectorRunAllScheduledTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "critical")
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "low")
@@ -2140,7 +2140,7 @@ func TestInspectorRunAllScheduledTasks(t *testing.T) {
 
 func TestInspectorRunAllRetryTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "critical")
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "low")
@@ -2257,7 +2257,7 @@ func TestInspectorRunAllRetryTasks(t *testing.T) {
 
 func TestInspectorRunAllArchivedTasks(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "critical")
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "low")
@@ -2371,7 +2371,7 @@ func TestInspectorRunAllArchivedTasks(t *testing.T) {
 
 func TestInspectorUpdateTaskPayloadUpdatesScheduledTaskPayload(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1_old := h.NewTaskMessage("task1", []byte("m1_old"))
 	m1_new := h.NewTaskMessage("task1", nil)
 	m1_new.ID = m1_old.ID
@@ -2459,7 +2459,7 @@ func TestInspectorUpdateTaskPayloadUpdatesScheduledTaskPayload(t *testing.T) {
 
 func TestInspectorUpdateTaskPayloadError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -2513,7 +2513,7 @@ func TestInspectorUpdateTaskPayloadError(t *testing.T) {
 
 func TestInspectorDeleteTaskDeletesPendingTask(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -2573,7 +2573,7 @@ func TestInspectorDeleteTaskDeletesPendingTask(t *testing.T) {
 
 func TestInspectorDeleteTaskDeletesScheduledTask(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -2623,7 +2623,7 @@ func TestInspectorDeleteTaskDeletesScheduledTask(t *testing.T) {
 
 func TestInspectorDeleteTaskDeletesRetryTask(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -2673,7 +2673,7 @@ func TestInspectorDeleteTaskDeletesRetryTask(t *testing.T) {
 
 func TestInspectorDeleteTaskDeletesArchivedTask(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -2723,7 +2723,7 @@ func TestInspectorDeleteTaskDeletesArchivedTask(t *testing.T) {
 
 func TestInspectorDeleteTaskError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -2788,7 +2788,7 @@ func TestInspectorDeleteTaskError(t *testing.T) {
 
 func TestInspectorRunTaskRunsScheduledTask(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessage("task2", nil)
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -2858,7 +2858,7 @@ func TestInspectorRunTaskRunsScheduledTask(t *testing.T) {
 
 func TestInspectorRunTaskRunsRetryTask(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "custom")
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -2927,7 +2927,7 @@ func TestInspectorRunTaskRunsRetryTask(t *testing.T) {
 
 func TestInspectorRunTaskRunsArchivedTask(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "critical")
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "low")
@@ -3000,7 +3000,7 @@ func TestInspectorRunTaskRunsArchivedTask(t *testing.T) {
 
 func TestInspectorRunTaskError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "critical")
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "low")
@@ -3100,7 +3100,7 @@ func TestInspectorRunTaskError(t *testing.T) {
 
 func TestInspectorArchiveTaskArchivesPendingTask(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "custom")
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -3191,7 +3191,7 @@ func TestInspectorArchiveTaskArchivesPendingTask(t *testing.T) {
 
 func TestInspectorArchiveTaskArchivesScheduledTask(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "custom")
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -3268,7 +3268,7 @@ func TestInspectorArchiveTaskArchivesScheduledTask(t *testing.T) {
 
 func TestInspectorArchiveTaskArchivesRetryTask(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "custom")
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -3343,7 +3343,7 @@ func TestInspectorArchiveTaskArchivesRetryTask(t *testing.T) {
 
 func TestInspectorArchiveTaskError(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	m1 := h.NewTaskMessage("task1", nil)
 	m2 := h.NewTaskMessageWithQueue("task2", nil, "custom")
 	m3 := h.NewTaskMessageWithQueue("task3", nil, "custom")
@@ -3591,7 +3591,7 @@ func TestParseOption(t *testing.T) {
 
 func TestInspectorGroups(t *testing.T) {
 	r := setup(t)
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	inspector := NewInspector(getRedisConnOpt(t))
 
 	m1 := h.NewTaskMessageBuilder().SetGroup("group1").Build()

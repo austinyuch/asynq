@@ -22,7 +22,7 @@ import (
 func TestClientEnqueueWithProcessAtOption(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	task := NewTask("send_email", h.JSON(map[string]interface{}{"to": "customer@gmail.com", "from": "merchant@example.com"}))
 
@@ -480,7 +480,7 @@ func testClientEnqueue(t *testing.T, client *Client, r redis.UniversalClient) {
 func TestClientEnqueue(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 	testClientEnqueue(t, client, r)
 }
 
@@ -498,7 +498,7 @@ func TestClientFromRedisClientEnqueue(t *testing.T) {
 func TestClientEnqueueWithGroupOption(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	task := NewTask("mytask", []byte("foo"))
 	now := time.Now()
@@ -651,7 +651,7 @@ func TestClientEnqueueWithGroupOption(t *testing.T) {
 func TestClientEnqueueWithTaskIDOption(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	task := NewTask("send_email", nil)
 	now := time.Now()
@@ -728,7 +728,7 @@ func TestClientEnqueueWithTaskIDOption(t *testing.T) {
 func TestClientEnqueueWithConflictingTaskID(t *testing.T) {
 	setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	const taskID = "custom_id"
 	task := NewTask("foo", nil)
@@ -745,7 +745,7 @@ func TestClientEnqueueWithConflictingTaskID(t *testing.T) {
 func TestClientEnqueueWithProcessInOption(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	task := NewTask("send_email", h.JSON(map[string]interface{}{"to": "customer@gmail.com", "from": "merchant@example.com"}))
 	now := time.Now()
@@ -868,7 +868,7 @@ func TestClientEnqueueWithProcessInOption(t *testing.T) {
 func TestClientEnqueueError(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	task := NewTask("send_email", h.JSON(map[string]interface{}{"to": "customer@gmail.com", "from": "merchant@example.com"}))
 
@@ -1032,7 +1032,7 @@ func TestClientWithDefaultOptions(t *testing.T) {
 	for _, tc := range tests {
 		h.FlushDB(t, r)
 		c := NewClient(getRedisConnOpt(t))
-		defer c.Close()
+		defer func() { _ = c.Close() }()
 		task := NewTask(tc.tasktype, tc.payload, tc.defaultOpts...)
 		gotInfo, err := c.Enqueue(task, tc.opts...)
 		if err != nil {
@@ -1063,7 +1063,7 @@ func TestClientWithDefaultOptions(t *testing.T) {
 func TestClientEnqueueUnique(t *testing.T) {
 	r := setup(t)
 	c := NewClient(getRedisConnOpt(t))
-	defer c.Close()
+	defer func() { _ = c.Close() }()
 
 	tests := []struct {
 		task *Task
@@ -1106,7 +1106,7 @@ func TestClientEnqueueUnique(t *testing.T) {
 func TestClientEnqueueUniqueWithProcessInOption(t *testing.T) {
 	r := setup(t)
 	c := NewClient(getRedisConnOpt(t))
-	defer c.Close()
+	defer func() { _ = c.Close() }()
 
 	tests := []struct {
 		task *Task
@@ -1152,7 +1152,7 @@ func TestClientEnqueueUniqueWithProcessInOption(t *testing.T) {
 func TestClientEnqueueUniqueWithProcessAtOption(t *testing.T) {
 	r := setup(t)
 	c := NewClient(getRedisConnOpt(t))
-	defer c.Close()
+	defer func() { _ = c.Close() }()
 
 	tests := []struct {
 		task *Task
@@ -1198,7 +1198,7 @@ func TestClientEnqueueUniqueWithProcessAtOption(t *testing.T) {
 func TestClientEnqueueWithHeaders(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	now := time.Now()
 	headers := map[string]string{
@@ -1438,7 +1438,7 @@ func TestClientEnqueueWithHeaders(t *testing.T) {
 func TestClientEnqueueWithHeadersScheduled(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	now := time.Now()
 	oneHourLater := now.Add(time.Hour)
@@ -1644,7 +1644,7 @@ func TestTaskHeadersMethod(t *testing.T) {
 func TestClientEnqueueWithHeadersAndGroup(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	now := time.Now()
 	headers := map[string]string{
@@ -1733,7 +1733,7 @@ func TestClientEnqueueWithHeadersAndGroup(t *testing.T) {
 func TestBatchEnqueueContext_ImmediateTasks(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	tasks := []*Task{
 		NewTask("task1", []byte("payload1")),
@@ -1770,7 +1770,7 @@ func TestBatchEnqueueContext_ImmediateTasks(t *testing.T) {
 func TestBatchEnqueueContext_ScheduledTask(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	future := time.Now().Add(1 * time.Hour)
 	tasks := []*Task{
@@ -1800,7 +1800,7 @@ func TestBatchEnqueueContext_ScheduledTask(t *testing.T) {
 func TestBatchEnqueueContext_MixedBatch(t *testing.T) {
 	r := setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	future := time.Now().Add(1 * time.Hour)
 	tasks := []*Task{
@@ -1857,7 +1857,7 @@ func TestBatchEnqueueContext_MixedBatch(t *testing.T) {
 func TestBatchEnqueueContext_ValidationErrors(t *testing.T) {
 	setup(t)
 	client := NewClient(getRedisConnOpt(t))
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	tests := []struct {
 		desc  string
@@ -1910,7 +1910,7 @@ func TestBatchEnqueueContext_ValidationErrors(t *testing.T) {
 
 func TestBatchEnqueueContext_BrokerError(t *testing.T) {
 	r := rdb.NewRDB(setup(t))
-	defer r.Close()
+	defer func() { _ = r.Close() }()
 	testBroker := testbroker.NewTestBroker(r)
 	client := &Client{broker: testBroker, sharedConnection: true}
 

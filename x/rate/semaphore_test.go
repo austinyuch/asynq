@@ -71,7 +71,7 @@ func TestNewSemaphore(t *testing.T) {
 			}
 
 			sema := NewSemaphore(opt, tt.name, tt.maxConcurrency)
-			defer sema.Close()
+			defer func() { _ = sema.Close() }()
 		})
 	}
 }
@@ -117,14 +117,14 @@ func TestNewSemaphore_Acquire(t *testing.T) {
 		t.Run(tt.desc, func(t *testing.T) {
 			opt := getRedisConnOpt(t)
 			rc := opt.MakeRedisClient().(redis.UniversalClient)
-			defer rc.Close()
+			defer func() { _ = rc.Close() }()
 
 			if err := rc.Del(context.Background(), semaphoreKey(tt.name)).Err(); err != nil {
 				t.Errorf("%s;\nredis.UniversalClient.Del() got error %v", tt.desc, err)
 			}
 
 			sema := NewSemaphore(opt, tt.name, tt.maxConcurrency)
-			defer sema.Close()
+			defer func() { _ = sema.Close() }()
 
 			for i := 0; i < len(tt.taskIDs); i++ {
 				ctx, cancel := tt.ctxFunc(tt.taskIDs[i])
@@ -179,14 +179,14 @@ func TestNewSemaphore_Acquire_Error(t *testing.T) {
 		t.Run(tt.desc, func(t *testing.T) {
 			opt := getRedisConnOpt(t)
 			rc := opt.MakeRedisClient().(redis.UniversalClient)
-			defer rc.Close()
+			defer func() { _ = rc.Close() }()
 
 			if err := rc.Del(context.Background(), semaphoreKey(tt.name)).Err(); err != nil {
 				t.Errorf("%s;\nredis.UniversalClient.Del() got error %v", tt.desc, err)
 			}
 
 			sema := NewSemaphore(opt, tt.name, tt.maxConcurrency)
-			defer sema.Close()
+			defer func() { _ = sema.Close() }()
 
 			for i := 0; i < len(tt.taskIDs); i++ {
 				ctx, cancel := tt.ctxFunc(tt.taskIDs[i])
@@ -205,7 +205,7 @@ func TestNewSemaphore_Acquire_Error(t *testing.T) {
 func TestNewSemaphore_Acquire_StaleToken(t *testing.T) {
 	opt := getRedisConnOpt(t)
 	rc := opt.MakeRedisClient().(redis.UniversalClient)
-	defer rc.Close()
+	defer func() { _ = rc.Close() }()
 
 	taskID := uuid.NewString()
 
@@ -217,7 +217,7 @@ func TestNewSemaphore_Acquire_StaleToken(t *testing.T) {
 	})
 
 	sema := NewSemaphore(opt, "stale-token", 1)
-	defer sema.Close()
+	defer func() { _ = sema.Close() }()
 
 	ctx, cancel := asynqcontext.New(context.Background(), &base.TaskMessage{
 		ID:    taskID,
@@ -271,7 +271,7 @@ func TestNewSemaphore_Release(t *testing.T) {
 		t.Run(tt.desc, func(t *testing.T) {
 			opt := getRedisConnOpt(t)
 			rc := opt.MakeRedisClient().(redis.UniversalClient)
-			defer rc.Close()
+			defer func() { _ = rc.Close() }()
 
 			if err := rc.Del(context.Background(), semaphoreKey(tt.name)).Err(); err != nil {
 				t.Errorf("%s;\nredis.UniversalClient.Del() got error %v", tt.desc, err)
@@ -289,7 +289,7 @@ func TestNewSemaphore_Release(t *testing.T) {
 			}
 
 			sema := NewSemaphore(opt, tt.name, 3)
-			defer sema.Close()
+			defer func() { _ = sema.Close() }()
 
 			for i := 0; i < len(tt.taskIDs); i++ {
 				ctx, cancel := tt.ctxFunc(tt.taskIDs[i])
@@ -350,7 +350,7 @@ func TestNewSemaphore_Release_Error(t *testing.T) {
 		t.Run(tt.desc, func(t *testing.T) {
 			opt := getRedisConnOpt(t)
 			rc := opt.MakeRedisClient().(redis.UniversalClient)
-			defer rc.Close()
+			defer func() { _ = rc.Close() }()
 
 			if err := rc.Del(context.Background(), semaphoreKey(tt.name)).Err(); err != nil {
 				t.Errorf("%s;\nredis.UniversalClient.Del() got error %v", tt.desc, err)
@@ -368,7 +368,7 @@ func TestNewSemaphore_Release_Error(t *testing.T) {
 			}
 
 			sema := NewSemaphore(opt, tt.name, 3)
-			defer sema.Close()
+			defer func() { _ = sema.Close() }()
 
 			for i := 0; i < len(tt.taskIDs); i++ {
 				ctx, cancel := tt.ctxFunc(tt.taskIDs[i])
