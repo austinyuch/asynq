@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.26.0-team.2] - 2026-07-30
+
+Fork security release. Tags: `v0.26.0-team.2`, `x/v0.1.0-team.2`, `tools/v0.26.0-team.2`.
+Downstream consumers should re-pin `go.mod` and re-run `govulncheck`.
+
+### Fixed
+- **Integer overflow in task encoding (CWE-190).** `internal/base` narrowed `int` to
+  `int32` with a bare conversion, so a `Retry`/`Retried` count above `MaxInt32`
+  wrapped to a negative value and inverted the `retried < retry` comparisons that
+  drive the retry state machine. Now saturates at the `int32` bounds.
+- Metrics exporter served on `http.ListenAndServe` with no timeouts, leaving it
+  open to slow-header (Slowloris) clients (CWE-676). Now uses an explicit
+  `http.Server` with read/write/idle timeouts.
+- CLI TLS config had no minimum version; now floors at TLS 1.2 (CWE-295).
+- 48 unhandled errors made explicit (CWE-703). All remaining gosec findings
+  resolved: 66 → 0.
+
+### Security
+- `golang.org/x/text` v0.31.0 → v0.40.0, clearing **CVE-2026-56852** /
+  GO-2026-5970 (infinite loop on invalid input). The advisory was present in the
+  `tools` dependency graph but not call-reachable.
+- Added a local shift-left `pre-push` gate: SBOM (trivy) + CVE (govulncheck, with
+  call-graph reachability) + SAST (gosec) + CISA KEV correlation across all three
+  modules. Blocks on a KEV-listed CVE, a reachable vulnerability with a fix
+  available, or a HIGH-severity SAST finding. See `docs/SECURITY_LOCAL_CI.md`.
+- Known residual risk, unchanged and documented rather than silently altered:
+  `base.UniqueKey` derives its dedup key with MD5. It is a content address, not a
+  security primitive, but collisions are cheap, so a caller controlling payload
+  bytes could have one of two distinct tasks suppressed as a duplicate. The digest
+  is part of the on-the-wire key format, so changing it is a breaking change.
+
+### Upgrades
+- `go` directive `1.26.4` → `1.26` (minor series, no patch pin) in all three
+  modules, matching CI's `go-version: 1.26.x`.
+- go-redis v9.20.0 → v9.21.0, prometheus/client_golang v1.23.2 → v1.24.1,
+  golang.org/x/sys v0.45.0 → v0.47.0, plus ~15 transitive bumps.
+
 ## [0.26.0] - 2026-02-03
 
 ### Upgrades
