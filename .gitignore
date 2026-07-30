@@ -32,6 +32,20 @@ temp/
 go.work
 go.work.sum
 
+# Local security CI evidence (SBOM / CVE / KEV snapshots, reports, fix plan).
+# Regenerate with `make security`; see docs/SECURITY_LOCAL_CI.md.
+.security/
+
+
+
+
+# cross-agents symlink bridge: managed begin
+.claude/skills
+.kiro/skills
+.codex/skills
+# cross-agents symlink bridge: managed end
+
+
 # cross-agents symlink bridge: claude-md begin
 CLAUDE.md
 internal/CLAUDE.md
@@ -41,12 +55,3 @@ tools/asynq/cmd/CLAUDE.md
 tools/CLAUDE.md
 x/CLAUDE.md
 # cross-agents symlink bridge: claude-md end
-
-# cross-agents symlink bridge: managed begin
-.claude/skills
-.kiro/skills
-.codex/skills
-.claude/specs
-.kiro/specs
-.codex/specs
-# cross-agents symlink bridge: managed end
