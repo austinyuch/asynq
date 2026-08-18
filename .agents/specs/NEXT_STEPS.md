@@ -8,7 +8,7 @@
 |---|---|---|---|
 | 1 | 下次 upstream 有更新時執行 upstream-sync skill(`.agents/skills/upstream-sync/`) | SPEC-003 | 週期性檢查或 upstream release;目前 0 behind(base `785bb72`) |
 | 2 | 下次 release 時依 FORK.md 慣例打 `v0.26.x-team.N`(x/tools 視 require 變動跟進,先 root 後 x 後 tools) | SPEC-004 | 有新功能/sync 合入後 |
-| 3 | go-redis 9.22.0 的 Redis-backed 驗證(root、`internal/rdb`、`x/rate`)| chore/deps-security-20260819 | 需要 governed 或 HITL 提供的 Valkey 實例;registry 已無 `asynq` entry(IL-005)|
+| 3 | go-redis 9.22.0 的 Redis-backed 驗證(root、`internal/rdb`、`x/rate`)| CR-2026-08-19-deps-provider(SPEC-001 overlay)| 需要 governed 或 HITL 提供的 Valkey 實例;registry 已無 `asynq` entry(IL-005)|
 
 ## Parked(明確不做,除非條件改變)
 

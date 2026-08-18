@@ -13,6 +13,14 @@
 | SPEC-007 | User manual + project review 文件生成 | ✅ completed (2026-06-07) | PR #7(13da155);headless 渲染驗證、evidence 全 live、claim cap 落實 | `docs/MANUAL_GENERATION_GUIDE.md`、`docs/REVIEW_GENERATION_GUIDE.md` |
 | SPEC-008 | Gap closeout:IL-001(proto 重生)、IL-003(visual evidence)、首份 runtime-backed review 裁決、cluster 驗證、CI flake 修復、dash.gif 重攝 | ✅ completed (2026-06-07) | PR #11(`acae113`);全套測試綠(standalone + 3-node cluster,Valkey 9.1.0)、dash ANSI→PNG/gif 實擷、`make proto` 驗證、CI `build` pass 3m59s | `.agents/specs/SPEC-008-gap-closeout/review.md`(**readiness 裁決權威**) |
 
+## Open Change Requests
+
+針對 completed baseline 的後續變更。CR 不重開 spec,但繼承該 baseline 的 evidence 義務。
+
+| CR ID | 對象 baseline | 描述 | 狀態 | 繼承的 evidence 義務 |
+|---|---|---|---|---|
+| CR-2026-08-19-deps-provider | SPEC-001(Security hardening + dependency upgrade) | 三 module 相依升級(go-redis 9.22.0、protobuf 1.36.12、x/text 0.41.0 等);`scripts/security/run.sh` 改由治理 aclab-middlewares security-data provider 取得 KEV/CVE catalog,provider 證據不符即擋下,不再靜默 fallback | 🟡 open — 部分驗證 | SPEC-001 的驗收含「全套 Valkey 測試綠」。目前 build+vet、lint(三 module 0 issues)、非 Redis 測試、security CI(PASS,KEV 0 / gosec 0)皆綠;**Redis-backed 套件(root、`internal/rdb`、`x/rate`)未跑**,阻塞於 IL-005。commits `7e4b010`、`a3083e5`,branch `chore/deps-security-20260819` |
+
 ## External contract 依賴
 
 - 下游專案以 `go get github.com/austinyuch/asynq@v0.26.0-team.1` 消費;tag 一經發佈不可移動/刪除
