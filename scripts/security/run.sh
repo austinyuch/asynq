@@ -14,11 +14,21 @@
 # step. A catalog that cannot be refreshed is treated as unavailable evidence
 # and fails the run; it is never downgraded to an empty catalog.
 #
+# Acquisition prefers the machine's governed shared security-data provider
+# (aclab-middlewares) when the operator registry at
+# ~/.config/aclab/security-data-provider.json declares one. That registry -- not
+# this repository, its Makefile, or its environment -- selects the adapter and
+# provider bytes. Provider evidence that is absent, FAIL, malformed, or
+# hash-inconsistent blocks the run instead of falling back silently. Only a
+# `not-expected` registry (or no registry at all) authorizes the labeled
+# consumer-local acquisition below.
+#
 # Usage:
 #   scripts/security/run.sh [--refresh] [--offline] [--quiet]
 #
 #   --refresh   force re-download of the CISA KEV catalog
 #   --offline   never touch the network; require cached catalogs to exist
+#               (also bypasses the governed provider -- see below)
 #   --quiet     suppress per-step progress (the summary is still printed)
 #
 # Exit codes: 0 pass, 1 policy block, 2 tooling/evidence failure.
@@ -197,6 +207,140 @@ PY
 done
 
 # ---------------------------------------------------------------------------
+# 3b. Governed shared security-data provider (aclab-middlewares).
+#
+# Trusted discovery, never a PATH lookup. The machine operator's fixed registry
+# at ~/.config/aclab/security-data-provider.json names the pinned adapter,
+# checkout root, direct provider, and state root. When it declares a provider,
+# we use it for every feed it serves; provider evidence that is absent, FAIL,
+# malformed, or hash-inconsistent is unavailable evidence and blocks. We never
+# silently fall back to a consumer-local download behind an expected provider.
+# ---------------------------------------------------------------------------
+PROVIDER_REGISTRY="${ACLAB_SECURITY_DATA_REGISTRY:-$HOME/.config/aclab/security-data-provider.json}"
+PROVIDER_MODE="absent"
+PROVIDER_LEASE_SECONDS="${ASYNQ_PROVIDER_LEASE_SECONDS:-3600}"
+PROVIDER_CVE_MAX_AGE_DAYS="${ASYNQ_PROVIDER_CVE_MAX_AGE_DAYS:-7}"
+PROVIDER_KEV_OK=0
+PROVIDER_CVE_OK=0
+KEV_SOURCE="consumer-fallback"
+CVE_SOURCE="consumer-fallback"
+PROVIDER_ADAPTER=""
+PROVIDER_STATE_ROOT=""
+
+reg() { jq -r "$1 // empty" "$PROVIDER_REGISTRY"; }
+
+if [ -e "$PROVIDER_REGISTRY" ]; then
+  [ -L "$PROVIDER_REGISTRY" ] && fail "provider registry $PROVIDER_REGISTRY is a symlink; refusing"
+  jq -e '.schema == "aclab-security-data-registry/v1"' "$PROVIDER_REGISTRY" >/dev/null 2>&1 ||
+    fail "provider registry $PROVIDER_REGISTRY is unreadable or not aclab-security-data-registry/v1.
+An unreadable registry blocks; it never means 'no provider is expected'."
+  PROVIDER_MODE="$(reg .mode)"
+  [ -n "$(reg .owner)" ] || fail "provider registry declares no accountable owner"
+fi
+
+case "$PROVIDER_MODE" in
+  absent)
+    log "[provider] no operator registry; consumer-local acquisition"
+    ;;
+  not-expected)
+    log "[provider] registry mode=not-expected; consumer-local acquisition (labeled)"
+    ;;
+  adapter-required|legacy-provider-allowed)
+    if [ "$OFFLINE" -eq 1 ]; then
+      # --offline is an explicit operator decision to consult no acquisition
+      # path at all. Falling through to cached repo-local evidence is honest;
+      # invoking the provider here would quietly make --offline reach the
+      # network through someone else's lease.
+      log "[provider] mode=$PROVIDER_MODE but --offline requested; using cached local catalogs"
+      KEV_SOURCE="offline-cached"
+      CVE_SOURCE="offline-cached"
+    else
+      PROVIDER_ADAPTER="$(reg .adapter_path)"
+      provider_checkout="$(reg .checkout_root)"
+      provider_cmd="$(reg .direct_provider)"
+      PROVIDER_STATE_ROOT="$(reg .state_root)"
+      provider_bash="$(reg .consumer_tool_paths.bash)"
+      [ -x "$PROVIDER_ADAPTER" ] ||
+        fail "registry mode=$PROVIDER_MODE but adapter $PROVIDER_ADAPTER is missing or not executable.
+  A missing expected provider is a blocking downgrade, not absence."
+      if [ "$PROVIDER_MODE" = legacy-provider-allowed ]; then
+        provider_expiry="$(reg .legacy_expiry)"
+        [ -n "$provider_expiry" ] || fail "legacy-provider-allowed registry declares no expiry"
+        [ "$(date -u -d "$provider_expiry" +%s)" -gt "$(date -u +%s)" ] ||
+          fail "legacy-provider-allowed registry expired at $provider_expiry"
+      fi
+
+      log "[provider] adapter ensure --feed all (lease ${PROVIDER_LEASE_SECONDS}s)"
+      provider_receipt="$EV_DIR/provider-receipt.json"
+      # env -i, not a denylist: no inherited loader/Python/shell-function variable
+      # may select different adapter or provider bytes.
+      if env -i "${provider_bash:-/usr/bin/bash}" -c \
+           "PATH=/usr/bin:/bin HOME=$HOME LANG=C.UTF-8 \
+            ACLAB_MIDDLEWARES_ROOT=$provider_checkout \
+            ACLAB_SECURITY_DATA_COMMAND=$provider_cmd \
+            $PROVIDER_ADAPTER ensure --feed all --max-age-seconds $PROVIDER_LEASE_SECONDS" \
+           > "$provider_receipt" 2>/dev/null &&
+         jq -e '.schema == "aclab-security-data-state/v1" and .result == "PASS"' \
+           "$provider_receipt" >/dev/null 2>&1; then
+        :
+      else
+        rm -f "$provider_receipt"
+        fail "governed security-data provider did not return PASS.
+  Absent, FAIL, or malformed provider evidence is unavailable evidence.
+  Refusing to silently fall back to a consumer-local download."
+      fi
+
+      # KEV: resolve the snapshot the receipt names, then verify the receipt
+      # SHA-256 against the exact file bytes before admitting them.
+      kev_snapshot="$(jq -r '.feeds[] | select(.feed=="kev") | .snapshot // empty' "$provider_receipt")"
+      kev_expect="$(jq -r '.feeds[] | select(.feed=="kev") | .sha256 // empty' "$provider_receipt")"
+      kev_status="$(jq -r '.feeds[] | select(.feed=="kev") | .status // empty' "$provider_receipt")"
+      case "$kev_status" in
+        reused|refreshed) ;;
+        *) fail "provider KEV feed status '$kev_status' is not reused|refreshed" ;;
+      esac
+      [ -f "$kev_snapshot" ] || fail "provider KEV snapshot $kev_snapshot does not exist"
+      [ "$(sha256 "$kev_snapshot")" = "$kev_expect" ] ||
+        fail "provider KEV receipt SHA-256 does not match the snapshot bytes.
+  Hash-inconsistent provider evidence blocks; it is never downgraded to a fallback."
+      cp -- "$kev_snapshot" "$KEV_FILE"
+      PROVIDER_KEV_OK=1
+      KEV_SOURCE="provider"
+      log "[provider] kev admitted ($kev_status)"
+
+      # CVE: the provider serves the full CVE List V5 catalog. Older pinned
+      # provider revisions expand `--feed all` to {trivy,kev} only, so the cve
+      # receipt is read from the operator state root when the run receipt has no
+      # cve entry. Either way the bytes are verified and freshness-bounded; a
+      # stale or missing catalog degrades to the scoped consumer path, which is
+      # labeled as such in the provenance instead of being passed off as central.
+      cve_receipt="$(jq -r '.feeds[] | select(.feed=="cve") | .snapshot // empty' "$provider_receipt")"
+      cve_receipt_file="$PROVIDER_STATE_ROOT/receipts/cve.json"
+      if [ -z "$cve_receipt" ] && [ -f "$cve_receipt_file" ]; then
+        cve_snapshot="$(jq -r '.snapshot // empty' "$cve_receipt_file")"
+        cve_expect="$(jq -r '.sha256 // empty' "$cve_receipt_file")"
+        cve_epoch="$(jq -r '.refreshed_at_epoch // 0' "$cve_receipt_file")"
+        cve_age_days=$(( ( $(date -u +%s) - cve_epoch ) / 86400 ))
+        if [ -f "$cve_snapshot" ] &&
+           [ "$(sha256 "$cve_snapshot")" = "$cve_expect" ] &&
+           [ "$cve_age_days" -le "$PROVIDER_CVE_MAX_AGE_DAYS" ] &&
+           jq -e '.schema == "cve-catalog-snapshot/v1"' "$cve_snapshot" >/dev/null 2>&1; then
+          cp -- "$cve_snapshot" "$CVE_CATALOG"
+          PROVIDER_CVE_OK=1
+          CVE_SOURCE="provider"
+          log "[provider] cve catalog admitted (age ${cve_age_days}d, $(jq -r .count "$CVE_CATALOG") records)"
+        else
+          log "[provider] cve catalog unusable (missing, hash-inconsistent, or > ${PROVIDER_CVE_MAX_AGE_DAYS}d); scoped consumer catalog will be used"
+        fi
+      fi
+    fi
+    ;;
+  *)
+    fail "provider registry declares unknown mode '$PROVIDER_MODE'"
+    ;;
+esac
+
+# ---------------------------------------------------------------------------
 # 4a. CISA KEV catalog. Unavailable refresh != empty catalog.
 # ---------------------------------------------------------------------------
 kev_is_fresh() {
@@ -207,7 +351,10 @@ kev_is_fresh() {
 }
 
 KEV_RETRIEVED="cached"
-if [ "$OFFLINE" -eq 1 ]; then
+if [ "$PROVIDER_KEV_OK" -eq 1 ]; then
+  KEV_RETRIEVED="$(jq -r '.feeds[] | select(.feed=="kev") | .refreshed_at // "provider"' "$EV_DIR/provider-receipt.json")"
+  log "[kev] governed provider snapshot (verified against its receipt)"
+elif [ "$OFFLINE" -eq 1 ]; then
   [ -f "$KEV_FILE" ] || fail "--offline requested but no cached KEV catalog at $KEV_FILE.
 Run once with network access: scripts/security/run.sh --refresh"
   log "[kev] using cached catalog (offline)"
@@ -250,8 +397,14 @@ python3 "$CI" cve-ids "${SBOM_FILES[@]}" "$EV_DIR"/*.govulncheck.cdx.json \
 mapfile -t DISCOVERED_CVES < "$cve_id_list"
 
 CVE_CATALOG_MODE="scoped"
+if [ "$PROVIDER_CVE_OK" -eq 1 ]; then
+  CVE_CATALOG_MODE="provider-full"
+fi
+
 if [ "${#DISCOVERED_CVES[@]}" -eq 0 ]; then
   log "[cve] no CVE candidates in evidence; correlation is vacuous"
+elif [ "$PROVIDER_CVE_OK" -eq 1 ]; then
+  log "[cve] ${#DISCOVERED_CVES[@]} CVE candidate(s); correlating against the provider's full catalog"
 else
   log "[cve] ${#DISCOVERED_CVES[@]} CVE candidate(s) discovered"
   fetched=0
@@ -287,6 +440,10 @@ fi
 # ---------------------------------------------------------------------------
 CORRELATION="$REPORT_DIR/correlation.json"
 CVE_SHA=""
+# An admitted provider catalog is provenance-worthy even when no candidate CVE
+# made the correlator run; otherwise the receipt names a catalog it cannot
+# identify.
+[ "$PROVIDER_CVE_OK" -eq 1 ] && CVE_SHA="$(sha256 "$CVE_CATALOG")"
 if [ "${#DISCOVERED_CVES[@]}" -eq 0 ]; then
   # Nothing to correlate. Record that explicitly instead of fabricating a
   # clean correlation receipt from catalogs that were never consulted.
@@ -323,6 +480,18 @@ fi
 # ---------------------------------------------------------------------------
 # Operator-owned catalog provenance.
 # ---------------------------------------------------------------------------
+if [ "$CVE_CATALOG_MODE" = "provider-full" ]; then
+  CVE_SOURCE_URI="https://github.com/CVEProject/cvelistV5"
+  CVE_CATALOG_NOTE="Full CVE List V5 daily-delta snapshot from the governed \
+aclab-middlewares provider, admitted after verifying its receipt SHA-256 against the \
+snapshot bytes. complete=false and completeness=not-asserted-by-source-schema still hold: \
+a scheduled refresh answers 'is this recent', never 'is this every CVE'."
+else
+  CVE_SOURCE_URI="$CVE_API/<CVE-ID>"
+  CVE_CATALOG_NOTE="Scoped to the CVE IDs discovered by the local scanners. \
+'not_present_in_supplied_snapshot' is therefore uninformative and never a global absence claim."
+fi
+
 python3 - "$PROVENANCE" <<PY
 import json
 from pathlib import Path
@@ -331,6 +500,8 @@ Path("$PROVENANCE").write_text(json.dumps({
     "generated_at": "$(now_utc)",
     "kev_catalog": {
         "source_uri": "$KEV_URL",
+        "acquisition": "$KEV_SOURCE",
+        "provider_mode": "$PROVIDER_MODE",
         "retrieved_at": "$KEV_RETRIEVED",
         "sha256": "$KEV_SHA",
         "catalog_version": "$KEV_VERSION",
@@ -339,12 +510,11 @@ Path("$PROVENANCE").write_text(json.dumps({
         "completeness": "not-asserted-by-source-schema",
     },
     "cve_catalog": {
-        "source_uri": "$CVE_API/<CVE-ID>",
+        "source_uri": "$CVE_SOURCE_URI",
+        "acquisition": "$CVE_SOURCE",
         "mode": "$CVE_CATALOG_MODE",
         "sha256": "$CVE_SHA",
-        "note": "Scoped to the CVE IDs discovered by the local scanners. "
-                "'not_present_in_supplied_snapshot' is therefore uninformative "
-                "and never a global absence claim.",
+        "note": "$CVE_CATALOG_NOTE",
     },
 }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 PY
