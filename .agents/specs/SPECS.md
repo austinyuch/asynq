@@ -19,7 +19,7 @@
 
 | CR ID | 對象 baseline | 描述 | 狀態 | 繼承的 evidence 義務 |
 |---|---|---|---|---|
-| CR-2026-08-19-deps-provider | SPEC-001(Security hardening + dependency upgrade) | 三 module 相依升級(go-redis 9.22.0、protobuf 1.36.12、x/text 0.41.0 等);`scripts/security/run.sh` 改由治理 aclab-middlewares security-data provider 取得 KEV/CVE catalog,provider 證據不符即擋下,不再靜默 fallback | 🟡 open — 部分驗證 | SPEC-001 的驗收含「全套 Valkey 測試綠」。目前 build+vet、lint(三 module 0 issues)、非 Redis 測試、security CI(PASS,KEV 0 / gosec 0)皆綠;**Redis-backed 套件(root、`internal/rdb`、`x/rate`)未跑**,阻塞於 IL-005。commits `7e4b010`、`a3083e5`,branch `chore/deps-security-20260819` |
+| CR-2026-08-19-deps-provider | SPEC-001(Security hardening + dependency upgrade) | 三 module 相依升級(go-redis 9.22.0、protobuf 1.36.12、x/text 0.41.0 等);`scripts/security/run.sh` 改由治理 aclab-middlewares security-data provider 取得 KEV/CVE catalog,provider 證據不符即擋下,不再靜默 fallback | ✅ completed (2026-08-19) | 已滿足 SPEC-001 的「全套 Valkey 測試綠」:root 206.4s / `internal/rdb` 17.0s / `x/rate` 1.1s 全 ok(`-race`,專用 Valkey 8 @ 127.0.0.1:16381);另 build+vet 三 module、lint 三 module 各 0 issues、非 Redis 套件全綠、security CI PASS(KEV-listed 0、gosec 0)。commits `7e4b010`、`a3083e5`、`9431103`,branch `chore/deps-security-20260819` |
 
 ## External contract 依賴
 
