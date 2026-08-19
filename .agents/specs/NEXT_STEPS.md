@@ -7,7 +7,7 @@
 | # | 項目 | 來源 | 條件 / 時機 |
 |---|---|---|---|
 | 1 | 下次 upstream 有更新時執行 upstream-sync skill(`.agents/skills/upstream-sync/`) | SPEC-003 | 週期性檢查或 upstream release;目前 0 behind(base `785bb72`) |
-| 2 | 下次 release 時依 FORK.md 慣例打 `v0.26.x-team.N`(x/tools 視 require 變動跟進,先 root 後 x 後 tools) | SPEC-004 | 有新功能/sync 合入後 |
+| 2 | 已發佈 `v0.26.0-team.3` / `x/v0.1.0-team.3` / `tools/v0.26.0-team.3`;下次 release 時依 FORK.md 慣例打下一個 `v0.26.x-team.N`(x/tools 視 require 變動跟進,先 root 後 x 後 tools) | SPEC-004 | 有新功能/sync 合入後 |
 
 ## Parked(明確不做,除非條件改變)
 
