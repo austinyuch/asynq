@@ -1,9 +1,5 @@
 github.com/MakeNowJust/heredoc/v2 v2.0.1 h1:rlCHh70XXXv7toz95ajQWOWQnN4WNLt0TdpZYIR/J6A=
 github.com/MakeNowJust/heredoc/v2 v2.0.1/go.mod h1:6/2Abh5s+hc3g9nbWLe9ObDIOhaRrqsyY9MWy+4JdRM=
-github.com/austinyuch/asynq v0.26.0-team.2 h1:dLPqm+vMVLaHJfEhA5sAZhl0DcAyCpTwJnPLQ6HDnII=
-github.com/austinyuch/asynq v0.26.0-team.2/go.mod h1:r9QhKhlk2wCWEeA3bI6Yfq0ZYys5+0XeBdeiPg5OZCw=
-github.com/austinyuch/asynq/x v0.1.0-team.2 h1:IvMkeMxEVC85ZFkwK5i7/7tXtM6zZKXhyR8gFFpFvpU=
-github.com/austinyuch/asynq/x v0.1.0-team.2/go.mod h1:uqnUrv5Zfaf6jn14mMatvkXaC8vQtXHCTdAfSk1pbMU=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
 github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6rlkpw=
 github.com/bsm/ginkgo/v2 v2.12.0 h1:Ny8MWAHyOepLGlLKYmXG4IEkioBysk6GpaRTLC8zwWs=
