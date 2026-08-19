@@ -31,7 +31,7 @@ git config core.hooksPath githooks   # 啟用 pre-push govulncheck
 | Module path | `github.com/hibiken/asynq` → `github.com/austinyuch/asynq`(root / `x` / `tools` 三個 module + 全部 import + proto `go_package`) | 下游直接 require,免 `replace` |
 | `x/go.mod` | require fork path(tagged)+ `replace => ../`(local dev;consumer 會忽略 replace) | multi-module repo 內部一致性 |
 | `tools/go.mod` | require fork tags,**無 replace**(`go install ...@tag` 拒絕含 replace 的 module)。本地開發 tools 對 root/x HEAD 時用 `go work init . x tools`(`go.work` 已 gitignore) | 支援遠端 `go install` |
-| Dependencies | go-redis v9.21.0、protobuf v1.36.11、x/sys v0.47.0、x/time v0.15.0;tools: prometheus/client_golang v1.24.1、cobra v1.10.2、viper v1.21.0、tcell v2.13.10、x/text v0.40.0 等。全 module 以 `go get -u ./...` 保持 latest-within-major | security hardening / CVE 面收斂;x/text ≥ v0.39.0 清掉 CVE-2026-56852 |
+| Dependencies | go-redis v9.22.0、protobuf v1.36.12、x/sys v0.47.0、x/time v0.15.0;tools: prometheus/client_golang v1.24.1、cobra v1.10.2、viper v1.21.0、tcell v2.13.10、x/text v0.41.0 等。全 module 以 `go get -u ./...` 保持 latest-within-major | security hardening / CVE 面收斂;x/text ≥ v0.39.0 清掉 CVE-2026-56852 |
 | Go version | `go 1.26`(三個 module 皆同,minor series、不釘 patch,無獨立 `toolchain` 行);CI `go-version: 1.26.x`(build.yml / benchstat.yml,單一版本非 matrix) | 跟上 supported releases;go.mod 與 CI 都在 1.26.x 系列內浮動,consumer 不會被某個 patch 卡住 |
 | CI | `redis:7` → `valkey/valkey:9.1.0`(build.yml / benchstat.yml) | 改用 Valkey 驗證 |
 | `server_test.go` | goleak 額外 ignore `maintnotifications.(*CircuitBreakerManager).cleanupLoop` | go-redis 9.20 新背景 goroutine |
@@ -73,6 +73,9 @@ Multi-module repo,tag 需帶目錄前綴:`vX.Y.Z-team.N`、`x/vX.Y.Z-team.N`、`
 | `v0.26.0-team.2` | `v0.26.0`(base 未變) | security release(PR #16):deps latest(x/text ≥ v0.39.0 清 CVE-2026-56852)、gosec 66 → 0(含 CWE-190 `int32` wrap 真 bug)、local SBOM/CVE/KEV/SAST gate、`go 1.26` |
 | `x/v0.1.0-team.2` | —(upstream 無 x tags) | require root `v0.26.0-team.2`;`go 1.26`、prometheus/client_golang v1.24.1 |
 | `tools/v0.26.0-team.2` | —(upstream 無 tools tags) | require root `v0.26.0-team.2` + x `v0.1.0-team.2`;CLI TLS `MinVersion` 1.2、exporter HTTP timeouts、48 處 error discard |
+| `v0.26.0-team.3` | `v0.26.0`(base 未變) | security/deps release(CR-2026-08-19-deps-provider):go-redis 9.22.0、protobuf 1.36.12、x/text 0.41.0 等;`scripts/security/run.sh` 改由治理 aclab-middlewares security-data provider 取得 KEV/CVE catalog |
+| `x/v0.1.0-team.3` | —(upstream 無 x tags) | require root `v0.26.0-team.3`;deps 同步升級 |
+| `tools/v0.26.0-team.3` | —(upstream 無 tools tags) | require root `v0.26.0-team.3` + x `v0.1.0-team.3`;deps 同步升級 |
 
 Release 順序(multi-module 相依,不可顛倒):先 tag root → bump `x/go.mod` require 後 tag x → bump `tools/go.mod` requires 後 tag tools。每個 module 一個 release PR(沿用 team.1 的 PR #2/#3/#4 先例)。
 
