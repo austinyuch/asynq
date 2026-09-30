@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"flag"
 	"math"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -132,11 +133,13 @@ func TestEnqueueTaskIdConflictError(t *testing.T) {
 		ID:      "custom_id",
 		Type:    "foo",
 		Payload: nil,
+		Queue:   base.DefaultQueueName,
 	}
 	m2 := base.TaskMessage{
 		ID:      "custom_id",
 		Type:    "bar",
 		Payload: nil,
+		Queue:   base.DefaultQueueName,
 	}
 
 	tests := []struct {
@@ -465,13 +468,15 @@ func TestEnqueueUniqueTaskIdConflictError(t *testing.T) {
 		ID:        "custom_id",
 		Type:      "foo",
 		Payload:   nil,
-		UniqueKey: "unique_key_one",
+		Queue:     base.DefaultQueueName,
+		UniqueKey: base.UniqueKey(base.DefaultQueueName, "foo", nil),
 	}
 	m2 := base.TaskMessage{
 		ID:        "custom_id",
 		Type:      "bar",
 		Payload:   nil,
-		UniqueKey: "unique_key_two",
+		Queue:     base.DefaultQueueName,
+		UniqueKey: base.UniqueKey(base.DefaultQueueName, "bar", nil),
 	}
 	const ttl = 30 * time.Second
 
@@ -1446,13 +1451,15 @@ func TestAddToGroupeTaskIdConflictError(t *testing.T) {
 		ID:        "custom_id",
 		Type:      "foo",
 		Payload:   nil,
-		UniqueKey: "unique_key_one",
+		Queue:     base.DefaultQueueName,
+		UniqueKey: base.UniqueKey(base.DefaultQueueName, "foo", nil),
 	}
 	m2 := base.TaskMessage{
 		ID:        "custom_id",
 		Type:      "bar",
 		Payload:   nil,
-		UniqueKey: "unique_key_two",
+		Queue:     base.DefaultQueueName,
+		UniqueKey: base.UniqueKey(base.DefaultQueueName, "bar", nil),
 	}
 	const groupKey = "mygroup"
 
@@ -1569,13 +1576,15 @@ func TestAddToGroupUniqueTaskIdConflictError(t *testing.T) {
 		ID:        "custom_id",
 		Type:      "foo",
 		Payload:   nil,
-		UniqueKey: "unique_key_one",
+		Queue:     base.DefaultQueueName,
+		UniqueKey: base.UniqueKey(base.DefaultQueueName, "foo", nil),
 	}
 	m2 := base.TaskMessage{
 		ID:        "custom_id",
 		Type:      "bar",
 		Payload:   nil,
-		UniqueKey: "unique_key_two",
+		Queue:     base.DefaultQueueName,
+		UniqueKey: base.UniqueKey(base.DefaultQueueName, "bar", nil),
 	}
 	const groupKey = "mygroup"
 	const ttl = 30 * time.Second
@@ -1667,13 +1676,15 @@ func TestScheduleTaskIdConflictError(t *testing.T) {
 		ID:        "custom_id",
 		Type:      "foo",
 		Payload:   nil,
-		UniqueKey: "unique_key_one",
+		Queue:     base.DefaultQueueName,
+		UniqueKey: base.UniqueKey(base.DefaultQueueName, "foo", nil),
 	}
 	m2 := base.TaskMessage{
 		ID:        "custom_id",
 		Type:      "bar",
 		Payload:   nil,
-		UniqueKey: "unique_key_two",
+		Queue:     base.DefaultQueueName,
+		UniqueKey: base.UniqueKey(base.DefaultQueueName, "bar", nil),
 	}
 	processAt := time.Now().Add(30 * time.Second)
 
@@ -1792,13 +1803,15 @@ func TestScheduleUniqueTaskIdConflictError(t *testing.T) {
 		ID:        "custom_id",
 		Type:      "foo",
 		Payload:   nil,
-		UniqueKey: "unique_key_one",
+		Queue:     base.DefaultQueueName,
+		UniqueKey: base.UniqueKey(base.DefaultQueueName, "foo", nil),
 	}
 	m2 := base.TaskMessage{
 		ID:        "custom_id",
 		Type:      "bar",
 		Payload:   nil,
-		UniqueKey: "unique_key_two",
+		Queue:     base.DefaultQueueName,
+		UniqueKey: base.UniqueKey(base.DefaultQueueName, "bar", nil),
 	}
 	const ttl = 30 * time.Second
 	processAt := time.Now().Add(30 * time.Second)
@@ -2507,7 +2520,32 @@ func TestArchiveTrim(t *testing.T) {
 			}
 
 			// check that only keys present in the archived set are in rdb
-			vals := r.client.Keys(context.Background(), base.TaskKeyPrefix(queue)+"*").Val()
+			ctx := context.Background()
+			pattern := base.TaskKeyPrefix(queue) + "*"
+			var vals []string
+			if cluster, ok := r.client.(*redis.ClusterClient); ok {
+				var mu sync.Mutex
+				err := cluster.ForEachMaster(ctx, func(ctx context.Context, client *redis.Client) error {
+					keys, err := client.Keys(ctx, pattern).Result()
+					if err != nil {
+						return err
+					}
+					mu.Lock()
+					vals = append(vals, keys...)
+					mu.Unlock()
+					return nil
+				})
+				if err != nil {
+					t.Fatalf("list task keys across cluster masters: %v", err)
+				}
+			} else {
+				var err error
+				vals, err = r.client.Keys(ctx, pattern).Result()
+				if err != nil {
+					t.Fatalf("list task keys: %v", err)
+				}
+			}
+			sort.Strings(vals)
 			if len(vals) != len(gotArchived) {
 				t.Errorf("len of keys = %v, want %v", len(vals), len(gotArchived))
 				return
