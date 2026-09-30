@@ -57,3 +57,6 @@ x/CLAUDE.md
 # cross-agents symlink bridge: claude-md end
 # xreview per-repo real config (seeded from template; never commit keys)
 .xreview/
+
+# Python scanner regression cache
+scripts/security/__pycache__/

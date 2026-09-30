@@ -1,0 +1,57 @@
+{
+  "scope": "internal/base/base.go",
+  "source_sha256": "e2d758ad19f74956ffaac351c4d2a137ea7d57a6312132709638f1682dbeb03c",
+  "test_sha256": "ecf7d17dbe54d5887e741255d8dbeed1474faad8db3ed1945e24784cc788323f",
+  "toolchain": "go1.26.6",
+  "claim": "bounded local source mutants only; not global mutation coverage",
+  "caught": 3,
+  "survived": 0,
+  "unviable": 0,
+  "mutants": [
+    {
+      "name": "saturation",
+      "status": "caught",
+      "command": [
+        "/home/ac/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.6.linux-arm64/bin/go",
+        "test",
+        "-overlay=/tmp/asynq-base-mutation/saturation.json",
+        "./internal/base",
+        "-run",
+        "^TestInt32SaturationProperty$",
+        "-count=1"
+      ],
+      "exit": 1,
+      "log": "/tmp/asynq-base-mutation/saturation.log"
+    },
+    {
+      "name": "state",
+      "status": "caught",
+      "command": [
+        "/home/ac/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.6.linux-arm64/bin/go",
+        "test",
+        "-overlay=/tmp/asynq-base-mutation/state.json",
+        "./internal/base",
+        "-run",
+        "^TestTaskStateContract$",
+        "-count=1"
+      ],
+      "exit": 1,
+      "log": "/tmp/asynq-base-mutation/state.log"
+    },
+    {
+      "name": "blank-queue",
+      "status": "caught",
+      "command": [
+        "/home/ac/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.26.6.linux-arm64/bin/go",
+        "test",
+        "-overlay=/tmp/asynq-base-mutation/blank-queue.json",
+        "./internal/base",
+        "-run",
+        "^TestQueueNameContract$",
+        "-count=1"
+      ],
+      "exit": 1,
+      "log": "/tmp/asynq-base-mutation/blank-queue.log"
+    }
+  ]
+}

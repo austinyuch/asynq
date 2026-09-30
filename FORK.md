@@ -6,6 +6,7 @@ Team-maintained fork of [hibiken/asynq](https://github.com/hibiken/asynq).
 
 | Branch | 角色 | 規則 |
 |---|---|---|
+| `dev` | 團隊整合 | topic slices 驗證後 merge;再以 PR promote 至 main |
 | `main`(default) | 下游消費 + 團隊 PR 目標 | PR-merge only;never rebase / force-push |
 | `master` | upstream 純鏡像 | 只能 `--ff-only` from `upstream/master`;永不放團隊 commit |
 
@@ -43,6 +44,12 @@ git config core.hooksPath githooks   # 啟用 pre-push govulncheck
 | Git hooks / local security CI | `githooks/pre-push` 跑 `scripts/security/run.sh`:對 root / `x` / `tools` 各做 SBOM(trivy)+ CVE(govulncheck,含 call-graph reachability)+ SAST(gosec)+ CISA KEV correlation;correlation 交給 `kev-sbom-correlation` skill 的 deterministic engine。KEV-listed CVE / reachable-with-fix / HIGH-severity SAST 會擋 push。啟用:`make security-hooks`(per-clone,不入版控)。工具缺失時降級為原本的 govulncheck-only gate 並明講,不 fail open。詳見 `docs/SECURITY_LOCAL_CI.md` | fork 的 import path 不在自動 advisory 覆蓋範圍內(見 `SECURITY.md`),supply-chain signal 自己在 push 前產生 |
 | SAST 修正 | gosec 66 → 0:`internal/base` 加 saturating `toInt32`(CWE-190,修 `int32` wrap 導致 retry 計數變負的真 bug)、metrics_exporter 加 HTTP timeouts(CWE-676)、CLI TLS 加 `MinVersion` 1.2(CWE-295)、48 處顯式 error discard(CWE-703);5 個 `#nosec` 皆註明理由並列表於 `docs/SECURITY_LOCAL_CI.md` | upstream 未做 SAST;修正順序依 CWE 對 KEV 的出現頻率排序 |
 
+
+## Current validation (2026-10-01)
+
+The reconciliation candidate merges upstream `d135f143` (three commits after `785bb72`) and verifies its memory-profiling environment contract. Promotion is pending independent review and the main PR gate. Go 1.26.5 produced reachable standard-library CVE blockers; local Go 1.26.6 cleared them. The existing `go 1.26`/CI `1.26.x` floating-series contract is retained. See CR-20261001-reconcile for coverage limits and evidence; this is not a new release or production-readiness claim.
+
+Imported upstream bare tags may exist locally after fetch. Never push them to the fork; only explicitly named fork `-team.N` release tags may be published.
 
 ## Sync log
 
