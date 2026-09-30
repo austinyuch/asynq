@@ -13,8 +13,8 @@
 
 - CR-20261001-reconcile: [bounded slices and evidence](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reconciliation.md), [tasks](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/tasks.md).
 - Cross-family Grok/ACP review needs explicit destination approval after automatic review refused unpublished candidate dispatch. Main promotion remains pending.
-- Global >=95% line coverage not achieved: root/rdb/x-metrics/tools require further vertical test slices. Base 100% and x/rate 96.2% are statement coverage, not global line evidence.
-- IL-004 requires a cluster-backed fixture slice; no cluster closeout from standalone PASS.
+- Global >=95% line coverage not achieved: root/rdb/tools require further vertical test slices; x/metrics targeted contracts now pass with 100% package statements. Base 100% and x/rate 96.2% are statement coverage, not global line evidence.
+- IL-004 candidate fixture/oracle repair has full standalone and three-master cluster race PASS; freeze successor evidence and promote after remaining gates. See CR test catalog and report.
 
 ## Parked(明確不做,除非條件改變)
 

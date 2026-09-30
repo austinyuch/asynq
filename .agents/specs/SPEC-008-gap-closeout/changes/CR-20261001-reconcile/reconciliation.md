@@ -31,3 +31,9 @@ Cross-family review: native xreview init selected Grok/ACP. Automatic approval r
 ## Validation limits
 
 Reports bind runtime, source digests and commands. Root first PASS ran across commit changes and is a baseline, not exact-final-commit proof. Final immutable gates and remote parity are recorded separately. Security raw evidence lives in gitignored .security/reconcile-20261001; SBOM subject includes dependency inputs and scanner digest. Catalog freshness does not prove completeness or global absence of vulnerabilities.
+
+## Successor test slices (2026-10-01, uncommitted candidate)
+
+See [TESTS.md](TESTS.md) and [test-slice-status.md](reports/test-slice-status.md). Internal errors/log/timeutil and metrics targets reach 100% statements with bounded properties/fuzz/mutation evidence. Root public contracts add 69 covered methods. IL-004 is candidate-resolved by six canonical fixtures and an all-master ArchiveTrim oracle: full standalone and cluster race suites pass. Remaining whole-project coverage and immutable successor gates stay open. The above inventory and percentages describe the earlier baseline, not the successor's final coverage.
+
+The public scheduler option parser delimiter defect is being repaired in a separate production/regression slice. No release or final promotion verdict is implied by these interim results.

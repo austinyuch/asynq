@@ -18,5 +18,5 @@
 | R-10 | 「fix them」(open gaps:IL-001、IL-003、review 裁決機制) | SPEC-008 | `make proto` 重生、dash ANSI→PNG 實擷、`docs/assets/` disposition、首份 review.md | PR #11 merge `acae113`;SPEC-008 review.md;ISSUE_LOG IL-R05/R06 |
 | R-11 | 「fix gaps」(cluster not_assessed、dash.gif upstream 素材、CI flake) | SPEC-008(round 2) | 3-node cluster 驗證、`client_test.go` EquateInt64Approx、dash.gif fork 重攝 | PR #11(`1870aa2`);cluster root 套件綠 209.96s;CI pass 3m59s;IL-004 記錄 rdb cluster 例外 |
 | R-12 | ROI vertical slices整合後經dev promote main | SPEC-003 / CR-20261001-reconcile | upstream merge + topic commits | [CR](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reconciliation.md);review/promotion未完成 |
-| R-13 | 三module SBOM + CVE/KEV更新 | SPEC-001 / CR-20261001-reconcile | runtime-aware fix plan + existing security gate | .security/reconcile-20261001/execution-receipt.json;Go1.26.6 PASS,候選SHA須對照receipt |
-| R-14 | >=95% line coverage、PBT/mutation/fuzz | SPEC-008 / CR-20261001-reconcile | base contracts + bounded fuzz/mutants | [reports](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/);global target未達成 |
+| R-13 | 三module SBOM + CVE/KEV更新 | SPEC-001 / CR-20261001-reconcile | runtime-aware fix plan + existing security gate | .security/security-<candidate>/execution-receipt.json;Go1.26.6 PASS,候選SHA須對照receipt |
+| R-14 | >=95% line coverage、PBT/mutation/fuzz | SPEC-008 / CR-20261001-reconcile | public/internal/metrics/CLI/rdb contracts + bounded properties/fuzz/mutants | [reports](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/);global target未達成 |

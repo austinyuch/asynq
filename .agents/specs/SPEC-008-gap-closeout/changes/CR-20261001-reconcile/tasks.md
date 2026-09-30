@@ -10,6 +10,6 @@
 - [ ] Cross-family review: destination approval required after automatic review refusal.
 - [ ] Integrate validated candidate into dev, then protected main PR/check/merge.
 - [ ] Reach >=95% project-wide line coverage; remaining root/rdb/x-metrics/tools gaps open.
-- [ ] IL-004 cluster fixtures and complete cluster regression evidence.
+- [x] IL-004 canonical cluster fixtures and all-master ArchiveTrim oracle; full standalone/cluster race suites PASS (successor final gate pending).
 - [ ] Release decision after functional promotion, sequential root/x/tools tags only; never push imported upstream bare tags.
 - [ ] Reclaim regenerable task-owned cache after persisting evidence; stop task runtime and release registry claim.
