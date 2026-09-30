@@ -34,9 +34,9 @@ Review 文件的所有數據引用 `docs/manual/assets/*.txt`(由 `docs/manual/d
 | Gap | 狀態 | Code |
 |---|---|---|
 | `asynq dash` TUI 視覺 | 文字 + 圖形層皆實擷(引用 manual assets txt/png) | resolved(SPEC-008) |
-| `docs/assets/` upstream 素材 | 逐檔 disposition 完成(9 檔零引用 legacy、dash.gif upstream 示意) | documented |
+| `docs/assets/` upstream 素材 | 逐檔 disposition 完成(9 檔零引用 legacy、dash.gif fork 環境重攝) | documented |
 | 正式 review.md 裁決 | **已建立**:`SPEC-008-gap-closeout/review.md` | 裁決機制生效 |
-| Redis Cluster mode | 裁決明列 not_assessed | 殘餘(低) |
+| Redis Cluster mode | SPEC-008 裁決:公開 API 層 PASS;internal/rdb 原始層 CONDITIONAL(IL-004) | historical runtime verdict(2026-06-07) |
 
 ### Gaps resolved since last check(本次:2026-06-07 再生 #3 / gap closeout)
 

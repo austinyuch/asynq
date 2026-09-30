@@ -99,7 +99,7 @@
 <details><summary>Q:導入後節省什麼成本?</summary><div>安全升級從「N 個專案 × 每次」變成「1 次 fork 升級 + 下游 bump 版本號」;CI 成本依指示壓到單 job 27-28s 且只在 PR 觸發。</div></details>
 <details><summary>Q:供應鏈安全如何確保?</summary><div>protected main(PR + required check)、master 鏡像 ff-only 不可污染、tags 不可移動、release train 順序(root→x→tools)保證 require 可解析;go.sum 完整鎖定。另有 pre-push hook 對 root/x/tools 三 module 跑 <code>govulncheck</code>(PR #9 起),已知漏洞在 push 前即攔截。</div></details>
 <h3>下游專案 / 外部</h3>
-<details><summary>Q:與直接用 hibiken/asynq 差在哪?</summary><div>功能 API 完全相同(目前與 upstream 0 commit 差距);差異在治理:依賴較新(go-redis 9.20 vs 9.14)、Valkey 驗證、版本由團隊控制節奏。</div></details>
+<details><summary>Q:與直接用 hibiken/asynq 差在哪?</summary><div>功能 API 完全相同(2026-06-07 與 upstream base <code>785bb72</code> 同步;最新差距須重新 fetch 驗證);差異在治理:依賴較新(go-redis 9.20 vs 9.14)、Valkey 驗證、版本由團隊控制節奏。</div></details>
 <details><summary>Q:支援哪些整合?</summary><div>與 upstream 相同:Redis/Valkey(standalone/cluster/sentinel)、Prometheus(x/metrics + exporter)、cron 式週期任務;Web UI 可外接 Asynqmon(外部專案,未在 fork 驗證範圍)。</div></details>
 <details><summary>Q:未來 6 個月路線?</summary><div>backlog hint(非承諾,見 NEXT_STEPS.md):跟隨 upstream release 週期 sync;有新功能合入時依 release train 慣例出 v0.26.x-team.N。</div></details>
 <h3>使用者</h3>
@@ -191,7 +191,7 @@ flowchart LR
 <h2>7. Roadmap(backlog hint,非承諾)</h2>
 <ul class="timeline">
 <li><b>已完成(2026-06-07)</b>:hardening → rename → 治理 → release train v0.26.0-team.1 → 文件(manual + review)→ govulncheck hook(PR #9)→ 文件再生 #2 → <b>gap closeout(SPEC-008:IL-001/IL-003 結案 + 首份 review.md 裁決)</b></li>
-<li><b>持續</b>:upstream 有更新時走 upstream-sync pipeline(目前 0 behind);sync 後出 v0.26.x-team.N</li>
+<li><b>持續</b>:upstream 有更新時走 upstream-sync pipeline(2026-06-07 base <code>785bb72</code> 為 0 behind;最新差距須重新 fetch 驗證);sync 後出 v0.26.x-team.N</li>
 <li><b>候選</b>(NEXT_STEPS hint):upstream sync 週期執行;IL-004 可考慮回饋 upstream(rdb 測試補 Queue 欄位)</li>
 </ul>
 
