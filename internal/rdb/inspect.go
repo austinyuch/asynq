@@ -7,6 +7,7 @@ package rdb
 import (
 	"context"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 
@@ -137,6 +138,8 @@ table.insert(res, aggregating_count)
 return res`)
 
 // CurrentStats returns a current state of the queues.
+// if DISABLE_MEMORY_USAGE_PROFILING is set to "true" or any non empty value, memory usage profiling will be disabled
+// which is otherwise always performed..
 func (r *RDB) CurrentStats(qname string) (*Stats, error) {
 	var op errors.Op = "rdb.CurrentStats"
 	exists, err := r.queueExists(qname)
@@ -228,11 +231,15 @@ func (r *RDB) CurrentStats(qname string) (*Stats, error) {
 		}
 	}
 	stats.Size = size
-	memusg, err := r.memoryUsage(qname)
-	if err != nil {
-		return nil, errors.E(op, errors.CanonicalCode(err), err)
+	disableMemUsageProfiling := os.Getenv("DISABLE_MEMORY_USAGE_PROFILING")
+	if disableMemUsageProfiling == "false" || disableMemUsageProfiling == "" {
+		memusg, err := r.memoryUsage(qname)
+		if err != nil {
+			return nil, errors.E(op, errors.CanonicalCode(err), err)
+		}
+
+		stats.MemoryUsage = memusg
 	}
-	stats.MemoryUsage = memusg
 	return stats, nil
 }
 
