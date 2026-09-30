@@ -138,8 +138,8 @@ table.insert(res, aggregating_count)
 return res`)
 
 // CurrentStats returns a current state of the queues.
-// if DISABLE_MEMORY_USAGE_PROFILING is set to "true" or any non empty value, memory usage profiling will be disabled
-// which is otherwise always performed..
+// Setting DISABLE_MEMORY_USAGE_PROFILING to any non-empty value other than "false"
+// disables memory usage profiling. Unset, empty, and "false" keep it enabled.
 func (r *RDB) CurrentStats(qname string) (*Stats, error) {
 	var op errors.Op = "rdb.CurrentStats"
 	exists, err := r.queueExists(qname)
