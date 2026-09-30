@@ -1,7 +1,7 @@
 {
   "scope": "internal/base/base.go",
   "source_sha256": "e2d758ad19f74956ffaac351c4d2a137ea7d57a6312132709638f1682dbeb03c",
-  "test_sha256": "ecf7d17dbe54d5887e741255d8dbeed1474faad8db3ed1945e24784cc788323f",
+  "test_sha256": "aa48c2c8243592cd651a6c7a0197cfbf7a528b0796b3b9361070ece0d2e69ef4",
   "toolchain": "go1.26.6",
   "claim": "bounded local source mutants only; not global mutation coverage",
   "caught": 3,
@@ -21,7 +21,10 @@
         "-count=1"
       ],
       "exit": 1,
-      "log": "/tmp/asynq-base-mutation/saturation.log"
+      "log": "/tmp/asynq-base-mutation/saturation.log",
+      "archived_log": "/home/ac/.codex/worktrees/0f02/asynq/.security/reconcile-20261001/mutation-final/saturation.log",
+      "archived_mutant": "/home/ac/.codex/worktrees/0f02/asynq/.security/reconcile-20261001/mutation-final/saturation.go",
+      "archived_overlay": "/home/ac/.codex/worktrees/0f02/asynq/.security/reconcile-20261001/mutation-final/saturation.json"
     },
     {
       "name": "state",
@@ -36,7 +39,10 @@
         "-count=1"
       ],
       "exit": 1,
-      "log": "/tmp/asynq-base-mutation/state.log"
+      "log": "/tmp/asynq-base-mutation/state.log",
+      "archived_log": "/home/ac/.codex/worktrees/0f02/asynq/.security/reconcile-20261001/mutation-final/state.log",
+      "archived_mutant": "/home/ac/.codex/worktrees/0f02/asynq/.security/reconcile-20261001/mutation-final/state.go",
+      "archived_overlay": "/home/ac/.codex/worktrees/0f02/asynq/.security/reconcile-20261001/mutation-final/state.json"
     },
     {
       "name": "blank-queue",
@@ -51,7 +57,13 @@
         "-count=1"
       ],
       "exit": 1,
-      "log": "/tmp/asynq-base-mutation/blank-queue.log"
+      "log": "/tmp/asynq-base-mutation/blank-queue.log",
+      "archived_log": "/home/ac/.codex/worktrees/0f02/asynq/.security/reconcile-20261001/mutation-final/blank-queue.log",
+      "archived_mutant": "/home/ac/.codex/worktrees/0f02/asynq/.security/reconcile-20261001/mutation-final/blank-queue.go",
+      "archived_overlay": "/home/ac/.codex/worktrees/0f02/asynq/.security/reconcile-20261001/mutation-final/blank-queue.json"
     }
-  ]
+  ],
+  "candidate": "d41bce11615fdd6e9f4aa666999fecfb3c2f2d86",
+  "tree": "21f1b3566d824647bbae85b097bec25bcd3989c4",
+  "status_porcelain": ""
 }
