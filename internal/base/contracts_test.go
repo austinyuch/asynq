@@ -35,7 +35,7 @@ func TestTaskStateContract(t *testing.T) {
 					t.Error("invalid state must panic")
 				}
 			}()
-			state.String()
+			_ = state.String()
 		})
 	}
 }

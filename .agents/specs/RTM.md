@@ -1,5 +1,7 @@
 # RTM — Requirements Traceability Matrix(austinyuch/asynq fork governance)
 
+> 本表 R-01~R-11 是 2026-06-07 歷史baseline,不得當作現行依賴或本輪gate。2026-10-01 reconciliation見下列R-12~R-14及CR證據。
+
 > 需求 → spec → 實作 → 驗證證據 的橋接。只列 fork 治理層需求;library 本身的功能矩陣見 upstream 測試套件。
 
 | Req ID | 需求(使用者原話摘要) | Spec | 實作 | 驗證證據 |
@@ -15,3 +17,6 @@
 | R-09 | 「govulncheck 加入 pre-push hook」 | —(direct change,PR #9) | `githooks/pre-push`(root/x/tools 三 module)+ `core.hooksPath` 啟用法載於 FORK.md | PR #9 merge `45c2a2f`;hook 於 push 時實際觸發,三 module 均 No vulnerabilities found |
 | R-10 | 「fix them」(open gaps:IL-001、IL-003、review 裁決機制) | SPEC-008 | `make proto` 重生、dash ANSI→PNG 實擷、`docs/assets/` disposition、首份 review.md | PR #11 merge `acae113`;SPEC-008 review.md;ISSUE_LOG IL-R05/R06 |
 | R-11 | 「fix gaps」(cluster not_assessed、dash.gif upstream 素材、CI flake) | SPEC-008(round 2) | 3-node cluster 驗證、`client_test.go` EquateInt64Approx、dash.gif fork 重攝 | PR #11(`1870aa2`);cluster root 套件綠 209.96s;CI pass 3m59s;IL-004 記錄 rdb cluster 例外 |
+| R-12 | ROI vertical slices整合後經dev promote main | SPEC-003 / CR-20261001-reconcile | upstream merge + topic commits | [CR](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reconciliation.md);review/promotion未完成 |
+| R-13 | 三module SBOM + CVE/KEV更新 | SPEC-001 / CR-20261001-reconcile | runtime-aware fix plan + existing security gate | .security/reconcile-20261001/execution-receipt.json;Go1.26.6 PASS,候選SHA須對照receipt |
+| R-14 | >=95% line coverage、PBT/mutation/fuzz | SPEC-008 / CR-20261001-reconcile | base contracts + bounded fuzz/mutants | [reports](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/);global target未達成 |

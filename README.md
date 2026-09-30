@@ -12,6 +12,8 @@ Asynq is a Go library for queueing tasks and processing them asynchronously with
 
 > 📌 **Team fork** of [hibiken/asynq](https://github.com/hibiken/asynq) — module path `github.com/austinyuch/asynq`. Governance / branch model / release tags: [FORK.md](FORK.md) · User manual: [docs/manual/](docs/manual/) · Project review: [docs/review/](docs/review/)
 
+Local SBOM/CVE/KEV checks and Go runtime remediation: [security CI guide](docs/SECURITY_LOCAL_CI.md).
+
 Highlevel overview of how Asynq works:
 
 - Client puts tasks on a queue
