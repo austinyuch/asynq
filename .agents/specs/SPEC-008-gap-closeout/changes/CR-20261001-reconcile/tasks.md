@@ -48,3 +48,5 @@
 
 - [x] Repair group visible-page selection, short/tiny/empty/shrunk page bounds, positive task fetch capacity and event-loop resize; preserve seven original failures and independent model/PBT/fuzz/mutation evidence. Delivery gates are commit-bound in `.security/final-group-navigation/`; promotion stays open.
 - [x] Bounded line-event control-flow experiment: actual OR probe omission reproduced/fixed in /tmp; independent serial/defer/concurrent witnesses and three generator mutants; no project denominator adoption.
+
+- [x] Verify nonempty CLI task tables, pagination wiring and ProcessIn bounds; focused race/PBT/four assertion mutants and nonauthor review PASS. Exact successor delivery uses `.security/final-task-visibility/`.

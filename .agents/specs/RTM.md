@@ -26,3 +26,5 @@
 | R-16 | 完整垂直切片與 exporter lifecycle 交付 | SPEC-008 / CR-20261001-reconcile | private instance ownership, graceful signals and shared shutdown barrier | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/exporter-lifecycle.md); exact1abf9d3 tools/build/security/entrypoint PASS; promotion pending |
 
 | R-17 | 修復實際 dashboard group 選取與 viewport 失效 | SPEC-008 / CR-20261001-reconcile | shared page/row range and immediate resize redraw | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/group-navigation.md); source-bound PBT/fuzz/mutation, frozen delivery subject in ledger; promotion pending |
+
+| R-REC-18 | CLI nonempty task output / pagination wiring / ProcessIn bounds | CR-20261001-reconcile | reports/task-visibility.md; CR TESTS T-REC-TASK-VISIBILITY | focused source-bound race/property/4 mutants PASS; exact delivery ledger pending |
