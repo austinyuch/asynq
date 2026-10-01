@@ -85,3 +85,7 @@
 - [x] Actual ServeMux middleware normal/first-middle-last panic temporal witness; four normal/race suites and three phase mutants,115 materials/86 sources reviewed. Direct defer retained; TryLock proves lock-release effect, not native defer-body events.
 
 - [x] Exact pre-push controlled seven-path routing and native Bash entry observer; independent exit/order/cwd oracles and three postprocessed detector mutants reviewed. Raw trace suffix discarded;65-line inventory retains unknown syntax. No real scanner/push/global95 claim.
+
+- [x] Public Inspector real-cluster readonly slot/node contracts across three masters; independent CRC/complete-range-set oracles, public closed-transport native fuzz and three assertion mutants. Frozen2d07568 complete root race PASS,137 sources; nine historical DBs and cluster11 keys preserved.
+- [x] Source-bound registry/process journal prototype plus reusable Python consumer; true fatalExit7 journal preservation, wrong-context/UTF8/duplicate/shape guards, realCLI/PBT/fuzz/mutants and nonauthor review. Consumer is tracked; experimental assembler/full-project denominator is not adopted.
+- [ ] Deliver event-ledger/Inspector successor with current source-bound consumer/build/security/governance/source-carry and dev/hosted parity; final-event-ledger authority.
