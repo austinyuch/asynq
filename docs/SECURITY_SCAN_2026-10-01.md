@@ -1,10 +1,10 @@
 # SBOM / CVE / KEV scan — 2026-10-01
 
-Executed `scripts/security/run.sh --refresh` at 2026-10-01T04:19:45.125870+00:00 with Go 1.26.6 and pinned Trivy image `docker.io/aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969`. Exit 0; policy verdict PASS.
+Executed `scripts/security/run.sh --refresh` at 2026-10-01T05:47:26.962865+00:00 with Go 1.26.6 and pinned Trivy image `docker.io/aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969`. Exit 0; policy verdict PASS.
 
 ## Subject and results
 
-This working-tree scan is based on commit `b146972d041e75a658debcbe724bc9c4791e8edd`. Two CLI contract test files were untracked; this is not a clean-commit release attestation. The receipt binds all tracked and untracked source bytes, unchanged throughout execution. All six root/x/tools dependency manifests were also unchanged. No dependency upgrade or new suppression was introduced.
+This working-tree scan is based on commit `de884752574ca0111049944da8080a2020eb5357`. `tools/metrics_exporter/main.go` was modified and `tools/metrics_exporter/lifecycle_contract_test.go` was untracked; this is not a clean-commit release attestation. The receipt binds 227 tracked and untracked source files, unchanged throughout execution. Later edits to this report are outside that execution snapshot. All six root/x/tools dependency manifests were also unchanged. No dependency upgrade or new suppression was introduced.
 
 | Module | CycloneDX version | Components | Reported CVEs |
 | --- | --- | ---: | ---: |
@@ -18,9 +18,9 @@ The existing gosec G118 warning at `internal/context/context.go:39` remains medi
 
 ## Local evidence
 
-- Three SBOMs: `.security/security-user-refresh-20261001/sbom/`.
-- Raw scans, normalized evidence, catalog provenance and policy verdict: `.security/security-user-refresh-20261001/`.
-- Execution/source/material hash receipt: `.security/security-user-refresh-20261001/execution-receipt.json`.
-- Bundle: `.security/sbom-user-refresh-20261001.tar.gz`; SHA-256 `09da0b4c96f3211ef52be0a41cd9e74b2166869839c397646d9d9ee4fa76233a`.
+- Three SBOMs: `.security/security-exporter-wip-new/sbom/`.
+- Raw scans, normalized evidence, catalog provenance and policy verdict: `.security/security-exporter-wip-new/`.
+- Execution/source/material hash receipt: `.security/security-exporter-wip-new/execution-receipt.json`.
+- Bundle: `.security/sbom-exporter-wip-new.tar.gz`; SHA-256 `ab38459b106436be52a511783f943944d93d53ed7fb905dc72154ce78b1a71ba`.
 
-All 25 material hashes were read back before bundling. Artifacts remain local and git-ignored; this document records their identity, not hosted publication. Dev/main promotion and release remain subject to the existing review and coverage gates. The prior clean b146972 gate remains separately available under `.security/security-b146972/`.
+All 25 material hashes were read back before bundling. Artifacts remain local and git-ignored; this document records their identity, not hosted publication. Dev/main promotion and release remain subject to the existing review and coverage gates. The prior clean de88475 gate remains separately available under `.security/security-de88475/`. Security tool regression tests also passed: 25 tests via `python3 -m unittest discover -s scripts/security -p "test_*.py"`. No dependency change was required by the supplied findings.

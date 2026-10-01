@@ -39,5 +39,7 @@
 
 - [x] Close CLI task-owned connections, preserve domain error causes, reject unreadable/malformed explicit config before command bodies; exact78499b1 tools race/build/security gates and topic/PR21 parity PASS.
 
-- [ ] Queue/stats first failure status, owned transport closure, effective cluster config and readable node output; reviewed standalone/three-master contracts PASS, exact successor gate and push pending.
+- [x] Queue/stats first failure status, owned transport closure, effective cluster config and readable node output; de88475 exact tools race/three-master/build/vet/security gates and topic/PR21 parity PASS.
 - [ ] Adopt a verified project line measurement policy/instrumenter; bounded AST witness prototype PASS is experimental and does not satisfy global line95.
+
+- [x] Refresh de88475-plus-exporter WIP three-module SBOM/CVE/KEV scan; 25 closed materials / 227 execution sources / 26 archive members independently verified; 0 blocking / 0 supplied KEV, existing G118 retained. See docs/SECURITY_SCAN_2026-10-01.md; not a clean-commit attestation.
