@@ -366,6 +366,10 @@ func TestFetchIdentityResizeReturnEpoch(t *testing.T) {
 		x.s.SetSize(512, height)
 		x.s.PostEventWait(tcell.NewEventResize(512, height))
 		x.frameAfter(t, after, hasText("=== Queue Summary ==="))
+		resized := identityAdmission(t, f)
+		if resized.page != 1 || resized.context.pageSize != height-15 {
+			t.Fatal("resize admission has wrong page/capacity")
+		}
 	}
 	identityTask(t, x, old, "old-before-resize")
 	if strings.Contains(identityBarrier(t, x), "old-before-resize") {

@@ -406,10 +406,18 @@ func drawTaskTable(d *ScreenDrawer, state *State) {
 	}
 }
 
+// Navigation follows the selected domain count, including while a page is
+// loading. Division before multiplication avoids overflow at extreme counts.
+func lastTaskPage(s tcell.Screen, state *State) int {
+	total := selectedTaskCount(state)
+	if total <= 0 {
+		return 1
+	}
+	return (total-1)/taskPageSize(s) + 1
+}
+
 func isNextTaskPageAvailable(s tcell.Screen, state *State) bool {
-	totalCount := selectedTaskCount(state)
-	end := (state.pageNum-1)*taskPageSize(s) + len(state.tasks)
-	return end < totalCount
+	return state.pageNum < lastTaskPage(s, state)
 }
 
 // Aggregating task pages represent the selected group, not the whole queue.

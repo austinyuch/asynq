@@ -57,7 +57,7 @@
 
 - [x] Reproduce cross-queue loading Enter panic and reset task row on new queue entry; source-bound race/32x8 properties/three assertion mutants PASS; exact delivery .security/final-queue-selection/.
 - [x] Reproduce IL021 with two consumer assertion failures and repair tagged admission/acceptance; reviewed focused race/PBT/fuzz/five assertion mutants PASS; exact real-fixture delivery authoritative in final-fetch-identity ledger.
-- [ ] Reproduce and repair IL022 task resize/page snapshot mismatch; remains source traced, not runtime closed.
+- [x] Reproduce seven IL022 assertion failures and repair viewport/page loading behavior; focused successor race/PBT/fragment fuzz/mutation reviewed PASS; exact full tools delivery in final-task-viewport ledger.
 
 - [x] Integrate validated slices into dev via no-ff bc9fad7; push parity verified; main draft PR22 hosted build PASS with exact checkout tree proof. Main merge remains unfinished.
 - [x] User-requested latest dev/WIP SBOM/CVE/KEV refresh: three modules, 25 closed materials / 26 verified archive members, PASS with existing G118 retained; see docs/SECURITY_SCAN_2026-10-01.md.

@@ -258,11 +258,20 @@ func (h *keyEventHandler) handleRightKey() {
 	}
 }
 
+// Clear selection before admission so loading Enter cannot open an old row.
+func (h *keyEventHandler) fetchTaskPage(page int) {
+	h.state.pageNum = page
+	h.state.tasks = nil
+	h.state.taskTableRowIdx = 0
+	h.fetcher.Fetch(h.state)
+	h.resetTicker()
+	h.drawer.Draw(h.state)
+}
+
 func (h *keyEventHandler) nextPage() {
 	var (
 		s     = h.s
 		state = h.state
-		f     = h.fetcher
 		d     = h.drawer
 	)
 	if state.view == viewTypeQueueDetails {
@@ -273,11 +282,14 @@ func (h *keyEventHandler) nextPage() {
 				state.groupTableRowIdx = 0
 				d.Draw(state)
 			}
-		} else {
-			if isNextTaskPageAvailable(s, state) {
-				state.pageNum++
-				f.Fetch(state)
-				h.resetTicker()
+		} else if state.taskID == "" {
+			last := lastTaskPage(s, state)
+			page := min(max(state.pageNum, 1), last)
+			if page < last {
+				page++
+			}
+			if page != state.pageNum {
+				h.fetchTaskPage(page)
 			}
 		}
 	}
@@ -287,7 +299,6 @@ func (h *keyEventHandler) prevPage() {
 	var (
 		s     = h.s
 		state = h.state
-		f     = h.fetcher
 		d     = h.drawer
 	)
 	if state.view == viewTypeQueueDetails {
@@ -298,11 +309,13 @@ func (h *keyEventHandler) prevPage() {
 				state.groupTableRowIdx = 0
 				d.Draw(state)
 			}
-		} else {
-			if state.pageNum > 1 {
-				state.pageNum--
-				f.Fetch(state)
-				h.resetTicker()
+		} else if state.taskID == "" {
+			page := min(max(state.pageNum, 1), lastTaskPage(s, state))
+			if page > 1 {
+				page--
+			}
+			if page != state.pageNum {
+				h.fetchTaskPage(page)
 			}
 		}
 	}
