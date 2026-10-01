@@ -7,12 +7,15 @@ package cmd
 import (
 	"fmt"
 	"io"
+	"sort"
+	"strings"
 
 	"github.com/MakeNowJust/heredoc/v2"
-	"github.com/fatih/color"
 	"github.com/austinyuch/asynq"
 	"github.com/austinyuch/asynq/internal/errors"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 const separator = "================================================="
@@ -49,8 +52,8 @@ var queueListCmd = &cobra.Command{
 var queueInspectCmd = &cobra.Command{
 	Use:   "inspect <queue> [<queue>...]",
 	Short: "Display detailed information on one or more queues",
-	Args: cobra.MinimumNArgs(1),
-	RunE: queueInspect,
+	Args:  cobra.MinimumNArgs(1),
+	RunE:  queueInspect,
 	Example: heredoc.Doc(`
 		$ asynq queue inspect myqueue
 		$ asynq queue inspect queue1 queue2 queue3`),
@@ -59,8 +62,8 @@ var queueInspectCmd = &cobra.Command{
 var queueHistoryCmd = &cobra.Command{
 	Use:   "history <queue> [<queue>...]",
 	Short: "Display historical aggregate data from one or more queues",
-	Args: cobra.MinimumNArgs(1),
-	RunE: queueHistory,
+	Args:  cobra.MinimumNArgs(1),
+	RunE:  queueHistory,
 	Example: heredoc.Doc(`
 		$ asynq queue history myqueue
 		$ asynq queue history queue1 queue2 queue3
@@ -101,41 +104,57 @@ var queueRemoveCmd = &cobra.Command{
 }
 
 func queueList(cmd *cobra.Command, args []string) error {
+	clusterMode := viper.GetBool("cluster")
 	type queueInfo struct {
 		name    string
 		keyslot int64
 		nodes   []*asynq.ClusterNode
 	}
 	inspector := createInspector()
+	defer inspector.Close()
 	queues, err := inspector.Queues()
 	if err != nil {
-		return fmt.Errorf("could not fetch list of queues: %v", err)
+		return fmt.Errorf("could not fetch list of queues: %w", err)
 	}
 	var qs []*queueInfo
+	var firstErr error
 	for _, qname := range queues {
 		q := queueInfo{name: qname}
-		if useRedisCluster {
+		if clusterMode {
 			keyslot, err := inspector.ClusterKeySlot(qname)
 			if err != nil {
-				fmt.Printf("error: could not get cluster keyslot for %q\n", qname)
+				wrapped := fmt.Errorf("could not get cluster keyslot for %q: %w", qname, err)
+				fmt.Printf("error: %v\n", wrapped)
+				if firstErr == nil {
+					firstErr = wrapped
+				}
 				continue
 			}
 			q.keyslot = keyslot
 			nodes, err := inspector.ClusterNodes(qname)
 			if err != nil {
-				fmt.Printf("error: could not get cluster nodes for %q\n", qname)
+				wrapped := fmt.Errorf("could not get cluster nodes for %q: %w", qname, err)
+				fmt.Printf("error: %v\n", wrapped)
+				if firstErr == nil {
+					firstErr = wrapped
+				}
 				continue
 			}
 			q.nodes = nodes
 		}
 		qs = append(qs, &q)
 	}
-	if useRedisCluster {
+	if clusterMode {
 		printTable(
 			[]string{"Queue", "Cluster KeySlot", "Cluster Nodes"},
 			func(w io.Writer, tmpl string) {
 				for _, q := range qs {
-					_, _ = fmt.Fprintf(w, tmpl, q.name, q.keyslot, q.nodes)
+					nodes := make([]string, 0, len(q.nodes))
+					for _, node := range q.nodes {
+						nodes = append(nodes, node.ID+"@"+node.Addr)
+					}
+					sort.Strings(nodes)
+					_, _ = fmt.Fprintf(w, tmpl, q.name, q.keyslot, strings.Join(nodes, ","))
 				}
 			},
 		)
@@ -144,11 +163,13 @@ func queueList(cmd *cobra.Command, args []string) error {
 			fmt.Println(q.name)
 		}
 	}
-	return nil
+	return firstErr
 }
 
 func queueInspect(cmd *cobra.Command, args []string) error {
 	inspector := createInspector()
+	defer inspector.Close()
+	var firstErr error
 	for i, qname := range args {
 		if i > 0 {
 			fmt.Printf("\n%s\n\n", separator)
@@ -156,11 +177,14 @@ func queueInspect(cmd *cobra.Command, args []string) error {
 		info, err := inspector.GetQueueInfo(qname)
 		if err != nil {
 			fmt.Printf("error: %v\n", err)
+			if firstErr == nil {
+				firstErr = err
+			}
 			continue
 		}
 		printQueueInfo(info)
 	}
-	return nil
+	return firstErr
 }
 
 func printQueueInfo(info *asynq.QueueInfo) {
@@ -199,6 +223,8 @@ func queueHistory(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	inspector := createInspector()
+	defer inspector.Close()
+	var firstErr error
 	for i, qname := range args {
 		if i > 0 {
 			fmt.Printf("\n%s\n\n", separator)
@@ -207,11 +233,14 @@ func queueHistory(cmd *cobra.Command, args []string) error {
 		stats, err := inspector.History(qname, days)
 		if err != nil {
 			fmt.Printf("error: %v\n", err)
+			if firstErr == nil {
+				firstErr = err
+			}
 			continue
 		}
 		printDailyStats(stats)
 	}
-	return nil
+	return firstErr
 }
 
 func printDailyStats(stats []*asynq.DailyStats) {
@@ -233,6 +262,7 @@ func printDailyStats(stats []*asynq.DailyStats) {
 
 func queuePause(cmd *cobra.Command, args []string) error {
 	inspector := createInspector()
+	defer inspector.Close()
 	var firstErr error
 	for _, qname := range args {
 		err := inspector.PauseQueue(qname)
@@ -250,6 +280,7 @@ func queuePause(cmd *cobra.Command, args []string) error {
 
 func queueUnpause(cmd *cobra.Command, args []string) error {
 	inspector := createInspector()
+	defer inspector.Close()
 	var firstErr error
 	for _, qname := range args {
 		err := inspector.UnpauseQueue(qname)
@@ -273,6 +304,7 @@ func queueRemove(cmd *cobra.Command, args []string) error {
 	}
 
 	r := createRDB()
+	defer r.Close()
 	var firstErr error
 	for _, qname := range args {
 		err = r.RemoveQueue(qname, force)

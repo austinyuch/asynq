@@ -17,9 +17,10 @@ import (
 	"unicode/utf8"
 
 	"github.com/MakeNowJust/heredoc/v2"
-	"github.com/fatih/color"
 	"github.com/austinyuch/asynq/internal/rdb"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // statsCmd represents the stats command
@@ -75,11 +76,13 @@ type FullStats struct {
 }
 
 func stats(cmd *cobra.Command, args []string) error {
+	clusterMode := viper.GetBool("cluster")
 	r := createRDB()
+	defer r.Close()
 
 	queues, err := r.AllQueues()
 	if err != nil {
-		return fmt.Errorf("could not fetch queues: %v", err)
+		return fmt.Errorf("could not fetch queues: %w", err)
 	}
 
 	var aggStats AggregateStats
@@ -87,7 +90,7 @@ func stats(cmd *cobra.Command, args []string) error {
 	for _, qname := range queues {
 		s, err := r.CurrentStats(qname)
 		if err != nil {
-			return fmt.Errorf("could not fetch stats for queue %q: %v", qname, err)
+			return fmt.Errorf("could not fetch stats for queue %q: %w", qname, err)
 		}
 		aggStats.Active += s.Active
 		aggStats.Pending += s.Pending
@@ -102,13 +105,13 @@ func stats(cmd *cobra.Command, args []string) error {
 		stats = append(stats, s)
 	}
 	var info map[string]string
-	if useRedisCluster {
+	if clusterMode {
 		info, err = r.RedisClusterInfo()
 	} else {
 		info, err = r.RedisInfo()
 	}
 	if err != nil {
-		return fmt.Errorf("could not fetch redis info: %v", err)
+		return fmt.Errorf("could not fetch redis info: %w", err)
 	}
 
 	if jsonFlag {
@@ -119,7 +122,7 @@ func stats(cmd *cobra.Command, args []string) error {
 		})
 
 		if err != nil {
-			return fmt.Errorf("could not marshal stats to JSON: %v", err)
+			return fmt.Errorf("could not marshal stats to JSON: %w", err)
 		}
 
 		fmt.Println(string(statsJSON))
@@ -139,7 +142,7 @@ func stats(cmd *cobra.Command, args []string) error {
 	printSuccessFailureStats(&aggStats)
 	fmt.Println()
 
-	if useRedisCluster {
+	if clusterMode {
 		_, _ = bold.Println("Redis Cluster Info")
 		printClusterInfo(info)
 	} else {

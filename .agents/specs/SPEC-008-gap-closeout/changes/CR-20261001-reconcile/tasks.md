@@ -37,4 +37,7 @@
 - [x] Repair dashboard normal quit, event-channel closure and worker/Inspector/screen ownership; b146972 exact gates/topic/PR21 parity PASS. Root native statements95.0743%, tools86.9266%; project line95 remains unmet.
 - [x] Reproduce native Go block-vs-line ambiguity using panic and short-circuit witnesses; preserve missing cross-language measurement and pending metric clarification.
 
-- [ ] Close CLI task-owned connections, preserve domain error causes, reject unreadable/malformed explicit config before command bodies; real Redis connection-count and child-process contracts, semantic mutations, full gates and push.
+- [x] Close CLI task-owned connections, preserve domain error causes, reject unreadable/malformed explicit config before command bodies; exact78499b1 tools race/build/security gates and topic/PR21 parity PASS.
+
+- [ ] Queue/stats first failure status, owned transport closure, effective cluster config and readable node output; reviewed standalone/three-master contracts PASS, exact successor gate and push pending.
+- [ ] Adopt a verified project line measurement policy/instrumenter; bounded AST witness prototype PASS is experimental and does not satisfy global line95.

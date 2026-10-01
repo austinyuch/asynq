@@ -283,11 +283,11 @@ func TestAdministrativeReadSurfacesRuntime(t *testing.T) {
 		t.Fatalf("queue list: %s %v", out, err)
 	}
 	out, err = invokeAdministration(t, queueInspectCmd, queueInspect, []string{f.queue + "-missing", f.queue}, nil)
-	if err != nil || !strings.Contains(out, "error:") || !strings.Contains(out, f.queue) || !strings.Contains(out, separator) {
+	if err == nil || !strings.Contains(out, "error:") || !strings.Contains(out, f.queue) || !strings.Contains(out, separator) {
 		t.Fatalf("queue inspection continuation: %s %v", out, err)
 	}
 	out, err = invokeAdministration(t, queueHistoryCmd, queueHistory, []string{f.queue + "-missing", f.queue}, map[string]string{"days": "2"})
-	if err != nil || !strings.Contains(out, "error:") || !strings.Contains(out, "date (UTC)") {
+	if err == nil || !strings.Contains(out, "error:") || !strings.Contains(out, "date (UTC)") {
 		t.Fatalf("history continuation: %s %v", out, err)
 	}
 	// Both JSON and human-readable stats must agree with independent queue state.

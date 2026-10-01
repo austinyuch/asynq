@@ -56,6 +56,12 @@ By default, `asynq` will try to read config file located in
 An absent default config is optional. An explicit config that cannot be read, or
 a discovered config that cannot be parsed, stops the command before its body runs;
 it does not continue with default Redis connection settings.
+Queue listing and stats use the effective `cluster` configuration, including
+config-file defaults. Cluster queue rows identify nodes as `ID@address`.
+
+Queue inspection and history continue displaying healthy queues after a failed
+queue read, and return a nonzero exit status if any read failed. This changes the
+previous behavior that printed errors while reporting success.
 
 Config file example:
 
