@@ -54,7 +54,7 @@ git config core.hooksPath githooks   # 啟用 pre-push govulncheck
 
 ## Current validation (2026-10-01)
 
-Dev `5f461d9` integrates upstream `d135f143` (three commits after `785bb72`) and validated fork slices, including immutable async identity and task viewport/page loading repairs. Topic delivery has same-family nonauthor review and exact local/hosted gates; remaining cross-family review work, true-line coverage and protected main PR22 promotion are unfinished. Current delivery is recorded in `.security/final-task-viewport/gate-ledger.json`; historical root/x runtime is content-bound carry, not fresh dev execution. Go 1.26.5 produced reachable standard-library CVE blockers; local Go 1.26.6 cleared them. The existing `go 1.26`/CI `1.26.x` floating-series contract is retained. See CR-20261001-reconcile for coverage limits and evidence; this is not a new release or production-readiness claim.
+Dev `295999` is the delivered cancellation baseline; heartbeat successor frozen `3a0ae99` has fresh root/build/security PASS and source-equivalent x/tools runtime reuse. Current heartbeat delivery authority is `.security/final-heartbeat/gate-ledger.json`; older viewport/cancellation ledgers remain historical evidence. Root statements3445/3634 (94.7991%); block-line proxy95.0572% does not prove actual line95. Protected main PR22, cross-family review, true-line coverage and sequential multi-module release are unfinished. Go1.26.6 cleared the recorded1.26.5 standard-library blockers; existing Go1.26/CI1.26.x floating-series contract is unchanged. This is not release or production-readiness approval.
 
 Imported upstream bare tags may exist locally after fetch. Never push them to the fork; only explicitly named fork `-team.N` release tags may be published.
 
