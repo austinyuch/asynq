@@ -25,3 +25,5 @@
 - Asynqmon(web UI)不在本 repo 範圍;manual 中以外部工具引用
 
 Latest exact e6002cc ledger: `.security/final-e6002cc/gate-ledger.json` (local artifact). Root statement union95.07%, tools81.19%; true project line95 still unproven. Native block panic/short-circuit witnesses prohibit relabeling this as per-line execution. Task-owned cache cleanup reclaimed1.36GiB; runtime claims remain active.
+
+Security user refresh (2026-10-01T04:20:11Z): three module SBOM/CVE/KEV pipeline PASS, 0 blockers / 0 supplied KEV matches, existing G118 medium warning unchanged. [Updated report](../../docs/SECURITY_SCAN_2026-10-01.md) binds the b146972-based working tree and two untracked CLI tests; this is not a clean-commit release attestation. Local bundle SHA-256: `09da0b4c96f3211ef52be0a41cd9e74b2166869839c397646d9d9ee4fa76233a`. Dependency manifests unchanged. Global line95 and dev/main/release review holds remain.
