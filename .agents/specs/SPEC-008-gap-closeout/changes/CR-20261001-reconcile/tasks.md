@@ -74,4 +74,9 @@
 - [x] Real taskCancel AUTH/no-publication positive-barrier and duplicate-ID ordered signal contracts; focused race/16 properties/two assertion mutants, DB12 empty before/after.
 - [x] x/rate closed-transport identity with valid task metadata/no deadline; normal/race/128 properties/native fuzz/two assertion mutants. Native statement delta is not global line95.
 - [x] Freeze cancellation-error successor a67e532 through fresh complete root/x/tools race, six build/vet and security successor gates; all135 source/dependency subjects stable.
-- [ ] Deliver cancellation-error successor through dev no-ff/push and hosted checkout proof; final-cancellation ledger remains authoritative.
+- [x] Deliver cancellation-error successor dev295999 through no-ff/push and hosted36855658080 checkout proof; final-cancellation ledger remains authoritative.
+
+- [x] Reconcile cancellation dev295999 delivery status in handoff/test catalog/RTM without raising readiness/main/release verdicts.
+- [x] Heartbeat genuine closed-RDB and real expired/reset/healthy-neighbor contracts; focused PBT/fuzz/four assertion mutants, immutable inputs and exact deadlines. No production change; hostname failure remains untested.
+- [x] Reversibly reclaim53248 allocated bytes from four terminal isolated Lease source duplicates; gzip/scratch restore/occupied STOP and durable evidence hash verified; cache guard remains held.
+- [ ] Deliver heartbeat/handoff successor via frozen complete root gate, build/source-carry/security, dev no-ff/push and hosted checkout proof; final-heartbeat ledger is authoritative.

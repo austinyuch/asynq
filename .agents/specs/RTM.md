@@ -17,7 +17,7 @@
 | R-09 | 「govulncheck 加入 pre-push hook」 | —(direct change,PR #9) | `githooks/pre-push`(root/x/tools 三 module)+ `core.hooksPath` 啟用法載於 FORK.md | PR #9 merge `45c2a2f`;hook 於 push 時實際觸發,三 module 均 No vulnerabilities found |
 | R-10 | 「fix them」(open gaps:IL-001、IL-003、review 裁決機制) | SPEC-008 | `make proto` 重生、dash ANSI→PNG 實擷、`docs/assets/` disposition、首份 review.md | PR #11 merge `acae113`;SPEC-008 review.md;ISSUE_LOG IL-R05/R06 |
 | R-11 | 「fix gaps」(cluster not_assessed、dash.gif upstream 素材、CI flake) | SPEC-008(round 2) | 3-node cluster 驗證、`client_test.go` EquateInt64Approx、dash.gif fork 重攝 | PR #11(`1870aa2`);cluster root 套件綠 209.96s;CI pass 3m59s;IL-004 記錄 rdb cluster 例外 |
-| R-12 | ROI vertical slices整合後經dev promote main | SPEC-003 / CR-20261001-reconcile | upstream merge + topic commits | [CR](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reconciliation.md);dev5f461d9 integrated; main/release/review work未完成 |
+| R-12 | ROI vertical slices整合後經dev promote main | SPEC-003 / CR-20261001-reconcile | upstream merge + topic commits | [CR](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reconciliation.md);historical dev5f461d9 integrated; latest cancellation-error dev295999/final-cancellation ledger and hosted36855658080 SUCCESS; main/release/review work未完成 |
 | R-13 | 三module SBOM + CVE/KEV更新 | SPEC-001 / CR-20261001-reconcile | runtime-aware fix plan + existing security gate | .security/security-<candidate>/execution-receipt.json;Go1.26.6 PASS,候選SHA須對照receipt |
 | R-14 | >=95% line coverage、PBT/mutation/fuzz | SPEC-008 / CR-20261001-reconcile | public/internal/metrics/CLI/rdb contracts + bounded properties/fuzz/mutants | [reports](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/);global target未達成 |
 
@@ -40,3 +40,7 @@
 | R-REC-23 | Cron/server errors must preserve cause/status and close owned clients | SPEC-008 / CR-20261001-reconcile | Close/%w/first-error with healthy partial output | reports/cli-entry-boundaries.md; T-REC-CRON-SERVER; original runtime FAIL and corrected candidate-v3 PASS; exact delivery .security/final-cli-entry/ |
 
 | R-REC-24 | Public dashboard TTY entry must return and restore owned resources | SPEC-008 / CR-20261001-reconcile | real controlling-PTY child and live-owner pipe ACK | reports/cli-entry-boundaries.md; T-REC-TTY-ENTRY; true-entry race/three assertion mutants, unknown-TERM actual error |
+
+| R-REC-25 | Cancellation transport causes and signal/Release integrity | SPEC-008 / CR-20261001-reconcile | root %w/canonical operation; CLI real AUTH/no-publication/order; rate closed-transport metadata | reports/cancellation-error-boundaries.md; T-REC-CANCEL-CAUSE / T-REC-CANCEL-SIGNALS / T-REC-RATE-RELEASE; final-cancellation ledger270 closed materials, dev295999/hosted36855658080 SUCCESS; tools released-root adoption/main pending |
+
+| R-REC-26 | Heartbeat transport failures and expired leases preserve healthy task state | SPEC-008 / CR-20261001-reconcile | genuine closed RDB/clock boundary with canonical Redis fixtures; no production changes | reports/heartbeat-error-boundaries.md; T-REC-HEARTBEAT; focused PBT/fuzz/four assertion mutants PASS; final-heartbeat delivery pending; main/global true-line95 unchanged |
