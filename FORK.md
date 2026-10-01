@@ -46,6 +46,7 @@ git config core.hooksPath githooks   # 啟用 pre-push govulncheck
 | Docs | README / CONTRIBUTING / tools README 提及 Valkey;import 範例改 fork path | 反映 fork 現況 |
 | 其他 | `AGENTS.md` 知識庫、`.agents/skills/upstream-sync/` | 團隊維運工具 |
 | Git hooks / local security CI | `githooks/pre-push` 跑 `scripts/security/run.sh`:對 root / `x` / `tools` 各做 SBOM(trivy)+ CVE(govulncheck,含 call-graph reachability)+ SAST(gosec)+ CISA KEV correlation;correlation 交給 `kev-sbom-correlation` skill 的 deterministic engine。KEV-listed CVE / reachable-with-fix / HIGH-severity SAST 會擋 push。啟用:`make security-hooks`(per-clone,不入版控)。工具缺失時降級為原本的 govulncheck-only gate 並明講,不 fail open。詳見 `docs/SECURITY_LOCAL_CI.md` | fork 的 import path 不在自動 advisory 覆蓋範圍內(見 `SECURITY.md`),supply-chain signal 自己在 push 前產生 |
+| Exporter lifecycle | 私有 registry/mux、SIGINT/SIGTERM 五秒 graceful shutdown、listener/Inspector ownership；HTTP timeout 維持不變 | 新生命週期功能；constructor Redis read 與 forced-close handler 限制見 `tools/metrics_exporter/README.md`；candidate exact gate pending |
 | SAST 修正 | gosec 66 → 0:`internal/base` 加 saturating `toInt32`(CWE-190,修 `int32` wrap 導致 retry 計數變負的真 bug)、metrics_exporter 加 HTTP timeouts(CWE-676)、CLI TLS 加 `MinVersion` 1.2(CWE-295)、48 處顯式 error discard(CWE-703);5 個 `#nosec` 皆註明理由並列表於 `docs/SECURITY_LOCAL_CI.md` | upstream 未做 SAST;修正順序依 CWE 對 KEV 的出現頻率排序 |
 
 

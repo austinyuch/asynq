@@ -43,3 +43,5 @@
 - [ ] Adopt a verified project line measurement policy/instrumenter; bounded AST witness prototype PASS is experimental and does not satisfy global line95.
 
 - [x] Refresh de88475-plus-exporter WIP three-module SBOM/CVE/KEV scan; 25 closed materials / 227 execution sources / 26 archive members independently verified; 0 blocking / 0 supplied KEV, existing G118 retained. See docs/SECURITY_SCAN_2026-10-01.md; not a clean-commit attestation.
+
+- [ ] Freeze exporter instance/signal/handler ownership successor; reviewed source-bound real HTTP/child/mutation evidence PASS; exact gates and push pending.

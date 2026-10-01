@@ -21,4 +21,6 @@
 | R-13 | 三module SBOM + CVE/KEV更新 | SPEC-001 / CR-20261001-reconcile | runtime-aware fix plan + existing security gate | .security/security-<candidate>/execution-receipt.json;Go1.26.6 PASS,候選SHA須對照receipt |
 | R-14 | >=95% line coverage、PBT/mutation/fuzz | SPEC-008 / CR-20261001-reconcile | public/internal/metrics/CLI/rdb contracts + bounded properties/fuzz/mutants | [reports](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/);global target未達成 |
 
-| R-15 | reconcile queue/stats config, error status and transport ownership | SPEC-008 / CR-20261001-reconcile | effective Viper mode, first-error result, owned Close and readable node output | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/queue-stats-cluster.md); reviewed candidate PASS, exact successor/promotion pending |
+| R-15 | reconcile queue/stats config, error status and transport ownership | SPEC-008 / CR-20261001-reconcile | effective Viper mode, first-error result, owned Close and readable node output | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/queue-stats-cluster.md); de88475 exact gates PASS; promotion pending |
+
+| R-16 | 完整垂直切片與 exporter lifecycle 交付 | SPEC-008 / CR-20261001-reconcile | private instance ownership, graceful signals and shared shutdown barrier | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/exporter-lifecycle.md); source-bound PASS, exact successor/promotion pending |
