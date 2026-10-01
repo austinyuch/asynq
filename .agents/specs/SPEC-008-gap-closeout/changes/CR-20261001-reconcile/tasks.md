@@ -11,11 +11,11 @@
 - [x] Integrate validated candidate through bc9fad7 into dev; security-document successor6898b82 pushed.
 - [ ] Complete protected main PR22/check/merge after unfinished objective work.
 - [ ] Reach >=95% project-wide line coverage; remaining root/rdb/x-metrics/tools gaps open.
-- [x] IL-004 canonical cluster fixtures and all-master ArchiveTrim oracle; full standalone/cluster race suites PASS (successor final gate pending).
+- [x] IL-004 canonical cluster fixtures and all-master ArchiveTrim oracle; full standalone/cluster race suites PASS (source-equivalent historical cluster runtime disclosed in delivery ledger).
 - [ ] Release decision after functional promotion, sequential root/x/tools tags only; never push imported upstream bare tags.
 - [ ] Reclaim regenerable task-owned cache after persisting evidence; stop task runtime and release registry claim.
 
-- [x] Reviewed successor queue-state/lock namespace fixes, Unicode/grapheme/modal/group-page fixes, Inspector/lifecycle/CLI/proto contracts; source-bound gates pass, immutable successor gates pending.
+- [x] Reviewed successor queue-state/lock namespace fixes, Unicode/grapheme/modal/group-page fixes, Inspector/lifecycle/CLI/proto contracts; source-bound gates pass, validated successors integrated into dev5f461d9; main pending.
 
 - [x] Exact72dbcd0 security/build/vet/root/x/tools/cluster gates PASS, including child profile union; narrow-screen tools successor exact5e98135 gates and origin parity PASS.
 
@@ -47,7 +47,7 @@
 
 - [x] Exporter instance/signal/handler ownership delivered1abf9d3; exact tools race/build/vet/security/actual production entrypoint gates and topic/PR21 parity PASS.
 
-- [x] Repair group visible-page selection, short/tiny/empty/shrunk page bounds, positive task fetch capacity and event-loop resize; preserve seven original failures and independent model/PBT/fuzz/mutation evidence. Delivery gates are commit-bound in `.security/final-group-navigation/`; promotion stays open.
+- [x] Repair group visible-page selection, short/tiny/empty/shrunk page bounds, positive task fetch capacity and event-loop resize; preserve seven original failures and independent model/PBT/fuzz/mutation evidence. Delivery gates are commit-bound in `.security/final-group-navigation/`; integrated into dev; main promotion stays open.
 - [x] Bounded line-event control-flow experiment: actual OR probe omission reproduced/fixed in /tmp; independent serial/defer/concurrent witnesses and three generator mutants; no project denominator adoption.
 
 - [x] Verify nonempty CLI task tables, pagination wiring and ProcessIn bounds; focused race/PBT/four assertion mutants and nonauthor review PASS. Exact successor delivery uses `.security/final-task-visibility/`.
@@ -61,3 +61,7 @@
 
 - [x] Integrate validated slices into dev via no-ff bc9fad7; push parity verified; main draft PR22 hosted build PASS with exact checkout tree proof. Main merge remains unfinished.
 - [x] User-requested latest dev/WIP SBOM/CVE/KEV refresh: three modules, 25 closed materials / 26 verified archive members, PASS with existing G118 retained; see docs/SECURITY_SCAN_2026-10-01.md.
+
+- [x] Deliver IL022 and security report through dev5f461d9; remote parity, full tools/build source equivalence, fresh merge security and hosted run36844671038 checkout-tree PASS. Reconcile current handoff against archived historical snapshots; main/release/line95 remain open.
+
+- [x] Source-traced reverse state/row navigation and stale response contracts; independent seeded key model, native fuzz and successor assertion mutants. Exact delivery is authoritative only in .security/final-reverse-navigation/.
