@@ -219,11 +219,8 @@ evidence, never an empty one, so it can never produce a false clean verdict.
 
 ## Relationship to hosted CI
 
-This gate is local and pre-push. `.github/workflows/` still owns build and test
-across the module matrix. The two are complementary: hosted CI proves the code
-works, the local gate proves the dependency graph is not knowingly exploitable
-before the push leaves your machine.
+Scanner gates remain local and pre-push. The single hosted build job builds and race-tests root, x and tools, then runs offline event-ledger and security decision contracts. Local scanner/catalog evidence and hosted behavioral checks cover different scopes; neither proves global vulnerability absence or production readiness.
 
 ## Evidence input contracts
 
-Invalid UTF-8 or malformed JSON inputs produce path-bearing diagnostics and exit2. CVE identities use ASCII digits, consistent with the [official CVE record schema](https://cveproject.github.io/cve-schema/schema/docs/); Unicode numeral lookalikes are rejected. Normalize/stream/CLI contracts exercise real temporary files and outputs. The source-bound Python native trace observes all25 tests from zero after source changes; seeded JSON generators are not coverage-guided fuzzing. No provider/scanner subprocess-line coverage or project-wide95% claim follows from the per-file result.
+Invalid UTF-8 or malformed JSON inputs produce path-bearing diagnostics and exit2. CVE identities use ASCII digits, consistent with the [official CVE record schema](https://cveproject.github.io/cve-schema/schema/docs/); Unicode numeral lookalikes are rejected. Normalize/stream/CLI contracts exercise real temporary files and outputs. Run `make security-contracts-test` for all29 offline security tests. Sparse SBOM metadata can be filled from a later record for the same module; missing version is filled only when module identity matches, without overwriting an existing version. The current source-bound Python native trace observes29 tests plus128 real CLI and65 direct-map children from zero after this repair; seeded JSON generators are not coverage-guided fuzzing. No provider/scanner subprocess-line coverage or project-wide95% claim follows from the per-file result.

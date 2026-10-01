@@ -85,3 +85,8 @@ security-clean: ## Remove all generated security evidence
 .PHONY: coverage-events-test
 coverage-events-test:
 	python3 -m unittest discover -s "$(ROOT_DIR)/scripts/coverage" -p 'test_*.py' -v
+
+# Offline security gate contracts; scanners and dependency mutations are stubbed.
+.PHONY: security-contracts-test
+security-contracts-test:
+	python3 -m unittest discover -s "$(ROOT_DIR)/scripts/security" -p 'test_*.py' -v

@@ -50,4 +50,11 @@ Origin/PR21 latestpublished5e98135 has exact security/build/vet/tools gates, wit
 
 ## Current operational authority
 
-The preceding sections retain dated baseline inventory, not current PR/ref/coverage instructions. Current delivery and remaining ROI order are in .agents/specs/NEXT_STEPS.md and source-bound final ledgers. Public Inspector cluster contracts and the reusable event-journal consumer are the active successor; original SPEC-008 readiness, architecture owner/profile, cross-family, protected main, whole-project line95 and sequential release remain unresolved as recorded there.
+The preceding sections retain dated baseline inventory, not current PR/ref/coverage instructions. Current delivery and remaining ROI order are in .agents/specs/NEXT_STEPS.md and source-bound final ledgers. Public Inspector cluster contracts and the reusable event-journal consumer are delivered successors; original SPEC-008 readiness, architecture owner/profile, cross-family, protected main, whole-project line95 and sequential release remain unresolved as recorded there.
+
+
+## Delivered event-ledger successor
+
+Event-ledger/public Inspector slice delivered at dev7538dd125a73b1e5c1b027dc85de8a71a0ca10be/tree0b02e84394401d8aeee7910d4377a01a310318f7. Final-event-ledger SHA c446e77dfb37c37981e80a4d053d97b884b9e63c62e31455527323fbd26e4c67 closes1178 materials; hosted36872746124 SUCCESS including the Python contract step. Actual checkout20bd3c8ecee6044e9952a69cab2a69194954fa37 has verified main57/dev7538 parents and identical tree. Fresh root executed2d07568;137 subjects (131 Go files plus6 dependencies) remain byte-equivalent. Root3463/3634 native statements95.2944%; x/tools retain dated compiled-consumer runtime contexts. Remote refs and clean working tree verified. Main/release and the user line-coverage target remain unfinished.
+
+Measurement scope remains pending: the original user line target is not satisfied by statement coverage, but the observational cross-language/test/document inventory and generic instrumenter proposal are not newly adopted hard gates. NEXT_STEPS remains the operational handoff.

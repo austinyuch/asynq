@@ -88,4 +88,7 @@
 
 - [x] Public Inspector real-cluster readonly slot/node contracts across three masters; independent CRC/complete-range-set oracles, public closed-transport native fuzz and three assertion mutants. Frozen2d07568 complete root race PASS,137 sources; nine historical DBs and cluster11 keys preserved.
 - [x] Source-bound registry/process journal prototype plus reusable Python consumer; true fatalExit7 journal preservation, wrong-context/UTF8/duplicate/shape guards, realCLI/PBT/fuzz/mutants and nonauthor review. Consumer is tracked; experimental assembler/full-project denominator is not adopted.
-- [ ] Deliver event-ledger/Inspector successor with current source-bound consumer/build/security/governance/source-carry and dev/hosted parity; final-event-ledger authority.
+- [x] Deliver event-ledger/Inspector successor at dev7538; final-event-ledger1178 materials, exactmerge build/security/make, source carry and hosted36872746124 checkout-tree PASS; main pending.
+
+- [x] Reproduce and repair known-module/missing-version SBOM metadata loss;128 actual CLI/64 conflicting-module properties plus maintained existing-version regression;5 fresh assertion-caught source mutants and independent peer PASS. Fresh29-test parent/193children native632/637 PASS; no old-source counter carry.
+- [ ] Deliver security enrichment/handoff successor through exact source/build/security/remote/hosted closure; final-security-enrichment authority.

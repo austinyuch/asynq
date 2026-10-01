@@ -450,6 +450,8 @@ def sbom_cve_map(paths: list[str]) -> dict[str, dict[str, Any]]:
             if not entry["module"]:
                 entry["module"] = module
                 entry["version"] = version
+            elif entry["module"] == module and not entry["version"]:
+                entry["version"] = version
             if not entry["fixed_version"]:
                 entry["fixed_version"] = fixed
             if not entry["severity"]:
