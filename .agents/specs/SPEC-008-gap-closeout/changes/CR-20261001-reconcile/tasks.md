@@ -79,4 +79,9 @@
 - [x] Reconcile cancellation dev295999 delivery status in handoff/test catalog/RTM without raising readiness/main/release verdicts.
 - [x] Heartbeat genuine closed-RDB and real expired/reset/healthy-neighbor contracts; focused PBT/fuzz/four assertion mutants, immutable inputs and exact deadlines. No production change; hostname failure remains untested.
 - [x] Reversibly reclaim53248 allocated bytes from four terminal isolated Lease source duplicates; gzip/scratch restore/occupied STOP and durable evidence hash verified; cache guard remains held.
-- [ ] Deliver heartbeat/handoff successor via frozen complete root gate, build/source-carry/security, dev no-ff/push and hosted checkout proof; final-heartbeat ledger is authoritative.
+- [x] Deliver heartbeat/handoff successor dev2d3bad29 through frozen root/build/source-carry/security, no-ff/push and hosted36860064417 checkout proof; final-heartbeat ledger f69a747 closes212 materials.
+
+- [x] Restricted actual EncodeMessage15field completion/initializer/Marshal-return witness; four plain/instrumented normal/race suites and two detector mutants,24 materials/8 sources reviewed. No generic or global-line adoption.
+- [x] Actual ServeMux middleware normal/first-middle-last panic temporal witness; four normal/race suites and three phase mutants,115 materials/86 sources reviewed. Direct defer retained; TryLock proves lock-release effect, not native defer-body events.
+
+- [x] Exact pre-push controlled seven-path routing and native Bash entry observer; independent exit/order/cwd oracles and three postprocessed detector mutants reviewed. Raw trace suffix discarded;65-line inventory retains unknown syntax. No real scanner/push/global95 claim.
