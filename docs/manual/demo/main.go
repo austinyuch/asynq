@@ -15,6 +15,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"log"
@@ -22,6 +23,7 @@ import (
 	"time"
 
 	"github.com/austinyuch/asynq"
+	"github.com/redis/go-redis/v9"
 )
 
 var redisAddr = flag.String("redis_addr", "localhost:6379", "redis/valkey address to seed")
@@ -42,8 +44,10 @@ func main() {
 	flag.Parse()
 	opt := asynq.RedisClientOpt{Addr: *redisAddr, DB: demoDB}
 
-	// Start from a clean slate so output is reproducible.
-	flushDemoDB(opt)
+	// Admit only an empty, dedicated database; never clear existing data.
+	if err := requireEmptyDemoDB(context.Background(), opt.MakeRedisClient().(*redis.Client)); err != nil {
+		log.Fatal(err)
+	}
 
 	client := asynq.NewClient(opt)
 	defer func() { _ = client.Close() }()
@@ -157,16 +161,29 @@ func main() {
 	fmt.Println("demo seed complete: data remains in DB", demoDB, "for CLI / exporter inspection")
 }
 
-// flushDemoDB clears the demo DB via a throwaway client connection.
-func flushDemoDB(opt asynq.RedisClientOpt) {
-	c := opt.MakeRedisClient()
-	type flusher interface {
-		FlushDB(ctx context.Context) interface{ Err() error }
+// demoDBInspector preserves the concrete go-redis command return type.
+// requireEmptyDemoDB owns and closes its disposable admission connection.
+type demoDBInspector interface {
+	DBSize(context.Context) *redis.IntCmd
+	Close() error
+}
+
+var _ demoDBInspector = (*redis.Client)(nil)
+
+var errDemoDBNotEmpty = errors.New("demo requires an empty dedicated database")
+
+func requireEmptyDemoDB(ctx context.Context, c demoDBInspector) (err error) {
+	defer func() {
+		if closeErr := c.Close(); closeErr != nil {
+			err = errors.Join(err, fmt.Errorf("close demo admission connection: %w", closeErr))
+		}
+	}()
+	size, queryErr := c.DBSize(ctx).Result()
+	if queryErr != nil {
+		return fmt.Errorf("inspect demo DB %d: %w", demoDB, queryErr)
 	}
-	if f, ok := c.(flusher); ok {
-		_ = f.FlushDB(context.Background()).Err()
+	if size != 0 {
+		return fmt.Errorf("DB %d contains %d keys: %w; select an empty dedicated instance", demoDB, size, errDemoDBNotEmpty)
 	}
-	if closer, ok := c.(interface{ Close() error }); ok {
-		_ = closer.Close()
-	}
+	return nil
 }
