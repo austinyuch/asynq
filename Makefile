@@ -90,3 +90,9 @@ coverage-events-test:
 .PHONY: security-contracts-test
 security-contracts-test:
 	python3 -m unittest discover -s "$(ROOT_DIR)/scripts/security" -p 'test_*.py' -v
+
+# Required local pre-merge gate for changes to maintained Python/Bash sources.
+# Tools are isolated/version-pinned; no automatic installation or source upload.
+.PHONY: security-source
+security-source:
+	python3 scripts/security/source_sast.py --out "$${ASYNQ_SOURCE_SAST_DIR:-.security/source-sast-$$(date -u +%Y%m%dT%H%M%S)-$$$$}"

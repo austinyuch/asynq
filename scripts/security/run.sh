@@ -59,7 +59,8 @@ log()  { [ "$QUIET" -eq 1 ] || printf '  %s\n' "$*"; }
 fail() { printf 'security-ci: %s\n' "$*" >&2; exit 2; }
 
 # GUI/IDE git clients and fresh shells may not have these on PATH.
-export PATH="$PATH:$HOME/.local/bin:$(go env GOPATH 2>/dev/null || echo "$HOME/go")/bin"
+PATH="$PATH:$HOME/.local/bin:$(go env GOPATH 2>/dev/null || echo "$HOME/go")/bin"
+export PATH
 
 need() { command -v "$1" >/dev/null 2>&1 || fail "$1 not found. Run: make security-tools"; }
 need trivy
@@ -427,7 +428,8 @@ Run once with network access: scripts/security/run.sh --refresh"
 A missing record is unavailable evidence, not an absent CVE."
     fi
   done
-  log "[cve] fetched $fetched new record(s), $(ls -1 "$CVE_RECORDS" | wc -l) cached total"
+  cached_records="$(find "$CVE_RECORDS" -maxdepth 1 -type f -name '*.json' -printf '.' | wc -c)"
+  log "[cve] fetched $fetched new record(s), $cached_records cached JSON record(s)"
 
   log "[cve] building cve-catalog-snapshot/v1 (skill builder)"
   python3 "$BUILD_CATALOG" "$CVE_RECORDS" \
@@ -539,5 +541,5 @@ python3 "$CI" gate \
 gate_status=$?
 set -e
 
-printf '  evidence: %s\n\n' "${OUT_DIR#$REPO_ROOT/}"
+printf '  evidence: %s\n\n' "${OUT_DIR#"$REPO_ROOT"/}"
 exit "$gate_status"
