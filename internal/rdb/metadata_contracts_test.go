@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"os"
 	"reflect"
+	"strconv"
 	"testing"
 	"time"
 
@@ -28,9 +29,17 @@ func newMetadataFixture(t *testing.T) *metadataFixture {
 	t.Helper()
 	addr := os.Getenv("ASYNQ_METADATA_TEST_REDIS_ADDR")
 	if addr == "" {
-		t.Skip("set ASYNQ_METADATA_TEST_REDIS_ADDR for exclusive task-owned DB11")
+		t.Skip("set ASYNQ_METADATA_TEST_REDIS_ADDR for an exclusive task-owned Redis database")
 	}
-	c := redis.NewClient(&redis.Options{Addr: addr, DB: 11})
+	db := 11
+	if value := os.Getenv("ASYNQ_METADATA_TEST_REDIS_DB"); value != "" {
+		var err error
+		db, err = strconv.Atoi(value)
+		if err != nil || db < 1 || db > 15 {
+			t.Fatalf("ASYNQ_METADATA_TEST_REDIS_DB must name a dedicated database between 1 and 15: %q", value)
+		}
+	}
+	c := redis.NewClient(&redis.Options{Addr: addr, DB: db})
 	f := &metadataFixture{r: NewRDB(c), c: c, prefix: fmt.Sprintf("metadata-%d", time.Now().UnixNano()), members: map[string][]interface{}{}, baseline: map[string]string{}}
 	ctx := context.Background()
 	t.Cleanup(func() {

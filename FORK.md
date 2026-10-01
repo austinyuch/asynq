@@ -94,3 +94,5 @@ Multi-module repo,tag 需帶目錄前綴:`vX.Y.Z-team.N`、`x/vX.Y.Z-team.N`、`
 Release 順序(multi-module 相依,不可顛倒):先 tag root → bump `x/go.mod` require 後 tag x → bump `tools/go.mod` requires 後 tag tools。每個 module 一個 release PR(沿用 team.1 的 PR #2/#3/#4 先例)。
 
 > **Downstream notification 是 release 的必要步驟**,不是可選項:`SECURITY.md` 要求 security release 直接通知已知 consumer 並要求 re-pin `go.mod` + 重跑 `govulncheck`。fork 的 import path 不在自動 advisory 覆蓋內,所以這一步沒有自動化替代品。
+
+Cancellation-error successor candidate preserves root PublishCancelation canonical diagnostic and typed Redis cause. Tools continues consuming released root until sequential release/dependency adoption; new CLI PubSub and x/rate transport contracts do not imply that root change is already consumed. See cancellation-error-boundaries.md under CR-20261001-reconcile; delivery authority remains its final ledger.
