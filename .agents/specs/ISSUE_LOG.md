@@ -10,6 +10,16 @@
 | IL-006 | 2026-08-19 | 治理 security-data provider 的 registry pin 落後:`~/.config/aclab/security-data-provider.json` 指向 worktree `security-data-provider-pin@7f38642`,其 `security_data_cache.py` 的 `--feed all` 只展開成 `{trivy, kev}`,不含 `cve`/`grype`;而 aclab-middlewares main(`4426e63`)的 adapter 已含 `CR-2026-08-18-cve-feed-provider-binding` 的四 feed 邏輯 | 低-中;CVE catalog 不在排程刷新路徑上,只能由 consumer 讀 state root 的 `receipts/cve.json`(本 repo 已如此實作並驗 hash + 7 天新鮮度) | aclab-middlewares(把 registry pin 推進到含 CVE feed binding 的 revision) |
 | IL-007 | 2026-08-19 | `machine-local-ci-broker.service` 自 2026-08-18 起 crash loop(restart counter 17,764):state dir 殘留舊 `broker.sock`,`internal/broker/local_socket.go` `Listen()` 對既存 socket fail-closed | 中;持續消耗 CPU,該 broker 完全不可用(asynq 本就未 enrolled) | aclab-middlewares(刪除 stale socket + 加開機前清理);純回報 |
 
+## Dated external-impact observations (2026-10-01)
+
+IL-005–007 remain **Open**. Their 2026-08-19 descriptions above are historical observations. The following read-only triage is recorded in `.security/final-security-enrichment/external-issues-triage.json` (SHA `8690e459241c3e892b440442610c5ca9e85d513eec0674236ee344f704aa6b0b`); it does not establish current external-owner closure or fresh service state.
+
+| ID | Dated observation | Remaining impact / authority |
+|---|---|---|
+| IL-005 | Canonical `~/.agents/local-infra/registry.json` recorded two active asynq task claims; standalone container dd7f0546 was running with0 mounts/0 restarts. Canonical claim tooling exists. | Governed task custody was observed; generic automatic provisioning and resolution of historical unregistered bootstrap ownership remain unproven. External owner disposition required. |
+| IL-006 | Historical provider registry path was absent; security provenance recorded provider_mode=absent and consumer-fallback, KEV2026.09.30/count1730 and scoped CVE acquisition. External source supported four feeds. | Old pinned two-feed route was not active in this observation; source capabilities do not prove configured scheduling or owner adoption. |
+| IL-007 | Broker unit reported LoadState=not-found, ActiveState=inactive, SubState=dead and NRestarts=0; no broker-named user unit files were observed. | Historical crash loop was not reproduced; broker availability/enrollment and owner restoration remain unproven. Result=success does not prove successful service execution. |
+
 ## Folded into CR-20261001-reconcile
 
 The following original issue rows are owned by the active CR. Their recorded candidate/promotion wording is historical. All listed repairs are integrated into dev5f461d9; main/release remain pending. IL021 delivered via `.security/final-fetch-identity/`; IL022 via `.security/final-task-viewport/`. This disposition does not close global coverage or claim same-context ordering/count-shrink auto-clamping.
@@ -38,7 +48,7 @@ The following original issue rows are owned by the active CR. Their recorded can
 
 | ID | 記錄日 | 描述 | 影響／修復 | 狀態／證據 |
 |---|---|---|---|---|
-| IL-024 | 2026-10-01 | 同一CVE/module先有名稱但缺version時，後續同module SBOM版本遭忽略 | 最小修正只補同module空version，保留既有版本且不借不同module版本；KEV policy不變 | folded CR-20261001-reconcile；original64真CLI assertions FAIL，candidate128 CLI/65 direct-map cases與5fresh mutants/nonauthor PASS，29tests native632/637；reports/security-metadata-enrichment.md；exact delivery/main pending |
+| IL-024 | 2026-10-01 | 同一CVE/module先有名稱但缺version時，後續同module SBOM版本遭忽略 | 最小修正只補同module空version，保留既有版本且不借不同module版本；KEV policy不變 | folded CR-20261001-reconcile；original64真CLI assertions FAIL，candidate128 CLI/65 direct-map cases與5fresh mutants/nonauthor PASS，29tests native632/637；reports/security-metadata-enrichment.md；dev059c delivered，historical final-security-enrichment fc4836／hosted36879646569 checkout-tree PASS；main pending；successor readback13 temporary materials missing |
 
 ## Resolved
 

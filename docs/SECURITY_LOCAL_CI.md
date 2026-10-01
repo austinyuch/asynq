@@ -224,3 +224,23 @@ Scanner gates remain local and pre-push. The single hosted build job builds and 
 ## Evidence input contracts
 
 Invalid UTF-8 or malformed JSON inputs produce path-bearing diagnostics and exit2. CVE identities use ASCII digits, consistent with the [official CVE record schema](https://cveproject.github.io/cve-schema/schema/docs/); Unicode numeral lookalikes are rejected. Normalize/stream/CLI contracts exercise real temporary files and outputs. Run `make security-contracts-test` for all29 offline security tests. Sparse SBOM metadata can be filled from a later record for the same module; missing version is filled only when module identity matches, without overwriting an existing version. The current source-bound Python native trace observes29 tests plus128 real CLI and65 direct-map children from zero after this repair; seeded JSON generators are not coverage-guided fuzzing. No provider/scanner subprocess-line coverage or project-wide95% claim follows from the per-file result.
+
+
+## Shell provenance contracts (2026-10-01)
+
+`make security-contracts-test` also discovers `test_security_shell.py`.
+Six offline groups exercise 27 real Bash subprocesses with controlled scanner
+fixtures and the real Python policy helper. They cover clean/quiet output,
+tooling/evidence failure, HIGH policy blocks, missing offline catalog, invalid
+arguments and generated benign literal paths/catalog versions. Complete JSON
+and catalog byte SHA-256 equality catches both quoted-path serialization errors
+and GNU sha256sum filename escaping. The runner passes metadata through argv to
+a quoted heredoc and hashes file contents through stdin.
+
+These fixtures prove process/serialization contracts, not scanner findings,
+network acquisition, provider adoption or project-wide line coverage. Default
+runs clean their temporary directories; an explicit `ASYNQ_SHELL_TEST_WORK`
+retains campaign evidence. Four source mutants and the old hash helper regression
+were caught by ordinary assertions. Fresh durable evidence is in
+`.security/shell-successor/receipt.json`; the previous temporary shell campaign
+is historical and currently has missing materials.

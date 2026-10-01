@@ -91,4 +91,6 @@
 - [x] Deliver event-ledger/Inspector successor at dev7538; final-event-ledger1178 materials, exactmerge build/security/make, source carry and hosted36872746124 checkout-tree PASS; main pending.
 
 - [x] Reproduce and repair known-module/missing-version SBOM metadata loss;128 actual CLI/64 conflicting-module properties plus maintained existing-version regression;5 fresh assertion-caught source mutants and independent peer PASS. Fresh29-test parent/193children native632/637 PASS; no old-source counter carry.
-- [ ] Deliver security enrichment/handoff successor through exact source/build/security/remote/hosted closure; final-security-enrichment authority.
+- [x] Deliver security enrichment/handoff successor at dev059c/treeaf5e; historical final-security-enrichment fc4836 records1795 materials and hosted36879646569 checkout-tree PASS. Successor readback1782 matching/13 missing temporary materials/0 mismatches; main remains pending.
+
+- [ ] Re-establish cleanup backup/restore custody; prior13 missing temporary materials include rollback receipts; no further cleanup. Prior shell1742/1752 gaps remain historical only.

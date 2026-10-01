@@ -112,7 +112,7 @@ KEV_FILE="$EV_DIR/known_exploited_vulnerabilities.json"
 CVE_CATALOG="$EV_DIR/cve-catalog.json"
 PROVENANCE="$EV_DIR/provenance.json"
 
-sha256() { sha256sum "$1" | cut -d' ' -f1; }
+sha256() { sha256sum < "$1" | cut -d' ' -f1; }
 now_utc() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 today_utc() { date -u +%Y-%m-%d; }
 
@@ -157,7 +157,8 @@ for spec in "${MODULES[@]}"; do
   # is a completed scan with zero findings, not missing evidence -- make that
   # explicit so the correlation engine does not read it as unavailable.
   python3 - "$sbom" <<'PY' || fail "could not normalize $label SBOM"
-import json, sys
+import json
+import sys
 from pathlib import Path
 path = Path(sys.argv[1])
 data = json.loads(path.read_text(encoding="utf-8"))
@@ -448,7 +449,8 @@ if [ "${#DISCOVERED_CVES[@]}" -eq 0 ]; then
   # Nothing to correlate. Record that explicitly instead of fabricating a
   # clean correlation receipt from catalogs that were never consulted.
   python3 - "$CORRELATION" "$KEV_VERSION" "$KEV_RELEASED" "$KEV_COUNT" "$KEV_SHA" <<'PY'
-import json, sys
+import json
+import sys
 from pathlib import Path
 out, version, released, count, sha = sys.argv[1:6]
 Path(out).write_text(json.dumps({
@@ -492,29 +494,31 @@ else
 'not_present_in_supplied_snapshot' is therefore uninformative and never a global absence claim."
 fi
 
-python3 - "$PROVENANCE" <<PY
+python3 - "$(now_utc)" "$PROVENANCE" "$KEV_URL" "$KEV_SOURCE" "$PROVIDER_MODE" "$KEV_RETRIEVED" "$KEV_SHA" "$KEV_VERSION" "$KEV_RELEASED" "$KEV_COUNT" "$CVE_SOURCE_URI" "$CVE_SOURCE" "$CVE_CATALOG_MODE" "$CVE_SHA" "$CVE_CATALOG_NOTE" <<'PY'
 import json
+import sys
 from pathlib import Path
-Path("$PROVENANCE").write_text(json.dumps({
+values = dict(zip(['PROVENANCE', 'KEV_URL', 'KEV_SOURCE', 'PROVIDER_MODE', 'KEV_RETRIEVED', 'KEV_SHA', 'KEV_VERSION', 'KEV_RELEASED', 'KEV_COUNT', 'CVE_SOURCE_URI', 'CVE_SOURCE', 'CVE_CATALOG_MODE', 'CVE_SHA', 'CVE_CATALOG_NOTE'], sys.argv[2:]))
+Path(values['PROVENANCE']).write_text(json.dumps({
     "schema": "asynq-catalog-provenance/v1",
-    "generated_at": "$(now_utc)",
+    "generated_at": sys.argv[1],
     "kev_catalog": {
-        "source_uri": "$KEV_URL",
-        "acquisition": "$KEV_SOURCE",
-        "provider_mode": "$PROVIDER_MODE",
-        "retrieved_at": "$KEV_RETRIEVED",
-        "sha256": "$KEV_SHA",
-        "catalog_version": "$KEV_VERSION",
-        "date_released": "$KEV_RELEASED",
-        "count": $KEV_COUNT,
+        "source_uri": values['KEV_URL'],
+        "acquisition": values['KEV_SOURCE'],
+        "provider_mode": values['PROVIDER_MODE'],
+        "retrieved_at": values['KEV_RETRIEVED'],
+        "sha256": values['KEV_SHA'],
+        "catalog_version": values['KEV_VERSION'],
+        "date_released": values['KEV_RELEASED'],
+        "count": int(values['KEV_COUNT']),
         "completeness": "not-asserted-by-source-schema",
     },
     "cve_catalog": {
-        "source_uri": "$CVE_SOURCE_URI",
-        "acquisition": "$CVE_SOURCE",
-        "mode": "$CVE_CATALOG_MODE",
-        "sha256": "$CVE_SHA",
-        "note": "$CVE_CATALOG_NOTE",
+        "source_uri": values['CVE_SOURCE_URI'],
+        "acquisition": values['CVE_SOURCE'],
+        "mode": values['CVE_CATALOG_MODE'],
+        "sha256": values['CVE_SHA'],
+        "note": values['CVE_CATALOG_NOTE'],
     },
 }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 PY
