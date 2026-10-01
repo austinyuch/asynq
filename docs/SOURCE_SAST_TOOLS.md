@@ -59,6 +59,11 @@ without a success receipt. Invalid source encodings, malformed embedded Python,
 tracked symlinks and mismatched tool versions retain their operational failure
 diagnostics; fixture-analyzer tests verify rejection, not vulnerability results.
 
+Fixture-analyzer CLI contracts include clean controls, non-list ShellCheck JSON,
+missing/extra Bandit source metrics and a real modification of an isolated tracked
+source during scanning. Invalid reports, incomplete source inventories and source
+drift exit 2 without a success receipt; these fixtures do not prove native scan results.
+
 Exit 2 means unavailable/invalid tools, reports, source inventory or extraction. Exit 1
 means a Bandit HIGH or ShellCheck error finding. Other findings are retained for
 non-author applicability review; policy exit 0 with warnings is explicitly `raw_clean=false`

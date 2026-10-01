@@ -107,4 +107,7 @@
 - [x] Deliver SBOM boundary dev a04040d; final-sbom-boundary fd663dd/6596 materials and hosted36899407152 actual checkout/parents/tree PASS.
 
 - [x] Repair empty-source-inventory diagnostic with original real-input RED/candidate GREEN; nine source-SAST methods,10 invalid version banners/seven invalid source cases plus empty inventory, three viable mutants caught normal/-O.
-- [ ] Deliver guarded-source successor through fresh exact tests/source/build/security/nativeSAST/remote/hosted gates; 46 maintained tests and source_sast.py195/203 native child evidence PASS; exact commit delivery and cross-family review remain separate.
+- [x] Deliver guarded-source devf619; final-source-guards921f89d/6777 materials and exact46/8/build/security/nativeSAST/hosted36904587170 checkout proof PASS.
+
+- [x] Adopt real report/inventory/source-drift integrity contracts:12 methods in fresh normal/inherited optimized CLI modes, three valid controls/seven rejects and four distinct assertion-caught mutants including peer false-pass normalization; initial -O receipts are harness-only, successor08d79d binds actual child optimization; adopted49 security tests PASS, production unchanged.
+- [ ] Deliver integrity-contract successor through exact source/test/build/security/nativeSAST/remote/hosted gates; verified final-sast-integrity ledger governs delivery.

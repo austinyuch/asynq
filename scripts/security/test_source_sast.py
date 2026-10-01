@@ -116,18 +116,25 @@ import sys
 SOURCE = Path(SPEC.origin).resolve()
 FAKE = """#!/usr/bin/env python3
 import json,sys
+from pathlib import Path
 args=sys.argv[1:]
 if '--version' in args:
  print(BANNER)
 elif '-o' in args:
  index=args.index('-o');path=args[index+1];sources=args[index+2:]
+ payload={'errors':[],'results':[],'metrics':dict.fromkeys(sources,{})}
+ if REPORT_MODE == 'metrics-missing':payload['metrics'].pop(sources[0])
+ if REPORT_MODE == 'metrics-extra':payload['metrics'][str(Path.cwd()/'unscanned.py')]={}
+ if REPORT_MODE == 'source-drift':Path(sources[0]).write_text('value=2\\n')
  with open(path, 'w') as stream:
-  stream.write(json.dumps({'errors':[],'results':[],'metrics':dict.fromkeys(sources,{})}))
-else: print('[]')
+  stream.write(json.dumps(payload))
+else:
+ payload={'shape': []} if REPORT_MODE=='shell-object' else None if REPORT_MODE=='shell-null' else 7 if REPORT_MODE=='shell-number' else 'empty' if REPORT_MODE=='shell-string' else []
+ print(json.dumps(payload))
 """
 
 class GuardedInputs(unittest.TestCase):
-    def case(self, kind, expected, bandit='__main__.py 1.9.4', shell='version: 0.11.0'):
+    def case(self, kind, expected, bandit='__main__.py 1.9.4', shell='version: 0.11.0', report_mode='valid'):
         with tempfile.TemporaryDirectory(prefix='asynq-guarded-') as tmp:
             root = Path(tmp)
             subprocess.run(['git', 'init', '-q', str(root)], check=True,
@@ -154,7 +161,7 @@ class GuardedInputs(unittest.TestCase):
             tools.mkdir()
             for name, banner in [('python', bandit), ('shellcheck', shell)]:
                 path = tools / name
-                path.write_text(FAKE.replace('BANNER', repr(banner)))
+                path.write_text(FAKE.replace('BANNER', repr(banner)).replace('REPORT_MODE', repr(report_mode)))
                 path.chmod(0o700)
             output = root / '.security/result'
             result = subprocess.run([
@@ -162,11 +169,23 @@ class GuardedInputs(unittest.TestCase):
                 '--out', str(output), '--bandit-python', str(tools / 'python'),
                 '--shellcheck', str(tools / 'shellcheck')],
                 capture_output=True, text=True, timeout=15)
-            self.assertEqual(result.returncode, 2, (kind, result.stdout, result.stderr))
-            self.assertEqual(json.loads(result.stdout)['error'], expected)
-            self.assertEqual(json.loads((output / 'failure.json').read_text())['error'], expected)
-            self.assertFalse((output / 'receipt.json').exists())
-            self.assertFalse((output / 'verdict.json').exists())
+            self.assertEqual(result.stderr, '', (kind, report_mode, result.stderr))
+            if expected is None:
+                self.assertEqual(result.returncode, 0, (kind, report_mode, result.stdout))
+                verdict = json.loads((output / 'verdict.json').read_text())
+                self.assertTrue(verdict['raw_clean'])
+                self.assertEqual(verdict['blocking_count'], 0)
+                self.assertEqual(verdict['warning_count'], 0)
+                self.assertTrue((output / 'receipt.json').is_file())
+                self.assertFalse((output / 'failure.json').exists())
+                self.assertEqual(json.loads((output / 'source-before.json').read_text()),
+                                 json.loads((output / 'source-after.json').read_text()))
+            else:
+                self.assertEqual(result.returncode, 2, (kind, report_mode, result.stdout))
+                self.assertEqual(json.loads(result.stdout)['error'], expected)
+                self.assertEqual(json.loads((output / 'failure.json').read_text())['error'], expected)
+                self.assertFalse((output / 'receipt.json').exists())
+                self.assertFalse((output / 'verdict.json').exists())
 
     def test_empty_tracked_inventory_diagnostic(self):
         self.case('empty', 'empty-source-inventory')
@@ -190,6 +209,23 @@ class GuardedInputs(unittest.TestCase):
         for version in ['0.10.0', '0.11.1', '1.0.0', '0.11.00', '0.11.0evil']:
             with self.subTest(shell=version):
                 self.case('normal', 'shellcheck-version-mismatch', shell='version: ' + version)
+
+
+    def test_real_report_shapes_and_valid_control(self):
+        self.case('normal', None)
+        for mode in ['shell-object', 'shell-null', 'shell-number', 'shell-string']:
+            with self.subTest(report_mode=mode):
+                self.case('normal', 'invalid-shellcheck-report', report_mode=mode)
+
+    def test_real_bandit_inventory_identity(self):
+        self.case('normal', None)
+        for mode in ['metrics-missing', 'metrics-extra']:
+            with self.subTest(report_mode=mode):
+                self.case('normal', 'bandit-source-inventory-mismatch', report_mode=mode)
+
+    def test_real_source_drift_and_unchanged_control(self):
+        self.case('normal', None)
+        self.case('normal', 'source-changed-during-scan', report_mode='source-drift')
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
