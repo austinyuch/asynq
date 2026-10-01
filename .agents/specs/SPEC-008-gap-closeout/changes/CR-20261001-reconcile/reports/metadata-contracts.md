@@ -1,0 +1,9 @@
+# Metadata expiry and history contracts
+
+Production already passed these contracts; no defect or statement-coverage increment is claimed. Twelve seeded expiry samples across three registries check score now-1 removal, now/now+1 retention, exact healthy metadata and byte-preserved healthy/stale payloads. Listing intentionally removes stale index membership; it does not delete stale payloads. The three global indexes must be absent before fixtures are admitted, avoiding foreign stale cleanup.
+
+Five scheduler history events verify page-size1–3/page0–4 ordered union/no duplicates. A corrupt middle-score member appears after two healthy events, requiring error plus nil whole result rather than partial success; malformed history bytes remain unchanged. Closed clients preserve errors.Is(redis.ErrClosed). Public server/worker global sort order is not asserted. No manufactured impossible Redis cast branch or artificial new fuzz target.
+
+Frozen test internal/rdb/metadata_contracts_test.go SHA-256 6f96e773b7e08ba8a241ff313b830caba5d4bd7e21cc54dba06ab18e652c62bb. Prefreeze focused race PASS1.122s; three semantic mutants assertion-caught (over-delete now boundary, delete stale payload, return partial history). Receipt .security/rdb-metadata/receipt.json SHA-256 d63daa8075947543e7eeb1a5deac122a656268a40b8698c9b271d53ad03a9707 closes126 Go/dependency subjects and10 materials. DB11 historical11 keys/DUMP/PTTL preserved; only owned members/keys removed; no FlushDB.
+
+Exact successor delivery is recorded in .security/final-metadata/: focused metadata race, root/x/tools build/vet and fresh security gates, followed by remote parity. Unchanged tools runtime remains source-equivalent historical70cbfc6; root/x full runtime historicalb146. Neither is a fresh successor execution. Global true-line95, cross-family review, dev/main and release remain open.

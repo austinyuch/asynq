@@ -50,3 +50,6 @@
 - [x] Bounded line-event control-flow experiment: actual OR probe omission reproduced/fixed in /tmp; independent serial/defer/concurrent witnesses and three generator mutants; no project denominator adoption.
 
 - [x] Verify nonempty CLI task tables, pagination wiring and ProcessIn bounds; focused race/PBT/four assertion mutants and nonauthor review PASS. Exact successor delivery uses `.security/final-task-visibility/`.
+
+- [x] Metadata expiry-boundary/payload-preservation/history partial-failure contracts: native race and three assertion mutants PASS; no production defect or coverage increment. Exact delivery .security/final-metadata/.
+- [x] Real internal/timeutil all-instruction-PC pilot; full physical-line inventory retained, compiler-attributed mapping not adopted as project executable denominator.
