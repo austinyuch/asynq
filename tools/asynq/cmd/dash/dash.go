@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gdamore/tcell/v2"
 	"github.com/austinyuch/asynq"
+	"github.com/gdamore/tcell/v2"
 )
 
 // viewType is an enum for dashboard views.
@@ -104,117 +104,144 @@ func Run(opts Options) {
 		fmt.Printf("failed to initialize screen: %v\n", err)
 		os.Exit(1)
 	}
-	s.SetStyle(baseStyle) // set default text style
+	runWithScreen(s, opts)
+}
 
-	var (
-		state = State{} // confined in this goroutine only; DO NOT SHARE
-
-		inspector = asynq.NewInspector(opts.RedisConnOpt)
-		ticker    = time.NewTicker(opts.PollInterval)
-
-		eventCh = make(chan tcell.Event)
-		done    = make(chan struct{})
-
-		// channels to send/receive data fetched asynchronously
-		errorCh  = make(chan error)
-		queueCh  = make(chan *asynq.QueueInfo)
-		taskCh   = make(chan *asynq.TaskInfo)
-		queuesCh = make(chan []*asynq.QueueInfo)
-		groupsCh = make(chan []*asynq.GroupInfo)
-		tasksCh  = make(chan []*asynq.TaskInfo)
-	)
-	defer ticker.Stop()
-
-	f := dataFetcher{
-		inspector,
-		opts,
-		s,
-		errorCh,
-		queueCh,
-		taskCh,
-		queuesCh,
-		groupsCh,
-		tasksCh,
+// runWithScreen owns an initialized screen and its newly created Inspector.
+// Keeping terminal initialization at the process boundary also allows the
+// same production wiring to run with a real SimulationScreen.
+func runWithScreen(s tcell.Screen, opts Options) {
+	// Transfer the initialized screen and owned Inspector to the runner.
+	inspector := asynq.NewInspector(opts.RedisConnOpt)
+	d := newDashboard(s, opts)
+	f := &dataFetcher{
+		inspector: inspector, opts: opts, s: s,
+		errorCh: d.errorCh, queueCh: d.queueCh, taskCh: d.taskCh,
+		queuesCh: d.queuesCh, groupsCh: d.groupsCh, tasksCh: d.tasksCh,
+		done: d.done, slots: make(chan struct{}, 4),
 	}
+	d.run(f, func() {
+		// Stop publication first (run closes done), then release transport before
+		// waiting for in-flight I/O. Inspector APIs do not accept a context.
+		_ = inspector.Close()
+		f.wait()
+	})
+}
 
-	d := dashDrawer{
-		s,
-		opts,
+// dashboard confines all mutable UI state to its event-loop goroutine. run owns
+// the initialized screen and ticker; cleanup owns the data source/workers.
+type dashboard struct {
+	s        tcell.Screen
+	opts     Options
+	ticker   *time.Ticker
+	ticks    <-chan time.Time
+	done     chan struct{}
+	errorCh  chan error
+	queueCh  chan *asynq.QueueInfo
+	taskCh   chan *asynq.TaskInfo
+	queuesCh chan []*asynq.QueueInfo
+	groupsCh chan []*asynq.GroupInfo
+	tasksCh  chan []*asynq.TaskInfo
+}
+
+func newDashboard(s tcell.Screen, opts Options) *dashboard {
+	ticker := time.NewTicker(opts.PollInterval)
+	return &dashboard{
+		s: s, opts: opts, ticker: ticker, ticks: ticker.C,
+		done: make(chan struct{}), errorCh: make(chan error),
+		queueCh: make(chan *asynq.QueueInfo), taskCh: make(chan *asynq.TaskInfo),
+		queuesCh: make(chan []*asynq.QueueInfo), groupsCh: make(chan []*asynq.GroupInfo),
+		tasksCh: make(chan []*asynq.TaskInfo),
 	}
+}
 
+// Only the event-loop owner closes done. Both a quit key and the deferred
+// cleanup can request stopping, so repeated requests are harmless.
+func stopDashboard(done chan struct{}) {
+	select {
+	case <-done:
+	default:
+		close(done)
+	}
+}
+
+func (d *dashboard) run(f fetcher, cleanup func()) {
+	s := d.s
+	s.SetStyle(baseStyle)
+	state := State{}
+	eventCh := make(chan tcell.Event)
+	eventsStopped := make(chan struct{})
+	go func() {
+		defer close(eventsStopped)
+		s.ChannelEvents(eventCh, d.done)
+	}()
+	defer func() {
+		d.ticker.Stop()
+		stopDashboard(d.done)
+		<-eventsStopped
+		cleanup()
+		s.Fini()
+	}()
+	drawer := dashDrawer{s: s, opts: d.opts}
 	h := keyEventHandler{
-		s:            s,
-		fetcher:      &f,
-		drawer:       &d,
-		state:        &state,
-		done:         done,
-		ticker:       ticker,
-		pollInterval: opts.PollInterval,
+		s: s, state: &state, done: d.done, fetcher: f, drawer: &drawer,
+		ticker: d.ticker, pollInterval: d.opts.PollInterval,
 	}
-
-	go fetchQueues(inspector, queuesCh, errorCh, opts)
-	go s.ChannelEvents(eventCh, done) // TODO: Double check that we are not leaking goroutine with this one.
-	d.Draw(&state)                    // draw initial screen
-
+	f.Fetch(&state)
+	drawer.Draw(&state)
 	for {
-		// Update screen
 		s.Show()
-
 		select {
-		case ev := <-eventCh:
-			// Process event
+		case <-d.done:
+			return
+		case ev, ok := <-eventCh:
+			if !ok {
+				return
+			}
 			switch ev := ev.(type) {
 			case *tcell.EventResize:
 				s.Sync()
 			case *tcell.EventKey:
 				h.HandleKeyEvent(ev)
 			}
-
-		case <-ticker.C:
+		case <-d.ticks:
 			f.Fetch(&state)
-
-		case queues := <-queuesCh:
+		case queues := <-d.queuesCh:
 			state.queues = queues
 			state.err = nil
 			if len(queues) < state.queueTableRowIdx {
 				state.queueTableRowIdx = len(queues)
 			}
-			d.Draw(&state)
-
-		case q := <-queueCh:
+			drawer.Draw(&state)
+		case q := <-d.queueCh:
 			state.selectedQueue = q
 			state.err = nil
-			d.Draw(&state)
-
-		case groups := <-groupsCh:
+			drawer.Draw(&state)
+		case groups := <-d.groupsCh:
 			state.groups = groups
 			state.err = nil
 			if len(groups) < state.groupTableRowIdx {
 				state.groupTableRowIdx = len(groups)
 			}
-			d.Draw(&state)
-
-		case tasks := <-tasksCh:
+			drawer.Draw(&state)
+		case tasks := <-d.tasksCh:
 			state.tasks = tasks
 			state.err = nil
 			if len(tasks) < state.taskTableRowIdx {
 				state.taskTableRowIdx = len(tasks)
 			}
-			d.Draw(&state)
-
-		case t := <-taskCh:
-			state.selectedTask = t
+			drawer.Draw(&state)
+		case task := <-d.taskCh:
+			state.selectedTask = task
 			state.err = nil
-			d.Draw(&state)
-
-		case err := <-errorCh:
+			drawer.Draw(&state)
+		case err := <-d.errorCh:
 			if errors.Is(err, asynq.ErrTaskNotFound) {
 				state.selectedTask = nil
 			} else {
 				state.err = err
 			}
-			d.Draw(&state)
+			drawer.Draw(&state)
 		}
 	}
-
 }

@@ -5,7 +5,6 @@
 package dash
 
 import (
-	"os"
 	"time"
 
 	"github.com/austinyuch/asynq"
@@ -27,9 +26,7 @@ type keyEventHandler struct {
 }
 
 func (h *keyEventHandler) quit() {
-	h.s.Fini()
-	close(h.done)
-	os.Exit(0)
+	stopDashboard(h.done)
 }
 
 func (h *keyEventHandler) HandleKeyEvent(ev *tcell.EventKey) {
