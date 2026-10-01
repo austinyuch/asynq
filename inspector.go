@@ -744,7 +744,7 @@ func (i *Inspector) ArchiveAllAggregatingTasks(queue, group string) (int, error)
 // If the task is in already archived, it returns a non-nil error.
 func (i *Inspector) ArchiveTask(queue, id string) error {
 	if err := base.ValidateQueueName(queue); err != nil {
-		return fmt.Errorf("asynq: err")
+		return err
 	}
 	err := i.rdb.ArchiveTask(queue, id)
 	switch {
