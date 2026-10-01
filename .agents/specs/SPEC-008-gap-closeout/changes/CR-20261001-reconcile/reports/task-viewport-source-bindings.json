@@ -1,0 +1,7 @@
+{
+  "tools/asynq/cmd/dash/dash.go": "d45240dec5df58b1c005dde4978d851f9c3b5c884c82941322d72aefdf18e7f1",
+  "tools/asynq/cmd/dash/draw.go": "d164089af46e2e6aafdcce0e1d9ae058ffc6f2647e83ae0a99c6c7da61d87d57",
+  "tools/asynq/cmd/dash/key_event.go": "7cf30814a5877142eb5e48dabcf8723b4f55a1ec9fd0163791bdbd81b8af3d30",
+  "tools/asynq/cmd/dash/fetch_identity_contract_test.go": "e5fec47add5b2ab2bbee7bbb76f1837e00615087f303355447d9a02ac782324e",
+  "tools/asynq/cmd/dash/task_viewport_contract_test.go": "834061f07fedc4b061077946f158e3ceb99b40de5a48e9a2c789a9e18afab33b"
+}

@@ -32,3 +32,5 @@
 | R-REC-19 | Loading Enter must not select an old queue row | SPEC-008 / CR-20261001-reconcile | queue-entry row reset | reports/queue-selection.md; T-REC-QUEUE-SELECTION; original panic + source-bound property/mutation PASS; delivery ledger pending |
 
 | R-REC-20 | Obsolete asynchronous responses must not update a newer dashboard view | SPEC-008 / CR-20261001-reconcile | immutable request context/epoch on all results and errors | reports/fetch-identity.md; T-REC-FETCH-IDENTITY; original assertion failures + source-bound candidate contracts; exact real-fixture delivery ledger separately required |
+
+| R-REC-21 | Task viewport/page transitions must not expose obsolete loading rows | SPEC-008 / CR-20261001-reconcile | clear/reset before immutable fetch; count-based page bounds; preserved modal identity | reports/task-viewport.md; T-REC-TASK-VIEWPORT; seven original assertion failures and reviewed successor contracts; exact delivery ledger separately authoritative |

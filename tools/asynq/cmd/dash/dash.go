@@ -171,6 +171,7 @@ func (d *dashboard) run(f fetcher, cleanup func()) {
 	f = contextualFetcher{next: f, screen: s}
 	s.SetStyle(baseStyle)
 	state := State{}
+	pageCapacity := taskPageSize(s)
 	eventCh := make(chan tcell.Event)
 	eventsStopped := make(chan struct{})
 	go func() {
@@ -203,6 +204,20 @@ func (d *dashboard) run(f fetcher, cleanup func()) {
 			switch ev := ev.(type) {
 			case *tcell.EventResize:
 				s.Sync()
+				capacity := taskPageSize(s)
+				details := state.view == viewTypeQueueDetails || (state.view == viewTypeHelp && state.prevView == viewTypeQueueDetails)
+				if capacity != pageCapacity && details && !shouldShowGroupTable(&state) {
+					state.pageNum = 1
+					state.tasks = nil
+					state.taskTableRowIdx = 0
+					// Preserve an open modal's identity while replacing its underlying page.
+					// Help defers admission until returning to the details view.
+					if state.view == viewTypeQueueDetails {
+						f.Fetch(&state)
+						d.ticker.Reset(d.opts.PollInterval)
+					}
+				}
+				pageCapacity = capacity
 				drawer.Draw(&state)
 				captureFetchContext(&state, s)
 			case *tcell.EventKey:

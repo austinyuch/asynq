@@ -4,8 +4,8 @@
 
 ## Current delivery and ROI handoff
 
-1. Validated reconciliation is integrated into dev at bc9fad7; security update6898b82 is pushed and PR22 draft build PASS. Current IL021 successor adds immutable async response identity; see [contracts and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/fetch-identity.md). Exact delivery requires `.security/final-fetch-identity/` receipts and remote readback.
-2. Next functional ROI: reproduce/fix IL022 task viewport/page snapshot mismatch. Then complete truthful project-wide >=95% line measurement/coverage; native Go statements are not equivalent evidence.
+1. Validated reconciliation is integrated into dev at bc9fad7; security update6898b82 is pushed and PR22 draft build PASS. IL021 delivered via devda67f2d with exact `.security/final-fetch-identity/` ledger, remote parity and main PR22 build/tree PASS. IL022 successor repairs task viewport/page loading; see [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/task-viewport.md). Exact delivery is authoritative in `.security/final-task-viewport/` receipts and remote readback.
+2. Next coverage ROI after IL022 delivery: reverse dashboard state/row navigation and remaining stale-result streams, then genuine error boundaries. Complete truthful project-wide >=95% line measurement/coverage; native Go statements are not equivalent evidence.
 3. Complete outstanding review work, protected main PR/check/merge, sequential root→x→tools release dependency consumption/tags/publication and runtime/cache cleanup. Prior scans/slices below are historical subjects, not current handoff instructions.
 
 ## Active
