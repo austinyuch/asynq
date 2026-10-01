@@ -65,3 +65,7 @@
 - [x] Deliver IL022 and security report through dev5f461d9; remote parity, full tools/build source equivalence, fresh merge security and hosted run36844671038 checkout-tree PASS. Reconcile current handoff against archived historical snapshots; main/release/line95 remain open.
 
 - [x] Source-traced reverse state/row navigation and stale response contracts; independent seeded key model, native fuzz and successor assertion mutants. Exact delivery is authoritative only in .security/final-reverse-navigation/.
+
+- [x] Reproduce cron/server AUTH cause/status failures and cronHistory owned-client leak; preserve original baseline, repair three Close/%w/first-error boundaries; corrected distinct-error fixed/seeded contracts and four semantic mutants PASS.
+- [x] Real Linux PTY public dashboard entry: live-child client/termios checks before OS exit, exact post-key Help/Queues, unknown-TERM rejection and three assertion mutants. Exact delivery in .security/final-cli-entry/.
+- [x] Expand real-base statement-entry observer to138 actual sites;36 existing Tests plain/instrumented normal/race and two independent observer mutants; full unsupported/physical inventory retained, not generic true-line95 adoption.
