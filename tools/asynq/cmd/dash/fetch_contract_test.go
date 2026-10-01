@@ -240,6 +240,15 @@ func TestDashboardFetchRuntimeContracts(t *testing.T) {
 	}
 }
 
+func fetchReceiveResult[T any](t *testing.T, ch <-chan fetchResult[T], expected fetchContext) T {
+	t.Helper()
+	result := fetchReceive(t, ch)
+	if result.request != expected {
+		t.Fatalf("producer request identity: got %+v want %+v", result.request, expected)
+	}
+	return result.value
+}
+
 func TestDashboardFetchDispatchContracts(t *testing.T) {
 	f := newFetchContractFixture(t)
 	before := f.snapshot(t)
@@ -254,15 +263,17 @@ func TestDashboardFetchDispatchContracts(t *testing.T) {
 	}
 	t.Cleanup(screen.Fini)
 	screen.SetSize(80, 17)
-	errorCh := make(chan error, 8)
-	queueCh := make(chan *asynq.QueueInfo, 8)
-	taskCh := make(chan *asynq.TaskInfo, 8)
-	queuesCh := make(chan []*asynq.QueueInfo, 8)
-	groupsCh := make(chan []*asynq.GroupInfo, 8)
-	tasksCh := make(chan []*asynq.TaskInfo, 8)
-	fetcher := dataFetcher{inspector: f.inspector, s: screen, errorCh: errorCh, queueCh: queueCh, taskCh: taskCh, queuesCh: queuesCh, groupsCh: groupsCh, tasksCh: tasksCh}
+	errorCh := make(chan fetchResult[error], 8)
+	queueCh := make(chan fetchResult[*asynq.QueueInfo], 8)
+	taskCh := make(chan fetchResult[*asynq.TaskInfo], 8)
+	queuesCh := make(chan fetchResult[[]*asynq.QueueInfo], 8)
+	groupsCh := make(chan fetchResult[[]*asynq.GroupInfo], 8)
+	tasksCh := make(chan fetchResult[[]*asynq.TaskInfo], 8)
+	done := make(chan struct{})
+	fetcher := dataFetcher{done: done, inspector: f.inspector, s: screen, errorCh: errorCh, queueCh: queueCh, taskCh: taskCh, queuesCh: queuesCh, groupsCh: groupsCh, tasksCh: tasksCh}
+	fetchJoinOnCleanup(t, &fetcher, done)
 	fetcher.Fetch(&State{view: viewTypeQueues})
-	if len(fetchReceive(t, queuesCh)) != 2 {
+	if len(fetchReceiveResult(t, queuesCh, fetchContext{view: viewTypeQueues})) != 2 {
 		t.Fatal("queue overview lost queues")
 	}
 	queue, e := f.inspector.GetQueueInfo(f.queues[0])
@@ -271,27 +282,30 @@ func TestDashboardFetchDispatchContracts(t *testing.T) {
 	}
 	for _, state := range []asynq.TaskState{asynq.TaskStateActive, asynq.TaskStatePending, asynq.TaskStateScheduled, asynq.TaskStateRetry, asynq.TaskStateArchived, asynq.TaskStateCompleted} {
 		id := f.ids[state][0]
+		request := fetchContext{view: viewTypeQueueDetails, queue: queue.Queue, taskState: state, page: 2, pageSize: 2, taskID: id, epoch: 1}
 		fetcher.Fetch(&State{view: viewTypeQueueDetails, selectedQueue: queue, taskState: state, pageNum: 2, taskID: id})
-		fetchAssertTasks(t, f, state, fetchReceive(t, tasksCh), fetchWantTasks(t, f.inspector, f.queues[0], state, 2, 2))
-		if fetchReceive(t, queueCh).Queue != f.queues[0] {
+		fetchAssertTasks(t, f, state, fetchReceiveResult(t, tasksCh, request), fetchWantTasks(t, f.inspector, f.queues[0], state, 2, 2))
+		if fetchReceiveResult(t, queueCh, request).Queue != f.queues[0] {
 			t.Fatal("wrong queue dispatch")
 		}
-		if task := fetchReceive(t, taskCh); task.ID != id || task.State != state {
+		if task := fetchReceiveResult(t, taskCh, request); task.ID != id || task.State != state {
 			t.Fatalf("modal identity: %+v", task)
 		}
 	}
+	request := fetchContext{view: viewTypeQueueDetails, queue: queue.Queue, taskState: asynq.TaskStateAggregating, pageSize: 2, epoch: 1}
 	fetcher.Fetch(&State{view: viewTypeQueueDetails, selectedQueue: queue, taskState: asynq.TaskStateAggregating})
-	if groups := fetchReceive(t, groupsCh); len(groups) != 1 || groups[0].Group != f.group {
+	if groups := fetchReceiveResult(t, groupsCh, request); len(groups) != 1 || groups[0].Group != f.group {
 		t.Fatal("group dispatch")
 	}
-	_ = fetchReceive(t, queueCh)
+	_ = fetchReceiveResult(t, queueCh, request)
+	request.group, request.page = f.group, 2
 	fetcher.Fetch(&State{view: viewTypeQueueDetails, selectedQueue: queue, taskState: asynq.TaskStateAggregating, selectedGroup: &asynq.GroupInfo{Group: f.group}, pageNum: 2})
 	want, e := f.inspector.ListAggregatingTasks(f.queues[0], f.group, asynq.PageSize(2), asynq.Page(2))
 	if e != nil {
 		t.Fatal(e)
 	}
-	fetchAssertTasks(t, f, asynq.TaskStateAggregating, fetchReceive(t, tasksCh), want)
-	_ = fetchReceive(t, queueCh)
+	fetchAssertTasks(t, f, asynq.TaskStateAggregating, fetchReceiveResult(t, tasksCh, request), want)
+	_ = fetchReceiveResult(t, queueCh, request)
 	fetcher.Fetch(&State{view: viewTypeHelp})
 	if len(errorCh)+len(queueCh)+len(taskCh)+len(queuesCh)+len(groupsCh)+len(tasksCh) != 0 {
 		t.Fatal("unexpected or unconsumed dispatch")
@@ -389,4 +403,97 @@ func (f *fetchContractFixture) snapshot(t *testing.T) map[string]string {
 		result[key] = v
 	}
 	return result
+}
+
+// The test owns shutdown before any receive can fail, so blocked result workers
+// cannot outlive fixture teardown.
+func fetchJoinOnCleanup(t *testing.T, fetcher *dataFetcher, done chan struct{}) {
+	t.Helper()
+	t.Cleanup(func() {
+		close(done)
+		joined := make(chan struct{})
+		go func() { fetcher.wait(); close(joined) }()
+		select {
+		case <-joined:
+		case <-time.After(3 * time.Second):
+			t.Error("typed producer cleanup did not join")
+		}
+	})
+}
+
+func TestDashboardFetchAdmissionSnapshotContracts(t *testing.T) {
+	f := newFetchContractFixture(t)
+	before := f.snapshot(t)
+	t.Cleanup(func() {
+		if !reflect.DeepEqual(before, f.snapshot(t)) {
+			t.Error("snapshot producer mutated fixture bytes")
+		}
+	})
+	screen := renderingScreen(t, 80, 17)
+	tasks := make(chan fetchResult[[]*asynq.TaskInfo])
+	queue := make(chan fetchResult[*asynq.QueueInfo])
+	modal := make(chan fetchResult[*asynq.TaskInfo])
+	failures := make(chan fetchResult[error], 3)
+	done := make(chan struct{})
+	fetcher := &dataFetcher{inspector: f.inspector, s: screen, tasksCh: tasks, queueCh: queue, taskCh: modal, errorCh: failures, done: done, slots: make(chan struct{}, 4)}
+	fetchJoinOnCleanup(t, fetcher, done)
+	id := f.ids[asynq.TaskStatePending][0]
+	state := &State{view: viewTypeQueueDetails, selectedQueue: &asynq.QueueInfo{Queue: f.queues[0]}, taskState: asynq.TaskStatePending, pageNum: 2, taskID: id, request: fetchContext{epoch: 7}}
+	expected := fetchContext{view: viewTypeQueueDetails, queue: f.queues[0], taskState: asynq.TaskStatePending, page: 2, pageSize: 2, taskID: id, epoch: 8}
+	want := fetchWantTasks(t, f.inspector, f.queues[0], asynq.TaskStatePending, 2, 2)
+	fetcher.Fetch(state)
+	// All result channels are unbuffered. Owner mutation happens before any
+	// publication completes; workers must use captured scalar request fields.
+	state.selectedQueue.Queue = "other-owner-view"
+	state.view, state.taskState, state.pageNum, state.taskID = viewTypeHelp, asynq.TaskStateArchived, 99, "new-modal"
+	state.request = fetchContext{epoch: 100}
+	fetchAssertTasks(t, f, asynq.TaskStatePending, fetchReceiveResult(t, tasks, expected), want)
+	if got := fetchReceiveResult(t, queue, expected); got.Queue != f.queues[0] {
+		t.Fatalf("captured queue payload: %v", got)
+	}
+	if got := fetchReceiveResult(t, modal, expected); got.ID != id || got.Queue != f.queues[0] {
+		t.Fatalf("captured modal payload: %v", got)
+	}
+	if len(failures) != 0 {
+		t.Fatalf("unexpected producer errors: %v", fetchReceive(t, failures).value)
+	}
+}
+
+func TestDashboardFetchErrorAdmissionSnapshotContracts(t *testing.T) {
+	client := redis.NewClient(&redis.Options{Addr: "127.0.0.1:0"})
+	inspector := asynq.NewInspectorFromRedisClient(client)
+	if err := client.Close(); err != nil {
+		t.Fatal(err)
+	}
+	screen := renderingScreen(t, 80, 17)
+	failures := make(chan fetchResult[error], 3)
+	done := make(chan struct{})
+	fetcher := &dataFetcher{inspector: inspector, s: screen, errorCh: failures, done: done, slots: make(chan struct{}, 4)}
+	fetchJoinOnCleanup(t, fetcher, done)
+	state := &State{view: viewTypeQueueDetails, selectedQueue: &asynq.QueueInfo{Queue: "captured-error-queue"}, taskState: asynq.TaskStatePending, pageNum: 2, taskID: "captured-error-modal", request: fetchContext{epoch: 7}}
+	expected := fetchContext{view: viewTypeQueueDetails, queue: "captured-error-queue", taskState: asynq.TaskStatePending, page: 2, pageSize: 2, taskID: "captured-error-modal", epoch: 8}
+	_, tasksErr := inspector.ListPendingTasks(expected.queue, asynq.PageSize(2), asynq.Page(2))
+	_, queueErr := inspector.GetQueueInfo(expected.queue)
+	_, modalErr := inspector.GetTaskInfo(expected.queue, expected.taskID)
+	want := map[string]int{}
+	for _, err := range []error{tasksErr, queueErr, modalErr} {
+		if err == nil {
+			t.Fatal("closed transport unexpectedly healthy")
+		}
+		want[fmt.Sprintf("%T:%s", err, err.Error())]++
+	}
+	fetcher.Fetch(state)
+	state.selectedQueue.Queue, state.pageNum, state.taskID = "changed-error-queue", 99, "changed-error-modal"
+	state.request = fetchContext{epoch: 100}
+	got := map[string]int{}
+	for n := 0; n < 3; n++ {
+		err := fetchReceiveResult(t, failures, expected)
+		if err == nil {
+			t.Fatal("nil closed transport error")
+		}
+		got[fmt.Sprintf("%T:%s", err, err.Error())]++
+	}
+	if !reflect.DeepEqual(got, want) {
+		t.Fatalf("typed errors changed released storage API causes: got%v want%v", got, want)
+	}
 }

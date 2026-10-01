@@ -26,10 +26,11 @@ const (
 
 // State holds dashboard state.
 type State struct {
-	queues []*asynq.QueueInfo
-	tasks  []*asynq.TaskInfo
-	groups []*asynq.GroupInfo
-	err    error
+	request fetchContext // event-loop-owned admission identity
+	queues  []*asynq.QueueInfo
+	tasks   []*asynq.TaskInfo
+	groups  []*asynq.GroupInfo
+	err     error
 
 	// Note: index zero corresponds to the table header; index=1 correctponds to the first element
 	queueTableRowIdx int             // highlighted row in queue table
@@ -136,22 +137,22 @@ type dashboard struct {
 	ticker   *time.Ticker
 	ticks    <-chan time.Time
 	done     chan struct{}
-	errorCh  chan error
-	queueCh  chan *asynq.QueueInfo
-	taskCh   chan *asynq.TaskInfo
-	queuesCh chan []*asynq.QueueInfo
-	groupsCh chan []*asynq.GroupInfo
-	tasksCh  chan []*asynq.TaskInfo
+	errorCh  chan fetchResult[error]
+	queueCh  chan fetchResult[*asynq.QueueInfo]
+	taskCh   chan fetchResult[*asynq.TaskInfo]
+	queuesCh chan fetchResult[[]*asynq.QueueInfo]
+	groupsCh chan fetchResult[[]*asynq.GroupInfo]
+	tasksCh  chan fetchResult[[]*asynq.TaskInfo]
 }
 
 func newDashboard(s tcell.Screen, opts Options) *dashboard {
 	ticker := time.NewTicker(opts.PollInterval)
 	return &dashboard{
 		s: s, opts: opts, ticker: ticker, ticks: ticker.C,
-		done: make(chan struct{}), errorCh: make(chan error),
-		queueCh: make(chan *asynq.QueueInfo), taskCh: make(chan *asynq.TaskInfo),
-		queuesCh: make(chan []*asynq.QueueInfo), groupsCh: make(chan []*asynq.GroupInfo),
-		tasksCh: make(chan []*asynq.TaskInfo),
+		done: make(chan struct{}), errorCh: make(chan fetchResult[error]),
+		queueCh: make(chan fetchResult[*asynq.QueueInfo]), taskCh: make(chan fetchResult[*asynq.TaskInfo]),
+		queuesCh: make(chan fetchResult[[]*asynq.QueueInfo]), groupsCh: make(chan fetchResult[[]*asynq.GroupInfo]),
+		tasksCh: make(chan fetchResult[[]*asynq.TaskInfo]),
 	}
 }
 
@@ -167,6 +168,7 @@ func stopDashboard(done chan struct{}) {
 
 func (d *dashboard) run(f fetcher, cleanup func()) {
 	s := d.s
+	f = contextualFetcher{next: f, screen: s}
 	s.SetStyle(baseStyle)
 	state := State{}
 	eventCh := make(chan tcell.Event)
@@ -202,41 +204,67 @@ func (d *dashboard) run(f fetcher, cleanup func()) {
 			case *tcell.EventResize:
 				s.Sync()
 				drawer.Draw(&state)
+				captureFetchContext(&state, s)
 			case *tcell.EventKey:
 				h.HandleKeyEvent(ev)
+				captureFetchContext(&state, s)
 			}
 		case <-d.ticks:
 			f.Fetch(&state)
-		case queues := <-d.queuesCh:
+		case result := <-d.queuesCh:
+			if result.request != captureFetchContext(&state, s) {
+				continue
+			}
+			queues := result.value
 			state.queues = queues
 			state.err = nil
 			if len(queues) < state.queueTableRowIdx {
 				state.queueTableRowIdx = len(queues)
 			}
 			drawer.Draw(&state)
-		case q := <-d.queueCh:
+		case result := <-d.queueCh:
+			if result.request != captureFetchContext(&state, s) {
+				continue
+			}
+			q := result.value
 			state.selectedQueue = q
 			state.err = nil
 			drawer.Draw(&state)
-		case groups := <-d.groupsCh:
+		case result := <-d.groupsCh:
+			if result.request != captureFetchContext(&state, s) {
+				continue
+			}
+			groups := result.value
 			state.groups = groups
 			state.err = nil
 			if len(groups) < state.groupTableRowIdx {
 				state.groupTableRowIdx = len(groups)
 			}
 			drawer.Draw(&state)
-		case tasks := <-d.tasksCh:
+		case result := <-d.tasksCh:
+			if result.request != captureFetchContext(&state, s) {
+				continue
+			}
+			tasks := result.value
 			state.tasks = tasks
 			state.err = nil
 			if len(tasks) < state.taskTableRowIdx {
 				state.taskTableRowIdx = len(tasks)
 			}
 			drawer.Draw(&state)
-		case task := <-d.taskCh:
+		case result := <-d.taskCh:
+			if result.request != captureFetchContext(&state, s) {
+				continue
+			}
+			task := result.value
 			state.selectedTask = task
 			state.err = nil
 			drawer.Draw(&state)
-		case err := <-d.errorCh:
+		case result := <-d.errorCh:
+			if result.request != captureFetchContext(&state, s) {
+				continue
+			}
+			err := result.value
 			if errors.Is(err, asynq.ErrTaskNotFound) {
 				state.selectedTask = nil
 			} else {

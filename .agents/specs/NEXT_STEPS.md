@@ -2,6 +2,12 @@
 
 > 唯一權威的 handoff path。完成即移除;不確定歸屬的改善項先進 `ISSUE_LOG.md`。
 
+## Current delivery and ROI handoff
+
+1. Validated reconciliation is integrated into dev at bc9fad7; security update6898b82 is pushed and PR22 draft build PASS. Current IL021 successor adds immutable async response identity; see [contracts and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/fetch-identity.md). Exact delivery requires `.security/final-fetch-identity/` receipts and remote readback.
+2. Next functional ROI: reproduce/fix IL022 task viewport/page snapshot mismatch. Then complete truthful project-wide >=95% line measurement/coverage; native Go statements are not equivalent evidence.
+3. Complete outstanding review work, protected main PR/check/merge, sequential root→x→tools release dependency consumption/tags/publication and runtime/cache cleanup. Prior scans/slices below are historical subjects, not current handoff instructions.
+
 ## Active
 
 | # | 項目 | 來源 | 條件 / 時機 |
@@ -9,7 +15,7 @@
 | 1 | 下次 upstream 有更新時執行 upstream-sync skill(`.agents/skills/upstream-sync/`) | SPEC-003 | 週期性檢查或 upstream release;2026-10-01 live upstream `d135f143` 新增 3 commits,已在候選 branch merge;待 review 與 dev/main promotion |
 | 2 | 已發佈 `v0.26.0-team.3` / `x/v0.1.0-team.3` / `tools/v0.26.0-team.3`;下次 release 時依 FORK.md 慣例打下一個 `v0.26.x-team.N`(x/tools 視 require 變動跟進,先 root 後 x 後 tools) | SPEC-004 | 有新功能/sync 合入後 |
 
-## Current reconciliation (2026-10-01)
+## Historical reconciliation receipts (2026-10-01)
 
 - CR-20261001-reconcile: [bounded slices and evidence](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reconciliation.md), [tasks](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/tasks.md).
 - Cross-family Grok/ACP review needs explicit destination approval after automatic review refused unpublished candidate dispatch. Main promotion remains pending.

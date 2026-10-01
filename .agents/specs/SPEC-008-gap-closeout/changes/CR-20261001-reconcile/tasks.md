@@ -8,7 +8,8 @@
 - [x] Generate three-module SBOM/CVE/KEV/SAST baseline; patched Go 1.26.6 gate PASS.
 - [x] Published5e98135 security/build/vet/tools gates and push parity; root/x/cluster carried with complete source-equality proof from72dbcd0.
 - [ ] Cross-family review: destination approval required after automatic review refusal.
-- [ ] Integrate validated candidate into dev, then protected main PR/check/merge.
+- [x] Integrate validated candidate through bc9fad7 into dev; security-document successor6898b82 pushed.
+- [ ] Complete protected main PR22/check/merge after unfinished objective work.
 - [ ] Reach >=95% project-wide line coverage; remaining root/rdb/x-metrics/tools gaps open.
 - [x] IL-004 canonical cluster fixtures and all-master ArchiveTrim oracle; full standalone/cluster race suites PASS (successor final gate pending).
 - [ ] Release decision after functional promotion, sequential root/x/tools tags only; never push imported upstream bare tags.
@@ -55,7 +56,8 @@
 - [x] Real internal/timeutil all-instruction-PC pilot; full physical-line inventory retained, compiler-attributed mapping not adopted as project executable denominator.
 
 - [x] Reproduce cross-queue loading Enter panic and reset task row on new queue entry; source-bound race/32x8 properties/three assertion mutants PASS; exact delivery .security/final-queue-selection/.
-- [ ] Reproduce and repair IL-021 asynchronous stale-result identity and IL-022 task resize/page snapshot mismatch; source traced, not runtime closed.
+- [x] Reproduce IL021 with two consumer assertion failures and repair tagged admission/acceptance; reviewed focused race/PBT/fuzz/five assertion mutants PASS; exact real-fixture delivery authoritative in final-fetch-identity ledger.
+- [ ] Reproduce and repair IL022 task resize/page snapshot mismatch; remains source traced, not runtime closed.
 
 - [x] Integrate validated slices into dev via no-ff bc9fad7; push parity verified; main draft PR22 hosted build PASS with exact checkout tree proof. Main merge remains unfinished.
 - [x] User-requested latest dev/WIP SBOM/CVE/KEV refresh: three modules, 25 closed materials / 26 verified archive members, PASS with existing G118 retained; see docs/SECURITY_SCAN_2026-10-01.md.
