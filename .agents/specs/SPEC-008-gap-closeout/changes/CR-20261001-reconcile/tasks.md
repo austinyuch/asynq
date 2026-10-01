@@ -110,4 +110,7 @@
 - [x] Deliver guarded-source devf619; final-source-guards921f89d/6777 materials and exact46/8/build/security/nativeSAST/hosted36904587170 checkout proof PASS.
 
 - [x] Adopt real report/inventory/source-drift integrity contracts:12 methods in fresh normal/inherited optimized CLI modes, three valid controls/seven rejects and four distinct assertion-caught mutants including peer false-pass normalization; initial -O receipts are harness-only, successor08d79d binds actual child optimization; adopted49 security tests PASS, production unchanged.
-- [ ] Deliver integrity-contract successor through exact source/test/build/security/nativeSAST/remote/hosted gates; verified final-sast-integrity ledger governs delivery.
+- [x] Deliver integrity-contract successor dev3da; final-sast-integrity9a9dd520/6949 materials and exact49/8 gates/hosted36908639580 actual checkout/tree PASS.
+
+- [x] Rehearse unpublished root→x→tools file-proxy snapshots with canonical zips, no-replace versioned CLI/exporter installs and actual root4/x4 build identities;32 closed-client consumer cases distinguish baseline0/candidate32 preserved causes;28 phases terminal0.
+- [ ] Deliver release preparation/governance slice with verified final-release-rehearsal ledger; no public tags/releases/notifications are inferred from rehearsal.
