@@ -262,7 +262,7 @@ Changes to maintained Python/Bash require `make security-source` before dev
 promotion, in addition to `make security-contracts-test` and the three-module
 SBOM/CVE/KEV gate. This runs native Bandit1.9.4 and ShellCheck0.11.0 against
 tracked `.py`/`.sh` files, quoted Python heredocs and the known literal FAKE test
-dispatcher. It does not analyze extensionless hooks or arbitrary generated code.
+fixtures. It does not analyze extensionless hooks or arbitrary generated code.
 The existing hosted job only runs its contract tests; a hosted native scan is
 not claimed. Missing/version-mismatched tools, invalid reports, unsupported
 extraction or changed inputs fail with exit2; HIGH Bandit/error ShellCheck
