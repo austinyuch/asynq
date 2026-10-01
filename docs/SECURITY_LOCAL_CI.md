@@ -246,6 +246,16 @@ were caught by ordinary assertions. Fresh durable evidence is in
 is historical and currently has missing materials.
 
 
+## Application SBOM scan boundary
+
+Each module scan excludes its own `./.security` evidence directory; the root
+also excludes the separate `./x` and `./tools` modules. Evidence snapshots,
+fixture manifests and isolated scanner environments are not application inputs.
+Other visible application manifests remain in scope, even when they are not Go
+manifests. Tooling inventories must be scanned separately under a tooling label.
+Older recursive-root SBOMs that included ignored tooling fixtures remain dated
+working-tree evidence and are not rewritten as pure application inventories.
+
 ## Maintained Python/Bash source SAST
 
 Changes to maintained Python/Bash require `make security-source` before dev

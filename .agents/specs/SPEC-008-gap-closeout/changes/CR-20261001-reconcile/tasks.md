@@ -101,4 +101,7 @@
 
 - [x] Adopt native source SAST with local pinned tools and fail-closed extraction/report policy; dirty39LOW/7MEDIUM/0HIGH, raw Bandit1/ShellCheck0/policy0 reviewed;42 maintained security tests PASS.
 - [x] Make metadata oracles active under -O:193 production child cases/five assertion-caught mutants in both modes; literal-prefix original FAIL/candidate38 real Bash diagnostic executions PASS.
-- [ ] Deliver source-SAST/oracle/prefix successor through frozen exact build/security/SAST/remote/hosted gates; dirty evidence is not promotion.
+- [x] Deliver source-SAST/oracle/prefix successor dev5eb88a5; exact gates, final ledgerd47ccbd/6363 materials and hosted36895501681 actual checkout/tree PASS. Main remains pending.
+
+- [x] Reproduce SBOM evidence contamination and adopt `.security` exclusion for all module scans while retaining visible application inputs and sibling module isolation;13 actual native fragment scans/four benign paths, one viable removal mutant assertion FAIL and maintained original RED/candidate GREEN.
+- [ ] Deliver SBOM boundary successor through fresh exact full scan/build/source/test/nativeSAST/remote/hosted gates; final-sbom-boundary ledger is the delivery authority when verified.

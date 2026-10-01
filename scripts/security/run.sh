@@ -144,9 +144,9 @@ for spec in "${MODULES[@]}"; do
 
   # trivy scans recursively, so exclude the sibling module directories from the
   # root scan to keep one SBOM per Go module.
-  skip=()
+  skip=(--skip-dirs ./.security)
   if [ "$dir" = "." ]; then
-    skip=(--skip-dirs ./x --skip-dirs ./tools)
+    skip+=(--skip-dirs ./x --skip-dirs ./tools)
   fi
 
   log "[$label] SBOM (trivy)"

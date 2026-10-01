@@ -8,4 +8,8 @@ Enrichment oracles now use unittest checks active under Python -O. Normal and op
 
 Shell diagnostic repository-prefix trimming now quotes the prefix so benign glob characters remain literal. Original ordinary assertion FAIL and candidate38 real Bash diagnostic executions PASS are retained in `.security/final-shell-handoff/oracle-fix/prefix-regression/receipt.json`. Native shell findings also led to separated PATH assignment/export and direct cached-JSON counting. Focused diagnostic executions are not full-pipeline or native-line coverage.
 
-Current working-tree `make security-contracts-test` passes42 tests. Freeze/build/security/SAST/remote/hosted gates remain pending for this successor. Global line95, cross-family approval, protected main and release remain held; SPEC-008 verdict is unchanged.
+Historical pre-freeze observation: `make security-contracts-test` passed42 working-tree tests; immutable gates had not yet executed at that observation. See delivered successor below. Global line95, cross-family approval, main and release remain held; SPEC-008 verdict is unchanged.
+
+## Delivered successor
+
+Delivered source-SAST/oracle/prefix dev5eb88a5/treec6f6: final-security-sast-oracle ledger SHA d47ccbd342ae700e577e3092e5ab9d9c3a43bc01ef8ce235481d171c35f9d2cf closes6363 materials; exact42 security/8 event contracts, build/security/nativeSAST and hosted36895501681 checkout394a1bbb (main57/dev5eb parents, equal tree) passed. Main/release/cross-family/global95 remain held. Root application SBOM scope contamination is handled by the separate [boundary successor](sbom-evidence-boundary.md); prior receipt bytes remain unchanged.

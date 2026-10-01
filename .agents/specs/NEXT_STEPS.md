@@ -20,7 +20,10 @@ Shell catalog provenance repair is delivered at dev `83e0e62c3f11a80eb2b9f7210c9
 
 Runtime observation2026-10-02 Asia/Taipei (`.security/final-shell-handoff/runtime-observation/receipt.json`, SHA `5a8e02d75bee2c6df3e308b1c3909db44f8b36dca061b9f77742403dbbb91c70`) finds all four task Valkey containers exited0 with0 mounts and all seven claimed ports refusing TCP; registry claims still read Active and are stale, not reusable/live runtime. Historical fixtures are currently unavailable; exit0 does not prove actor/cause or current data preservation. Historical source-bound runtime evidence remains dated evidence. No start/stop/delete or registry mutation occurred; runtime claim release and fixture disposition remain pending.
 
-Current source-SAST/oracle/prefix successor:42 working-tree security tests PASS; native39LOW/7MEDIUM/0HIGH, raw Bandit1/ShellCheck0/policy0 with reviewed warnings retained. Optimized-safe metadata assertions and literal-prefix regressions pass. Dirty/staged evidence is not an exact commit gate or promotion. Freeze/build/security/SAST/remote/hosted checks remain pending. [Evidence](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/source-sast-and-oracle.md).
+Historical pre-freeze observation:42 working-tree contracts and contextual native warnings were candidate evidence. Delivered source-SAST/oracle/prefix dev5eb88a5/treec6f6: final-security-sast-oracle ledger SHA d47ccbd342ae700e577e3092e5ab9d9c3a43bc01ef8ce235481d171c35f9d2cf closes6363 materials; exact42 security/8 event contracts, build/security/nativeSAST and hosted36895501681 checkout394a1bbb (main57/dev5eb parents, equal tree) passed. Main/release/cross-family/global95 remain held. [Report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/source-sast-and-oracle.md).
+
+
+SBOM boundary successor excludes evidence-only `.security` inputs; candidate native/maintained contracts are in [boundary report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/sbom-evidence-boundary.md). Exact successor delivery follows its verified final ledger.
 
 ## ROI-ordered remaining delivery
 
