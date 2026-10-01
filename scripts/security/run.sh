@@ -192,7 +192,8 @@ PY
   # genuine tool failure (no parseable JSON) is fatal here. Deliberately NOT
   # -quiet: that suppresses output entirely on a clean scan, which would throw
   # away the files/lines/nosec stats that make "0 findings" auditable.
-  ( cd "$mod_path" && gosec -fmt=json -exclude-generated ./... > "$sast_raw" 2>/dev/null ) || true
+  # gosec walks ignored directories; exclude only the evidence path component.
+  ( cd "$mod_path" && gosec -fmt=json -exclude-generated -exclude-dir '(^|/)\.security(/|$)' ./... > "$sast_raw" 2>/dev/null ) || true
   jq -e 'has("Issues") or has("Stats")' "$sast_raw" >/dev/null 2>&1 \
     || fail "gosec produced unparseable output for $label (see $sast_raw)"
 
