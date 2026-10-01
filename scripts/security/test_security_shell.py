@@ -11,7 +11,7 @@ def repository_root():
     if configured:
         return pathlib.Path(configured)
     return pathlib.Path(__file__).resolve().parents[2]
-FAKE = '#!/usr/bin/python3\nimport json,os,pathlib,sys\nname=pathlib.Path(sys.argv[0]).name;mode=os.environ.get("FIXTURE_MODE", "clean")\nif name=="go":\n print(os.environ["FIXTURE_GOPATH"]);sys.exit(0)\nif name=="curl": sys.exit(91)\nif name=="trivy":\n if mode=="trivy-fail":sys.exit(3)\n target=pathlib.Path(sys.argv[sys.argv.index("--output")+1]);target.write_text("[]" if mode=="trivy-malformed" else json.dumps({"bomFormat":"CycloneDX","specVersion":"1.5","version":1,"components":[]}));sys.exit(0)\nif name=="govulncheck":\n if mode=="govuln-fail":sys.exit(3)\n print("{" if mode=="govuln-malformed" else "");sys.exit(0)\nif name=="gosec":\n if mode=="gosec-malformed":print("not-json");sys.exit(3)\n issues=[]\n if mode=="gosec-high":issues=[{"rule_id":"G101","severity":"HIGH","confidence":"HIGH","file":"fixture.go","line":"1","details":"synthetic fixture","cwe":{"id":"798"}}]\n print(json.dumps({"Issues":issues,"Stats":{"files":1,"lines":1,"nosec":0}}));sys.exit(1 if issues else 0)\n'
+FAKE = '#!/usr/bin/python3\nimport json,os,pathlib,sys\nname=pathlib.Path(sys.argv[0]).name;mode=os.environ.get("FIXTURE_MODE", "clean")\nif name=="go":\n print(os.environ["FIXTURE_GOPATH"]);sys.exit(0)\nif name=="curl": sys.exit(91)\nif name=="trivy":\n if mode=="trivy-fail":sys.exit(3)\n target=pathlib.Path(sys.argv[sys.argv.index("--output")+1])\n with (target.parent.parent / "trivy-invocations.jsonl").open("a", encoding="utf-8") as log:log.write(json.dumps({"cwd":str(pathlib.Path.cwd()),"argv":sys.argv[1:]})+"\\n")\n target.write_text("[]" if mode=="trivy-malformed" else json.dumps({"bomFormat":"CycloneDX","specVersion":"1.5","version":1,"components":[]}));sys.exit(0)\nif name=="govulncheck":\n if mode=="govuln-fail":sys.exit(3)\n print("{" if mode=="govuln-malformed" else "");sys.exit(0)\nif name=="gosec":\n if mode=="gosec-malformed":print("not-json");sys.exit(3)\n issues=[]\n if mode=="gosec-high":issues=[{"rule_id":"G101","severity":"HIGH","confidence":"HIGH","file":"fixture.go","line":"1","details":"synthetic fixture","cwe":{"id":"798"}}]\n print(json.dumps({"Issues":issues,"Stats":{"files":1,"lines":1,"nosec":0}}));sys.exit(1 if issues else 0)\n'
 
 class Contracts(unittest.TestCase):
 
@@ -97,6 +97,27 @@ class Contracts(unittest.TestCase):
                 p, out = self.run_case(name=name, version=version)
                 self.assertEqual(p.returncode, 0, p.stderr.decode())
                 self.assert_provenance(out, version)
+
+    def test_sbom_evidence_directory_exclusion(self):
+        """Check the actual three production scanner invocations, not a clone."""
+        process, out = self.run_case()
+        self.assertEqual(process.returncode, 0, process.stderr)
+        rows = [json.loads(line) for line in
+                (out / 'trivy-invocations.jsonl').read_text().splitlines()]
+        self.assertEqual(len(rows), 3)
+        root = repository_root().resolve()
+        expected = {str(root): {'./.security', './x', './tools'},
+                    str(root / 'x'): {'./.security'},
+                    str(root / 'tools'): {'./.security'}}
+        self.assertEqual({row['cwd'] for row in rows}, set(expected))
+        for row in rows:
+            with self.subTest(module=row['cwd']):
+                args = row['argv']
+                exclusions = {args[index + 1] for index, arg in enumerate(args)
+                              if arg == '--skip-dirs'}
+                self.assertEqual(exclusions, expected[row['cwd']])
+                self.assertEqual(args[-1], '.')
+                self.assertEqual(args[args.index('--scanners') + 1], 'vuln')
 
     def test_literal_repository_prefix_display(self):
         """Exercise the actual Bash diagnostic with literal path data."""
