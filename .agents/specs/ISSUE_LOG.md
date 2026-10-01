@@ -34,6 +34,12 @@ The following original issue rows are owned by the active CR. Their recorded can
 | IL-008 | 2026-10-01 | demo reset structural return interface was incompatible with go-redis *StatusCmd and silently skipped cleanup | candidate replaces reset with empty-only admission before enqueue; pure/runtime contracts preserve nonempty sentinel and original errors, no FlushDB | folded into CR-20261001-reconcile safe demo; candidate-reviewed, exact e61d596 runtime/security gates PASS; promotion pending; reports/test-slice-status.md |
 | IL-002 | 2026-06-07 | branch 往返(checkout 舊 commit)會讓 git 以實體目錄蓋掉 `.claude/skills` symlink | 低;skill 暫時失聯 | 已記入 FORK.md one-liner;若頻繁發生考慮 post-checkout hook |
 
+## Active security follow-up
+
+| ID | 記錄日 | 描述 | 影響／修復 | 狀態／證據 |
+|---|---|---|---|---|
+| IL-024 | 2026-10-01 | 同一CVE/module先有名稱但缺version時，後續同module SBOM版本遭忽略 | 最小修正只補同module空version，保留既有版本且不借不同module版本；KEV policy不變 | folded CR-20261001-reconcile；original64真CLI assertions FAIL，candidate128 CLI/65 direct-map cases與5fresh mutants/nonauthor PASS，29tests native632/637；reports/security-metadata-enrichment.md；exact delivery/main pending |
+
 ## Resolved
 
 | ID | 記錄日 | 描述 | 解法 / 證據 |
