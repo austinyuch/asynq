@@ -56,3 +56,6 @@
 
 - [x] Reproduce cross-queue loading Enter panic and reset task row on new queue entry; source-bound race/32x8 properties/three assertion mutants PASS; exact delivery .security/final-queue-selection/.
 - [ ] Reproduce and repair IL-021 asynchronous stale-result identity and IL-022 task resize/page snapshot mismatch; source traced, not runtime closed.
+
+- [x] Integrate validated slices into dev via no-ff bc9fad7; push parity verified; main draft PR22 hosted build PASS with exact checkout tree proof. Main merge remains unfinished.
+- [x] User-requested latest dev/WIP SBOM/CVE/KEV refresh: three modules, 25 closed materials / 26 verified archive members, PASS with existing G118 retained; see docs/SECURITY_SCAN_2026-10-01.md.
