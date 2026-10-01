@@ -1,0 +1,16 @@
+# Project line measurement gap — source-backed inventory
+
+Authority: user project-wide>=95% line target and the existing CR coverage task. Status: measurement remains incomplete; this report introduces no exclusion policy, threshold change, cross-language score or acceptance verdict.
+
+| Source class | Observed owned surface | Current executable evidence | Measurement gap |
+| --- | --- | --- | --- |
+| Go core/extensions/tools | root, internal, x, tools; generated protobuf, demo and test helpers retained | Native compiler block counters; module/source-bound statement profiles and explicit child unions | Inclusive block-line union is a proxy. A complete executable-line interpretation has not been approved or verified. Preserve distinct dependency contexts. |
+| Python | scripts/security/security_local_ci.py | Python3.12.3 stdlib trace actual counters; compiled recursive code line table, docstrings excluded by stdlib helper | Native observed94/632 executable lines14.87% in six unit tests; fake child subprocess execution is not included in parent counters. |
+| Test source | Go *_test.go; scripts/security/test_security_local_ci.py | Tests/PBT/fuzz/mutants; Python test source86/88 observed lines97.73% recorded separately | Denominator disposition must be explicit; this report does not silently admit or exclude test-source lines from the project target. |
+| Shell / hook | scripts/security/run.sh; .agents/skills/upstream-sync/scripts/reapply-module-path.sh; githooks/pre-push | Executable regression/scanner commands and safety fixtures | No native per-line execution profile or complete executable-line inventory. |
+| Embedded Lua | internal/rdb/rdb.go; internal/rdb/inspect.go; x/rate/semaphore.go | Real standalone/cluster Redis contracts and semantic mutants | Go counters do not instrument embedded Lua. No Lua line execution profile. |
+| Embedded JavaScript | docs/manual/en/index.html; docs/manual/zh-tw/index.html; docs/review/index.html | Tracked documentation UI source inventory | No browser V8 line/range execution profile or declared denominator disposition. |
+
+Raw inventory `.security/coverage-inventory-5e98135.json` enumerates tracked source classes and source hashes at the working-tree observation. Physical line counts are explicitly not executable denominators. New successor tests are additionally identified by the CR test catalog. Python receipt `.security/security-python-native/receipt.json` retains actual(filename,lineno,count), inventory/missing lines, observer hash and Python version. The observer lives in/tmp; no global package installation or provider write occurred. The stdlib executable-inventory helper is private and version-bound, so it is evidence of this interpreter's native table rather than an unqualified tool-independent metric.
+
+Next action: native security decision-table/property contracts, followed by source-bound measurement of remaining shell/Lua/embedded-JS surfaces. Keep all unmeasured classes visible. Neither a Go statement95% nor an arithmetic three-module proxy can close this project's line requirement. Formal spec/review authority and historical readiness remain unchanged.

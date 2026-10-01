@@ -6,7 +6,7 @@
 - [x] Fix runtime advisory remediation and shell literal argument handling; six regression tests PASS.
 - [x] Reconcile seven historical documentation contradictions.
 - [x] Generate three-module SBOM/CVE/KEV/SAST baseline; patched Go 1.26.6 gate PASS.
-- [ ] Final immutable candidate security/build/race gates and push parity.
+- [x] Published5e98135 security/build/vet/tools gates and push parity; root/x/cluster carried with complete source-equality proof from72dbcd0.
 - [ ] Cross-family review: destination approval required after automatic review refusal.
 - [ ] Integrate validated candidate into dev, then protected main PR/check/merge.
 - [ ] Reach >=95% project-wide line coverage; remaining root/rdb/x-metrics/tools gaps open.
@@ -16,4 +16,8 @@
 
 - [x] Reviewed successor queue-state/lock namespace fixes, Unicode/grapheme/modal/group-page fixes, Inspector/lifecycle/CLI/proto contracts; source-bound gates pass, immutable successor gates pending.
 
-- [x] Exact72dbcd0 security/build/vet/root/x/tools/cluster gates PASS, including child profile union; narrow-screen tools successor awaits its own gate.
+- [x] Exact72dbcd0 security/build/vet/root/x/tools/cluster gates PASS, including child profile union; narrow-screen tools successor exact5e98135 gates and origin parity PASS.
+
+- [x] Reviewed testbroker/Inspector error contracts and safe demo admission/runtime; source-bound PBT/fuzz/mutants and fixture custody pass.
+- [x] Native Python line baseline and complete known executable-source-class inventory; measurement gaps remain explicit.
+- [ ] Freeze current contract/demo successor, refresh full relevant gates and child profiles, scan SBOM/CVE/KEV, then push draft PR21.

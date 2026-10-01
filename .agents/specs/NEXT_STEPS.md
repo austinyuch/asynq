@@ -13,8 +13,8 @@
 
 - CR-20261001-reconcile: [bounded slices and evidence](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reconciliation.md), [tasks](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/tasks.md).
 - Cross-family Grok/ACP review needs explicit destination approval after automatic review refused unpublished candidate dispatch. Main promotion remains pending.
-- Exact72dbcd0 queue-removal/dashboard/lifecycle/proto/CLI successor gates PASS; apply/retest narrow-screen tools correction and refresh its SBOM/CVE/KEV before updating draft PR #21. Root/x carry-forward requires complete source-equivalence proof and original commit binding.
-- Next coverage ROI: testbroker fault-injection/delegation contracts; demo reset interface mismatch is open and must not be repaired by enabling unsafe default FlushDB.
+- Published5e98135 has exact security/build/vet/tools gates and origin/PR21 parity; source-equivalent root/x/cluster carry72dbcd0 execution binding. Reviewed testbroker, Inspector error and safe-demo successor now needs immutable relevant gates and fresh SBOM/CVE/KEV before the next push.
+- Next coverage ROI: native Python security decision-table/property contracts (baseline94/632 observed executable lines), then source-bound shell/Lua/embedded-JS measurement. See CR reports/line-measurement-gap.md. Demo now admits only an empty dedicated database; runtime successor proof is source-bound pending immutable gates.
 - Global >=95% line coverage not achieved: root/rdb/tools require further vertical test slices; x/metrics targeted contracts now pass with 100% package statements. Base 100% and x/rate 96.2% are statement coverage, not global line evidence.
 - IL-004 candidate fixture/oracle repair has full standalone and three-master cluster race PASS; freeze successor evidence and promote after remaining gates. See CR test catalog and report.
 

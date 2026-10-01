@@ -42,3 +42,8 @@ The public scheduler option parser delimiter defect is being repaired in a separ
 ## Published baseline and active successor
 
 Draft fork PR #21 targets dev; b7f572d has exact-commit three-module build/vet/security and split race gates with remote parity. Origin dev/main remain57b9e964. Security baseline contains three CycloneDX SBOMs, refreshed CISA snapshot and Go/SAST evidence; blocking findings0, supplied KEV matches0, one existing G118 warning. New queue-removal and dashboard defects found by runtime contracts are corrected in reviewed successor files; see the dated test report. These changes require a new immutable scanner/build/race freeze. No release, protected promotion or95% project-line claim is made.
+
+
+## Current published and reviewed successor boundary
+
+Origin/PR21 latestpublished5e98135 has exact security/build/vet/tools gates, with root/x/cluster source-equal execution lineage from72dbcd0. Dev/main remain57b9e964. Reviewed successor adds testbroker/Inspector errors and safe empty-only demo admission with actual opt-in runtime, retained sentinel and child-profile custody. Current successor still requires its immutable relevant gates; no95% line, cross-family, promotion or release closure. Known non-Go line gaps and native Python baseline are recorded in reports/line-measurement-gap.md; no denominator exclusion is invented.
