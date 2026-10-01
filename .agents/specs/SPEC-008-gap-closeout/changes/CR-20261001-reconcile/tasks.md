@@ -73,4 +73,5 @@
 - [x] Reproduce root cancellation typed-cause loss; repair %w and exact diagnostic/canonical operation preservation; focused normal/race/PBT/fuzz/two semantic mutants reviewed. Tools released-root consumption remains unchanged until release.
 - [x] Real taskCancel AUTH/no-publication positive-barrier and duplicate-ID ordered signal contracts; focused race/16 properties/two assertion mutants, DB12 empty before/after.
 - [x] x/rate closed-transport identity with valid task metadata/no deadline; normal/race/128 properties/native fuzz/two assertion mutants. Native statement delta is not global line95.
-- [ ] Freeze and deliver cancellation-error successor through complete root/x/tools gates, fresh security, dev no-ff/push and hosted checkout proof.
+- [x] Freeze cancellation-error successor a67e532 through fresh complete root/x/tools race, six build/vet and security successor gates; all135 source/dependency subjects stable.
+- [ ] Deliver cancellation-error successor through dev no-ff/push and hosted checkout proof; final-cancellation ledger remains authoritative.
