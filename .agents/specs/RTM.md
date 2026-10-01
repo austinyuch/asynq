@@ -36,3 +36,7 @@
 | R-REC-21 | Task viewport/page transitions must not expose obsolete loading rows | SPEC-008 / CR-20261001-reconcile | clear/reset before immutable fetch; count-based page bounds; preserved modal identity | reports/task-viewport.md; T-REC-TASK-VIEWPORT; seven original assertion failures and reviewed successor contracts; exact final-task-viewport delivered via dev5f461d9, hosted36844671038 PASS; main pending |
 
 | R-REC-22 | Reverse dashboard state/row navigation and stale-result streams | SPEC-008 / CR-20261001-reconcile | user key cycle and immutable response identity contracts | reports/reverse-navigation.md; T-REC-REVERSE-NAVIGATION; successor source-bound gates; exact delivery in .security/final-reverse-navigation/ |
+
+| R-REC-23 | Cron/server errors must preserve cause/status and close owned clients | SPEC-008 / CR-20261001-reconcile | Close/%w/first-error with healthy partial output | reports/cli-entry-boundaries.md; T-REC-CRON-SERVER; original runtime FAIL and corrected candidate-v3 PASS; exact delivery .security/final-cli-entry/ |
+
+| R-REC-24 | Public dashboard TTY entry must return and restore owned resources | SPEC-008 / CR-20261001-reconcile | real controlling-PTY child and live-owner pipe ACK | reports/cli-entry-boundaries.md; T-REC-TTY-ENTRY; true-entry race/three assertion mutants, unknown-TERM actual error |

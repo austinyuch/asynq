@@ -52,10 +52,11 @@ var cronHistoryCmd = &cobra.Command{
 
 func cronList(cmd *cobra.Command, args []string) error {
 	inspector := createInspector()
+	defer inspector.Close()
 
 	entries, err := inspector.SchedulerEntries()
 	if err != nil {
-		return fmt.Errorf("could not fetch scheduler entries: %v", err)
+		return fmt.Errorf("could not fetch scheduler entries: %w", err)
 	}
 	if len(entries) == 0 {
 		fmt.Println("No scheduler entries")
@@ -106,6 +107,8 @@ func cronHistory(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	inspector := createInspector()
+	defer inspector.Close()
+	var firstErr error
 	for i, entryID := range args {
 		if i > 0 {
 			fmt.Printf("\n%s\n", separator)
@@ -118,6 +121,9 @@ func cronHistory(cmd *cobra.Command, args []string) error {
 			entryID, asynq.PageSize(pageSize), asynq.Page(pageNum))
 		if err != nil {
 			fmt.Printf("error: %v\n", err)
+			if firstErr == nil {
+				firstErr = err
+			}
 			continue
 		}
 		if len(events) == 0 {
@@ -133,5 +139,5 @@ func cronHistory(cmd *cobra.Command, args []string) error {
 		}
 		printTable(cols, printRows)
 	}
-	return nil
+	return firstErr
 }
