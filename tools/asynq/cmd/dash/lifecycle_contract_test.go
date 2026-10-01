@@ -77,10 +77,12 @@ type lifecycleFetchRequest struct {
 type lifecycleFetcher struct {
 	requests chan lifecycleFetchRequest
 	count    atomic.Int32
+	current  atomic.Value
 }
 
 func (f *lifecycleFetcher) Fetch(s *State) {
 	f.count.Add(1)
+	f.current.Store(s.request)
 	q := ""
 	if s.selectedQueue != nil {
 		q = s.selectedQueue.Queue
@@ -175,12 +177,12 @@ func (x *lifecycleFixture) key(t *testing.T, key tcell.Key, r rune, accept func(
 
 // Publication runs in the test goroutine, so no sender can survive a timeout.
 // These selects are deliberately independent of production publish.
-func lifecycleSend[T any](t *testing.T, x *lifecycleFixture, ch chan<- T, value T) {
+func lifecycleSend[T any](t *testing.T, x *lifecycleFixture, ch chan<- fetchResult[T], value T) {
 	t.Helper()
 	timer := time.NewTimer(time.Second)
 	defer timer.Stop()
 	select {
-	case ch <- value:
+	case ch <- fetchResult[T]{request: x.f.current.Load().(fetchContext), value: value}:
 	case <-x.s.abortPump:
 		t.Fatal("publication aborted")
 	case <-x.returned:
@@ -276,9 +278,9 @@ func TestDashboardLifecycleResultChannelsAndResize(t *testing.T) {
 	lifecycleSend(t, x, x.d.queuesCh, queues[:1])
 	x.frame(t, hasText("queueTableRowIdx=1 "))
 	x.key(t, tcell.KeyEnter, 0, hasText("=== Queue Summary ==="))
-	lifecycleSend(t, x, x.d.queueCh, &asynq.QueueInfo{Queue: "queue-update-oracle", Active: 2})
-	x.frame(t, hasText("queue-update-oracle"))
-	tasks := []*asynq.TaskInfo{{ID: "result-one", Queue: "queue-update-oracle", Type: "oracle-type", State: asynq.TaskStateActive}, {ID: "result-two", Queue: "queue-update-oracle", Type: "oracle-type", State: asynq.TaskStateActive}}
+	lifecycleSend(t, x, x.d.queueCh, &asynq.QueueInfo{Queue: "owned-alpha", Active: 2})
+	x.frame(t, hasText("owned-alpha"))
+	tasks := []*asynq.TaskInfo{{ID: "result-one", Queue: "owned-alpha", Type: "oracle-type", State: asynq.TaskStateActive}, {ID: "result-two", Queue: "owned-alpha", Type: "oracle-type", State: asynq.TaskStateActive}}
 	lifecycleSend(t, x, x.d.tasksCh, tasks)
 	x.frame(t, hasText("result-two"))
 	x.key(t, tcell.KeyRune, 'j', hasText("taskTableRowIdx=1 "))
@@ -286,7 +288,7 @@ func TestDashboardLifecycleResultChannelsAndResize(t *testing.T) {
 	lifecycleSend(t, x, x.d.tasksCh, tasks[:1])
 	x.frame(t, hasText("taskTableRowIdx=1 "))
 	x.key(t, tcell.KeyEnter, 0, hasText("=== Task Info ==="))
-	lifecycleSend(t, x, x.d.taskCh, &asynq.TaskInfo{ID: "result-one", Queue: "queue-update-oracle", Type: "updated-modal-oracle", State: asynq.TaskStateActive})
+	lifecycleSend(t, x, x.d.taskCh, &asynq.TaskInfo{ID: "result-one", Queue: "owned-alpha", Type: "updated-modal-oracle", State: asynq.TaskStateActive})
 	x.frame(t, hasText("updated-modal-oracle"))
 	lifecycleSend(t, x, x.d.errorCh, asynq.ErrTaskNotFound)
 	x.frame(t, hasText("no longer exists"))

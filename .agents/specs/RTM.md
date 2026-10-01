@@ -30,3 +30,5 @@
 | R-REC-18 | CLI nonempty task output / pagination wiring / ProcessIn bounds | CR-20261001-reconcile | reports/task-visibility.md; CR TESTS T-REC-TASK-VISIBILITY | focused source-bound race/property/4 mutants PASS; exact delivery ledger pending |
 
 | R-REC-19 | Loading Enter must not select an old queue row | SPEC-008 / CR-20261001-reconcile | queue-entry row reset | reports/queue-selection.md; T-REC-QUEUE-SELECTION; original panic + source-bound property/mutation PASS; delivery ledger pending |
+
+| R-REC-20 | Obsolete asynchronous responses must not update a newer dashboard view | SPEC-008 / CR-20261001-reconcile | immutable request context/epoch on all results and errors | reports/fetch-identity.md; T-REC-FETCH-IDENTITY; original assertion failures + source-bound candidate contracts; exact real-fixture delivery ledger separately required |

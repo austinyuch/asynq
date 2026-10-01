@@ -310,8 +310,8 @@ func TestGroupNavigationTinyViewportFetch(t *testing.T) {
 		}
 	})
 	screen := renderingScreen(t, 100, 10)
-	tasks := make(chan []*asynq.TaskInfo, 1)
-	failures := make(chan error, 1)
+	tasks := make(chan fetchResult[[]*asynq.TaskInfo], 1)
+	failures := make(chan fetchResult[error], 1)
 	done := make(chan struct{})
 	fetcher := &dataFetcher{inspector: f.inspector, s: screen, tasksCh: tasks, errorCh: failures, done: done, slots: make(chan struct{}, 4)}
 	t.Cleanup(func() {
@@ -332,9 +332,16 @@ func TestGroupNavigationTinyViewportFetch(t *testing.T) {
 		t.Fatalf("independent fixture/page1 oracle unexpected: %v", expected)
 	}
 	state := &State{view: viewTypeQueueDetails, selectedQueue: &asynq.QueueInfo{Queue: f.queues[0], Aggregating: 5}, taskState: asynq.TaskStateAggregating, selectedGroup: &asynq.GroupInfo{Group: f.group, Size: 5}, pageNum: 1}
+	expectedRequest := fetchContext{view: viewTypeQueueDetails, queue: f.queues[0], group: f.group, taskState: asynq.TaskStateAggregating, page: 1, pageSize: 1, epoch: 1}
 	fetcher.Fetch(state)
+	// Mutating owner state after admission must not rewrite in-flight identity.
+	state.selectedQueue.Queue, state.selectedGroup.Group, state.pageNum = "changed-after-admission", "changed-group", 99
 	select {
-	case got := <-tasks:
+	case result := <-tasks:
+		if result.request != expectedRequest {
+			t.Fatalf("captured tiny request: got %+v want %+v", result.request, expectedRequest)
+		}
+		got := result.value
 		if len(got) != 1 || got[0].ID != expected[0].ID {
 			t.Fatalf("tiny viewport must fetch one ordered task; got%d want1", len(got))
 		}

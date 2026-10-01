@@ -72,6 +72,8 @@ func (h *keyEventHandler) goBack() {
 		if state.taskID != "" {
 			state.taskID = ""
 			state.selectedTask = nil
+			f.Fetch(state)
+			h.resetTicker()
 			d.Draw(state)
 		} else {
 			state.view = viewTypeQueues
