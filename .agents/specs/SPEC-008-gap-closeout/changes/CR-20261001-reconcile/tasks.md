@@ -34,5 +34,7 @@
 - [x] Refresh three-module WIP-bound SBOM/CVE/KEV evidence; report03be718 pushed,0 blockers/0 supplied KEV matches, existing G118 retained.
 - [x] Freeze e6002cc Inspector validation/lifecycle/Aggregator/dashboard-fetch slices; exact all-module build/vet/race/cluster/security/native-Python gates PASS, topic/PR21 parity verified. Root compatible native statements3455/3634=95.07%; tools1377/1696=81.19%; not project line95.
 - [x] At e6002cc idle gate completion, clean only regenerable task Go cache;1,459,806,634 bytes reclaimed. Evidence/runtime retained; cache will rebuild with later tests.
-- [ ] Repair dashboard normal quit, event-channel closure and worker/Inspector/screen ownership; reviewed source-bound simulation/transport/publication tests then exact gate/push.
+- [x] Repair dashboard normal quit, event-channel closure and worker/Inspector/screen ownership; b146972 exact gates/topic/PR21 parity PASS. Root native statements95.0743%, tools86.9266%; project line95 remains unmet.
 - [x] Reproduce native Go block-vs-line ambiguity using panic and short-circuit witnesses; preserve missing cross-language measurement and pending metric clarification.
+
+- [ ] Close CLI task-owned connections, preserve domain error causes, reject unreadable/malformed explicit config before command bodies; real Redis connection-count and child-process contracts, semantic mutations, full gates and push.

@@ -53,6 +53,9 @@ You can use a config file to set default values for the flags.
 
 By default, `asynq` will try to read config file located in
 `$HOME/.asynq.(yml|json)`. You can specify the file location via `--config` flag.
+An absent default config is optional. An explicit config that cannot be read, or
+a discovered config that cannot be parsed, stops the command before its body runs;
+it does not continue with default Redis connection settings.
 
 Config file example:
 
