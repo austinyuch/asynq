@@ -80,3 +80,8 @@ security-hooks: ## Point git at githooks/ so pre-push runs the local security CI
 .PHONY: security-clean
 security-clean: ## Remove all generated security evidence
 	rm -rf $(ROOT_DIR)/.security
+
+# Source-bound event journal validation; does not assert project line coverage.
+.PHONY: coverage-events-test
+coverage-events-test:
+	python3 -m unittest discover -s "$(ROOT_DIR)/scripts/coverage" -p 'test_*.py' -v

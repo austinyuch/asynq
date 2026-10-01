@@ -60,3 +60,6 @@ x/CLAUDE.md
 
 # Python scanner regression cache
 scripts/security/__pycache__/
+
+# Python event ledger regression cache
+scripts/coverage/__pycache__/
