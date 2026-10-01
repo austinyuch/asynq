@@ -27,6 +27,5 @@ receipt currently lacks1742 materials. New durable source-bound evidence is
 independent; no historical receipt was overwritten. Missing cleanup backup and
 restore materials preclude claiming current rollback custody or further cleanup.
 
-Exact-commit build/security, dev promotion and hosted checkout proof remain
-separate delivery gates. Main, release, cross-family approval and the user's
+Shell catalog provenance repair is delivered at dev `83e0e62c3f11a80eb2b9f7210c9056033ea654fa`, tree `6a4148be714c37a05e57aa88fc4f0863fcb6f69e`. Authority `.security/final-shell-contracts/gate-ledger.json` SHA `258938bee4b58595d7607bfa1ad57a1c8d4cdc3ed6c5aa538f0299ad3f8dbd0d` closes3935 materials. Exact six build/vet gates,35 security contracts and8 event contracts passed; actual three-module SBOM/CVE/KEV execution receipt SHA `947d83aa8facb8ff109faaf0ce5e9cd45c663d740e61459a4bdbc1e50a40e236` passed with0 blockers/0 supplied KEV matches and existing G118 retained. Hosted run36886544773 SUCCESS checks out `43edc6b94835ff31b4ca5c6399ef116656f50cea`, with main57/dev83 parents and equal tree; all five required test steps passed.27 real offline Bash cases/four assertion-caught mutants are fixture-scanner contracts, separate from actual scanner evidence. Main/release, cross-family approval and project-wide line95 remain pending; SPEC-008 verdict is unchanged. Main, release, cross-family approval and the user's
 project-wide line coverage95 target remain pending. SPEC-008 readiness is unchanged.

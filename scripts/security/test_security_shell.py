@@ -98,6 +98,28 @@ class Contracts(unittest.TestCase):
                 self.assertEqual(p.returncode, 0, p.stderr.decode())
                 self.assert_provenance(out, version)
 
+    def test_literal_repository_prefix_display(self):
+        """Exercise the actual Bash diagnostic with literal path data."""
+        subject = pathlib.Path(os.environ.get(
+            'SHELL_CANDIDATE', str(repository_root() / 'scripts/security/run.sh')))
+        statements = [line for line in subject.read_text().splitlines()
+                      if line.startswith("printf '  evidence:")]
+        self.assertEqual(len(statements), 1, 'production diagnostic statement')
+        rng = random.Random(20261002)
+        roots = ['/tmp/normal', '/tmp/path[ab]', '/tmp/path*star',
+                 '/tmp/path?mark', '/tmp/quote"測試', '/tmp/back\\slash']
+        roots += ['/tmp/' + ''.join(rng.choice('ab []?*測\\"')
+                                   for _ in range(10)) for _ in range(32)]
+        for root in roots:
+            with self.subTest(root=root):
+                env = dict(os.environ, REPO_ROOT=root,
+                           OUT_DIR=root + '/.security/evidence')
+                result = subprocess.run(['/bin/bash', '-c', statements[0]],
+                                        env=env, capture_output=True, timeout=10)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout, b'  evidence: .security/evidence\n\n')
+                self.assertEqual(result.stderr, b'')
+
     def assert_provenance(self, out, version):
         provenance = json.loads((out / 'evidence/provenance.json').read_text())
         timestamp = provenance.pop('generated_at')

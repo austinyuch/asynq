@@ -20,6 +20,10 @@ IL-005–007 remain **Open**. Their 2026-08-19 descriptions above are historical
 | IL-006 | Historical provider registry path was absent; security provenance recorded provider_mode=absent and consumer-fallback, KEV2026.09.30/count1730 and scoped CVE acquisition. External source supported four feeds. | Old pinned two-feed route was not active in this observation; source capabilities do not prove configured scheduling or owner adoption. |
 | IL-007 | Broker unit reported LoadState=not-found, ActiveState=inactive, SubState=dead and NRestarts=0; no broker-named user unit files were observed. | Historical crash loop was not reproduced; broker availability/enrollment and owner restoration remain unproven. Result=success does not prove successful service execution. |
 
+## Runtime observation (2026-10-02 Asia/Taipei)
+
+Runtime observation2026-10-02 Asia/Taipei (`.security/final-shell-handoff/runtime-observation/receipt.json`, SHA `5a8e02d75bee2c6df3e308b1c3909db44f8b36dca061b9f77742403dbbb91c70`) finds all four task Valkey containers exited0 with0 mounts and all seven claimed ports refusing TCP; registry claims still read Active and are stale, not reusable/live runtime. Historical fixtures are currently unavailable; exit0 does not prove actor/cause or current data preservation. Historical source-bound runtime evidence remains dated evidence. No start/stop/delete or registry mutation occurred; runtime claim release and fixture disposition remain pending. IL-005 remains Open; the earlier2026-10-01 observed-running claim above is historical and does not describe this observation.
+
 ## Folded into CR-20261001-reconcile
 
 The following original issue rows are owned by the active CR. Their recorded candidate/promotion wording is historical. All listed repairs are integrated into dev5f461d9; main/release remain pending. IL021 delivered via `.security/final-fetch-identity/`; IL022 via `.security/final-task-viewport/`. This disposition does not close global coverage or claim same-context ordering/count-shrink auto-clamping.

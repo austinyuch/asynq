@@ -16,6 +16,7 @@ SUBJECT = Path(os.environ.get(
 
 def run_case(subject: Path, seed: int, known_first: bool = False) -> dict:
     """Each seed independently determines a nonconflicting valid input domain."""
+    checks = unittest.TestCase()
     rng = random.Random(seed)
     route, label = ((".", "application"), ("x", "application-x"),
                     ("tools", "application-tools"))[seed % 3]
@@ -55,21 +56,26 @@ def run_case(subject: Path, seed: int, known_first: bool = False) -> dict:
             "--out-summary", str(summary_path), "--out-fix-plan", str(plan_path),
         ]
         result = subprocess.run(command, capture_output=True, timeout=10)
-        assert result.returncode == 1 and result.stderr == b"", "gate disposition"
+        checks.assertEqual(result.returncode, 1, "gate disposition")
+        checks.assertEqual(result.stderr, b"", "gate stderr")
         verdict = json.loads(verdict_path.read_text(encoding="utf-8"))
-        assert verdict["verdict"] == "block", "KEV verdict"
-        assert len(verdict["blocking"]) == 1 and verdict["warnings"] == [], "KEV partition"
+        checks.assertEqual(verdict["verdict"], "block", "KEV verdict")
+        checks.assertEqual(len(verdict["blocking"]), 1, "KEV partition")
+        checks.assertEqual(verdict["warnings"], [], "KEV warnings")
         item = verdict["blocking"][0]
-        assert item["reason"] == "kev-listed" and item["cve_ids"] == [cve], "KEV identity"
+        checks.assertEqual(item["reason"], "kev-listed", "KEV reason")
+        checks.assertEqual(item["cve_ids"], [cve], "KEV identity")
         actual = (item["package_module"], item["version"], item["fixed_version"],
                   item["severity"], item["module_dir"])
-        assert actual == (module, version, fixed, "high", route), "metadata enrichment/route"
-        assert verdict["fix_plan"] == {route: {module: fixed}}, "fix plan ownership"
+        checks.assertEqual(actual, (module, version, fixed, "high", route),
+                           "metadata enrichment/route")
+        checks.assertEqual(verdict["fix_plan"], {route: {module: fixed}}, "fix plan ownership")
         plan = plan_path.read_text(encoding="utf-8")
-        assert f"go get {module}@{fixed}" in plan, "plan dependency/version"
-        assert f'cd -- "$repo_root"/{route}\n' in plan, "plan directory"
-        assert plan.count("go get ") == 1 and plan.count("go mod tidy") == 1, "plan cardinality"
-        assert result.stdout == summary_path.read_bytes(), "stdout/summary parity"
+        checks.assertIn(f"go get {module}@{fixed}", plan, "plan dependency/version")
+        checks.assertIn(f'cd -- "$repo_root"/{route}\n', plan, "plan directory")
+        checks.assertEqual(plan.count("go get "), 1, "dependency plan cardinality")
+        checks.assertEqual(plan.count("go mod tidy"), 1, "tidy plan cardinality")
+        checks.assertEqual(result.stdout, summary_path.read_bytes(), "stdout/summary parity")
         return {
             "seed": seed, "route": route, "exit": result.returncode,
             "command": command,

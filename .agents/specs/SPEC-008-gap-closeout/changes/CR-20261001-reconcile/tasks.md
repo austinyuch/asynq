@@ -94,3 +94,11 @@
 - [x] Deliver security enrichment/handoff successor at dev059c/treeaf5e; historical final-security-enrichment fc4836 records1795 materials and hosted36879646569 checkout-tree PASS. Successor readback1782 matching/13 missing temporary materials/0 mismatches; main remains pending.
 
 - [ ] Re-establish cleanup backup/restore custody; prior13 missing temporary materials include rollback receipts; no further cleanup. Prior shell1742/1752 gaps remain historical only.
+
+- [x] Deliver shell catalog literal-data and backslash-filename digest repair at dev83e0e62; durable27-child/four-mutant contracts, independent peer review, exact six build/vet, make35/8 and real security947d83 PASS; final-shell-contracts258938/3935-material authority and hosted36886544773 checkout-tree proof. Main remains pending.
+
+- [ ] Resolve stale task runtime claims and historical fixture disposition:2026-10-02 four exited0/no-mount containers and seven unavailable ports coexist with Active registry claims; no restart/stop/delete/registry mutation or current data-preservation proof.
+
+- [x] Adopt native source SAST with local pinned tools and fail-closed extraction/report policy; dirty39LOW/7MEDIUM/0HIGH, raw Bandit1/ShellCheck0/policy0 reviewed;42 maintained security tests PASS.
+- [x] Make metadata oracles active under -O:193 production child cases/five assertion-caught mutants in both modes; literal-prefix original FAIL/candidate38 real Bash diagnostic executions PASS.
+- [ ] Deliver source-SAST/oracle/prefix successor through frozen exact build/security/SAST/remote/hosted gates; dirty evidence is not promotion.
