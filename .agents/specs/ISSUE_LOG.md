@@ -6,6 +6,16 @@
 
 | ID | 記錄日 | 描述 | 影響 | 建議歸屬 |
 |---|---|---|---|---|
+| IL-005 | 2026-08-19 | local infra registry(`~/.config/opencode/local-infra/registry.json`)已無 `asynq` project entry,2026-07-30 登錄的 `asynq-test` Valkey(127.0.0.1:16381)連同容器一併消失;`aclab-middlewares/scripts/local_infra.py` 只接受自家 profile,無「為外部專案配置實例」的 governed 指令 | 中;2026-08-19 經使用者授權以 `podman run` 直接重建 `asynq-test-valkey`(127.0.0.1:16381)完成 CR 驗證,該容器目前**存在於 registry 之外**,依 transition bootstrap 規則應補登錄但無 tool 可用 | aclab-middlewares(registry tool contract 缺 generic request);asynq 側僅能回報 |
+| IL-006 | 2026-08-19 | 治理 security-data provider 的 registry pin 落後:`~/.config/aclab/security-data-provider.json` 指向 worktree `security-data-provider-pin@7f38642`,其 `security_data_cache.py` 的 `--feed all` 只展開成 `{trivy, kev}`,不含 `cve`/`grype`;而 aclab-middlewares main(`4426e63`)的 adapter 已含 `CR-2026-08-18-cve-feed-provider-binding` 的四 feed 邏輯 | 低-中;CVE catalog 不在排程刷新路徑上,只能由 consumer 讀 state root 的 `receipts/cve.json`(本 repo 已如此實作並驗 hash + 7 天新鮮度) | aclab-middlewares(把 registry pin 推進到含 CVE feed binding 的 revision) |
+| IL-007 | 2026-08-19 | `machine-local-ci-broker.service` 自 2026-08-18 起 crash loop(restart counter 17,764):state dir 殘留舊 `broker.sock`,`internal/broker/local_socket.go` `Listen()` 對既存 socket fail-closed | 中;持續消耗 CPU,該 broker 完全不可用(asynq 本就未 enrolled) | aclab-middlewares(刪除 stale socket + 加開機前清理);純回報 |
+
+## Folded into CR-20261001-reconcile
+
+The following original issue rows are owned by the active CR. Their recorded candidate/promotion wording is historical. All listed repairs are integrated into dev5f461d9; main/release remain pending. IL021 delivered via `.security/final-fetch-identity/`; IL022 via `.security/final-task-viewport/`. This disposition does not close global coverage or claim same-context ordering/count-shrink auto-clamping.
+
+| ID | 記錄日 | 描述 | 原始修復／影響 | 原始 disposition／證據 |
+|---|---|---|---|---|
 | IL-019 | 2026-10-01 | dashboard group selection disagreed with visible page; short/shrunk/tiny pages escaped bounds and resize retained stale frame | seven original failure observations; page-local identity/shared bounds/positive fetch capacity; immediate event-loop redraw | folded CR-20261001-reconcile; source-bound regression/model/fuzz/mutation evidence; delivery ledger binds commit, promotion pending |
 | IL-020 | 2026-10-01 | queue change cleared tasks but retained selected task row; loading Enter panicked | reset row before fetch; original key-pipeline panic and source-bound properties/3 mutants | folded CR-20261001-reconcile; candidate fixed, exact delivery/promotion separately pending |
 | IL-021 | 2026-10-01 | obsolete async queue/tasks/error results overwrite newer view identity | two original consumer assertion failures; immutable context/epoch protocol and focused race/model/fuzz/five assertion mutants reviewed | folded CR-20261001-reconcile; candidate repaired; real-fixture exact delivery in final-fetch-identity; main pending |
@@ -22,9 +32,6 @@
 | IL-011 | 2026-10-01 | invalid UTF-8 evidence leaked decode exceptions | missing normal exit2/path-bearing stderr; both readers now fail through die | folded CR-20261001-reconcile; candidate-resolved/reviewed; exact bc1990b gates PASS; promotion pending |
 | IL-008 | 2026-10-01 | demo reset structural return interface was incompatible with go-redis *StatusCmd and silently skipped cleanup | candidate replaces reset with empty-only admission before enqueue; pure/runtime contracts preserve nonempty sentinel and original errors, no FlushDB | folded into CR-20261001-reconcile safe demo; candidate-reviewed, exact e61d596 runtime/security gates PASS; promotion pending; reports/test-slice-status.md |
 | IL-002 | 2026-06-07 | branch 往返(checkout 舊 commit)會讓 git 以實體目錄蓋掉 `.claude/skills` symlink | 低;skill 暫時失聯 | 已記入 FORK.md one-liner;若頻繁發生考慮 post-checkout hook |
-| IL-005 | 2026-08-19 | local infra registry(`~/.config/opencode/local-infra/registry.json`)已無 `asynq` project entry,2026-07-30 登錄的 `asynq-test` Valkey(127.0.0.1:16381)連同容器一併消失;`aclab-middlewares/scripts/local_infra.py` 只接受自家 profile,無「為外部專案配置實例」的 governed 指令 | 中;2026-08-19 經使用者授權以 `podman run` 直接重建 `asynq-test-valkey`(127.0.0.1:16381)完成 CR 驗證,該容器目前**存在於 registry 之外**,依 transition bootstrap 規則應補登錄但無 tool 可用 | aclab-middlewares(registry tool contract 缺 generic request);asynq 側僅能回報 |
-| IL-006 | 2026-08-19 | 治理 security-data provider 的 registry pin 落後:`~/.config/aclab/security-data-provider.json` 指向 worktree `security-data-provider-pin@7f38642`,其 `security_data_cache.py` 的 `--feed all` 只展開成 `{trivy, kev}`,不含 `cve`/`grype`;而 aclab-middlewares main(`4426e63`)的 adapter 已含 `CR-2026-08-18-cve-feed-provider-binding` 的四 feed 邏輯 | 低-中;CVE catalog 不在排程刷新路徑上,只能由 consumer 讀 state root 的 `receipts/cve.json`(本 repo 已如此實作並驗 hash + 7 天新鮮度) | aclab-middlewares(把 registry pin 推進到含 CVE feed binding 的 revision) |
-| IL-007 | 2026-08-19 | `machine-local-ci-broker.service` 自 2026-08-18 起 crash loop(restart counter 17,764):state dir 殘留舊 `broker.sock`,`internal/broker/local_socket.go` `Listen()` 對既存 socket fail-closed | 中;持續消耗 CPU,該 broker 完全不可用(asynq 本就未 enrolled) | aclab-middlewares(刪除 stale socket + 加開機前清理);純回報 |
 
 ## Resolved
 
