@@ -69,3 +69,8 @@
 - [x] Reproduce cron/server AUTH cause/status failures and cronHistory owned-client leak; preserve original baseline, repair three Close/%w/first-error boundaries; corrected distinct-error fixed/seeded contracts and four semantic mutants PASS.
 - [x] Real Linux PTY public dashboard entry: live-child client/termios checks before OS exit, exact post-key Help/Queues, unknown-TERM rejection and three assertion mutants. Exact delivery in .security/final-cli-entry/.
 - [x] Expand real-base statement-entry observer to138 actual sites;36 existing Tests plain/instrumented normal/race and two independent observer mutants; full unsupported/physical inventory retained, not generic true-line95 adoption.
+
+- [x] Reproduce root cancellation typed-cause loss; repair %w and exact diagnostic/canonical operation preservation; focused normal/race/PBT/fuzz/two semantic mutants reviewed. Tools released-root consumption remains unchanged until release.
+- [x] Real taskCancel AUTH/no-publication positive-barrier and duplicate-ID ordered signal contracts; focused race/16 properties/two assertion mutants, DB12 empty before/after.
+- [x] x/rate closed-transport identity with valid task metadata/no deadline; normal/race/128 properties/native fuzz/two assertion mutants. Native statement delta is not global line95.
+- [ ] Freeze and deliver cancellation-error successor through complete root/x/tools gates, fresh security, dev no-ff/push and hosted checkout proof.

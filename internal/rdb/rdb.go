@@ -1613,7 +1613,7 @@ func (r *RDB) PublishCancelation(id string) error {
 	var op errors.Op = "rdb.PublishCancelation"
 	ctx := context.Background()
 	if err := r.client.Publish(ctx, base.CancelChannel, id).Err(); err != nil {
-		return errors.E(op, errors.Unknown, fmt.Sprintf("redis pubsub publish error: %v", err))
+		return errors.E(op, errors.Unknown, fmt.Errorf("redis pubsub publish error: %w", err))
 	}
 	return nil
 }

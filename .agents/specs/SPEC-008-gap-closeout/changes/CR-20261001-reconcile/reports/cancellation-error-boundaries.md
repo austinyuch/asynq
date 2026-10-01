@@ -1,0 +1,13 @@
+# Cancellation transport error boundaries
+
+Existing reconciliation CR coverage follow-up; candidate topic codex/cancellation-error-boundaries-20261001. No new architecture/profile/readiness adoption.
+
+Root PublishCancelation reproduced loss of redis.ErrClosed identity on a real closed go-redis client. Preserve canonical Unknown/op and exact diagnostic text while retaining the original cause through %w. Receipt .security/cancellation-cause-final/receipt.json records normal/race,128 seeded properties,10-second native fuzz and two assertion-caught mutants. Earlier swallow mutant was compile-unviable, not caught; substring oracle was tightened and final campaign rerun. No socket/Redis setup is used by these closed-client contracts; they do not establish live authentication/network behavior.
+
+Tools still consumes released root v0.26.0-team.3. Its taskCancel already closes owned Inspector and returns first error; the workspace root fix is not consumed by tools until a real release/dependency update. New real AUTH/canonical-status/exact-output/no-publication contracts use healthy positive marker delivery barriers, plus16 seeded sequence cases retaining duplicate IDs and exact multiplicity/order. Focused race: .security/task-cancel-focused/receipt.json; two assertion mutants: .security/task-cancel-mutants/receipt.json. DB12 starts/ends empty and PubSub is serialized service-wide. DB12 client ownership does not cover AUTH connections before SELECT; two equal AUTH errors do not prove distinct first-versus-last selection.
+
+x/rate Release closed-client cause with/without deadline retains task metadata. Normal/race,128 seeded cases,10-second native fuzz63996 executions and two assertion mutants PASS: .security/rate-release-closed-contracts/receipt.json. This adds one native error-return statement. Historical source-equivalent rate26/26 statement union is not fresh full-suite coverage or global true-line coverage.
+
+Metadata fixtures now accept ASYNQ_METADATA_TEST_REDIS_DB strictly1..15, default11 preserved. Fresh root gates must use verified-empty DB5 for metadata and DB6 for root/rdb, with demo13 empty-only and historical11/14/15 read-only. Do not skip metadata or replay historical fixture databases to manufacture a full gate.
+
+Peer review is same-family independent-session, not cross-family approval. Frozen full root/x/tools runtime, build/vet, fresh SBOM/CVE/KEV, commit/tree topology, remote parity and hosted CI remain required before delivery; current authority will be .security/final-cancellation/gate-ledger.json. Main/release/global true-line95 and protected cleanup remain open.

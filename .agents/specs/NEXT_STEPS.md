@@ -12,7 +12,7 @@ The delivered reverse-navigation/governance predecessor is tracked by `.security
 
 ## ROI-ordered remaining delivery
 
-1. Finish exact delivery of the reviewed CLI-entry/cron-server successor (reports/cli-entry-boundaries.md), then prioritize task-cancel/heartbeat genuine reachable error boundaries and complete unmeasured source classes; never add artificial setup failures for coverage.
+1. CLI-entry successor is delivered at dev eaad04eb969f180a0d64ed749870260f253bb512, tree51cbc22fa7d8568842d32404fce3d3c74fb1ba4b; final-cli-entry ledger SHA b0faaa24608874d261425cff2b413bfd36939f7b4ef7e16161f6f3f76ded5482 and hosted36852044899 SUCCESS verify parity. Finish cancellation-error successor full gates/delivery (reports/cancellation-error-boundaries.md), then heartbeat genuine reachable error boundaries and actual short-circuit/multiline evaluation events. Never add artificial setup failures for coverage.
 2. Complete project-wide >=95% true executable-line coverage. Native Go statements are separate metrics; line observer support/unmapped inventories and shell/Lua/JS gaps remain visible. [Measurement gap](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/line-measurement-gap.md).
 3. Complete outstanding review work and protected main PR22 gates/merge. Same-family peer findings are not cross-family approval. Prior external dispatch was automatically rejected; explicit destination/payload authorization is still absent.
 4. After main promotion, build and consume sequential root→x→tools release dependencies, publish only explicitly named fork team tags, and prove remote/release parity. Existing team.3 tags are historical; no new release has been published in this reconciliation.
