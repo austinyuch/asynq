@@ -106,6 +106,10 @@ make security-upgrade  # upgrade ALL deps to latest within major, build+vet, re-
   stays within the current major version, so it will not silently take a breaking
   major upgrade.
 
+`stdlib` and `toolchain` findings require selecting a fixed Go runtime and rerunning the gate, rather than `go get stdlib@...`. A generated plan containing those findings stops with exit 2 before applying dependency updates. Ordinary dependency plans continue to use `go get` and `go mod tidy`.
+
+The 2026-10-01 three-module baseline passed with Go 1.26.6 (Go 1.26.5 was blocked): zero blocking findings, zero KEV-listed candidates, and one G118 MEDIUM SAST warning at the context factory. The caller receives and defers the returned cancel in `processor.go`; the warning remains visible pending independent review. Scanner evidence is local, and absence of candidates does not prove global vulnerability absence. See CR-20261001-reconcile for exact scope and remaining gates.
+
 Both print a `go.mod`/`go.sum` diffstat and re-run the pipeline, so you always
 see the before/after. Review the diff and commit it yourself.
 
@@ -219,3 +223,7 @@ This gate is local and pre-push. `.github/workflows/` still owns build and test
 across the module matrix. The two are complementary: hosted CI proves the code
 works, the local gate proves the dependency graph is not knowingly exploitable
 before the push leaves your machine.
+
+## Evidence input contracts
+
+Invalid UTF-8 or malformed JSON inputs produce path-bearing diagnostics and exit2. CVE identities use ASCII digits, consistent with the [official CVE record schema](https://cveproject.github.io/cve-schema/schema/docs/); Unicode numeral lookalikes are rejected. Normalize/stream/CLI contracts exercise real temporary files and outputs. The source-bound Python native trace observes all25 tests from zero after source changes; seeded JSON generators are not coverage-guided fuzzing. No provider/scanner subprocess-line coverage or project-wide95% claim follows from the per-file result.

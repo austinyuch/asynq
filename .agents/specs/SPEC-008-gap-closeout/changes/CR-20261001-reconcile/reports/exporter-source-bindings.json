@@ -1,0 +1,13 @@
+{
+  "scope": "reviewed exporter source and consumed dependency manifests; exact successor gates pending",
+  "sha256": {
+    "tools/metrics_exporter/main.go": "4380444a4885a203568ce51ac4a181fc830d1d4a15ddcba2b2947c356843413e",
+    "tools/metrics_exporter/lifecycle_contract_test.go": "0e4bcbe31a605f55a0927ccb5407bed89665ca166e8b99c2becd6561d96fd6e2",
+    "go.mod": "78a360cc2707d580c167f79204324a48ff926e48df36c3fa5400c46c964821a5",
+    "go.sum": "8ee2c733e0396eb8f982a6a8ff071d6d0924408a83f1e9ff346e9d560e0f5c33",
+    "x/go.mod": "338685af553bbd74dc52e8ebbd91a58dc11adc12e4807f577b00dc537ac3c0cb",
+    "x/go.sum": "6c694ec9f80ba23b0d342aa820f980735993bcbee538a7f2cea21c090ed5bae9",
+    "tools/go.mod": "72c34922f68a38ede079cc40a21740f803b8c93cd652d0902fb4154d5837dfa3",
+    "tools/go.sum": "3390e2b985f391f9f7f5c3d9905003ed861797b33a5212e408180ff13084335f"
+  }
+}

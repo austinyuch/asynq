@@ -1,0 +1,58 @@
+# Tasks — CR-20261001-reconcile
+
+- [x] Inventory refs, worktrees, PR/issues and preserve WIP.
+- [x] Merge single-file upstream memory profiling change; test seven environment values.
+- [x] Add base PBT/fuzz and bounded mutation evidence.
+- [x] Fix runtime advisory remediation and shell literal argument handling; six regression tests PASS.
+- [x] Reconcile seven historical documentation contradictions.
+- [x] Generate three-module SBOM/CVE/KEV/SAST baseline; patched Go 1.26.6 gate PASS.
+- [x] Published5e98135 security/build/vet/tools gates and push parity; root/x/cluster carried with complete source-equality proof from72dbcd0.
+- [ ] Cross-family review: destination approval required after automatic review refusal.
+- [ ] Integrate validated candidate into dev, then protected main PR/check/merge.
+- [ ] Reach >=95% project-wide line coverage; remaining root/rdb/x-metrics/tools gaps open.
+- [x] IL-004 canonical cluster fixtures and all-master ArchiveTrim oracle; full standalone/cluster race suites PASS (successor final gate pending).
+- [ ] Release decision after functional promotion, sequential root/x/tools tags only; never push imported upstream bare tags.
+- [ ] Reclaim regenerable task-owned cache after persisting evidence; stop task runtime and release registry claim.
+
+- [x] Reviewed successor queue-state/lock namespace fixes, Unicode/grapheme/modal/group-page fixes, Inspector/lifecycle/CLI/proto contracts; source-bound gates pass, immutable successor gates pending.
+
+- [x] Exact72dbcd0 security/build/vet/root/x/tools/cluster gates PASS, including child profile union; narrow-screen tools successor exact5e98135 gates and origin parity PASS.
+
+- [x] Reviewed testbroker/Inspector error contracts and safe demo admission/runtime; source-bound PBT/fuzz/mutants and fixture custody pass.
+- [x] Native Python line baseline and complete known executable-source-class inventory; measurement gaps remain explicit.
+- [x] Freeze e61d596 contract/demo successor; exact security/build/vet/root/x/tools gates PASS, child profiles reconciled, topic/PR21 parity verified; cluster execution remains explicitly source-equivalent from72dbcd0.
+- [x] Reviewed security Python policy/native-line contracts and testutil comparator/codec/fatal-child contracts; PBT, bounded fuzz and semantic mutants pass.
+- [x] Reviewed owned Redis timestamp-domain contracts; healthy-neighbor/no-write oracles,80 properties and3 mutants pass; original11 fixture keys preserved.
+- [x] Freeze323d5d1 Python/testutil/inspection successor; exact fresh gates/SBOM and PR21 push parity verified.
+- [x] Recoverable task-owned Go build cache cleanup reclaimed2,088,853,978 bytes at e61; runtime stop/registry release remain pending, and later tests rebuild cache.
+
+- [x] Published323d5d1 exact build/vet/root/x/tools/cluster/security gates and origin/PR21 parity.
+- [x] Reproduce and repair canceled-context processor sync fallback for four dispositions; bounded deadline/ownership recovery contracts and3 mutants PASS.
+- [x] Reproduce and repair UTF-8 evidence-reader exit behavior and ASCII CVE ID validation; normalize/ingress contracts and fresh-source25-test trace PASS.
+- [x] Python production positive native lines622/635=97.95%; no old-source carry. JS native inline-config ranges captured with explicit stub/render limitations.
+- [x] Freeze recovery/ingress successor bc1990b; exact build/vet/root/x/tools/cluster/security and Python native gates PASS, topic/PR21 remote parity verified.
+- [x] Refresh three-module WIP-bound SBOM/CVE/KEV evidence; report03be718 pushed,0 blockers/0 supplied KEV matches, existing G118 retained.
+- [x] Freeze e6002cc Inspector validation/lifecycle/Aggregator/dashboard-fetch slices; exact all-module build/vet/race/cluster/security/native-Python gates PASS, topic/PR21 parity verified. Root compatible native statements3455/3634=95.07%; tools1377/1696=81.19%; not project line95.
+- [x] At e6002cc idle gate completion, clean only regenerable task Go cache;1,459,806,634 bytes reclaimed. Evidence/runtime retained; cache will rebuild with later tests.
+- [x] Repair dashboard normal quit, event-channel closure and worker/Inspector/screen ownership; b146972 exact gates/topic/PR21 parity PASS. Root native statements95.0743%, tools86.9266%; project line95 remains unmet.
+- [x] Reproduce native Go block-vs-line ambiguity using panic and short-circuit witnesses; preserve missing cross-language measurement and pending metric clarification.
+
+- [x] Close CLI task-owned connections, preserve domain error causes, reject unreadable/malformed explicit config before command bodies; exact78499b1 tools race/build/security gates and topic/PR21 parity PASS.
+
+- [x] Queue/stats first failure status, owned transport closure, effective cluster config and readable node output; de88475 exact tools race/three-master/build/vet/security gates and topic/PR21 parity PASS.
+- [ ] Adopt a verified project line measurement policy/instrumenter; bounded AST witness prototype PASS is experimental and does not satisfy global line95.
+
+- [x] Refresh de88475-plus-exporter WIP three-module SBOM/CVE/KEV scan; 25 closed materials / 227 execution sources / 26 archive members independently verified; 0 blocking / 0 supplied KEV, existing G118 retained. See docs/SECURITY_SCAN_2026-10-01.md; not a clean-commit attestation.
+
+- [x] Exporter instance/signal/handler ownership delivered1abf9d3; exact tools race/build/vet/security/actual production entrypoint gates and topic/PR21 parity PASS.
+
+- [x] Repair group visible-page selection, short/tiny/empty/shrunk page bounds, positive task fetch capacity and event-loop resize; preserve seven original failures and independent model/PBT/fuzz/mutation evidence. Delivery gates are commit-bound in `.security/final-group-navigation/`; promotion stays open.
+- [x] Bounded line-event control-flow experiment: actual OR probe omission reproduced/fixed in /tmp; independent serial/defer/concurrent witnesses and three generator mutants; no project denominator adoption.
+
+- [x] Verify nonempty CLI task tables, pagination wiring and ProcessIn bounds; focused race/PBT/four assertion mutants and nonauthor review PASS. Exact successor delivery uses `.security/final-task-visibility/`.
+
+- [x] Metadata expiry-boundary/payload-preservation/history partial-failure contracts: native race and three assertion mutants PASS; no production defect or coverage increment. Exact delivery .security/final-metadata/.
+- [x] Real internal/timeutil all-instruction-PC pilot; full physical-line inventory retained, compiler-attributed mapping not adopted as project executable denominator.
+
+- [x] Reproduce cross-queue loading Enter panic and reset task row on new queue entry; source-bound race/32x8 properties/three assertion mutants PASS; exact delivery .security/final-queue-selection/.
+- [ ] Reproduce and repair IL-021 asynchronous stale-result identity and IL-022 task resize/page snapshot mismatch; source traced, not runtime closed.

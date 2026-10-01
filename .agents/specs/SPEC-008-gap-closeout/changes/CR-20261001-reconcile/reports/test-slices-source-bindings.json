@@ -1,0 +1,497 @@
+{
+  "schema": "asynq-candidate-test-slices/v1",
+  "status": "published323 exact gates separate; reviewed recovery/ingress successor source bindings; new immutable gates pending",
+  "slices": {
+    "internal": {
+      "local_receipt": ".security/slice2/receipt.json",
+      "receipt_sha256": "9bc40ad8d5072dd17cee41e9a352512e094b2ffe0a9a4fa4bc6871e354c85d30",
+      "source_binding": {
+        "source_and_test_sha256": {
+          "internal/errors/errors.go": "4058739ebfcaa76f30f90a6d18070a1f514e9ced89898e0f7b806e7bdf02d302",
+          "internal/errors/contracts_test.go": "ef96755250db028f3a5ddcea83bca4ad96a2713f578d953e574664b9e54d0627",
+          "internal/log/log.go": "b56e2242e0b6fd2d70919412f611bd6509677b03daa16fef2ac8a000a7946b50",
+          "internal/log/contracts_test.go": "384d9f25ebbfb1d29730085798455f93901f694bfd53e283c895f029e6a2d803",
+          "internal/timeutil/timeutil.go": "2fe2e866a7968250821fd90ab72e8d6029b5e9cc3c65e27152fc2f4067890de5",
+          "internal/timeutil/contracts_test.go": "ca0c0142e53d525b06d506d74311099abf907b27a777957cc3c56e945ff7f0f1"
+        },
+        "evidence_sha256": {
+          "threshold-boundary.log": "78358b7263436419bbe020aa75df65307dfceb26b68f3a7061e6fcc50cd118e6",
+          "fatal-routing.log": "790bc61dbfa0d4b83f4ec513ef9017d0fe0289aac3e33230eb75d1eb0c9d6114",
+          "errors-fuzz.log": "d82d7a90d458f5b15e6ec636d451889a87572b9344cd3a323f83b03faf13aeec",
+          "contracts.cover": "f96653d55dc174d8b751a9d584b6ad9a8c77030329a72a1a68079e5e5fc939dc",
+          "canonical-nesting.log": "898e04e308fbbb38d9418001c11c90b5418338bc17b667e0ff18554f978591e2",
+          "race.log": "e208637e7602c06a879aaa9cb1079a40f3ea8879d93cbb9b2c0ca69ec546d727",
+          "redis-cause.log": "dd4d226ecb904ea6455f50dc9862dd5752cd2ab9c9c6ccdc6cd88f4622c1bd5b",
+          "clock-direction.log": "a9b206db26b9991cab393839b53fe4ceb1a8b88f8547a437450fe9e6cceecc02",
+          "timeutil-fuzz.log": "c27ba5607bb62450d329922cfaee761e7c735eb0e8ce2c2ac84146d1436e9df2"
+        }
+      }
+    },
+    "public": {
+      "local_receipt": ".security/public-contracts/receipt.json",
+      "receipt_sha256": "899aeb32358c4198e7501729eaa6abaffe6dc6c2ce2e2b47911c85d45fc526e2",
+      "source_binding": {
+        "source_test_sha256": {
+          "asynq.go": "f7bb0c027e74a79b8f27bcb37baadc22b08cc8389bd3dbe0a2cc61556ba4270c",
+          "client.go": "136afc593e7e4cc72b2df8d629cfc1bd608f030b9df44802e5dfdd909cc0a623",
+          "context.go": "bf67588cfc1fbd4a44132ce726a8387aef09926a9db68a4d4c44c434aa8eab03",
+          "inspector.go": "166ccf5fcb98ad56ab7bcbc052df9d9859e0fb0dcb8e92e0308c30ae9302cbc8",
+          "public_contracts_test.go": "a26668e91f607f05ce8a0d9a7ae5a9dd574fe38a53d68efa2648d6a1ab54f644"
+        },
+        "artifact_sha256": {
+          "mutation-run.log": "39ca7f23fc445c38351ede43e26dd51416b038c0dc0f66e09777ef3c2a9dbffe",
+          "focused.cover": "249d96e8ed3e5911edd70b6821d1561240288379f4a05d27b3b853f249fbb9e1",
+          "headers-alias.log": "5885e52b6853d6c75294b43dd3c32af4c09e7626f3e4ff058593fe2c4d580058",
+          "fuzz.log": "896273f24908b27d8b4815c2f5f1e8be7476434c08e89634ba4704e16cbfb87a",
+          "vet.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retry-precedence.log": "34f4b96b91478f1db1b1186cb47878f9a1a0a6b8a3309b2e01c461f738918af1",
+          "focused-race.log": "8259a4cb916822d1fee616153ce7729935d1daed1acca80810647f39f676606e",
+          "functions.txt": "6b924924f2e7f509c775ff8e013bc5b3487ad6e94e9b9c49f890419dd76a2aa5",
+          "queue-validation.log": "4a3168b91c219631c301de66cdba2cc58edd7be7f89648e4ab5765fa5591e246",
+          "context-retry-field.log": "2d6508846d1aba4db89b44cbdf651a0aecb1b50e0c6364a9092b5d67d41d23e6",
+          "cancellation-cause.log": "6a3f3d7e0bf2a7768337a593eada2aca18e4d73491fde8f2a9df16306e4b961c"
+        }
+      }
+    },
+    "parser": {
+      "local_receipt": ".security/option-parser/receipt.json",
+      "receipt_sha256": "c9468d44737b9d303f3d6f935c0831da0d996eeb6d26a10f60750a3c9fa29076",
+      "source_binding": {
+        "source_test_sha256": {
+          "inspector.go": "85a9af004b036d3310e42ebf24a9a51062cc026af817bb478cde8d895e1f0c77",
+          "option_parser_contracts_test.go": "cc4eb84df2db8e427d1214d8ed927a98f707a73ad07dba1db98b16552ae4dc41"
+        }
+      }
+    },
+    "metrics": {
+      "local_receipt": ".security/reconcile-20261001/metrics-test-receipt.json",
+      "receipt_sha256": "bae3ec39ab90efb31aa84576171c171645aff8220d76d3762bee4ab8e1898c8d",
+      "source_binding": {
+        "source_sha256": "695086585851ee2cc417817a5267d11a27e8ff06cb421943809099232b6eb0a8",
+        "test_sha256": "47ee6b8e7dbc6fe80c5b2104d36f6ce6884b7ee0cb3366282857c601193f5ca9",
+        "dependency_sha256": {
+          "go.mod": "78a360cc2707d580c167f79204324a48ff926e48df36c3fa5400c46c964821a5",
+          "go.sum": "8ee2c733e0396eb8f982a6a8ff071d6d0924408a83f1e9ff346e9d560e0f5c33",
+          "x/go.mod": "338685af553bbd74dc52e8ebbd91a58dc11adc12e4807f577b00dc537ac3c0cb",
+          "x/go.sum": "6c694ec9f80ba23b0d342aa820f980735993bcbee538a7f2cea21c090ed5bae9"
+        }
+      }
+    },
+    "rdb": {
+      "local_receipt": ".security/reconcile-20261001/rdb-error-test-receipt.json",
+      "receipt_sha256": "253496ee383db7b8c2820f8419e595820371889e527a8e09c22e8ffdb7085096",
+      "source_binding": {
+        "tests_sha256": "97d8ebad650eb3dfade1c686e5038b3049cb29dd4270c4d56a8b69e18021ee34",
+        "source_sha256": {
+          "internal/rdb/rdb.go": "b7ce70ad0846e2177859a5d9f8c74b62ef5a8fb5699960d1064dd6c1dbdf8f8c",
+          "internal/rdb/inspect.go": "1e38d8fe3c28e2f7693977a79bc2509bfb1516a0dc068b3e1c1046500371c2db"
+        },
+        "dependency_sha256": {
+          "go.mod": "78a360cc2707d580c167f79204324a48ff926e48df36c3fa5400c46c964821a5",
+          "go.sum": "8ee2c733e0396eb8f982a6a8ff071d6d0924408a83f1e9ff346e9d560e0f5c33",
+          "x/go.mod": "338685af553bbd74dc52e8ebbd91a58dc11adc12e4807f577b00dc537ac3c0cb",
+          "x/go.sum": "6c694ec9f80ba23b0d342aa820f980735993bcbee538a7f2cea21c090ed5bae9"
+        }
+      }
+    },
+    "tools": {
+      "local_receipt": ".security/tools-contracts/receipt.json",
+      "receipt_sha256": "0ad469515c4b54826bdbd07912610f398b59dfaba50f24ebb9fd5ecb11fdb3b6",
+      "source_binding": {
+        "source_sha256": {
+          "tools/asynq/cmd/contracts_test.go": "4642e8c908490810365ed53694401ec96c2303af1977a25d8384ed76b9af323f",
+          "tools/asynq/cmd/cron.go": "3f6353ad65a3d675f0c3efb10e565d2b23e59abea06e0b26772dd856fd5cb175",
+          "tools/asynq/cmd/dash/dash.go": "04a7a37520a585d3abee840fd85ceb5a146be25d713510b04a5715d6da12ffe2",
+          "tools/asynq/cmd/dash/draw.go": "46db62b51efcd16f433bbb4e7cd5c0148701a2d21270dcf3dd60c199bc63bf19",
+          "tools/asynq/cmd/dash/draw_test.go": "0facd4929c1cbbd1001be084dc28395e49e597d94fc4a8148986a4cb4fb3f126",
+          "tools/asynq/cmd/dash/fetch.go": "2b71c411a2edfab5a9f930f4248c775ba9e8fc9d34c85f8506aeeb214ae09ce4",
+          "tools/asynq/cmd/dash/key_event.go": "c42a1d0eda9f47943e9ac9becb83f099b1c32afe096b7cea3a53564113778aca",
+          "tools/asynq/cmd/dash/key_event_test.go": "b2d87c6a11f79379065076ad1e4dc7d9d7ca7f756a2134ebba1c97ebc9570f49",
+          "tools/asynq/cmd/dash/pagination_contract_test.go": "f2ef33510f5eae23937b08df3f388b19d5e8b35b508003f79a73b3e868185633",
+          "tools/asynq/cmd/dash/screen_drawer.go": "d96e122e6118fa635f770709215d4374023a61f472bdde5605fd15bf08912574",
+          "tools/asynq/cmd/dash/table.go": "7ed7f45787d6443fc0209fc2d882fcd0dddc8ca9354aa3cc94ba88045de21305",
+          "tools/asynq/cmd/dash.go": "dec6c70adcf08c270526db9fe10acbd765fb60f62e3c63219f10a1525c488c83",
+          "tools/asynq/cmd/group.go": "46431c1ccef09b92ba2aa89306b563aef09989b6f5fc6f818cf04f83f122af2e",
+          "tools/asynq/cmd/queue.go": "d3e657ce311a9968f09d329753f5c8634a6f4fbc49aba941b4e64e3d02d4b956",
+          "tools/asynq/cmd/root.go": "2f2b15aecb61f99b4f7086617d869aed89c7455460df8b9601fc87d25989ef20",
+          "tools/asynq/cmd/runtime_contract_test.go": "d0ec7ed81c83211980762465789c200aec9ac55777a1926efdea4ca9d01b1b67",
+          "tools/asynq/cmd/server.go": "a19ecfbfb939622571904287384bbd04478fb6b6f673363ecb0d08ca17fd14e7",
+          "tools/asynq/cmd/stats.go": "b10835e11a6bdcbfc35f6c3e3a5fea636b9142fd8ba543e5a599f4ba56b661d1",
+          "tools/asynq/cmd/task.go": "9f46fa2e2e885b005f17d89a715c04504103c11ccb68ded6cc9ef03e6dd101c5",
+          "tools/asynq/main.go": "6432841d7f52913a10d6468c1a19765b483eee8d1749b55e57d6601ac72db2e5",
+          "tools/go.mod": "72c34922f68a38ede079cc40a21740f803b8c93cd652d0902fb4154d5837dfa3",
+          "tools/go.sum": "3390e2b985f391f9f7f5c3d9905003ed861797b33a5212e408180ff13084335f",
+          "tools/metrics_exporter/main.go": "b888b4884c929083ed722a1c154a19b253af85d1fbca11a98eb4b499c9f534b5"
+        }
+      }
+    },
+    "security-python-contracts": {
+      "local_receipt": ".security/security-python-contracts/receipt.json",
+      "receipt_sha256": "13723811f65eb3099384eeaa343d74d71323d731adc57ccff3db8c8b4247fb33",
+      "source_binding": {
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "interpreter": "/usr/bin/python3",
+        "observer": "/tmp/asynq-security-contracts-observer.py",
+        "observer_sha256": "21e74e2d9f8d5a27122ae44cb6065e461ed5dee77712b9c4714a3a5204ff22fb",
+        "command": [
+          "/usr/bin/python3",
+          "/tmp/asynq-security-contracts-observer.py"
+        ],
+        "source_before_sha256": {
+          "scripts/security/security_local_ci.py": "b0666161997167e65ebeea35c9e7b0d120b16adae7e1cd374b91ec494dfbe931",
+          "scripts/security/test_security_contracts.py": "eac515d95961378c357f2b0b73342401f71b7eeb45e3f345624af9a7db99ba0e",
+          "scripts/security/test_security_local_ci.py": "0535a7189f000b0d77cad700e30d2fb505e2f4e2c4ceee0ff159971b01c73c8f"
+        },
+        "source_after_sha256": {
+          "scripts/security/security_local_ci.py": "b0666161997167e65ebeea35c9e7b0d120b16adae7e1cd374b91ec494dfbe931",
+          "scripts/security/test_security_contracts.py": "eac515d95961378c357f2b0b73342401f71b7eeb45e3f345624af9a7db99ba0e",
+          "scripts/security/test_security_local_ci.py": "0535a7189f000b0d77cad700e30d2fb505e2f4e2c4ceee0ff159971b01c73c8f"
+        },
+        "sources_unchanged": true,
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "test_status": "PASS",
+        "seconds": 2.441864432999864,
+        "properties": {
+          "ordering_membership_highest_stable_fix": {
+            "seed": 20261002,
+            "trials": 250
+          },
+          "bounded_json_shape_generator": {
+            "seed": 20261003,
+            "trials": 1000,
+            "method": "stdlib seeded Random, bounded valid-schema/recursive shapes; NOT coverage-guided fuzzing"
+          }
+        },
+        "native_method": "Python3.12.3 trace.Trace(count=True, trace=False) with trace._find_executable_linenos: compiled recursive line tables excluding detected docstrings; private helper/version-bound; exclude nonpositive line-table metadata (lineno<=0) from executable source denominator",
+        "prior_merge": {
+          "receipt": ".security/security-python-native/receipt.json",
+          "receipt_sha256": "9ddc5f8445e0ae6171c40466a117ed595cbae9471f9e5d6a19fb48390beb8002",
+          "source_identity_checked": [
+            "scripts/security/security_local_ci.py",
+            "scripts/security/test_security_local_ci.py"
+          ],
+          "identity_match": true,
+          "counts_summed_per_filename_lineno": true,
+          "prior_counters_sha256": "6bebe3785bed71b60c9b50fbb4a07dccf57bf6245b9f3e6d8934449af54e06d4",
+          "prior_counter_hash_verified": true,
+          "no_old_tests_rerun": true
+        },
+        "reports": [
+          {
+            "source": "scripts/security/security_local_ci.py",
+            "class": "production",
+            "covered": 426,
+            "total": 631,
+            "native_line_percent": 67.51188589540412
+          },
+          {
+            "source": "scripts/security/test_security_contracts.py",
+            "class": "test",
+            "covered": 178,
+            "total": 179,
+            "native_line_percent": 99.44134078212291
+          },
+          {
+            "source": "scripts/security/test_security_local_ci.py",
+            "class": "test",
+            "covered": 86,
+            "total": 87,
+            "native_line_percent": 98.85057471264368
+          }
+        ],
+        "mutations": [
+          {
+            "name": "empty-policy",
+            "source": "/tmp/asynq-security-contract-mutants/empty-policy.py",
+            "source_sha256": "46f23c0989385151d97b3609588eaf87c8b021e57f265d389e1e14fbd9162383",
+            "production_sha256": "b0666161997167e65ebeea35c9e7b0d120b16adae7e1cd374b91ec494dfbe931",
+            "test_sha256": "eac515d95961378c357f2b0b73342401f71b7eeb45e3f345624af9a7db99ba0e",
+            "selector": "SecurityDecisionContracts.test_independent_reachability_kev_fix_decision_table",
+            "assertion_caught": true,
+            "failures": 9,
+            "errors": 0,
+            "log": ".security/security-python-contracts/empty-policy.log",
+            "log_sha256": "43241c91ba31ceb9c3b8fe63b1c8a7df89a9a995a3c3b57181afde830b931b62",
+            "execution_method": "same Python observer process; import temporary mutant and set test module ci to it; unittest loader/runner, no subprocess"
+          },
+          {
+            "name": "kev-warning",
+            "source": "/tmp/asynq-security-contract-mutants/kev-warning.py",
+            "source_sha256": "983c15b18fccf7e13bade9e236da46c837123b86010800f07a38bf9023b48273",
+            "production_sha256": "b0666161997167e65ebeea35c9e7b0d120b16adae7e1cd374b91ec494dfbe931",
+            "test_sha256": "eac515d95961378c357f2b0b73342401f71b7eeb45e3f345624af9a7db99ba0e",
+            "selector": "SecurityDecisionContracts.test_independent_reachability_kev_fix_decision_table",
+            "assertion_caught": true,
+            "failures": 4,
+            "errors": 0,
+            "log": ".security/security-python-contracts/kev-warning.log",
+            "log_sha256": "a647ba9c23fdf71032b0aaaa02492e2341283792e39fd2c75f2695c0a67ac9db",
+            "execution_method": "same Python observer process; import temporary mutant and set test module ci to it; unittest loader/runner, no subprocess"
+          },
+          {
+            "name": "reachable-fix-warning",
+            "source": "/tmp/asynq-security-contract-mutants/reachable-fix-warning.py",
+            "source_sha256": "83bdb97ef749f26667639b750e022ea210a4185dda33ea4ed70bd2f970775296",
+            "production_sha256": "b0666161997167e65ebeea35c9e7b0d120b16adae7e1cd374b91ec494dfbe931",
+            "test_sha256": "eac515d95961378c357f2b0b73342401f71b7eeb45e3f345624af9a7db99ba0e",
+            "selector": "SecurityDecisionContracts.test_independent_reachability_kev_fix_decision_table",
+            "assertion_caught": true,
+            "failures": 1,
+            "errors": 0,
+            "log": ".security/security-python-contracts/reachable-fix-warning.log",
+            "log_sha256": "f590e58bc0cec8d2b9d8748caebe20e3865d0060c8885cbbeeb6ff185c010e2f",
+            "execution_method": "same Python observer process; import temporary mutant and set test module ci to it; unittest loader/runner, no subprocess"
+          },
+          {
+            "name": "lower-fix-version",
+            "source": "/tmp/asynq-security-contract-mutants/lower-fix-version.py",
+            "source_sha256": "e9077bdb18c9e172ae2f6f23dcedfbb5396b8314a023f5fb4c5a3ec76e101749",
+            "production_sha256": "b0666161997167e65ebeea35c9e7b0d120b16adae7e1cd374b91ec494dfbe931",
+            "test_sha256": "eac515d95961378c357f2b0b73342401f71b7eeb45e3f345624af9a7db99ba0e",
+            "selector": "SecurityDecisionContracts.test_seeded_ordering_membership_and_highest_stable_fix_properties",
+            "assertion_caught": true,
+            "failures": 1,
+            "errors": 0,
+            "log": ".security/security-python-contracts/lower-fix-version.log",
+            "log_sha256": "a82e904d51b372b0d198fdf765ed366eea599a85f3142a7975f895edc45ac716",
+            "execution_method": "same Python observer process; import temporary mutant and set test module ci to it; unittest loader/runner, no subprocess"
+          },
+          {
+            "name": "sast-high-warning",
+            "source": "/tmp/asynq-security-contract-mutants/sast-high-warning.py",
+            "source_sha256": "97520ffcf96f37e53213fb44fc73d266273030da9325dd625b637f47396a7a9b",
+            "production_sha256": "b0666161997167e65ebeea35c9e7b0d120b16adae7e1cd374b91ec494dfbe931",
+            "test_sha256": "eac515d95961378c357f2b0b73342401f71b7eeb45e3f345624af9a7db99ba0e",
+            "selector": "SecurityDecisionContracts.test_sast_high_blocks_but_cwe_membership_only_ranks",
+            "assertion_caught": true,
+            "failures": 2,
+            "errors": 0,
+            "log": ".security/security-python-contracts/sast-high-warning.log",
+            "log_sha256": "ea432df4ae9eae52b50add852465dc03255c81279b4047bbd3895cb6e962810e",
+            "execution_method": "same Python observer process; import temporary mutant and set test module ci to it; unittest loader/runner, no subprocess"
+          },
+          {
+            "name": "runtime-stop-removed",
+            "source": "/tmp/asynq-security-contract-mutants/runtime-stop-removed.py",
+            "source_sha256": "dc4c485c8da5d4a545ef4835c548e0e256ceec8478cdfaf988e665353f371067",
+            "production_sha256": "b0666161997167e65ebeea35c9e7b0d120b16adae7e1cd374b91ec494dfbe931",
+            "test_sha256": "eac515d95961378c357f2b0b73342401f71b7eeb45e3f345624af9a7db99ba0e",
+            "selector": "SecurityDecisionContracts.test_runtime_fix_plan_stops_before_dependency_commands",
+            "assertion_caught": true,
+            "failures": 1,
+            "errors": 0,
+            "log": ".security/security-python-contracts/runtime-stop-removed.log",
+            "log_sha256": "4939517f3d9f21daf5b10aaf488fdd7a3e69c437dbf19825b4932b0a419ff362",
+            "execution_method": "same Python observer process; import temporary mutant and set test module ci to it; unittest loader/runner, no subprocess"
+          }
+        ],
+        "claim_ceiling": "source-bound synthetic Python decision contracts only; no provider/scanner/process execution; per-source native line observation, no cross-language/project95% or immutable gate claim",
+        "historical_backup": ".security/security-python-contracts/history/621af21ca212ca5f",
+        "historical_backup_manifest_sha256": "a2d19445e07551d9950b9db6159df821f5bf81d5311b0769d954a312b8a09fc2",
+        "artifacts_sha256": {
+          "actual-line-counters.json": "62817a255332a8fc43a8caa9386c33d85a6604a4f719bcc987b77abdb0aac146",
+          "unittest.log": "7db3771efbddc9088a8da490a8d69d044409b97ede6ce611a4ba593783c9df36",
+          "reachable-fix-warning.log": "f590e58bc0cec8d2b9d8748caebe20e3865d0060c8885cbbeeb6ff185c010e2f",
+          "merged-line-counters.json": "d93a95cfc7154c23b34421a36ced29f0789fe7ec7b0e32cd99c7a2811b1d85f4",
+          "sast-high-warning.log": "ea432df4ae9eae52b50add852465dc03255c81279b4047bbd3895cb6e962810e",
+          "native-line-inventory.json": "d5b1618ddba064734a98a1e2527573b41ea4e827292d343a844e9c61cca747a9",
+          "observer.log": "1a7a8e5cc4ada418291eaa9063bac23b754b118f3dbb6d1ab150467cfd2b4e19",
+          "runtime-stop-removed.log": "4939517f3d9f21daf5b10aaf488fdd7a3e69c437dbf19825b4932b0a419ff362",
+          "empty-policy.log": "43241c91ba31ceb9c3b8fe63b1c8a7df89a9a995a3c3b57181afde830b931b62",
+          "lower-fix-version.log": "a82e904d51b372b0d198fdf765ed366eea599a85f3142a7975f895edc45ac716",
+          "mutations.json": "2a232498b3938f478b106e881b69f59778fa2b9cff3c890c746a32c94a2d3bea",
+          "kev-warning.log": "a647ba9c23fdf71032b0aaaa02492e2341283792e39fd2c75f2695c0a67ac9db"
+        }
+      },
+      "claim_ceiling": "source-bound reviewed successor; no exact immutable gate/project95/promotion claim"
+    },
+    "testutil-contracts": {
+      "local_receipt": ".security/testutil-contracts/receipt.json",
+      "receipt_sha256": "b1ae7fd92535686efe33fb11c2bdb438a174d3a6bfd5701c432817b4715dcb45",
+      "source_binding": {
+        "head": "e61d5962b13c536597d5eef4cf11ce04ace8d0bb",
+        "source_bound_not_commit_gate": true,
+        "sources_sha256": {
+          "internal/testutil/testutil.go": "f91c196d45c17256faf9f98d06ea27f9436ce03c7d105e3694ac274ffb5ef2fc",
+          "internal/testutil/builder.go": "d98a90ddbc3c7b305d72f91bc3227eea61bf01db46fa072e534c2d0abc62d469",
+          "internal/testutil/contracts_test.go": "7c545c862cd20dde274e281792c868985dfdacce26ba8eedd7d6b7ba2f934393"
+        },
+        "toolchain": "go1.26.6 linux/arm64",
+        "race_exit": 0,
+        "fuzz_exit": 0,
+        "fuzz_seconds": 30,
+        "race_command": "ASYNQ_TESTUTIL_COVERAGE_DIR=$PWD/.security/testutil-contracts/children GOCACHE=/tmp/asynq-reconcile-go-cache GOTOOLCHAIN=local go test -race -count=1 -coverpkg=./internal/testutil -coverprofile=.security/testutil-contracts/parent.cover -covermode=atomic ./internal/testutil",
+        "fuzz_command": "GOCACHE=/tmp/asynq-reconcile-go-cache GOTOOLCHAIN=local go test -run ^$ -fuzz ^FuzzTestutilCodecContracts$ -fuzztime=30s -parallel=2 ./internal/testutil",
+        "redis_access": false,
+        "mutation_caught": 4,
+        "properties": "33 sizes deterministic comparator permutations; equality keeps full non-key fields and does not mutate caller slices; 200 structured binary/time codec cases plus arbitrary fuzz; unsupported JSON type panics; real testing.T fatal child exit1 without return",
+        "new_statement_blocks_vs_e61": [
+          {
+            "block": "github.com/austinyuch/asynq/internal/testutil/testutil.go:57.3,57.33",
+            "statements": 1
+          },
+          {
+            "block": "github.com/austinyuch/asynq/internal/testutil/testutil.go:81.150,83.38",
+            "statements": 2
+          },
+          {
+            "block": "github.com/austinyuch/asynq/internal/testutil/testutil.go:83.38,85.3",
+            "statements": 1
+          },
+          {
+            "block": "github.com/austinyuch/asynq/internal/testutil/testutil.go:86.2,86.12",
+            "statements": 1
+          },
+          {
+            "block": "github.com/austinyuch/asynq/internal/testutil/testutil.go:105.3,105.37",
+            "statements": 1
+          },
+          {
+            "block": "github.com/austinyuch/asynq/internal/testutil/testutil.go:142.16,143.13",
+            "statements": 1
+          },
+          {
+            "block": "github.com/austinyuch/asynq/internal/testutil/testutil.go:175.16,177.3",
+            "statements": 1
+          },
+          {
+            "block": "github.com/austinyuch/asynq/internal/testutil/testutil.go:186.16,188.3",
+            "statements": 1
+          }
+        ],
+        "new_statements_vs_e61": 9,
+        "coverage_producer": "parent race profile plus two coverage-instrumented self executable fatal subprocess profiles, merged only compatible block identity max count",
+        "coverage_claim_ceiling": "bounded helper contracts; no independently measured global line coverage claim; parent profile alone excludes child fatal branches",
+        "artifacts_sha256": {
+          ".security/testutil-contracts/fuzz-final.log": "6f2f92fa90483234dd32be666da0f23a8d2070ad03b2d1f7ad0b0cc59d15136d",
+          ".security/testutil-contracts/sort-mutates-input.log": "680bc6a89fa4095cdc9e086b184a1731c94ce005f3f208a08d581c77c344f86a",
+          ".security/testutil-contracts/numeric-sort-disabled.log": "bf12d28662a565fa84dd69679526fb9a4fb90efdd0394da85555d67cd582ad83",
+          ".security/testutil-contracts/retry-not-incremented.log": "d7a344426d833054f21dbc4191a300c6d5c3bae6170db2977cd936d5448f9ed6",
+          ".security/testutil-contracts/canonical-union.cover": "783a76835cb7733e5898a8a96fa937ad59dac6872c655a0439135bda04ef163a",
+          ".security/testutil-contracts/fuzz.log": "4cbb73d4174cf1d308d8622d35388e8e53518fc7999b6d65ea9c7fe896f8124b",
+          ".security/testutil-contracts/parent.cover": "efcd7e8b7b7c32b461011bbc9a32643d5f79e2b2f35dc29db49ede19d7fb8368",
+          ".security/testutil-contracts/json-error-suppressed.log": "7272abfdf14d320957f8bf2ceec531610215243dd8a696c8ebd0aa497d8b6fb5",
+          ".security/testutil-contracts/race.log": "df2c9118cae8cb0dd7bfb44058eeb4e94b69ed7f5a25268d981f3c14aa18e9c6",
+          ".security/testutil-contracts/mutation.json": "6a318bb424ee38661ff8a77bd7725817044d3e948a190565f83fd330d7234b0f",
+          ".security/testutil-contracts/functions.txt": "6457f0291b727deb66a4aedbe9530186bb4a4ab965b8bd689c5a372bdee6eb1d",
+          ".security/testutil-contracts/children/marshal.cover": "58dd47f9f9b7b2bd7bb1ab3bcc3a53ae333deb2d6eec996cb1f998232a2a7171",
+          ".security/testutil-contracts/children/unmarshal.cover": "6dfadcb784d809ea89c83b199d4d2dc4936f2f053a656ccb9c6e6de2f9b24afc",
+          ".security/testutil-contracts/children/unmarshal-covdata/covmeta.2c48ed117532d6447fe3ca7b1bed7e6c": "fafdda74a460452f8a6e9d0a77cc6e9a24ac20a769e071b9b5b9654ef6a445e1",
+          ".security/testutil-contracts/children/unmarshal-covdata/covcounters.2c48ed117532d6447fe3ca7b1bed7e6c.5957.1790819895715525684": "7bb583644bf2bc0bfe64afb56a9dcd3bf922898f82938653cad31f9fb6e1bc9d",
+          ".security/testutil-contracts/children/unmarshal-covdata/covcounters.2c48ed117532d6447fe3ca7b1bed7e6c.154.1790819990436499121": "b27a4fdf4dbda44d33f498469b50a38ba90de369d2bac3c56652fa4d54997a79",
+          ".security/testutil-contracts/children/marshal-covdata/covcounters.2c48ed117532d6447fe3ca7b1bed7e6c.148.1790819990416570146": "0a236992cd28e43b57616a6d424c60441d51dc682d2bc9271a5d47a66746ff85",
+          ".security/testutil-contracts/children/marshal-covdata/covmeta.2c48ed117532d6447fe3ca7b1bed7e6c": "fafdda74a460452f8a6e9d0a77cc6e9a24ac20a769e071b9b5b9654ef6a445e1",
+          ".security/testutil-contracts/children/marshal-covdata/covcounters.2c48ed117532d6447fe3ca7b1bed7e6c.5951.1790819895696866852": "6196c54cef0b9dc766ccb1e9152e66593afb66568768087a7b88a4613777a99e"
+        }
+      },
+      "claim_ceiling": "source-bound reviewed successor; no exact immutable gate/project95/promotion claim"
+    },
+    "rdb-inspection-contracts": {
+      "local_receipt": ".security/rdb-inspection-contracts/receipt.json",
+      "receipt_sha256": "495896da5e4ba20676924b756d0986faaf9c530e6223791c21a182daf4f1458c",
+      "source_binding": {
+        "claim": "source-bound focused contracts; not exact-commit global gate or true line coverage",
+        "head": "e61d5962b13c536597d5eef4cf11ce04ace8d0bb",
+        "tree": "4dbf056ed14656a6aaef0962a2fc1275e94643c8",
+        "working_status": "?? internal/rdb/inspection_contracts_test.go\n?? internal/testutil/contracts_test.go\n?? scripts/security/test_security_contracts.py\n",
+        "source_sha256": {
+          "internal/rdb/inspection_contracts_test.go": "a0e4b47637378e6a6cfde7af04422eb9095ad285151868639322719c8cac18ab",
+          "internal/rdb/inspect.go": "af7da13a29daf325db4019b13accbbd93989cdb8ed47eb3bc2f6f335ef1acfa2",
+          "internal/base/base.go": "e2d758ad19f74956ffaac351c4d2a137ea7d57a6312132709638f1682dbeb03c",
+          "internal/testutil/testutil.go": "f91c196d45c17256faf9f98d06ea27f9436ce03c7d105e3694ac274ffb5ef2fc",
+          "go.mod": "78a360cc2707d580c167f79204324a48ff926e48df36c3fa5400c46c964821a5",
+          "go.sum": "8ee2c733e0396eb8f982a6a8ff071d6d0924408a83f1e9ff346e9d560e0f5c33"
+        },
+        "focused": {
+          "exit": 0,
+          "race": true,
+          "command": "GOTOOLCHAIN=local GOCACHE=/tmp/asynq-reconcile-go-cache go1.26.6 test -race -count=1 -run ^TestInspection(UnrepresentableTimestampContracts|TimestampDomainProperty)$ -coverpkg=./... -coverprofile=.security/rdb-inspection-contracts/focused.cover ./internal/rdb -redis_addr=127.0.0.1:16382 -redis_db=11",
+          "elapsed_seconds": 1.168
+        },
+        "property": {
+          "seed": 20261003,
+          "cases": 80,
+          "states": [
+            "scheduled",
+            "retry"
+          ],
+          "domain": "signed scientific magnitudes 1e40 through 1e100; fractional scores deliberately excluded"
+        },
+        "mutation": [
+          {
+            "name": "task_accept",
+            "exit": 1,
+            "caught": true,
+            "source_path": "/tmp/asynq-inspection-task_accept.go",
+            "source_sha256": "115f743f51b41285da18073dad71d5339ce43cb519b72f3c7644dfa52f46d524",
+            "log_sha256": "af562b03ff20b20a734539361a1acd3f88ff00940b09c41034509a2d72e40293",
+            "command": "GOTOOLCHAIN=local GOCACHE=/tmp/asynq-reconcile-go-cache go1.26.6 test -overlay=/tmp/asynq-inspection-task_accept.json -count=1 -run ^TestInspectionUnrepresentableTimestampContracts$ ./internal/rdb -redis_addr=127.0.0.1:16382 -redis_db=11"
+          },
+          {
+            "name": "list_accept",
+            "exit": 1,
+            "caught": true,
+            "source_path": "/tmp/asynq-inspection-list_accept.go",
+            "source_sha256": "f1430bd8db721616506ead3b4fb44050c7ce3afc671ecd3e30333ac31a66f8a4",
+            "log_sha256": "15d702ddeed553b288c9a8f99300d13a6974014c74777d93f483970316d89954",
+            "command": "GOTOOLCHAIN=local GOCACHE=/tmp/asynq-reconcile-go-cache go1.26.6 test -overlay=/tmp/asynq-inspection-list_accept.json -count=1 -run ^TestInspectionUnrepresentableTimestampContracts$ ./internal/rdb -redis_addr=127.0.0.1:16382 -redis_db=11"
+          },
+          {
+            "name": "task_classification",
+            "exit": 1,
+            "caught": true,
+            "source_path": "/tmp/asynq-inspection-task_classification.go",
+            "source_sha256": "fa1373dcb4be403e6dceec5a0ee77677a1c3936d9ca49b7cf69797d723a52a1a",
+            "log_sha256": "7ba47cc65d510486f561b5a51a2a942a9b06748a12d068b141d9e1713c14b025",
+            "command": "GOTOOLCHAIN=local GOCACHE=/tmp/asynq-reconcile-go-cache go1.26.6 test -overlay=/tmp/asynq-inspection-task_classification.json -count=1 -run ^TestInspectionUnrepresentableTimestampContracts$ ./internal/rdb -redis_addr=127.0.0.1:16382 -redis_db=11"
+          }
+        ],
+        "db11_baseline_preserved": true,
+        "additional_blocks_vs_e61": [
+          {
+            "block": "github.com/austinyuch/asynq/internal/rdb/inspect.go:534.16,536.3",
+            "statements": 1
+          },
+          {
+            "block": "github.com/austinyuch/asynq/internal/rdb/inspect.go:866.17,868.4",
+            "statements": 1
+          }
+        ],
+        "additional_statements_vs_e61": 2,
+        "evidence_sha256": {
+          ".security/rdb-inspection-contracts/db11-before-backup.json": "ef57e4a41d1d792e5f1c76cb346a1898c7ec386a74e6486ac594684839b33204",
+          ".security/rdb-inspection-contracts/focused.cover": "0ed3214b1dbadf6458e3df3aa9335f7051374e9f7fc9576918c2224ba126e518",
+          ".security/rdb-inspection-contracts/focused.log": "00899ee07de780aff077d9ae7f192926135802ae2a65fe283ff85cc274d5f1d2",
+          ".security/rdb-inspection-contracts/mutation-task_classification.log": "7ba47cc65d510486f561b5a51a2a942a9b06748a12d068b141d9e1713c14b025",
+          ".security/rdb-inspection-contracts/mutation-task_accept.log": "af562b03ff20b20a734539361a1acd3f88ff00940b09c41034509a2d72e40293",
+          ".security/rdb-inspection-contracts/db11-after-inventory.json": "f3b413bfa6fc186da26a0ca281ad1d3b9f277dc61737507ee0fcd1e9e0097886",
+          ".security/rdb-inspection-contracts/mutation-list_accept.log": "15d702ddeed553b288c9a8f99300d13a6974014c74777d93f483970316d89954"
+        },
+        "ceiling": "local standalone timestamp corruption; no cluster, fuzz, project >=95 or production claim"
+      },
+      "claim_ceiling": "source-bound reviewed successor; no exact immutable gate/project95/promotion claim"
+    },
+    "processor-failure": {
+      "local_receipt": ".security/processor-failure-contracts/receipt.json",
+      "receipt_sha256": "805114df0c0dbdaeb2c4c666a04dfa4bc691634bc07f52cef422f814433b0076",
+      "claim_ceiling": "source-bound successor; original receipt scope, no immutable/global95/promotion claim"
+    },
+    "python-normalize": {
+      "local_receipt": ".security/security-python-normalize/receipt.json",
+      "receipt_sha256": "81d62be3e6524103bf74812343b1142da25093f2d0b493589ef7f10e215a8156",
+      "claim_ceiling": "source-bound successor; original receipt scope, no immutable/global95/promotion claim"
+    },
+    "python-ingress": {
+      "local_receipt": ".security/security-python-ingress/receipt.json",
+      "receipt_sha256": "661cc1f75eb297d0b3d5f6a2e164bc10709ba22b62807c4b25eea7bb890ebd93",
+      "claim_ceiling": "source-bound successor; original receipt scope, no immutable/global95/promotion claim"
+    },
+    "js-config-native": {
+      "local_receipt": ".security/js-config-native/receipt.json",
+      "receipt_sha256": "d7ada7d56d4af2c0589647f6d86685ab141b181de6e44f4d0aa7870f81607422",
+      "claim_ceiling": "source-bound successor; original receipt scope, no immutable/global95/promotion claim"
+    }
+  }
+}

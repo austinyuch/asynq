@@ -1,0 +1,15 @@
+{
+  "scope": "peer-reviewed group-navigation source; exact delivery receipt separately binds frozen commit",
+  "sha256": {
+    "tools/asynq/cmd/dash/dash.go": "d5c6dbfab86fa6a9ccab9e07be14e8ec0c24093c79988e3c1d4980300639c57a",
+    "tools/asynq/cmd/dash/draw.go": "bd2b869a4a4a50867db9abe3c7e0c76a32bc89c13c107e87f1ad3c9d188b6b2f",
+    "tools/asynq/cmd/dash/key_event.go": "8186e412eaf856f07fc502d352b3b12393519a066bccd0ebb97d315ca9278376",
+    "tools/asynq/cmd/dash/group_navigation_contract_test.go": "29db318be88759200ad6747c1f81558ae42b2e659a553832ddf21a9ba05effdc",
+    "go.mod": "78a360cc2707d580c167f79204324a48ff926e48df36c3fa5400c46c964821a5",
+    "go.sum": "8ee2c733e0396eb8f982a6a8ff071d6d0924408a83f1e9ff346e9d560e0f5c33",
+    "x/go.mod": "338685af553bbd74dc52e8ebbd91a58dc11adc12e4807f577b00dc537ac3c0cb",
+    "x/go.sum": "6c694ec9f80ba23b0d342aa820f980735993bcbee538a7f2cea21c090ed5bae9",
+    "tools/go.mod": "72c34922f68a38ede079cc40a21740f803b8c93cd652d0902fb4154d5837dfa3",
+    "tools/go.sum": "3390e2b985f391f9f7f5c3d9905003ed861797b33a5212e408180ff13084335f"
+  }
+}

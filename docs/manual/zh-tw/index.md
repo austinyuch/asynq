@@ -245,7 +245,7 @@ asynq_queue_memory_usage_approx_bytes{queue="critical"} 488
 **Gaps resolved since last check**(本次:2026-06-07 再生 #3 / gap closeout):
 
 - ✅ **dash TUI 圖形層**:以 `tmux capture-pane -e` 取得真實 ANSI 色彩序列並渲染為 PNG ×2 — IL-003 的 dash 部分完全解決
-- ✅ **`docs/assets/` 逐檔 disposition**:9 檔零引用(legacy,保留利於 sync)、`dash.gif` 為 README upstream 動畫示意(fork 權威視覺在本手冊)— IL-003 結案
+- ✅ **`docs/assets/` 逐檔 disposition**:9 檔零引用(legacy,保留利於 sync)、`dash.gif` 已於 fork 環境重攝(6 frames 真實導覽)— IL-003 結案
 - ✅ `internal/proto/asynq.pb.go` 殘留舊 go_package 字串(IL-001)→ `make proto` 重生,descriptor 已為 austinyuch path
 
 **較早(2026-06-07 再生 #2)**:
@@ -253,7 +253,7 @@ asynq_queue_memory_usage_approx_bytes{queue="critical"} 488
 - ✅ **`assets/*.txt` evidence 檔案此前從未 commit**(手冊內連結為死連結)— 本次補齊 7 個 git-tracked assets,手冊連結全部可下載
 - ✅ **`asynq dash` TUI 首次取得 fork 環境真實擷取**(tmux capture-pane ×2:Queues 主畫面 + Queue Summary)— IL-003 的 dash 部分由「完全無擷取」縮小為「僅圖形層未擷取」
 - ✅ 全部數據以 2026-06-07 governed allocation 重新產生,四個 surface(seed/CLI/dash/exporter)數據互相一致
-- ⏳ 仍 open:IL-003 殘餘(`docs/assets/` upstream 素材未重攝;dash 圖形層)
+- 歷史狀態(再生 #2):當時 IL-003 尚未解;再生 #3 已完成 dash 圖形層、fork 動畫重攝與 legacy disposition(見上方結案紀錄)
 
 ---
 

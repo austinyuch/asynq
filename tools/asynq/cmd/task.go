@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/MakeNowJust/heredoc/v2"
-	"github.com/fatih/color"
 	"github.com/austinyuch/asynq"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -255,6 +255,7 @@ func taskList(cmd *cobra.Command, args []string) error {
 
 func listActiveTasks(qname string, pageNum, pageSize int) error {
 	i := createInspector()
+	defer i.Close()
 	tasks, err := i.ListActiveTasks(qname, asynq.PageSize(pageSize), asynq.Page(pageNum))
 	if err != nil {
 		return err
@@ -276,6 +277,7 @@ func listActiveTasks(qname string, pageNum, pageSize int) error {
 
 func listPendingTasks(qname string, pageNum, pageSize int) error {
 	i := createInspector()
+	defer i.Close()
 	tasks, err := i.ListPendingTasks(qname, asynq.PageSize(pageSize), asynq.Page(pageNum))
 	if err != nil {
 		return err
@@ -297,6 +299,7 @@ func listPendingTasks(qname string, pageNum, pageSize int) error {
 
 func listScheduledTasks(qname string, pageNum, pageSize int) error {
 	i := createInspector()
+	defer i.Close()
 	tasks, err := i.ListScheduledTasks(qname, asynq.PageSize(pageSize), asynq.Page(pageNum))
 	if err != nil {
 		return err
@@ -329,6 +332,7 @@ func formatProcessAt(processAt time.Time) string {
 
 func listRetryTasks(qname string, pageNum, pageSize int) error {
 	i := createInspector()
+	defer i.Close()
 	tasks, err := i.ListRetryTasks(qname, asynq.PageSize(pageSize), asynq.Page(pageNum))
 	if err != nil {
 		return err
@@ -351,6 +355,7 @@ func listRetryTasks(qname string, pageNum, pageSize int) error {
 
 func listArchivedTasks(qname string, pageNum, pageSize int) error {
 	i := createInspector()
+	defer i.Close()
 	tasks, err := i.ListArchivedTasks(qname, asynq.PageSize(pageSize), asynq.Page(pageNum))
 	if err != nil {
 		return err
@@ -371,6 +376,7 @@ func listArchivedTasks(qname string, pageNum, pageSize int) error {
 
 func listCompletedTasks(qname string, pageNum, pageSize int) error {
 	i := createInspector()
+	defer i.Close()
 	tasks, err := i.ListCompletedTasks(qname, asynq.PageSize(pageSize), asynq.Page(pageNum))
 	if err != nil {
 		return err
@@ -391,6 +397,7 @@ func listCompletedTasks(qname string, pageNum, pageSize int) error {
 
 func listAggregatingTasks(qname, group string, pageNum, pageSize int) error {
 	i := createInspector()
+	defer i.Close()
 	tasks, err := i.ListAggregatingTasks(qname, group, asynq.PageSize(pageSize), asynq.Page(pageNum))
 	if err != nil {
 		return err
@@ -412,6 +419,7 @@ func listAggregatingTasks(qname, group string, pageNum, pageSize int) error {
 
 func taskCancel(cmd *cobra.Command, args []string) error {
 	i := createInspector()
+	defer i.Close()
 	var firstErr error
 	for _, id := range args {
 		if err := i.CancelProcessing(id); err != nil {
@@ -437,9 +445,10 @@ func taskInspect(cmd *cobra.Command, args []string) error {
 	}
 
 	i := createInspector()
+	defer i.Close()
 	info, err := i.GetTaskInfo(qname, id)
 	if err != nil {
-		return fmt.Errorf("could not get task info: %v", err)
+		return fmt.Errorf("could not get task info: %w", err)
 	}
 	printTaskInfo(info)
 	return nil
@@ -492,9 +501,10 @@ func taskArchive(cmd *cobra.Command, args []string) error {
 	}
 
 	i := createInspector()
+	defer i.Close()
 	err = i.ArchiveTask(qname, id)
 	if err != nil {
-		return fmt.Errorf("could not archive task: %v", err)
+		return fmt.Errorf("could not archive task: %w", err)
 	}
 	fmt.Println("task archived")
 	return nil
@@ -511,9 +521,10 @@ func taskDelete(cmd *cobra.Command, args []string) error {
 	}
 
 	i := createInspector()
+	defer i.Close()
 	err = i.DeleteTask(qname, id)
 	if err != nil {
-		return fmt.Errorf("could not delete task: %v", err)
+		return fmt.Errorf("could not delete task: %w", err)
 	}
 	fmt.Println("task deleted")
 	return nil
@@ -530,9 +541,10 @@ func taskRun(cmd *cobra.Command, args []string) error {
 	}
 
 	i := createInspector()
+	defer i.Close()
 	err = i.RunTask(qname, id)
 	if err != nil {
-		return fmt.Errorf("could not run task: %v", err)
+		return fmt.Errorf("could not run task: %w", err)
 	}
 	fmt.Println("task is now pending")
 	return nil
@@ -634,11 +646,12 @@ func taskEnqueue(cmd *cobra.Command, args []string) error {
 	}
 
 	c := createClient()
+	defer c.Close()
 	task := asynq.NewTask(typeName, []byte(payload), opts...)
 
 	taskInfo, err := c.Enqueue(task)
 	if err != nil {
-		return fmt.Errorf("could not enqueue task: %v", err)
+		return fmt.Errorf("could not enqueue task: %w", err)
 	}
 
 	fmt.Printf("Enqueued task %s to queue %s\n", taskInfo.ID, taskInfo.Queue)
@@ -656,6 +669,7 @@ func taskArchiveAll(cmd *cobra.Command, args []string) error {
 	}
 
 	i := createInspector()
+	defer i.Close()
 	var n int
 	switch state {
 	case "pending":
@@ -699,6 +713,7 @@ func taskDeleteAll(cmd *cobra.Command, args []string) error {
 	}
 
 	i := createInspector()
+	defer i.Close()
 	var n int
 	switch state {
 	case "pending":
@@ -746,6 +761,7 @@ func taskRunAll(cmd *cobra.Command, args []string) error {
 	}
 
 	i := createInspector()
+	defer i.Close()
 	var n int
 	switch state {
 	case "scheduled":

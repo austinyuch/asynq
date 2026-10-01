@@ -1,0 +1,18 @@
+{
+  "scope": "source-bound successor; exact freeze gate separate",
+  "sources_sha256": {
+    "tools/asynq/cmd/dash/dash.go": "6bbf7ceacd2551fa0a4c227d586c0229e865fa6385cc716f00ae545c03aadbd1",
+    "tools/asynq/cmd/dash/fetch.go": "be8b393350849b0c66604a3d7f76db38e6dfcd2c22e7cfe6f05437d77771a1db",
+    "tools/asynq/cmd/dash/key_event.go": "e6b7e40dc7d339e5837dad19da3c5b4b49c775df1c17ba5e7ae91fc45bf0c62d",
+    "tools/asynq/cmd/dash/fetch_lifecycle_test.go": "47ffdafa4320eb673ded7c6f51ad1430e64fcfbb103deb72e3bcbcf72103a3e0",
+    "tools/asynq/cmd/dash/lifecycle_contract_test.go": "718edda91dcdc4237ab41deb91d29371cef81bc5aaf674cebf0f5850b6dc2bdd"
+  },
+  "receipts_sha256": {
+    ".security/dashboard-lifecycle/receipt.json": "e04981cb4d5c7c14398caca3df48fa3eb0f4ed0bedf9fab991c7f554792a6645",
+    ".security/dashboard-fetch-lifecycle/receipt.json": "f87208d034ec14648f2df3a67521d0649ff3d5eab03388800beede02574e0feb",
+    ".security/dashboard-original-quit/receipt.json": "26a07becf5a7dac0438ba260b72d6388a574257197ef9e19fbf87acd8398e49f"
+  },
+  "review": "same-family non-author; all cleanup P2 closed; no cross-family approval",
+  "native_scope": "dash package statement708/782 only; not true project lines",
+  "mutation_disposition": "three fetch assertion-caught; four loop assertions including spin that terminates with isolated process; original quit external completion detector"
+}

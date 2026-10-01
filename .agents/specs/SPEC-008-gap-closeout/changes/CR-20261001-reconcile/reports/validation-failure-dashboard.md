@@ -1,0 +1,11 @@
+# Validation, failure isolation and dashboard fetch slices
+
+Inspector.ArchiveTask now preserves the invalid-queue validator diagnostic instead of returning literal `asynq: err`. A nil persistence tripwire verifies rejection before storage across24 APIs,55 whitespace inputs, plus300 pagination properties. Original source replay fails the strong diagnostic assertion; three semantic mutants are caught.
+
+Lifecycle contracts preserve healthy periodic schedules on provider/cron failures, verify canceled running-handler retry arguments and released resources, and capture real batch deadline/timeout wire values. Three semantic mutants are assertion-caught. An exploratory pre-handler guard bypass escaped a bounded callback-count observation; the miss is retained and no permanent never-callback claim is made.
+
+Aggregator tests exercise64 seeded finite fault arrangements using a real Client and boundary broker: later healthy groups/queues survive failures, enqueue failure cannot delete input, deletion failure retains input after acceptance, headers remain independent, semaphore saturation skips broker operations. Call-time context validity and deadline are checked separately from eventual cancellation; five assertion-caught mutants include early cancellation before I/O, following a peer finding and correction. These finite fault spaces do not manufacture a fuzz claim.
+
+Dashboard contracts cover all fetch states, group/modal dispatch, pagination IDs/cardinality/payload and error channels,48 seeded trials and four assertion-caught mutants. Dedicated empty DB12 returns to empty with owned-key cleanup; full tools tests require both CLI/dashboard opt-in Redis address variables and `-p=1` to avoid cross-package fixture interference. This does not prove a real terminal event loop or browser rendering. Tools retains published root/x dependency context.
+
+Receipts: `.security/inspector-validation/receipt.json`, `.security/lifecycle-failure-paths/receipt.json`, `.security/aggregator-failure-paths/receipt.json`, `.security/dashboard-fetch/receipt.json`. Source-bound focused race/PBT/mutation evidence is distinct from the subsequent clean exact-commit gates. Existing functional/spec readiness and cross-family authorization holds remain.

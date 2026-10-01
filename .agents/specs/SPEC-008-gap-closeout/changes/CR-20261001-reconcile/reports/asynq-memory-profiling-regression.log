@@ -1,0 +1,18 @@
+=== RUN   TestCurrentStatsMemoryProfilingEnvironment
+=== RUN   TestCurrentStatsMemoryProfilingEnvironment/unset
+=== RUN   TestCurrentStatsMemoryProfilingEnvironment/empty
+=== RUN   TestCurrentStatsMemoryProfilingEnvironment/false
+=== RUN   TestCurrentStatsMemoryProfilingEnvironment/true
+=== RUN   TestCurrentStatsMemoryProfilingEnvironment/zero
+=== RUN   TestCurrentStatsMemoryProfilingEnvironment/capital_false
+=== RUN   TestCurrentStatsMemoryProfilingEnvironment/other
+--- PASS: TestCurrentStatsMemoryProfilingEnvironment (0.01s)
+    --- PASS: TestCurrentStatsMemoryProfilingEnvironment/unset (0.00s)
+    --- PASS: TestCurrentStatsMemoryProfilingEnvironment/empty (0.00s)
+    --- PASS: TestCurrentStatsMemoryProfilingEnvironment/false (0.00s)
+    --- PASS: TestCurrentStatsMemoryProfilingEnvironment/true (0.00s)
+    --- PASS: TestCurrentStatsMemoryProfilingEnvironment/zero (0.00s)
+    --- PASS: TestCurrentStatsMemoryProfilingEnvironment/capital_false (0.00s)
+    --- PASS: TestCurrentStatsMemoryProfilingEnvironment/other (0.00s)
+PASS
+ok  	github.com/austinyuch/asynq/internal/rdb	1.025s

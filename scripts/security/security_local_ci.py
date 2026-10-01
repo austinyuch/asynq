@@ -21,11 +21,12 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shlex
 import sys
 from pathlib import Path
 from typing import Any, Iterator
 
-CVE_RE = re.compile(r"\bCVE-\d{4}-\d{4,19}\b", re.IGNORECASE)
+CVE_RE = re.compile(r"\bCVE-[0-9]{4}-[0-9]{4,19}\b", re.IGNORECASE)
 TRIVY_FIX_RE = re.compile(
     r"[Uu]pgrade\s+(?P<module>\S+)\s+to\s+version\s+v?(?P<version>[0-9][^\s,;]*)"
 )
@@ -48,6 +49,8 @@ def read_json(path: Path) -> Any:
         return json.loads(path.read_text(encoding="utf-8"))
     except OSError as exc:
         die(f"cannot read {path}: {exc}")
+    except UnicodeError as exc:
+        die(f"{path} is not valid UTF-8: {exc}")
     except json.JSONDecodeError as exc:
         die(f"{path} is not valid JSON: {exc}")
 
@@ -58,6 +61,8 @@ def iter_json_stream(path: Path) -> Iterator[dict[str, Any]]:
         text = path.read_text(encoding="utf-8")
     except OSError as exc:
         die(f"cannot read {path}: {exc}")
+    except UnicodeError as exc:
+        die(f"{path} is not valid UTF-8: {exc}")
     decoder = json.JSONDecoder()
     index = 0
     length = len(text)
@@ -691,16 +696,35 @@ def write_fix_plan(path: Path, fixes: dict[str, dict[str, str]]) -> None:
         'repo_root="$(git rev-parse --show-toplevel)"',
         "",
     ]
-    if not fixes:
+    runtime_fixes = [
+        (module_dir, module, version)
+        for module_dir, entries in sorted(fixes.items())
+        for module, version in sorted(entries.items())
+        if module in {"stdlib", "toolchain"}
+    ]
+    if runtime_fixes:
+        for module_dir, module, version in runtime_fixes:
+            guidance = (
+                f"({module_dir}) {module}: select a patched Go runtime "
+                f"at {version} or a later supported patched release; "
+                "rerun scripts/security/run.sh before applying dependency fixes."
+            )
+            lines.append(f"printf '%s\\n' {shlex.quote(guidance)} >&2")
+        # A runtime advisory is not a module requirement. Do not let this plan
+        # mutate dependencies and exit successfully while it remains unresolved.
+        lines.extend(["exit 2", ""])
+    if not any(fixes.values()):
         lines += ['echo "security fix plan: nothing to bump"', ""]
     for module_dir in sorted(fixes):
         entries = fixes[module_dir]
-        if not entries:
+        dependencies = {module: version for module, version in entries.items()
+                        if module not in {"stdlib", "toolchain"}}
+        if not dependencies:
             continue
-        lines.append(f'echo "==> {module_dir}"')
-        lines.append(f'cd "$repo_root/{module_dir}"')
-        for module in sorted(entries):
-            lines.append(f"go get {module}@{entries[module]}")
+        lines.append(f"printf '%s\\n' {shlex.quote('==> ' + module_dir)}")
+        lines.append(f'cd -- "$repo_root"/{shlex.quote(module_dir)}')
+        for module in sorted(dependencies):
+            lines.append(f"go get {shlex.quote(module + '@' + dependencies[module])}")
         lines.append("go mod tidy")
         lines.append("")
     path.write_text("\n".join(lines), encoding="utf-8")
@@ -748,7 +772,13 @@ def render_summary(payload: dict[str, Any]) -> str:
         out.append("  FIX PLAN (apply with: make security-fix)")
         for module_dir, entries in payload["fix_plan"].items():
             for module, version in entries.items():
-                out.append(f"    ({module_dir}) go get {module}@{version}")
+                if module in {"stdlib", "toolchain"}:
+                    out.append(
+                        f"    ({module_dir}) select patched Go runtime {version} "
+                        "or later supported patched release; rerun security gate"
+                    )
+                else:
+                    out.append(f"    ({module_dir}) go get {shlex.quote(module + '@' + version)}")
         out.append("")
 
     out.append(f"  verdict: {payload['verdict'].upper()}")
