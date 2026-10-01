@@ -13,3 +13,5 @@
 - [x] IL-004 canonical cluster fixtures and all-master ArchiveTrim oracle; full standalone/cluster race suites PASS (successor final gate pending).
 - [ ] Release decision after functional promotion, sequential root/x/tools tags only; never push imported upstream bare tags.
 - [ ] Reclaim regenerable task-owned cache after persisting evidence; stop task runtime and release registry claim.
+
+- [x] Reviewed successor queue-state/lock namespace fixes, Unicode/grapheme/modal/group-page fixes, Inspector/lifecycle/CLI/proto contracts; source-bound gates pass, immutable successor gates pending.

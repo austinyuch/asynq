@@ -37,3 +37,8 @@ Reports bind runtime, source digests and commands. Root first PASS ran across co
 See [TESTS.md](TESTS.md) and [test-slice-status.md](reports/test-slice-status.md). Internal errors/log/timeutil and metrics targets reach 100% statements with bounded properties/fuzz/mutation evidence. Root public contracts add 69 covered methods. IL-004 is candidate-resolved by six canonical fixtures and an all-master ArchiveTrim oracle: full standalone and cluster race suites pass. Remaining whole-project coverage and immutable successor gates stay open. The above inventory and percentages describe the earlier baseline, not the successor's final coverage.
 
 The public scheduler option parser delimiter defect is being repaired in a separate production/regression slice. No release or final promotion verdict is implied by these interim results.
+
+
+## Published baseline and active successor
+
+Draft fork PR #21 targets dev; b7f572d has exact-commit three-module build/vet/security and split race gates with remote parity. Origin dev/main remain57b9e964. Security baseline contains three CycloneDX SBOMs, refreshed CISA snapshot and Go/SAST evidence; blocking findings0, supplied KEV matches0, one existing G118 warning. New queue-removal and dashboard defects found by runtime contracts are corrected in reviewed successor files; see the dated test report. These changes require a new immutable scanner/build/race freeze. No release, protected promotion or95% project-line claim is made.
