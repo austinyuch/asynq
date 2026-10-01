@@ -13,8 +13,8 @@
 
 - CR-20261001-reconcile: [bounded slices and evidence](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reconciliation.md), [tasks](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/tasks.md).
 - Cross-family Grok/ACP review needs explicit destination approval after automatic review refused unpublished candidate dispatch. Main promotion remains pending.
-- Published bc1990b has exact fresh root/x/tools/build/vet/security/three-master cluster gates and origin/PR21 parity. It repairs canceled-context sync fallback, invalid UTF-8 evidence handling and ASCII CVE IDs. Security refresh report03be718 is pushed; WIP-bound scan PASS with0 blockers/0 supplied KEV matches, existing G118 warning retained. New Inspector validation, lifecycle/Aggregator failure and dashboard-fetch slices are being frozen; successor exact gates remain pending. No dependency versions changed.
-- Next coverage ROI: finish reviewed Inspector/lifecycle/Aggregator and dashboard-fetch slices, then dashboard lifecycle and source-bound shell/Lua measurement. New-source Python full25-test trace now622/635 positive native lines97.95%; no old production counters carried. Normalize/ingress semantic mutants and line0 history are separately retained. Demo empty-only admission/runtime now has exact e61 gate evidence. See CR reports/line-measurement-gap.md.
+- Published bc1990b has exact fresh root/x/tools/build/vet/security/three-master cluster gates and origin/PR21 parity. It repairs canceled-context sync fallback, invalid UTF-8 evidence handling and ASCII CVE IDs. Security refresh report03be718 is pushed; WIP-bound scan PASS with0 blockers/0 supplied KEV matches, existing G118 warning retained. Inspector validation, lifecycle/Aggregator failure and dashboard-fetch slices are published at e6002cc; exact gates and PR21 parity PASS. New dashboard normal-return/owned-shutdown successor is under source-bound validation. No dependency versions changed.
+- Next coverage ROI: dashboard lifecycle/production wiring and remaining CLI contracts, then source-bound shell/Lua measurement. New-source Python full25-test trace now622/635 positive native lines97.95%; no old production counters carried. Normalize/ingress semantic mutants and line0 history are separately retained. Demo empty-only admission/runtime now has exact e61 gate evidence. See CR reports/line-measurement-gap.md.
 - Global >=95% line coverage not achieved: root/rdb/tools require further vertical test slices; x/metrics targeted contracts now pass with 100% package statements. Base 100% and x/rate 96.2% are statement coverage, not global line evidence.
 - IL-004 candidate fixture/oracle repair has full standalone and three-master cluster race PASS; freeze successor evidence and promote after remaining gates. See CR test catalog and report.
 
@@ -23,3 +23,5 @@
 - 不擴大 CI(trigger/matrix/jobs)— 使用者成本指示;權威 gate 在 local Valkey 全套
 - 不自動清理 `temp/skill-evals/`(gitignored,佔空間時手動刪)
 - Asynqmon(web UI)不在本 repo 範圍;manual 中以外部工具引用
+
+Latest exact e6002cc ledger: `.security/final-e6002cc/gate-ledger.json` (local artifact). Root statement union95.07%, tools81.19%; true project line95 still unproven. Native block panic/short-circuit witnesses prohibit relabeling this as per-line execution. Task-owned cache cleanup reclaimed1.36GiB; runtime claims remain active.

@@ -6,6 +6,7 @@
 
 | ID | 記錄日 | 描述 | 影響 | 建議歸屬 |
 |---|---|---|---|---|
+| IL-013 | 2026-10-01 | dashboard quit used os.Exit and unbuffered fetch publication had no shutdown path | bypassed ticker/Inspector cleanup; exiting consumer could leave workers blocked | folded CR-20261001-reconcile; normal-return/owned shutdown candidate, source-bound tests and immutable gates pending |
 | IL-012 | 2026-10-01 | Inspector.ArchiveTask discarded invalid-queue diagnostics with literal asynq: err | reject-before-storage contract now returns validator error; original-source overlay reproduces failure | folded CR-20261001-reconcile; candidate fix and source-bound tests, immutable gate/promotion pending |
 | IL-009 | 2026-10-01 | processor delayed sync reused a canceled context after Redis recovered | four dispositions could remain active; each attempt now uses a fresh context bounded by original lease deadline; real pre-fix FAIL/recovery/deadline oracles retained | folded CR-20261001-reconcile; candidate-resolved/reviewed; exact bc1990b gates PASS; promotion pending; reports/failure-recovery-security-ingress.md |
 | IL-010 | 2026-10-01 | Unicode digit CVE identifiers were accepted | correlation could emit noncanonical IDs; ASCII ID pattern plus regression properties/mutant | folded CR-20261001-reconcile; candidate-resolved/reviewed; exact bc1990b gates PASS; promotion pending |

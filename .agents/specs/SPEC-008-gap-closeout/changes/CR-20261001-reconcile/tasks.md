@@ -32,5 +32,7 @@
 - [x] Python production positive native lines622/635=97.95%; no old-source carry. JS native inline-config ranges captured with explicit stub/render limitations.
 - [x] Freeze recovery/ingress successor bc1990b; exact build/vet/root/x/tools/cluster/security and Python native gates PASS, topic/PR21 remote parity verified.
 - [x] Refresh three-module WIP-bound SBOM/CVE/KEV evidence; report03be718 pushed,0 blockers/0 supplied KEV matches, existing G118 retained.
-- [ ] Freeze reviewed Inspector validation fix and lifecycle/Aggregator/dashboard-fetch slices; exact fresh gates pending.
+- [x] Freeze e6002cc Inspector validation/lifecycle/Aggregator/dashboard-fetch slices; exact all-module build/vet/race/cluster/security/native-Python gates PASS, topic/PR21 parity verified. Root compatible native statements3455/3634=95.07%; tools1377/1696=81.19%; not project line95.
+- [x] At e6002cc idle gate completion, clean only regenerable task Go cache;1,459,806,634 bytes reclaimed. Evidence/runtime retained; cache will rebuild with later tests.
+- [ ] Repair dashboard normal quit, event-channel closure and worker/Inspector/screen ownership; reviewed source-bound simulation/transport/publication tests then exact gate/push.
 - [x] Reproduce native Go block-vs-line ambiguity using panic and short-circuit witnesses; preserve missing cross-language measurement and pending metric clarification.
