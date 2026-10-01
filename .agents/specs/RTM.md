@@ -28,3 +28,5 @@
 | R-17 | 修復實際 dashboard group 選取與 viewport 失效 | SPEC-008 / CR-20261001-reconcile | shared page/row range and immediate resize redraw | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/group-navigation.md); source-bound PBT/fuzz/mutation, frozen delivery subject in ledger; promotion pending |
 
 | R-REC-18 | CLI nonempty task output / pagination wiring / ProcessIn bounds | CR-20261001-reconcile | reports/task-visibility.md; CR TESTS T-REC-TASK-VISIBILITY | focused source-bound race/property/4 mutants PASS; exact delivery ledger pending |
+
+| R-REC-19 | Loading Enter must not select an old queue row | SPEC-008 / CR-20261001-reconcile | queue-entry row reset | reports/queue-selection.md; T-REC-QUEUE-SELECTION; original panic + source-bound property/mutation PASS; delivery ledger pending |

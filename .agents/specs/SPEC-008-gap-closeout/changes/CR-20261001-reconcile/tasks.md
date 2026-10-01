@@ -53,3 +53,6 @@
 
 - [x] Metadata expiry-boundary/payload-preservation/history partial-failure contracts: native race and three assertion mutants PASS; no production defect or coverage increment. Exact delivery .security/final-metadata/.
 - [x] Real internal/timeutil all-instruction-PC pilot; full physical-line inventory retained, compiler-attributed mapping not adopted as project executable denominator.
+
+- [x] Reproduce cross-queue loading Enter panic and reset task row on new queue entry; source-bound race/32x8 properties/three assertion mutants PASS; exact delivery .security/final-queue-selection/.
+- [ ] Reproduce and repair IL-021 asynchronous stale-result identity and IL-022 task resize/page snapshot mismatch; source traced, not runtime closed.

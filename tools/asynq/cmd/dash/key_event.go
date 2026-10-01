@@ -183,6 +183,7 @@ func (h *keyEventHandler) enterKeyQueues() {
 		state.view = viewTypeQueueDetails
 		state.taskState = asynq.TaskStateActive
 		state.tasks = nil
+		state.taskTableRowIdx = 0
 		state.pageNum = 1
 		f.Fetch(state)
 		h.resetTicker()
