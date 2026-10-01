@@ -1,6 +1,6 @@
 {
   "schema": "asynq-candidate-test-slices/v1",
-  "status": "historical source-bound slices plus reviewed Python/testutil/inspection successor; e61 published gates separate; new exact gate pending",
+  "status": "published323 exact gates separate; reviewed recovery/ingress successor source bindings; new immutable gates pending",
   "slices": {
     "internal": {
       "local_receipt": ".security/slice2/receipt.json",
@@ -472,6 +472,26 @@
         "ceiling": "local standalone timestamp corruption; no cluster, fuzz, project >=95 or production claim"
       },
       "claim_ceiling": "source-bound reviewed successor; no exact immutable gate/project95/promotion claim"
+    },
+    "processor-failure": {
+      "local_receipt": ".security/processor-failure-contracts/receipt.json",
+      "receipt_sha256": "805114df0c0dbdaeb2c4c666a04dfa4bc691634bc07f52cef422f814433b0076",
+      "claim_ceiling": "source-bound successor; original receipt scope, no immutable/global95/promotion claim"
+    },
+    "python-normalize": {
+      "local_receipt": ".security/security-python-normalize/receipt.json",
+      "receipt_sha256": "81d62be3e6524103bf74812343b1142da25093f2d0b493589ef7f10e215a8156",
+      "claim_ceiling": "source-bound successor; original receipt scope, no immutable/global95/promotion claim"
+    },
+    "python-ingress": {
+      "local_receipt": ".security/security-python-ingress/receipt.json",
+      "receipt_sha256": "661cc1f75eb297d0b3d5f6a2e164bc10709ba22b62807c4b25eea7bb890ebd93",
+      "claim_ceiling": "source-bound successor; original receipt scope, no immutable/global95/promotion claim"
+    },
+    "js-config-native": {
+      "local_receipt": ".security/js-config-native/receipt.json",
+      "receipt_sha256": "d7ada7d56d4af2c0589647f6d86685ab141b181de6e44f4d0aa7870f81607422",
+      "claim_ceiling": "source-bound successor; original receipt scope, no immutable/global95/promotion claim"
     }
   }
 }

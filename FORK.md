@@ -35,6 +35,7 @@ git config core.hooksPath githooks   # 啟用 pre-push govulncheck
 | Dependencies | go-redis v9.22.0、protobuf v1.36.12、x/sys v0.47.0、x/time v0.15.0;tools: prometheus/client_golang v1.24.1、cobra v1.10.2、viper v1.21.0、tcell v2.13.10、x/text v0.41.0 等。全 module 以 `go get -u ./...` 保持 latest-within-major | security hardening / CVE 面收斂;x/text ≥ v0.39.0 清掉 CVE-2026-56852 |
 | Go version | `go 1.26`(三個 module 皆同,minor series、不釘 patch,無獨立 `toolchain` 行);CI `go-version: 1.26.x`(build.yml / benchstat.yml,單一版本非 matrix) | 跟上 supported releases;go.mod 與 CI 都在 1.26.x 系列內浮動,consumer 不會被某個 patch 卡住 |
 | CI | `redis:7` → `valkey/valkey:9.1.0`(build.yml / benchstat.yml) | 改用 Valkey 驗證 |
+| `processor.go` | four failed-sync dispositions recreate deadline-bound context per attempt | original deferred cancel must not poison later Redis recovery; captured deadline prevents retry/lease renewal extending the request |
 | `server_test.go` | goleak 額外 ignore `maintnotifications.(*CircuitBreakerManager).cleanupLoop` | go-redis 9.20 新背景 goroutine |
 | `client_test.go` | group entries 的 `Z.Score` 比較加 `h.EquateInt64Approx(2)`(兩處) | 修跨秒 timing flake(SPEC-008;CI 首次真跑全套時曝露) |
 | `internal/proto/asynq.pb.go` | `make proto` 重生(protoc 3.21.12 + protoc-gen-go 1.36.11),descriptor 為 fork path | IL-001 結案(SPEC-008) |

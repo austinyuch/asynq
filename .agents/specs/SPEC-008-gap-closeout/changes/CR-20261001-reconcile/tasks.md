@@ -23,5 +23,11 @@
 - [x] Freeze e61d596 contract/demo successor; exact security/build/vet/root/x/tools gates PASS, child profiles reconciled, topic/PR21 parity verified; cluster execution remains explicitly source-equivalent from72dbcd0.
 - [x] Reviewed security Python policy/native-line contracts and testutil comparator/codec/fatal-child contracts; PBT, bounded fuzz and semantic mutants pass.
 - [x] Reviewed owned Redis timestamp-domain contracts; healthy-neighbor/no-write oracles,80 properties and3 mutants pass; original11 fixture keys preserved.
-- [ ] Freeze Python/testutil/inspection successor, refresh exact relevant gates and SBOM/CVE/KEV, then push PR21.
+- [x] Freeze323d5d1 Python/testutil/inspection successor; exact fresh gates/SBOM and PR21 push parity verified.
 - [x] Recoverable task-owned Go build cache cleanup reclaimed2,088,853,978 bytes at e61; runtime stop/registry release remain pending, and later tests rebuild cache.
+
+- [x] Published323d5d1 exact build/vet/root/x/tools/cluster/security gates and origin/PR21 parity.
+- [x] Reproduce and repair canceled-context processor sync fallback for four dispositions; bounded deadline/ownership recovery contracts and3 mutants PASS.
+- [x] Reproduce and repair UTF-8 evidence-reader exit behavior and ASCII CVE ID validation; normalize/ingress contracts and fresh-source25-test trace PASS.
+- [x] Python production positive native lines622/635=97.95%; no old-source carry. JS native inline-config ranges captured with explicit stub/render limitations.
+- [ ] Freeze recovery/ingress successor, refresh relevant immutable gates/SBOM, then topic push; global95% and protected promotion remain open.

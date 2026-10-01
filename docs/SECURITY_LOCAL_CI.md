@@ -223,3 +223,7 @@ This gate is local and pre-push. `.github/workflows/` still owns build and test
 across the module matrix. The two are complementary: hosted CI proves the code
 works, the local gate proves the dependency graph is not knowingly exploitable
 before the push leaves your machine.
+
+## Evidence input contracts
+
+Invalid UTF-8 or malformed JSON inputs produce path-bearing diagnostics and exit2. CVE identities use ASCII digits, consistent with the [official CVE record schema](https://cveproject.github.io/cve-schema/schema/docs/); Unicode numeral lookalikes are rejected. Normalize/stream/CLI contracts exercise real temporary files and outputs. The source-bound Python native trace observes all25 tests from zero after source changes; seeded JSON generators are not coverage-guided fuzzing. No provider/scanner subprocess-line coverage or project-wide95% claim follows from the per-file result.

@@ -79,3 +79,8 @@ Successor testutil: full package race and30-second fuzz795515 executions PASS,4 
 Successor inspection: standalone DB11 real race PASS; scheduled/retry ±Inf/overflow boundaries and80 fixed-seed domain properties require canonicalInternal, nil partial results, unchanged owned DUMP bytes and readable healthy neighbors.3 semantic mutants caught;2 new statements versus e61. Original11 baseline keys preserved; no FlushDB or PubSub mutation. `.security/rdb-inspection-contracts/receipt.json`.
 
 These new slice receipts bind actual sources, not an immutable successor gate. Freeze and refresh relevant root/build/security gates before push. Project-wide line95%, remaining language measurement and cross-family destination authorization remain OPEN; dev/main/release HOLD. Recoverable task-owned Go cache cleanup at e61 reclaimed2,088,853,978 bytes; new test execution rebuilds it. Runtime containers and registry claims remain active.
+
+
+## Reviewed recovery and evidence-ingress successor
+
+See [failure-recovery-security-ingress.md](failure-recovery-security-ingress.md) for pre-fix FAIL, four deadline-bounded processor dispositions, UTF-8/ASCII-CVE corrections and exact-source native Python622/635=97.95%. Published323d5d1 had all exact gates including fresh cluster; these new production/test sources require a new immutable freeze. Native V8 inline-config ranges do not establish browser rendering or project-line95%.
