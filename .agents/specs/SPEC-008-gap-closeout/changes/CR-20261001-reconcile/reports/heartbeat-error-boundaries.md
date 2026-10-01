@@ -1,0 +1,15 @@
+# Heartbeat lease/transport boundary contracts
+
+Coverage follow-up in the existing reconciliation CR; no production change, new API/factory seam or formal readiness/profile adoption. Topic codex/heartbeat-boundaries-20261001.
+
+Real closed lazy go-redis client through RDB makes WriteServerState/ExtendLease fail.16 seeded widths/queues/payloads/equality deadlines verify diagnostics, immutable worker/task inputs, unchanged lease deadlines and no expiration notification on valid leases. Native pure-path fuzz10 seconds/54353 executions PASS; this is not Redis/runtime fuzz.
+
+Opt-in owned DB2 starts empty;12 real-RDB cases seed canonical active/lease fixtures through internal/testutil. Expired lease signals Done and its Redis score remains unchanged. A clock straddles the old lease deadline during the genuine Redis operation: Redis extends while local Reset correctly refuses resurrection. Healthy neighbor accepts the exact returned deadline, with a simulated broker clock giving an independent exact deadline/Unix score oracle. Queue configuration matches worker queues. Typed workers preserve Host/PID/Started/Deadline/ID/type/queue/payload/server identity against before-beat snapshots; canonical task DUMP bytes remain unchanged. Exact owned keys/index members clean to DB2 empty; no FlushDB.
+
+Final source c82c67e20bd9cf0d64a10faa1ac694a41f96373b23d42e04b5faca39bb9fef5d; receipt .security/heartbeat-failure-contracts/receipt.json SHA8d0bf7de8974dfba6ead3eb6157d70c3e6884eb3399117776cfcd7c00aa4f797 closes19 materials/9 source subjects. Four viable semantic mutants are assertion-caught; initial compile-unviable setup is retained in heartbeat-failure-contracts-initial and not counted. Peer is same-family nonauthor review, not cross-family approval. Limited same-production-source union39/44 historical plus24/44 focused reaches43/44 statements; hostname failure remains uncovered without inventing a seam. No full root/global true-line95 claim from this union.
+
+Fresh complete root gate must use verified-empty rootDB3/metadata5/demo13/heartbeat2 with protected historical6/7/8/11/14/15/9/10 DUMP/PTTL unchanged. Frozen full gates, build/vet, source-equivalent x/tools consumption, fresh merge SBOM/CVE/KEV, dev no-ff/push and hosted checkout remain required; final authority will be .security/final-heartbeat/gate-ledger.json.
+
+## Reversible disk cleanup
+
+Four terminal isolated Lease source duplicates were gzip-backed and scratch-restored before exact unlink. Original durable22-material Lease proof is unchanged. Quarantine /tmp/asynq-lease-source-quarantine-20261001T114615.530369Z retains four backups, manifest, occupied-STOP/no-replace restore and receipt SHA37ee6f6ed00c40f118f400e67492ab32ca2713146fc462fb6a400208ac0cbf5a. File allocation accounting98304 removed minus45056 backup/manifest/restore/receipt yields53248 bytes net; directory metadata and concurrent disk changes are excluded. Rollback: python3 /tmp/asynq-lease-source-quarantine-20261001T114615.530369Z/restore.py. Cache clients remain unverifiable for PID4156/4238, so no cache removal occurred and the254022818-byte estimate is not reclaimed space.
