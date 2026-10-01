@@ -629,8 +629,8 @@ func withModal(d *ScreenDrawer, rowPrintFns []func(d *modalRowDrawer)) {
 		rowOffset   = int(math.Floor(float64(h) * 0.2)) // 20% from the top
 		colOffset   = int(math.Floor(float64(w) * 0.2)) // 20% from the left
 	)
-	if modalHeight < 3 {
-		return // no content can be shown
+	if modalHeight < 3 || modalWidth < 4 {
+		return // borders and padding leave no content area
 	}
 	d.Goto(colOffset, rowOffset)
 	d.Print(string(tcell.RuneULCorner), baseStyle)

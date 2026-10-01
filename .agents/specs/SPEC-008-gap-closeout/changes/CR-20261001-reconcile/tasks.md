@@ -15,3 +15,5 @@
 - [ ] Reclaim regenerable task-owned cache after persisting evidence; stop task runtime and release registry claim.
 
 - [x] Reviewed successor queue-state/lock namespace fixes, Unicode/grapheme/modal/group-page fixes, Inspector/lifecycle/CLI/proto contracts; source-bound gates pass, immutable successor gates pending.
+
+- [x] Exact72dbcd0 security/build/vet/root/x/tools/cluster gates PASS, including child profile union; narrow-screen tools successor awaits its own gate.

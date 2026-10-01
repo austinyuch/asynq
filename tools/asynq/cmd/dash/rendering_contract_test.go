@@ -405,3 +405,37 @@ func TestRenderingGraphemeCellsAndModalBoundary(t *testing.T) {
 		})
 	}
 }
+
+func TestRenderingNarrowHelpAndModalFrames(t *testing.T) {
+	for width := 1; width <= 12; width++ {
+		t.Run(fmt.Sprint(width), func(t *testing.T) {
+			s := renderingScreen(t, width, 15)
+			(&dashDrawer{s: s}).Draw(&State{view: viewTypeHelp})
+			// The help footer remains visible even when no modal fits.
+			if !strings.HasPrefix(renderingRow(s, 14), "<") {
+				t.Fatal("narrow help footer disappeared")
+			}
+			s.Clear()
+			withModal(NewScreenDrawer(s), []func(*modalRowDrawer){func(d *modalRowDrawer) { d.Print("payload", baseStyle) }})
+			if width < 7 {
+				for row := 0; row < 15; row++ {
+					if renderingRow(s, row) != "" {
+						t.Fatalf("unrenderable modal left cells on row %d", row)
+					}
+				}
+				return
+			}
+			right := int(float64(width)*0.2) + int(float64(width)*0.6) - 1
+			r, _, _, _ := s.GetContent(right, 4)
+			if r != tcell.RuneVLine {
+				t.Fatalf("narrow modal right border lost: %q", r)
+			}
+			for x := right + 1; x < width; x++ {
+				r, _, _, _ = s.GetContent(x, 4)
+				if r != 0 && r != ' ' {
+					t.Fatalf("narrow modal escaped at x=%d: %q", x, r)
+				}
+			}
+		})
+	}
+}
