@@ -26,7 +26,7 @@ import sys
 from pathlib import Path
 from typing import Any, Iterator
 
-CVE_RE = re.compile(r"\bCVE-\d{4}-\d{4,19}\b", re.IGNORECASE)
+CVE_RE = re.compile(r"\bCVE-[0-9]{4}-[0-9]{4,19}\b", re.IGNORECASE)
 TRIVY_FIX_RE = re.compile(
     r"[Uu]pgrade\s+(?P<module>\S+)\s+to\s+version\s+v?(?P<version>[0-9][^\s,;]*)"
 )
@@ -49,6 +49,8 @@ def read_json(path: Path) -> Any:
         return json.loads(path.read_text(encoding="utf-8"))
     except OSError as exc:
         die(f"cannot read {path}: {exc}")
+    except UnicodeError as exc:
+        die(f"{path} is not valid UTF-8: {exc}")
     except json.JSONDecodeError as exc:
         die(f"{path} is not valid JSON: {exc}")
 
@@ -59,6 +61,8 @@ def iter_json_stream(path: Path) -> Iterator[dict[str, Any]]:
         text = path.read_text(encoding="utf-8")
     except OSError as exc:
         die(f"cannot read {path}: {exc}")
+    except UnicodeError as exc:
+        die(f"{path} is not valid UTF-8: {exc}")
     decoder = json.JSONDecoder()
     index = 0
     length = len(text)
