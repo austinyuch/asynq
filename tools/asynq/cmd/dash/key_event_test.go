@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/austinyuch/asynq"
 	"github.com/gdamore/tcell/v2"
 	"github.com/google/go-cmp/cmp"
-	"github.com/austinyuch/asynq"
 )
 
 func makeKeyEventHandler(t *testing.T, state *State) *keyEventHandler {
@@ -215,7 +215,7 @@ func TestKeyEventHandler(t *testing.T) {
 			for _, e := range tc.events {
 				h.HandleKeyEvent(e)
 			}
-			if diff := cmp.Diff(tc.wantState, *tc.state, cmp.AllowUnexported(State{})); diff != "" {
+			if diff := cmp.Diff(tc.wantState, *tc.state, cmp.AllowUnexported(State{}, fetchContext{})); diff != "" {
 				t.Errorf("after state was %+v, want %+v: (-want,+got)\n%s", *tc.state, tc.wantState, diff)
 			}
 		})
