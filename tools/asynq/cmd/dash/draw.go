@@ -253,12 +253,43 @@ func drawQueueSummary(d *ScreenDrawer, state *State) {
 // Returns the max number of groups that can be displayed.
 func groupPageSize(s tcell.Screen) int {
 	_, h := s.Size()
+	if h <= 16 {
+		return 1 // Keep navigation valid when the table is clipped.
+	}
 	return h - 16 // height - (# of rows used)
+}
+
+// groupPageRange reconciles page and row selection with the current viewport
+// and group snapshot. Rows are page-local, with zero selecting the header.
+func groupPageRange(s tcell.Screen, state *State) (start, end int) {
+	size, total := groupPageSize(s), len(state.groups)
+	last := 1
+	if total > 0 {
+		last = (total-1)/size + 1
+	}
+	if state.pageNum < 1 {
+		state.pageNum = 1
+	}
+	if state.pageNum > last {
+		state.pageNum = last
+	}
+	start = (state.pageNum - 1) * size
+	end = start + min(size, total-start)
+	if state.groupTableRowIdx < 0 {
+		state.groupTableRowIdx = 0
+	}
+	if state.groupTableRowIdx > end-start {
+		state.groupTableRowIdx = end - start
+	}
+	return start, end
 }
 
 // Returns the number of tasks to fetch.
 func taskPageSize(s tcell.Screen) int {
 	_, h := s.Size()
+	if h <= 15 {
+		return 1 // A zero SDK page size would fetch the entire task list.
+	}
 	return h - 15 // height - (# of rows used)
 }
 
@@ -390,6 +421,7 @@ func selectedTaskCount(state *State) int {
 }
 
 func drawGroupTable(d *ScreenDrawer, state *State) {
+	start, end := groupPageRange(d.Screen(), state)
 	if len(state.groups) == 0 {
 		return // print nothing
 	}
@@ -401,8 +433,6 @@ func drawGroupTable(d *ScreenDrawer, state *State) {
 	// pagination
 	pageSize := groupPageSize(d.Screen())
 	total := len(state.groups)
-	start := (state.pageNum - 1) * pageSize
-	end := min(start+pageSize, total)
 	drawTable(d, baseStyle, colConfigs, state.groups[start:end], state.groupTableRowIdx-1)
 
 	if pageSize < total {

@@ -23,4 +23,6 @@
 
 | R-15 | reconcile queue/stats config, error status and transport ownership | SPEC-008 / CR-20261001-reconcile | effective Viper mode, first-error result, owned Close and readable node output | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/queue-stats-cluster.md); de88475 exact gates PASS; promotion pending |
 
-| R-16 | 完整垂直切片與 exporter lifecycle 交付 | SPEC-008 / CR-20261001-reconcile | private instance ownership, graceful signals and shared shutdown barrier | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/exporter-lifecycle.md); source-bound PASS, exact successor/promotion pending |
+| R-16 | 完整垂直切片與 exporter lifecycle 交付 | SPEC-008 / CR-20261001-reconcile | private instance ownership, graceful signals and shared shutdown barrier | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/exporter-lifecycle.md); exact1abf9d3 tools/build/security/entrypoint PASS; promotion pending |
+
+| R-17 | 修復實際 dashboard group 選取與 viewport 失效 | SPEC-008 / CR-20261001-reconcile | shared page/row range and immediate resize redraw | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/group-navigation.md); source-bound PBT/fuzz/mutation, frozen delivery subject in ledger; promotion pending |

@@ -44,4 +44,7 @@
 
 - [x] Refresh de88475-plus-exporter WIP three-module SBOM/CVE/KEV scan; 25 closed materials / 227 execution sources / 26 archive members independently verified; 0 blocking / 0 supplied KEV, existing G118 retained. See docs/SECURITY_SCAN_2026-10-01.md; not a clean-commit attestation.
 
-- [ ] Freeze exporter instance/signal/handler ownership successor; reviewed source-bound real HTTP/child/mutation evidence PASS; exact gates and push pending.
+- [x] Exporter instance/signal/handler ownership delivered1abf9d3; exact tools race/build/vet/security/actual production entrypoint gates and topic/PR21 parity PASS.
+
+- [x] Repair group visible-page selection, short/tiny/empty/shrunk page bounds, positive task fetch capacity and event-loop resize; preserve seven original failures and independent model/PBT/fuzz/mutation evidence. Delivery gates are commit-bound in `.security/final-group-navigation/`; promotion stays open.
+- [x] Bounded line-event control-flow experiment: actual OR probe omission reproduced/fixed in /tmp; independent serial/defer/concurrent witnesses and three generator mutants; no project denominator adoption.

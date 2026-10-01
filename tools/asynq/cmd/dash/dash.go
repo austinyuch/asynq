@@ -201,6 +201,7 @@ func (d *dashboard) run(f fetcher, cleanup func()) {
 			switch ev := ev.(type) {
 			case *tcell.EventResize:
 				s.Sync()
+				drawer.Draw(&state)
 			case *tcell.EventKey:
 				h.HandleKeyEvent(ev)
 			}

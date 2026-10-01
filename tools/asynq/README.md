@@ -28,6 +28,10 @@ To view details on any command, use `asynq help <command> <subcommand>`.
 - `asynq task [ls cancel delete archive run deleteall archiveall runall]`
 - `asynq server [ls]`
 
+### Dashboard group navigation
+
+In the aggregating tab, use Up/Down to select a group on the current page and Enter to open that displayed group. `n`/`p` change pages and reset the selection to the header. The final page contains only actual groups; it cannot advance to an empty page. A data refresh or resize reconciles the page and selection with the current group list, and resize redraws without another fetch. Very small terminals clip the table while keeping navigation bounded, and task requests retain a positive page size instead of loading the entire group.
+
 ### Global flags
 
 Asynq CLI needs to connect to a Valkey or Redis server to inspect the state of queues and tasks. Use flags to specify the options to connect to the server used by your application.

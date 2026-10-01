@@ -105,7 +105,8 @@ func (h *keyEventHandler) downKeyQueues() {
 func (h *keyEventHandler) downKeyQueueDetails() {
 	s, state := h.s, h.state
 	if shouldShowGroupTable(state) {
-		if state.groupTableRowIdx < groupPageSize(s) {
+		start, end := groupPageRange(s, state)
+		if state.groupTableRowIdx < end-start {
 			state.groupTableRowIdx++
 		} else {
 			state.groupTableRowIdx = 0 // loop back
@@ -142,8 +143,9 @@ func (h *keyEventHandler) upKeyQueues() {
 func (h *keyEventHandler) upKeyQueueDetails() {
 	s, state := h.s, h.state
 	if shouldShowGroupTable(state) {
+		start, end := groupPageRange(s, state)
 		if state.groupTableRowIdx == 0 {
-			state.groupTableRowIdx = groupPageSize(s)
+			state.groupTableRowIdx = end - start
 		} else {
 			state.groupTableRowIdx--
 		}
@@ -194,14 +196,19 @@ func (h *keyEventHandler) enterKeyQueueDetails() {
 		f     = h.fetcher
 		d     = h.drawer
 	)
-	if shouldShowGroupTable(state) && state.groupTableRowIdx != 0 {
-		state.selectedGroup = state.groups[state.groupTableRowIdx-1]
+	if shouldShowGroupTable(state) {
+		start, _ := groupPageRange(h.s, state)
+		if state.groupTableRowIdx == 0 {
+			return
+		}
+		state.selectedGroup = state.groups[start+state.groupTableRowIdx-1]
 		state.tasks = nil
+		state.taskTableRowIdx = 0
 		state.pageNum = 1
 		f.Fetch(state)
 		h.resetTicker()
 		d.Draw(state)
-	} else if !shouldShowGroupTable(state) && state.taskTableRowIdx != 0 {
+	} else if state.taskTableRowIdx != 0 {
 		task := state.tasks[state.taskTableRowIdx-1]
 		state.selectedTask = task
 		state.taskID = task.ID
@@ -257,12 +264,10 @@ func (h *keyEventHandler) nextPage() {
 	)
 	if state.view == viewTypeQueueDetails {
 		if shouldShowGroupTable(state) {
-			pageSize := groupPageSize(s)
-			total := len(state.groups)
-			start := (state.pageNum - 1) * pageSize
-			end := start + pageSize
-			if end <= total {
+			_, end := groupPageRange(s, state)
+			if end < len(state.groups) {
 				state.pageNum++
+				state.groupTableRowIdx = 0
 				d.Draw(state)
 			}
 		} else {
@@ -284,10 +289,10 @@ func (h *keyEventHandler) prevPage() {
 	)
 	if state.view == viewTypeQueueDetails {
 		if shouldShowGroupTable(state) {
-			pageSize := groupPageSize(s)
-			start := (state.pageNum - 1) * pageSize
+			start, _ := groupPageRange(s, state)
 			if start > 0 {
 				state.pageNum--
+				state.groupTableRowIdx = 0
 				d.Draw(state)
 			}
 		} else {
