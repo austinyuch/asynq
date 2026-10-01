@@ -84,3 +84,11 @@ The user target is project-wide line coverage >=95%. Native Go NumStmt counts st
 ## Security orchestration native successor
 
 The actual same-module missing-version bug is repaired in security_local_ci.py; reports/security-metadata-enrichment.md binds original failure and minimal guarded repair. Fresh29-tests parent/193actualchildren native line evidence is632/637 for production SHA6be571, with all five unseen positions retained; receipt .security/security-python-enrichment-v4-full/receipt.json SHA90ed7c275350762a25be031e074f92becab677a4bfb29e35386cbb2bb2f36d72 closes208 materials. Earlier42cd source full26-tests630/635 and v3 repaired-source28-tests632/637 remain dated; their counters are not merged into this current v4 result. This strengthens actual runtime/PBT/mutation coverage without adopting a whole-project denominator.
+
+## Dated source-SAST native observation (a04040d)
+
+`.security/main-admission-current/source-sast-native/20261001T174213914018Z/receipt.json` binds clean a04040d source0d6ea1e and six maintained tests to normal/traced native runs:182/203 positive compiled lines (89.6552%). This is the actual prior-source measurement; the subsequent empty-inventory repair/new guard tests change source/test bindings. Do not carry these counters as current guard-source coverage. The current-source trace is recorded below; project-wide line95 remains unproven.
+
+## Current candidate source-SAST child-own observation
+
+Current dirty candidate source-bound receipt `.security/main-admission-current/source-sast-native/20261001T180026204024Z/receipt.json` SHA `8d315706333d481cb1b1343adf51e00485d99ebb8477b64820114b4d229cfbdd` records source_sast.py195/203 positive native lines (96.0591%) and18 actual PID child journals with normal/traced semantic match. This is only source_sast.py, not project-wide95 or committed delivery. Current46 maintained security contracts PASS; native scan covers13 tracked source files plus five extracted inputs and retains44 LOW/9 MEDIUM findings (53 total),0 HIGH, policy0 with raw_clean=false. Earlier a040 counters stay historical and are not unioned with changed-source counters.

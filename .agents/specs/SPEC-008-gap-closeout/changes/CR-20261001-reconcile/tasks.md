@@ -104,4 +104,7 @@
 - [x] Deliver source-SAST/oracle/prefix successor dev5eb88a5; exact gates, final ledgerd47ccbd/6363 materials and hosted36895501681 actual checkout/tree PASS. Main remains pending.
 
 - [x] Reproduce SBOM evidence contamination and adopt `.security` exclusion for all module scans while retaining visible application inputs and sibling module isolation;13 actual native fragment scans/four benign paths, one viable removal mutant assertion FAIL and maintained original RED/candidate GREEN.
-- [ ] Deliver SBOM boundary successor through fresh exact full scan/build/source/test/nativeSAST/remote/hosted gates; final-sbom-boundary ledger is the delivery authority when verified.
+- [x] Deliver SBOM boundary dev a04040d; final-sbom-boundary fd663dd/6596 materials and hosted36899407152 actual checkout/parents/tree PASS.
+
+- [x] Repair empty-source-inventory diagnostic with original real-input RED/candidate GREEN; nine source-SAST methods,10 invalid version banners/seven invalid source cases plus empty inventory, three viable mutants caught normal/-O.
+- [ ] Deliver guarded-source successor through fresh exact tests/source/build/security/nativeSAST/remote/hosted gates; 46 maintained tests and source_sast.py195/203 native child evidence PASS; exact commit delivery and cross-family review remain separate.

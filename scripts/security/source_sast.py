@@ -120,7 +120,7 @@ def tracked_sources(root):
         raise EvidenceError('git-source-inventory-unavailable') from exc
     if result.returncode:
         raise EvidenceError('git-source-inventory-unavailable')
-    names = result.stdout.decode('utf-8').rstrip('\0').split('\0')
+    names = result.stdout.decode('utf-8').rstrip('\0').split('\0') if result.stdout else []
     sources = []
     for name in names:
         path = root / name

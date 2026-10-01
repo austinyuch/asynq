@@ -48,10 +48,16 @@ is never overwritten. Tool paths can be explicitly supplied with `--bandit-pytho
 and `--shellcheck`; exact native tool versions are checked. No command downloads tools.
 
 All tracked `.py` and `.sh` files are scanned. Literal quoted Python heredocs and the
-known `FAKE` test dispatcher string are copied without evaluation and receive original
+known literal `FAKE` test fixture strings are copied without evaluation and receive original
 source/hash/line mappings. Dynamic, ambiguous or unsupported heredocs/generated Python
 fail closed. Bandit analyzes extracted Python; extraction itself is not a custom SAST
 engine. ShellCheck analyzes shell only, not embedded Python.
+
+An empty tracked Python/Bash inventory reports `empty-source-inventory`; a
+missing language reports `unsupported-empty-language-inventory`. Both exit 2
+without a success receipt. Invalid source encodings, malformed embedded Python,
+tracked symlinks and mismatched tool versions retain their operational failure
+diagnostics; fixture-analyzer tests verify rejection, not vulnerability results.
 
 Exit 2 means unavailable/invalid tools, reports, source inventory or extraction. Exit 1
 means a Bandit HIGH or ShellCheck error finding. Other findings are retained for

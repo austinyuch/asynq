@@ -112,5 +112,84 @@ class Contracts(unittest.TestCase):
             self.assertFalse((output/'verdict.json').exists())
             self.assertEqual(SUBJECT.main(['--source-root', str(root), '--out', str(output)]), 2)
 
+import sys
+SOURCE = Path(SPEC.origin).resolve()
+FAKE = """#!/usr/bin/env python3
+import json,sys
+args=sys.argv[1:]
+if '--version' in args:
+ print(BANNER)
+elif '-o' in args:
+ index=args.index('-o');path=args[index+1];sources=args[index+2:]
+ with open(path, 'w') as stream:
+  stream.write(json.dumps({'errors':[],'results':[],'metrics':dict.fromkeys(sources,{})}))
+else: print('[]')
+"""
+
+class GuardedInputs(unittest.TestCase):
+    def case(self, kind, expected, bandit='__main__.py 1.9.4', shell='version: 0.11.0'):
+        with tempfile.TemporaryDirectory(prefix='asynq-guarded-') as tmp:
+            root = Path(tmp)
+            subprocess.run(['git', 'init', '-q', str(root)], check=True,
+                           capture_output=True, timeout=15)
+            py, sh = b'value=1\n', b'#!/bin/bash\nprintf ok\n'
+            python_cases = {'invalid-python': b'broken = (\n',
+                            'dynamic-fake': b"FAKE = str('value=1')\n",
+                            'invalid-utf8': b'\xff\n'}
+            py = python_cases.get(kind, py)
+            if kind == 'invalid-heredoc':
+                sh = b"python3 - <<'PY'\nbroken = (\nPY\n"
+            if kind != 'empty':
+                if kind != 'only-shell':
+                    (root / 'fixture.py').write_bytes(py)
+                if kind != 'only-python':
+                    (root / 'fixture.sh').write_bytes(sh)
+                if kind == 'symlink':
+                    (root / 'fixture.py').unlink()
+                    (root / 'target').write_text('value=1\n')
+                    (root / 'fixture.py').symlink_to('target')
+                subprocess.run(['git', '-C', str(root), 'add', '.'], check=True,
+                               capture_output=True, timeout=15)
+            tools = root / 'tools'
+            tools.mkdir()
+            for name, banner in [('python', bandit), ('shellcheck', shell)]:
+                path = tools / name
+                path.write_text(FAKE.replace('BANNER', repr(banner)))
+                path.chmod(0o700)
+            output = root / '.security/result'
+            result = subprocess.run([
+                sys.executable, str(SOURCE), '--source-root', str(root),
+                '--out', str(output), '--bandit-python', str(tools / 'python'),
+                '--shellcheck', str(tools / 'shellcheck')],
+                capture_output=True, text=True, timeout=15)
+            self.assertEqual(result.returncode, 2, (kind, result.stdout, result.stderr))
+            self.assertEqual(json.loads(result.stdout)['error'], expected)
+            self.assertEqual(json.loads((output / 'failure.json').read_text())['error'], expected)
+            self.assertFalse((output / 'receipt.json').exists())
+            self.assertFalse((output / 'verdict.json').exists())
+
+    def test_empty_tracked_inventory_diagnostic(self):
+        self.case('empty', 'empty-source-inventory')
+
+    def test_real_tracked_source_guards(self):
+        cases = [('symlink', 'unsupported-tracked-source'),
+                 ('only-python', 'unsupported-empty-language-inventory'),
+                 ('only-shell', 'unsupported-empty-language-inventory'),
+                 ('invalid-python', 'invalid-tracked-python'),
+                 ('dynamic-fake', 'dynamic-generated-python'),
+                 ('invalid-utf8', 'source-or-output-unavailable'),
+                 ('invalid-heredoc', 'invalid-embedded-python')]
+        for kind, error in cases:
+            with self.subTest(kind=kind):
+                self.case(kind, error)
+
+    def test_version_admission_boundaries(self):
+        for version in ['1.9.3', '1.9.5', '2.0.0', '1.9.40', '1.9.4evil']:
+            with self.subTest(bandit=version):
+                self.case('normal', 'bandit-version-mismatch', bandit='__main__.py ' + version)
+        for version in ['0.10.0', '0.11.1', '1.0.0', '0.11.00', '0.11.0evil']:
+            with self.subTest(shell=version):
+                self.case('normal', 'shellcheck-version-mismatch', shell='version: ' + version)
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)
