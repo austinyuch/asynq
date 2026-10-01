@@ -114,3 +114,5 @@
 
 - [x] Rehearse unpublished root→x→tools file-proxy snapshots with canonical zips, no-replace versioned CLI/exporter installs and actual root4/x4 build identities;32 closed-client consumer cases distinguish baseline0/candidate32 preserved causes;28 phases terminal0.
 - [ ] Deliver release preparation/governance slice with verified final-release-rehearsal ledger; no public tags/releases/notifications are inferred from rehearsal.
+
+- [ ] Verify gosec evidence-directory boundary repair: actual per-module argv component exclusion and native fixture/control/removal-mutant evidence `.security/final-release-rehearsal/scope-regression/20261001T193732Z/receipt.json` SHA `6145b4f69efc72dd6ab4f5041d096b7be7ccd3d0dce038185b1ce899ceb9eb56` PASS; candidate50 security contracts and fresh exact security/build/make/hosted gates remain pending. Preserve failed36 receipt; do not push36 as complete.
