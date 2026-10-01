@@ -8,8 +8,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/gdamore/tcell/v2"
 	"github.com/austinyuch/asynq"
+	"github.com/gdamore/tcell/v2"
 )
 
 // keyEventHandler handles keyboard events and updates the state.
@@ -269,9 +269,7 @@ func (h *keyEventHandler) nextPage() {
 				d.Draw(state)
 			}
 		} else {
-			pageSize := taskPageSize(s)
-			totalCount := getTaskCount(state.selectedQueue, state.taskState)
-			if (state.pageNum-1)*pageSize+len(state.tasks) < totalCount {
+			if isNextTaskPageAvailable(s, state) {
 				state.pageNum++
 				f.Fetch(state)
 				h.resetTicker()

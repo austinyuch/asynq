@@ -13,8 +13,8 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/gdamore/tcell/v2"
 	"github.com/austinyuch/asynq"
+	"github.com/gdamore/tcell/v2"
 	"github.com/mattn/go-runewidth"
 )
 
@@ -359,11 +359,7 @@ func drawTaskTable(d *ScreenDrawer, state *State) {
 
 	// Pagination
 	pageSize := taskPageSize(d.Screen())
-	totalCount := getTaskCount(state.selectedQueue, state.taskState)
-	if state.taskState == asynq.TaskStateAggregating {
-		// aggregating tasks are scoped to each group when shown in the table.
-		totalCount = state.selectedGroup.Size
-	}
+	totalCount := selectedTaskCount(state)
 	if pageSize < totalCount {
 		start := (state.pageNum-1)*pageSize + 1
 		end := start + len(state.tasks) - 1
@@ -380,9 +376,17 @@ func drawTaskTable(d *ScreenDrawer, state *State) {
 }
 
 func isNextTaskPageAvailable(s tcell.Screen, state *State) bool {
-	totalCount := getTaskCount(state.selectedQueue, state.taskState)
+	totalCount := selectedTaskCount(state)
 	end := (state.pageNum-1)*taskPageSize(s) + len(state.tasks)
 	return end < totalCount
+}
+
+// Aggregating task pages represent the selected group, not the whole queue.
+func selectedTaskCount(state *State) int {
+	if state.taskState == asynq.TaskStateAggregating && state.selectedGroup != nil {
+		return state.selectedGroup.Size
+	}
+	return getTaskCount(state.selectedQueue, state.taskState)
 }
 
 func drawGroupTable(d *ScreenDrawer, state *State) {
@@ -613,6 +617,7 @@ func (d *modalRowDrawer) Print(s string, style tcell.Style) {
 		s = truncate(s, d.maxWidth-d.width)
 	}
 	d.d.Print(s, style)
+	d.width += runewidth.StringWidth(s)
 }
 
 // withModal draws a modal with the given functions row by row.
@@ -638,6 +643,7 @@ func withModal(d *ScreenDrawer, rowPrintFns []func(d *modalRowDrawer)) {
 		maxWidth: modalWidth - 4, /* borders + paddings */
 	}
 	for i := 1; i < modalHeight-1; i++ {
+		rowDrawer.width = 0
 		d.Goto(colOffset, rowOffset+i)
 		d.Print(fmt.Sprintf("%c ", tcell.RuneVLine), baseStyle)
 		if i <= len(rowPrintFns) {
@@ -670,12 +676,19 @@ func titleCase(s string) string {
 	return string(r)
 }
 
-// truncates s if s exceeds max length.
+// truncate limits text to max terminal cells, preserving grapheme boundaries.
 func truncate(s string, max int) string {
+	if max <= 0 {
+		return ""
+	}
 	if runewidth.StringWidth(s) <= max {
 		return s
 	}
-	return string([]rune(s)[:max-1]) + "…"
+	tail := "…"
+	if runewidth.StringWidth(tail) > max {
+		tail = ""
+	}
+	return runewidth.Truncate(s, max, tail)
 }
 
 func drawDebugInfo(d *ScreenDrawer, state *State) {
