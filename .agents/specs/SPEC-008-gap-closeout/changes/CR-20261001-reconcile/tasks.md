@@ -30,4 +30,7 @@
 - [x] Reproduce and repair canceled-context processor sync fallback for four dispositions; bounded deadline/ownership recovery contracts and3 mutants PASS.
 - [x] Reproduce and repair UTF-8 evidence-reader exit behavior and ASCII CVE ID validation; normalize/ingress contracts and fresh-source25-test trace PASS.
 - [x] Python production positive native lines622/635=97.95%; no old-source carry. JS native inline-config ranges captured with explicit stub/render limitations.
-- [ ] Freeze recovery/ingress successor, refresh relevant immutable gates/SBOM, then topic push; global95% and protected promotion remain open.
+- [x] Freeze recovery/ingress successor bc1990b; exact build/vet/root/x/tools/cluster/security and Python native gates PASS, topic/PR21 remote parity verified.
+- [x] Refresh three-module WIP-bound SBOM/CVE/KEV evidence; report03be718 pushed,0 blockers/0 supplied KEV matches, existing G118 retained.
+- [ ] Freeze reviewed Inspector validation fix and lifecycle/Aggregator/dashboard-fetch slices; exact fresh gates pending.
+- [x] Reproduce native Go block-vs-line ambiguity using panic and short-circuit witnesses; preserve missing cross-language measurement and pending metric clarification.
