@@ -1,6 +1,6 @@
 # Test slice evidence — 2026-10-01
 
-This is interim evidence for uncommitted successor slices, not a final candidate verdict.
+Historical sections retain their original execution/source bindings. Latest published immutable baseline is e61d596; the final section records the new source-bound successor. No section confers project-line95% or formal promotion authority.
 
 - internal/errors, internal/log, internal/timeutil: race/vet PASS, each 100% statement coverage; seeded properties, two 30-second fuzz runs and five viable mutants caught. Source-bound local receipt: `.security/slice2/receipt.json`.
 - x/metrics: real Redis Inspector fixtures and seeded properties, race PASS, 31/31 statements and derived profile line union 113/113; four viable mutants caught. Source-bound local receipt: `.security/reconcile-20261001/metrics-test-receipt.json`.
@@ -64,3 +64,18 @@ Published5e98135 has exact three-module security/build/vet and tools race plus s
 - Demo runtime: opt-in isolated DB13 and25-second parent deadlines exercise actual main in a child. Independent Inspector checks validate three queues, six processed tasks, duplicate rejection, archived billing and scheduled report. Nonempty child exits before enqueue and preserves its owned sentinel; os.Exit does not emit a coverage profile, and none is fabricated. Positive child main statement coverage91.0%; parent/child profiles retain source/binary identities. Two semantic mutants caught. Task-owned exact-key DUMP/PTTL custody and conditional deletion restore empty DB13; no FlushDB, foreign index or shared cancellation channel mutation. Receipt `.security/demo-runtime/receipt.json`.
 
 All three bounded same-family peer reviews found no actionable finding. Demo admission is not an atomic lock against other writers: the dedicated runtime ownership/custody is required. The above working-tree receipts are not immutable successor gates; freeze and refresh root/demo child profile unions, security and build/vet before the next push. Project line95% and cross-family approval remain open.
+
+
+## Published e61d596 and reviewed policy/helper/timestamp successor
+
+Exact e61d596/tree4dbf056e root/x/tools race and six build/vet commands PASS. Root canonical unique-block statement union3329/3622=91.91%; inclusive block-line proxy5787/6280=92.15%, not independent executable-line instrumentation. X56/57 statements98.25%; tools1311/1696 canonical block statements77.30%. Cluster remains source-equivalent carried72dbcd0 execution, not a fresh exact e61 cluster run. `.security/final-e61d596/gate-ledger.json` separates bindings.
+
+Exact e61 three CycloneDX1.7 SBOMs have root13/x18/tools45 components; CVE/KEV/SAST blocking0, supplied KEVmatches0, existingG118 warning1, no new suppressions. CISA2026.09.30 catalog1730 entries. Bundle `.security/sbom-e61d596.tar.gz` SHA2569205d1a14d73ca0efa64c63c44f383ae6aecdf5d0867451996c64ba5329cfa47. Supplied snapshot absence is not global vulnerability absence. Topic/PR21 head/title/body parity verified; dev/main remain57b9e964.
+
+Successor Python:13 combined unit tests PASS; new7 decision-table/schema/property contracts,250 seeded permutations/membership/stable-fix cases,1000 bounded generated JSON inputs (not coverage-guided fuzz),6 assertion-caught semantic mutants. Source-identical native counters merged426/631 positive production source lines67.51%; test source separately178/179 and86/87. Same-family peer review found and closed nonexistent line0 denominator metadata and vacuous empty-policy acceptance. Original receipt/raw tables are hash-archived; raw compiler table and positive source inventory remain separate. `.security/security-python-contracts/receipt.json`.
+
+Successor testutil: full package race and30-second fuzz795515 executions PASS,4 semantic mutants caught. Independent comparison permutation/nonmutation and protobuf decoder oracles plus real10-second fatal child contracts add9 statements versus compatible e61 profile. Parent and two instrumented fatal-child profiles are verified separately before union. No Redis used. `.security/testutil-contracts/receipt.json`; same-family independent peer review found no actionable findings.
+
+Successor inspection: standalone DB11 real race PASS; scheduled/retry ±Inf/overflow boundaries and80 fixed-seed domain properties require canonicalInternal, nil partial results, unchanged owned DUMP bytes and readable healthy neighbors.3 semantic mutants caught;2 new statements versus e61. Original11 baseline keys preserved; no FlushDB or PubSub mutation. `.security/rdb-inspection-contracts/receipt.json`.
+
+These new slice receipts bind actual sources, not an immutable successor gate. Freeze and refresh relevant root/build/security gates before push. Project-wide line95%, remaining language measurement and cross-family destination authorization remain OPEN; dev/main/release HOLD. Recoverable task-owned Go cache cleanup at e61 reclaimed2,088,853,978 bytes; new test execution rebuilds it. Runtime containers and registry claims remain active.

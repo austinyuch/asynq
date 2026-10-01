@@ -20,4 +20,8 @@
 
 - [x] Reviewed testbroker/Inspector error contracts and safe demo admission/runtime; source-bound PBT/fuzz/mutants and fixture custody pass.
 - [x] Native Python line baseline and complete known executable-source-class inventory; measurement gaps remain explicit.
-- [ ] Freeze current contract/demo successor, refresh full relevant gates and child profiles, scan SBOM/CVE/KEV, then push draft PR21.
+- [x] Freeze e61d596 contract/demo successor; exact security/build/vet/root/x/tools gates PASS, child profiles reconciled, topic/PR21 parity verified; cluster execution remains explicitly source-equivalent from72dbcd0.
+- [x] Reviewed security Python policy/native-line contracts and testutil comparator/codec/fatal-child contracts; PBT, bounded fuzz and semantic mutants pass.
+- [x] Reviewed owned Redis timestamp-domain contracts; healthy-neighbor/no-write oracles,80 properties and3 mutants pass; original11 fixture keys preserved.
+- [ ] Freeze Python/testutil/inspection successor, refresh exact relevant gates and SBOM/CVE/KEV, then push PR21.
+- [x] Recoverable task-owned Go build cache cleanup reclaimed2,088,853,978 bytes at e61; runtime stop/registry release remain pending, and later tests rebuild cache.
