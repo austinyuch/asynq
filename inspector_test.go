@@ -12,13 +12,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/go-cmp/cmp"
-	"github.com/google/go-cmp/cmp/cmpopts"
-	"github.com/google/uuid"
 	"github.com/austinyuch/asynq/internal/base"
 	"github.com/austinyuch/asynq/internal/rdb"
 	h "github.com/austinyuch/asynq/internal/testutil"
 	"github.com/austinyuch/asynq/internal/timeutil"
+	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
+	"github.com/google/uuid"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -3512,7 +3512,7 @@ func TestInspectorSchedulerEntries(t *testing.T) {
 }
 
 func TestParseOption(t *testing.T) {
-	oneHourFromNow := time.Now().Add(1 * time.Hour)
+	optionTime := time.Date(2026, time.October, 3, 12, 34, 56, 0, time.UTC)
 	tests := []struct {
 		s        string
 		wantType OptionType
@@ -3521,9 +3521,9 @@ func TestParseOption(t *testing.T) {
 		{`MaxRetry(10)`, MaxRetryOpt, 10},
 		{`Queue("email")`, QueueOpt, "email"},
 		{`Timeout(3m)`, TimeoutOpt, 3 * time.Minute},
-		{Deadline(oneHourFromNow).String(), DeadlineOpt, oneHourFromNow},
+		{Deadline(optionTime).String(), DeadlineOpt, optionTime},
 		{`Unique(1h)`, UniqueOpt, 1 * time.Hour},
-		{ProcessAt(oneHourFromNow).String(), ProcessAtOpt, oneHourFromNow},
+		{ProcessAt(optionTime).String(), ProcessAtOpt, optionTime},
 		{`ProcessIn(10m)`, ProcessInOpt, 10 * time.Minute},
 		{`Retention(24h)`, RetentionOpt, 24 * time.Hour},
 		{`Header(["email", "hello@example.com"])`, HeaderOpt, [2]string{"email", "hello@example.com"}},
@@ -3571,7 +3571,7 @@ func TestParseOption(t *testing.T) {
 				if !ok {
 					t.Fatal("returned Option with non time value")
 				}
-				if cmp.Equal(gotVal, tc.wantVal.(time.Time)) {
+				if !gotVal.Equal(tc.wantVal.(time.Time)) {
 					t.Fatalf("got value %v, want %v", gotVal, tc.wantVal)
 				}
 			case HeaderOpt:
@@ -3683,4 +3683,49 @@ func TestInspectorGroups(t *testing.T) {
 			}
 		})
 	}
+}
+
+// The option string uses UnixDate: this contract covers UTC whole seconds,
+// year 0000 through 9999 only; it does not claim subsecond/zone round trips.
+func timeOptionInput(n int64) time.Time {
+	const first int64 = -62167219200
+	const span int64 = 315569520000
+	offset := n % span
+	if offset < 0 {
+		offset += span
+	}
+	return time.Unix(first+offset, 0).UTC()
+}
+func assertTimeOptionRoundTrip(t *testing.T, n int64) {
+	t.Helper()
+	want := timeOptionInput(n)
+	for _, input := range []Option{Deadline(want), ProcessAt(want)} {
+		got, err := parseOption(input.String())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got == nil {
+			t.Fatal("nil option")
+		}
+		if got.Type() != input.Type() {
+			t.Fatalf("type got %v want %v", got.Type(), input.Type())
+		}
+		value, ok := got.Value().(time.Time)
+		if !ok || !value.Equal(want) {
+			t.Fatalf("time got %v want %v", got.Value(), want)
+		}
+	}
+}
+func TestParseTimeOptionRoundTripProperties(t *testing.T) {
+	seed := uint64(20261003)
+	for i := 0; i < 100; i++ {
+		seed = seed*6364136223846793005 + 1442695040888963407
+		assertTimeOptionRoundTrip(t, int64(seed))
+	}
+}
+func FuzzParseTimeOptionRoundTrip(f *testing.F) {
+	for _, n := range []int64{0, -62167219200, 253402300799, -1, 1, -9223372036854775808, 9223372036854775807} {
+		f.Add(n)
+	}
+	f.Fuzz(func(t *testing.T, n int64) { assertTimeOptionRoundTrip(t, n) })
 }

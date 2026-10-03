@@ -124,3 +124,12 @@ reviewed; Shell340 experimental candidates retain unadmitted dynamic contexts.
 Nine Shell contracts/100 properties/two producer mutants and10-second fuzz are
 producer evidence, not production adequacy. Full project ratio remains null.
 Next: owned registry-admitted Redis runtime, Lua mapping and full Go profiles.
+
+
+Runtime assertion follow-up: [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/runtime-fixture-oracles.md).
+Actual full native campaign exposed set-DUMP ordering, stale scope reuse and an
+inverted time-value oracle. Adopted test-only fixes retain byte-preserving set
+membership, exact owned-key cleanup and bounded UTC whole-second PBT/fuzz.
+Focused count20/race and mutation evidence do not establish full LINE95.
+Next: fresh complete native runtime and Lua Proto observer qualification; main,
+release and destructive cleanup remain held.
