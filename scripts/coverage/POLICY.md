@@ -92,3 +92,9 @@ and full project coverage remain incomplete. See the CR
 ## Maintained local recipe and configuration scope — 2026-10-04
 
 Maintained first-party Makefile recipes and repository workflow local run/configuration expressions remain in-scope executable candidates. Include disabled or test-triggered maintained local recipe operations rather than excluding them by current execution. External third-party action implementation remains excluded as third-party code, while local uses/configuration/control expression sites remain unresolved candidates pending engine and original-source attribution qualification. Source blocks, expansion prefixes and remaining physical configuration lines are inventory units, not executable-line counts. No complete denominator or ratio is admitted by this scope decision. Ref: R-14.
+
+## Current finite browser class disposition — 2026-10-04
+
+Ref: R-14. Adopt the exact three owned HTML inline modules’ six original lines under native CDP precise V8 coverage plus actual import-resolution and initialize/SVG evidence. Whole-source identity and the two straightline syntactic forms delimit this complete finite class; changes require requalification. Preserve six adopted helper exit1, no independent import-line counter and point-in-time CDN caps. Other language/platform classes remain OPEN; global denominator and ratio are unadmitted. See the CR finite JS class report.
+
+Ref: R-14 Current Go independent145-source/771-archive/12-replay inventory remains6182 candidates; original native static-storage/panic-init counterexamples prove zeroUNKNOWN is not semantic completeness. Python768/755/13 statement inventory remains INCOMPLETE: actual child exit0 without expected profile fails closed, shell-origin custody and multiline semantics pending. See the CR finite JS class report and hash-bound `scripts/coverage/class-admissions.json` registry; evidence source baseline is distinct from future delivery HEAD.

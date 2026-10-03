@@ -1,0 +1,154 @@
+{
+  "schema": "finite-source-class-admission/v1",
+  "state": "ROOT_ADOPTED_FINITE_CLASS",
+  "decision_authority": "Root coordinator adopts exact finite owned-browser JS class; root sole tracked apply",
+  "ref": "R-14",
+  "classes": {
+    "owned_browser_javascript": {
+      "status": "QUALIFIED_FINITE_COMPLETE_CLASS",
+      "original_executable_lines": 6,
+      "original_hit_lines": 6,
+      "selected_metric": "native CDP V8 precise coverage + actual import resolution/module-entry and initialize/SVG behavior for exact two straightline forms",
+      "whole_source_sha256": {
+        "docs/manual/en/index.html": "e7c8c903c0dd342d7a544ae4a77e1789eaacd619755a5f98921904638ce8194f",
+        "docs/manual/zh-tw/index.html": "cdb07bf0982611948cf53f0990a6e8b6b277791b32f6f65d12c0a2eb666cbed0",
+        "docs/review/index.html": "0d80785a35992ab8f1a52901f92c6d6b2e6dc85a5bf0ae365476eba77cd3444e"
+      },
+      "sites": [
+        {
+          "path": "docs/manual/en/index.html",
+          "original_source_sha256": "e7c8c903c0dd342d7a544ae4a77e1789eaacd619755a5f98921904638ce8194f",
+          "line": 8,
+          "token": "import mermaid from",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 3,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        },
+        {
+          "path": "docs/manual/en/index.html",
+          "original_source_sha256": "e7c8c903c0dd342d7a544ae4a77e1789eaacd619755a5f98921904638ce8194f",
+          "line": 9,
+          "token": "mermaid.initialize",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 93,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        },
+        {
+          "path": "docs/manual/zh-tw/index.html",
+          "original_source_sha256": "cdb07bf0982611948cf53f0990a6e8b6b277791b32f6f65d12c0a2eb666cbed0",
+          "line": 8,
+          "token": "import mermaid from",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 3,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        },
+        {
+          "path": "docs/manual/zh-tw/index.html",
+          "original_source_sha256": "cdb07bf0982611948cf53f0990a6e8b6b277791b32f6f65d12c0a2eb666cbed0",
+          "line": 9,
+          "token": "mermaid.initialize",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 93,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        },
+        {
+          "path": "docs/review/index.html",
+          "original_source_sha256": "0d80785a35992ab8f1a52901f92c6d6b2e6dc85a5bf0ae365476eba77cd3444e",
+          "line": 8,
+          "token": "import mermaid from",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 3,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        },
+        {
+          "path": "docs/review/index.html",
+          "original_source_sha256": "0d80785a35992ab8f1a52901f92c6d6b2e6dc85a5bf0ae365476eba77cd3444e",
+          "line": 9,
+          "token": "mermaid.initialize",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 93,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        }
+      ],
+      "syntax_inventory": {
+        "inline_modules": 3,
+        "event_handlers": 0,
+        "javascript_urls": 0,
+        "owned_external_js": 0
+      },
+      "native_peer_materials_verified": 210,
+      "receipt_bindings": {
+        ".security/browser-lines-20261003/source-inventory/receipt.json": "5960bef94a3c8497e97c25481f4f7072f9148b60de6e445c3b95fe0a360837ea",
+        ".security/browser-lines-20261003/peer-review/receipt.json": "8fb9c0828e51885b97b78ae8efeeed7d899aafcef95c7728b1f8c1ede9475520",
+        ".security/browser-lines-20261003/maintained-pages/receipt.json": "7cd45b1768597a877eb6766cdf1eebdfd7175499a7800799db7d762187150a6d",
+        ".security/browser-lines-20261003/maintained-pages/mapping-readback/readback.json": "88382fdfcae0572f3235cf9458e25798bed79fd3dfe11f777eac12a0a84ed26e",
+        ".security/browser-lines-20261003/mapping-contracts-successor/receipt.json": "070773d14e7964588f337a4a92a6e0f97eaf350bd117c4cbbc2d6c194c305f98",
+        ".security/current-js-finite-admission-20261004/independent.json": "c4874bb07e98f9b6bcf15bb6dc22aabc78fdd8507125f3a992967687f3d156ba",
+        ".security/current-js-finite-admission-20261004/native-range-readback.json": "81e659b445e12cfacb01036e202418ae3061abf62f6a94d2011f344b130cd2dc"
+      },
+      "caps": [
+        "six adopted browser helper exit1 retained; leader0/owned cleanup qualified, no all-descendants0 claim",
+        "no independent native import-line counter",
+        "mermaid CDN dependency exact point-in-time hashes; future CDN bytes not admitted",
+        "change to any whole HTML source or admitted syntactic form requires requalification",
+        "arbitrary future JS syntax, formal cross-family review and promotion not admitted"
+      ]
+    },
+    "go": "OPEN",
+    "python": "INCOMPLETE_NOT_ADMITTED",
+    "shell_and_local_recipe_config": "OPEN",
+    "embedded_lua": "OPEN"
+  },
+  "project_line_ratio": null,
+  "full_goal": "active",
+  "global_LINE95": "OPEN",
+  "main": "HELD",
+  "formal_review": "immutable existing R-14 authority",
+  "registry_role": "Hash-bound finite coordinator disposition registry; not an executable gate and not evidence of future commit measurement",
+  "evidence_source_baseline": {
+    "head": "4f7f6d500c3956eb4fc4cf53319d1283a619d5f9",
+    "tree": "86dbe9e2f0da7d3eb4ffc2982d7d31035c69469e",
+    "meaning": "Source baseline of evidence; does not assert new delivery commit has been measured"
+  },
+  "other_class_evidence_receipts": {
+    ".security/go-operation-completeness-20261004/final-receipt.json": "bf29c229d7eed4fee28444e3610c321fd5208acc7cbf4e1f997b34501ec0d831",
+    ".security/go-current-start-contexts-20261004/independent.json": "f16d72966ad2ba32e93878105c62e0d21b6c9977d4c99bd0235980c7e3647ffd",
+    ".security/python-full-class-inventory-20261004/receipt.json": "b6938c4525a74b410a25bcee293f858879b145377fd0a7c2bacfb220f5c45e70"
+  }
+}

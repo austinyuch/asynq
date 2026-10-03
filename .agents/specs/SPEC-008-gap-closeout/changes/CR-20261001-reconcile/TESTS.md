@@ -166,3 +166,7 @@ Ref: R-14. [Windows tests and aggregate roles](reports/windows-test-portability-
 
 
 Ref: R-14. [Rejected Start handler preservation](reports/server-start-handler-preservation.md) retains dev126254b4 hosted37154543825 core race failure/four skipped gates; candidate assigns handler only after successful state admission and before workers, with distinct-handler rejection preservation assertion. Bounded source review PASS; native/PBT/fuzz/mutation bounded PASS; fresh three-platform compilation PASS; successor delivery PENDING. Windows runtime/complete denominator/LINE95/formal/main/release remain OPEN; ratio null.
+
+- Ref: R-14 Finite JS class admission uses exact current3HTML/6original lines, complete source syntax scan, native CDP/import/SVG and independent210-material readback. Retain helper6exit1/no independent import counter/CDN point-in-time limits. All other classes, Go semantic completeness and global95 remain OPEN.
+
+Ref: R-14 Current Go independent145-source/771-archive/12-replay inventory remains6182 candidates; original native static-storage/panic-init counterexamples prove zeroUNKNOWN is not semantic completeness. Python768/755/13 statement inventory remains INCOMPLETE: actual child exit0 without expected profile fails closed, shell-origin custody and multiline semantics pending. See the CR finite JS class report and hash-bound `scripts/coverage/class-admissions.json` registry; evidence source baseline is distinct from future delivery HEAD.
