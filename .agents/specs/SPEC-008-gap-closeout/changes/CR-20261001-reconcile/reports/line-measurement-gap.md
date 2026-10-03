@@ -96,3 +96,64 @@ Current dirty candidate source-bound receipt `.security/main-admission-current/s
 ## Delegated policy successor (2026-10-03)
 
 `scripts/coverage/POLICY.md` now adopts owned maintained production executable LINE scope and explicit exclusions under user delegation. This supersedes the historical unselected-policy status, not the dated measurement observations. Current checkout source is the denominator; released team.3 consumer dependencies retain separate contexts. Unmeasured languages/platforms remain incomplete, and neither physical inventory counts nor statement profiles produce a project ratio. `docs/REVIEWER_ADMISSION_HANDOFF.md` records the separate native ACP promotion capability gap and proposed owner acceptance work.
+
+
+## Source-bound observer and typed inventory follow-up (2026-10-03)
+
+Policy delivery is dev `c28062492bc5602173f2807d97f76c8cc8456501`, tree
+`d07e6ec8fa7c09d35e7792bd53023f44db65be01`. Hosted run37100672109 SUCCESS
+checked out96ff1b593358963f1b9753a75dcc9ce23699e664 with main57/devc280 parents
+and the same tree. This is the policy predecessor, not delivery of the following
+ignored experimental producers or a project coverage verdict.
+
+The independent-parent, bounded own-session native observer records actual GDB,
+child wait and parent kernel status. All five panic/short-circuit witnesses have
+matching selected-site outcomes. Actual errors/context package v4 observations
+retain10/5 existing Tests with unchanged normal/debug verdicts, all three exits0,
+no output truncation and complete own-session cleanup. Errors105 and context28
+compiler-attributed hit lines are subsets; unmapped physical lines199/59 remain
+visible. Each instruction PC is disabled only after its first actual hit. A
+negative SID-escape contract proves the escaped child is outside the cleanup
+scope and ends naturally; it does not prove whole-process-tree containment.
+Earlier argv/no-test, logging/timeout and negative-breakpoint failures are retained.
+Package closeout `.security/line-packages-20261003/closeout.json`, SHA
+`2d9459b123ef0aa28073e810b46645782872fae0cca24c8f491392c44bff38e2`,
+closes118 materials. No debugger timing/concurrency equivalence is inferred.
+
+The syntax inventory includes45 unique owned production Go files and63118 AST
+nodes, with original positions and parent ancestry. The original inventory already
+includes all three Go/Lua mixed files. A later erroneous48-unique declaration
+counted their duplicate language memberships; its bytes are retained and rejected
+by the native count guard. Correct scope is45 unique files,3 mixed files and48
+Go/Lua membership records. Cross-language original path/line/source identities
+must be deduplicated rather than counted twice. Test-only helpers, demo and
+protobuf exclusions retain the policy reasons; no unmapped or platform file is
+excluded because it lacks observed execution.
+
+The untyped semantic-v3 prototype passes27 marked contracts and100 seeded
+line-position properties. Actual Go1.26.6 coverage-guided fuzz completes133680
+executions after finding and repairing a nil-body function-declaration panic;
+the minimized input and failed campaign remain retained. Four assertion-caught
+semantic mutants belong to untyped v2 only. These tests qualify their bounded
+contracts; they are not current typed-producer fuzz/mutation or production-line
+evidence. Closeout `.security/semantic-lines-20261003/closeout.json`, SHA
+`39552f0d7c6187c3d75a11e42c50a708bde4cce6aaf2a19600e47a32cc5feb47`.
+
+Six actual cached-only Go1.26.6 export and native go/types contexts cover
+root/x/tools on linux/windows arm64. Corrected typed-v3 attempt04 retains all45
+source hashes and returns0 in every context;30 actual typed-fixture role
+assertions pass. Conversion/type arguments, named composite keys, imported
+package qualifiers and assignment targets are distinguished. Root/x use current
+root; tools imports released team.3. Windows export/type checking is not Windows
+runtime execution. Export-cache locators are hash-checked inputs, not durable
+copies or future cache-custody claims.
+
+Typed closeout `.security/typed-lines-20261003/closeout.json`, SHA
+`9e548f13336d1be5652dc288c2f128df7eeffbdc0521f68a6352825a30180c0f`,
+retains6164 candidate and361 unresolved unique source lines across contexts.
+Candidate/unknown overlap is permitted; neither is a complete executable
+denominator or a hit count. Case dispatch and nonconstant package static/runtime
+initialization still require semantic qualification. Other maintained languages
+and actual platform observations remain open. Project ratio stays null; the
+user LINE>=95% target, SPEC-008 readiness, strict cross-family review, protected
+main, real sequential release and cleanup custody remain unfinished.

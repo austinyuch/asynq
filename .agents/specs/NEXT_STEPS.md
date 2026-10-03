@@ -67,3 +67,23 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 ## Delegated measurement and reviewer capability slice (2026-10-03)
 
 The user instructed the coordinator to select and handle both outstanding choices. Policy is in `scripts/coverage/POLICY.md`; source inventory retains unmeasured classes as incomplete, with no project ratio. The read-only owner live-contract view records Grok ACP reviewed PASS on20260928, but owner native code explicitly lacks an ACP pointer carrier and refuses sealed promotion scopes. A prepared local owner CR is in `docs/REVIEWER_ADMISSION_HANDOFF.md`; no foreign tracked write, provider dispatch, owner publication or promotion PASS is claimed. This supersedes the historical lack-of-selected-policy statement; previous review permission was for the fixed original payload. Current policy implementation, project line95, strict review, main and real release remain separate unfinished gates.
+
+
+## Typed measurement follow-up (2026-10-03)
+
+The policy predecessor c280/d07 is delivered with hosted37100672109 SUCCESS.
+[Source-bound measurement follow-up](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/line-measurement-gap.md)
+records the selected-package native observer, retained failures, syntax/semantic
+contracts and actual six export/type contexts. The Go source cohort is45 unique
+files including3 mixed Go/Lua files;48 is a language-membership count. Native
+count mismatch rejects the retained erroneous declaration. Typed-v3 fixtures
+pass30 role assertions; its6164 candidate/361 unresolved union is not a coverage
+ratio. Earlier untyped-v3 fuzz and v2 mutation evidence remain separately bound.
+
+Next ROI: settle case dispatch and nonconstant package-initializer classification,
+then qualify full executable inventories and original-line observations for all
+maintained languages/platforms. Current-root/x and released-root tools contexts
+remain distinct. This evidence reconciliation does not change SPEC-008 verdict,
+strict review/main/release gates or cleanup custody. Its dev-delivery authority is
+`.security/line-observer-delivery-20261003/gate-ledger.json` only when that receipt
+exists in DEV_DELIVERED_MAIN_HELD state with actual gate/remote/hosted bindings.
