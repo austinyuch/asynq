@@ -162,3 +162,6 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 
 - [x] Retain the rejected final-LOADK guard and qualify the selected constant-binding/named-function after-operation successor with seven paired native witnesses,100 properties, three viable ordinary mutation catches and independent review.
 - [ ] Extend compiler emission mappings to all owned Lua operation roles and integrate exact production Redis Proto profiles; two guarded standalone classes do not admit all50 scripts.
+
+- [x] Reproduce downstream published-queue transport cause loss with independent owned Redis state oracle, preserve cause at four helper/preload sites, and check four viable mutation catches plus bounded PBT/fuzz.
+- [ ] Bind published-queue cause fix to clean exact build/make/security/RDB-race gates, remote parity and actual hosted checkout proof before dev delivery; protected main and project LINE95 remain OPEN.

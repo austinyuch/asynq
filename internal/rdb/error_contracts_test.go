@@ -184,25 +184,15 @@ func TestClosedClientOperationContracts(t *testing.T) {
 		"ClearSchedulerHistory":       errors.Unknown,
 		"WriteResult":                 errors.Unknown,
 	}
-	// These APIs currently format the Redis cause instead of wrapping it.
+	// These tested routes still format the Redis cause instead of wrapping it.
 	formattedCauses := map[string]bool{
-		"AggregationCheck":            true,
-		"Archive":                     true,
-		"BatchEnqueue":                true,
 		"CancelationPubSub":           true,
-		"DeleteAggregationSet":        true,
 		"DeleteExpiredCompletedTasks": true,
 		"Dequeue":                     true,
-		"Done":                        true,
 		"ForwardIfReady":              true,
 		"ListLeaseExpired":            true,
-		"MarkAsComplete":              true,
 		"PublishCancelation":          true,
 		"ReadAggregationSet":          true,
-		"ReclaimStaleAggregationSets": true,
-		"RecordSchedulerEnqueueEvent": true,
-		"Requeue":                     true,
-		"Retry":                       true,
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
