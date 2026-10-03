@@ -63,3 +63,6 @@ scripts/security/__pycache__/
 
 # Python event ledger regression cache
 scripts/coverage/__pycache__/
+
+# Durable local cross-model review findings and handoffs
+.reviewer-output/
