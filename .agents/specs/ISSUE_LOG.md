@@ -56,6 +56,8 @@ The following original issue rows are owned by the active CR. Their recorded can
 
 | IL-025 | 2026-10-03 | Successfully published queue bypasses SADD, then downstream script/preload formatting loses Redis transport cause | Four %w sites retain Unknown/Internal/op/diagnostics; eight native cause RED→GREEN, independent owned-state oracle, four viable mutants and bounded PBT/fuzz | folded CR-20261001-reconcile; [candidate](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/published-queue-transport-cause.md); exact dev delivery/main pending |
 
+| IL-026 | 2026-10-04 | Real ACL MEMORY denial loses typed redis.Error in memoryUsage and CurrentStats | One %w wrapper preserves Unknown/op/diagnostic; identical native RED/GREEN, real metadata partial effects, payload PBT/guided fuzz and three compiled mutants | folded CR-20261001-reconcile; [candidate](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/rdb-acl-contracts.md); exact dev delivery/main pending |
+
 ## Resolved
 
 | ID | 記錄日 | 描述 | 解法 / 證據 |

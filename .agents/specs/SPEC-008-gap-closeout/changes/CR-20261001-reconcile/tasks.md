@@ -171,3 +171,6 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 - [x] Rebuild current two-file RDB native compiler profiles and retain independently checked349/348/1 outcomes,1517 compiler lines/1440 hits with139 original-source bindings.
 - [x] Retain the no-DWARF original-operand counterexample, five-site103-pair typed-string pilot/two caught mutants, and three production operand56-event overlay pair with exact mapping and native custody.
 - [ ] Admit complete original-line semantics/denominators across all maintained language/platform classes before LINE95 or protected promotion; bounded compiler and operand observations do not close this requirement.
+
+- [x] Reproduce real ACL memory typed-cause loss, preserve cause with one wrapper change, and verify unchanged partial-effect contracts plus100 payload properties/guided native fuzz/three compiled mutants.
+- [ ] Bind ACL successor to exact frozen build/make/security/RDB-race gates, remote parity and hosted checkout proof; refresh changed inspect.go source measurements before any carry-forward.
