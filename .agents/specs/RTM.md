@@ -72,3 +72,6 @@ R-REC-ACL maps real ACL memory typed-cause preservation and metadata partial eff
 R-14 zero/folded measurement refinement maps to [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-zero-folded-qualification.md). Bounded typed/native phase evidence and143-source contexts remain experimental; bounded six-context independent review PASS; complete executable denominator and LINE95 remain OPEN. Ref: R-14.
 
 R-14 maintained-source cohort and local recipe scope maps to [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/source-scope-manifest.md).293 tracked classifications/byte-map-v2/recipe source blocks are independently bounded evidence; complete operation inventories/observers and denominator remain INCOMPLETE. Ref: R-14.
+
+
+R-14 Windows test portability/aggregate candidate roles map to [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/windows-test-portability-and-aggregate-roles.md). Cross-compilation/current-byte review and bounded v8 semantic roles are verified; Linux regression/final delivery pending, Windows runtime and full executable denominator incomplete. Ref: R-14.
