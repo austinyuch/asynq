@@ -88,3 +88,7 @@ ranges must prevent positive-parent span filling. Current qualification is bound
 to the three documents' six straight-line owned JS lines; other language classes
 and full project coverage remain incomplete. See the CR
 [shell/browser report](../../.agents/specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/shell-and-browser-qualification.md).
+
+## Maintained local recipe and configuration scope — 2026-10-04
+
+Maintained first-party Makefile recipes and repository workflow local run/configuration expressions remain in-scope executable candidates. Include disabled or test-triggered maintained local recipe operations rather than excluding them by current execution. External third-party action implementation remains excluded as third-party code, while local uses/configuration/control expression sites remain unresolved candidates pending engine and original-source attribution qualification. Source blocks, expansion prefixes and remaining physical configuration lines are inventory units, not executable-line counts. No complete denominator or ratio is admitted by this scope decision. Ref: R-14.

@@ -181,5 +181,12 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 - [x] Ref: R-14 Retain exact single zero-store phase and typed-constants-v2 source/value/position/PBT/fuzz/mutation native custody; preserve first citation failure.
 - [x] Ref: R-14 Retain bounded v7 native contracts and fresh six143-source type/export contexts; current experimental6211→6077 semantic refinement is not denominator admission.
 - [x] Ref: R-14 Independently replay six-context v6/v7 exact sites with12 native replays/1024 materials; no formal cross-family admission.
-- [ ] Ref: R-14 Deliver governance refinement through exact gates/remote/hosted authority.
+- [x] Ref: R-14 Deliver prior zero/folded governance refinement at devf5b0c0ae with hosted37149325053 and independently sealed514-material authority.
 - [ ] Ref: R-14 Qualify full policy languages/platforms/source-operation denominator before project LINE95/protected promotion.
+
+- [x] Ref: R-14 Retain293 tracked-path classifications and bounded45Go/3Python/3Shell/50Lua/3JS-document cohort; preserve failed initial mapping and independent byte-map-v2.
+- [x] Ref: R-14 Select maintained local Make/workflow recipe/configuration scope and independently inventory41sourceblocks/19configsites/21expansion prefixes.
+- [ ] Ref: R-14 Qualify complete recipe/configuration original operations,113remainingconfigurationlines and full expansion provenance; no prefix-count denominator inference.
+- [ ] Ref: R-14 Complete all-policy executable denominator/observers/platform profiles before LINE95 and protected promotion.
+
+Current source-scope delivery status follows its report’s conditional exact gate/remote/hosted ledger authority; scope adoption does not close executable-line qualification tasks.
