@@ -116,3 +116,11 @@ and50 stdin-observed security tests keep their separate runtime contexts. Do not
 count689 profile inputs or840 process profiles as distinct children. Source-before
 reconstruction, missing full stdin sys.flags and nonidentical shell output remain
 explicit; full shell/Lua/browser/Go/platform qualification is OPEN.
+
+
+Shell/browser follow-up: [report](reports/shell-and-browser-qualification.md).
+Actual current browser class has six original JS lines observed and independently
+reviewed; Shell340 experimental candidates retain unadmitted dynamic contexts.
+Nine Shell contracts/100 properties/two producer mutants and10-second fuzz are
+producer evidence, not production adequacy. Full project ratio remains null.
+Next: owned registry-admitted Redis runtime, Lua mapping and full Go profiles.

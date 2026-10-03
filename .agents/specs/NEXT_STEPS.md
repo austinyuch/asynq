@@ -116,3 +116,11 @@ limits remain explicit. Closeout3805 materials SHA
 7da1f5a3b64124bbd702505d4293e1695fde83679e5d479078dd08ec4d33c011.
 Next: qualify full Go runtime and remaining shell/Lua/browser inventories/observers;
 these focused counts do not admit project LINE95, main, real release or cleanup.
+
+
+Shell/browser follow-up: [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/shell-and-browser-qualification.md).
+Actual current browser class has six original JS lines observed and independently
+reviewed; Shell340 experimental candidates retain unadmitted dynamic contexts.
+Nine Shell contracts/100 properties/two producer mutants and10-second fuzz are
+producer evidence, not production adequacy. Full project ratio remains null.
+Next: owned registry-admitted Redis runtime, Lua mapping and full Go profiles.
