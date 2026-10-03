@@ -7,7 +7,7 @@
 - [x] Reconcile seven historical documentation contradictions.
 - [x] Generate three-module SBOM/CVE/KEV/SAST baseline; patched Go 1.26.6 gate PASS.
 - [x] Published5e98135 security/build/vet/tools gates and push parity; root/x/cluster carried with complete source-equality proof from72dbcd0.
-- [ ] Cross-family review: destination approval required after automatic review refusal.
+- [ ] Cross-family review completion: fixed published main57→dev25 Grok/ACP payload authorized2026-10-03; actual promotion coverage-proof/transport admission remains incomplete.
 - [x] Integrate validated candidate through bc9fad7 into dev; security-document successor6898b82 pushed.
 - [ ] Complete protected main PR22/check/merge after unfinished objective work.
 - [ ] Reach >=95% project-wide line coverage; remaining root/rdb/x-metrics/tools gaps open.
@@ -113,6 +113,11 @@
 - [x] Deliver integrity-contract successor dev3da; final-sast-integrity9a9dd520/6949 materials and exact49/8 gates/hosted36908639580 actual checkout/tree PASS.
 
 - [x] Rehearse unpublished root→x→tools file-proxy snapshots with canonical zips, no-replace versioned CLI/exporter installs and actual root4/x4 build identities;32 closed-client consumer cases distinguish baseline0/candidate32 preserved causes;28 phases terminal0.
-- [ ] Deliver release preparation/governance slice with verified final-release-rehearsal ledger; no public tags/releases/notifications are inferred from rehearsal.
+- [x] Deliver release preparation/governance slice dev25 via final-release-rehearsal4f1e971/8920 and independent auditdcdf349; no public tags/releases/notifications are inferred from rehearsal.
 
-- [ ] Verify gosec evidence-directory boundary repair: actual per-module argv component exclusion and native fixture/control/removal-mutant evidence `.security/final-release-rehearsal/scope-regression/20261001T193732Z/receipt.json` SHA `6145b4f69efc72dd6ab4f5041d096b7be7ccd3d0dce038185b1ce899ceb9eb56` PASS; candidate50 security contracts and fresh exact security/build/make/hosted gates remain pending. Preserve failed36 receipt; do not push36 as complete.
+- [x] Verify gosec evidence-directory boundary repair: actual per-module argv component exclusion and native fixture/control/removal-mutant evidence `.security/final-release-rehearsal/scope-regression/20261001T193732Z/receipt.json` SHA `6145b4f69efc72dd6ab4f5041d096b7be7ccd3d0dce038185b1ce899ceb9eb56` PASS; exact50/8 and security/build/make/hosted gates passed dev25 as recorded by final-release-rehearsal ledger. Preserve failed36 receipt; do not push36 as complete.
+
+- [x] Record scoped2026-10-03 published Grok/ACP payload authorization and actual promotion preflight exit3; no review PASS inferred.
+- [ ] Complete coverage-proof/promotion admission and actual cross-family review; fixed payload authorization does not bypass those gates.
+
+This bounded closeout only records delivery and actual preflight facts. `.reviewer-output/` is ignored for durable local reviewer custody; findings are retained, with no production-source or global-tool change. `.security/final-admission-closeout/gate-ledger.json` becomes successor delivery authority only if it exists in DEV_DELIVERED_MAIN_HELD state with verified exact gate/source/remote/hosted bindings. Main, cross-family review completion, project-wide true-line95, real sequential release and cleanup remain held; SPEC-008 verdict is unchanged.

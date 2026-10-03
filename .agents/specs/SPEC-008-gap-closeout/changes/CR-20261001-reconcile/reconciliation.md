@@ -26,7 +26,7 @@ Architecture: organization profile absent; system-architect configuration decisi
 
 External IL-005/006/007 stay unresolved until their owning repository supplies fresh evidence. Registry now permits this task's isolated Valkey at 16382, without persistent volumes; old observations are not rewritten as current owner resolutions.
 
-Cross-family review: native xreview init selected Grok/ACP. Automatic approval review refused dispatch, including after proving the repository PUBLIC, because the local candidate diff is unpublished and specific destination authorization was absent. No review PASS, main promotion or release is claimed.
+Cross-family review: native xreview init selected Grok/ACP. Automatic approval review refused dispatch, including after proving the repository PUBLIC, because the then-local candidate diff was unpublished and specific destination authorization was absent (dated historical observation). No review PASS, main promotion or release is claimed.
 
 ## Validation limits
 
@@ -58,3 +58,11 @@ The preceding sections retain dated baseline inventory, not current PR/ref/cover
 Event-ledger/public Inspector slice delivered at dev7538dd125a73b1e5c1b027dc85de8a71a0ca10be/tree0b02e84394401d8aeee7910d4377a01a310318f7. Final-event-ledger SHA c446e77dfb37c37981e80a4d053d97b884b9e63c62e31455527323fbd26e4c67 closes1178 materials; hosted36872746124 SUCCESS including the Python contract step. Actual checkout20bd3c8ecee6044e9952a69cab2a69194954fa37 has verified main57/dev7538 parents and identical tree. Fresh root executed2d07568;137 subjects (131 Go files plus6 dependencies) remain byte-equivalent. Root3463/3634 native statements95.2944%; x/tools retain dated compiled-consumer runtime contexts. Remote refs and clean working tree verified. Main/release and the user line-coverage target remain unfinished.
 
 Measurement scope remains pending: the original user line target is not satisfied by statement coverage, but the observational cross-language/test/document inventory and generic instrumenter proposal are not newly adopted hard gates. NEXT_STEPS remains the operational handoff.
+
+## Bounded admission closeout2026-10-03
+
+Release preparation and gosec evidence-scope repair delivered dev25a7fa32f4a6664117e1e10cab3580caa25158a3/treeef416c92fc19f13030bf4a1692174a60c6358c60. Authority `.security/final-release-rehearsal/gate-ledger.json` SHA `4f1e971b0a65123885877768a0a33b4649c1cd97c8e97cbfd0bc43eaf8e76a54` closes8920 materials; independent final audit SHA `dcdf349a966414dc5431fc7f8c58bf58ffe68e50f14b8787a52d91d6a2da18b0` verifies the closure. Exact50 security/8 event tests and build/vet/security/native gates passed. Hosted36916206937 SUCCESS actualcheckout45fa1bad1123201d5828bfabb11b1cd26ee55f79 has main57/dev25 parents and equal tree. Historical36 failed security receipt is preserved, not a delivery authority.
+
+On2026-10-03 the user approved the fixed published154-path main57→dev25 Grok/ACP payload/destination. Earlier missing-authorization refusals are historical; this approval does not approve a line-coverage policy or bypass a gate. Native v0.90 promotion preflight run-e090043796b8b0e20411af83 exits3 with scope-evidence-unavailable / promotion-route-without-coverage-proof. ACP transport discovery occurred, evidence_started=false and Git remained stable; no actual review, coverage proof or PASS occurred. Exec remains quarantined with exec-reviewed-live-evidence-missing; no global-tool/policy bypass is authorized.
+
+This bounded closeout only records delivery and actual preflight facts. `.reviewer-output/` is ignored for durable local reviewer custody; findings are retained, with no production-source or global-tool change. `.security/final-admission-closeout/gate-ledger.json` becomes successor delivery authority only if it exists in DEV_DELIVERED_MAIN_HELD state with verified exact gate/source/remote/hosted bindings. Main, cross-family review completion, project-wide true-line95, real sequential release and cleanup remain held; SPEC-008 verdict is unchanged.
