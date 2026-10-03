@@ -139,3 +139,9 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 - [x] Observe base/log/timeutil original Go inferiors with per-hit process identity, actual exits and bounded own-session cleanup;232/232,47/49,12/12 candidate hits, unobserved descendants retained uncovered.
 - [x] Preserve pinned standalone Python line profiles,689 original input copies and independent recombination; actual run.sh three-heredoc runtime mapping48 lines/840 process profiles with explicit interpreter/output/custody limits.
 - [ ] Qualify full language/platform inventories and observers, collect full exact-source profiles and form the deduplicated project executable LINE denominator; project95 remains OPEN.
+
+
+- [x] Adopt Shell original-token attribution; retain actual kcov/PS4/trap counterexamples, restricted eight-fixture guard and producer contracts/PBT/mutation/fuzz.
+- [x] Qualify the current three-document six-line owned JS class with actual Chromium/CDP, exact UTF16/source maps and independent bounded readback; retain helper exit1 and floating CDN limits.
+- [x] Validate selected Go probe grouping; retain all50 embedded Lua source maps/compile results and verified owner registry-client concurrency checks.
+- [ ] Complete owned Redis runtime, Lua observer qualification and full Go/platform profiles; full executable LINE95/main/release/cleanup remain OPEN.

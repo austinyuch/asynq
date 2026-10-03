@@ -53,9 +53,9 @@ denominator. Physical line counts are inventory observations only.
 | --- | --- | --- |
 | Go | Native instruction/source-line observer on debug test binaries; retain statement profiles separately | Validate original-line mapping, panic/short-circuit witnesses, unexecuted files and platform contexts. Existing selected-package GDB pilots are insufficient for project admission. |
 | Python | Version-pinned coverage.py line tracing with child-process capture and JSON executable/missing lines | Validate complete maintained-source inventory, children, source identity and normal/traced equivalence. Existing stdlib trace receipts remain dated evidence. |
-| Shell | Version-pinned kcov bounded pilot, checked against existing PS4 observations | Validate sourced files, children, source whitelist, unexecuted files and original-line mapping before adoption as a qualified producer. |
+| Shell | Original-token AST inventory and fail-closed native observer qualification; retain failed kcov/PS4 pilots | Validate sourced files, children, source whitelist, unexecuted files and original-line mapping before adoption as a qualified producer. |
 | Embedded Lua | Isolated Redis Lua debugger line observations with explicit embedding map | Validate all scripts, unexecuted scripts, debugger/runtime equivalence and source mapping; existing Go profiles do not cover Lua. |
-| Embedded JS | Real Chromium Playwright V8 coverage with pinned source-range-to-line mapping | Include unexecuted owned inline modules and real browser execution. Node tests with a Mermaid stub cannot substitute for browser coverage. |
+| Embedded JS | Real pinned Chromium CDP V8 precise coverage with original UTF16 range-to-line mapping (Playwright-compatible producer) | Include unexecuted owned inline modules and real browser execution. Node tests with a Mermaid stub cannot substitute for browser coverage. |
 
 The plan selects the direction of work; it does not assert that these observers
 are installed, qualified or interchangeable. Go block coverage counts statements
@@ -72,3 +72,19 @@ Primary references: [Go cover](https://pkg.go.dev/cmd/cover),
 
 Next: produce the classified source manifest and qualify the Go observer against
 the existing semantic witnesses before a full runtime campaign.
+
+## Adopted source-operation refinements
+
+Shell attribution uses operation token positions: function registration at its
+name, loop/if/case decisions at headers, operator sites and independently
+maintained dynamic children/bodies. Static pattern labels, structural footers and
+plain continuation literals are nonexecutable; never fill complete AST spans.
+Source/eval command sites stay executable candidates while dynamic provenance
+remains separately unadmitted. An unresolved context never excludes source.
+
+CDP native V8 precise coverage preserves the selected browser metric without
+requiring a Playwright wrapper. Exact original UTF16 maps and innermost zero-count
+ranges must prevent positive-parent span filling. Current qualification is bounded
+to the three documents' six straight-line owned JS lines; other language classes
+and full project coverage remain incomplete. See the CR
+[shell/browser report](../../.agents/specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/shell-and-browser-qualification.md).
