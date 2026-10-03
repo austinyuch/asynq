@@ -156,3 +156,6 @@ Current source refresh: [report](SPEC-008-gap-closeout/changes/CR-20261001-recon
 
 
 Redis ACL follow-up: [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/rdb-acl-contracts.md). Frozen eight-case RED7PASS/1 typed-causeFAIL becomes GREEN8PASS after one memoryUsage %w repair. Genuine scheduler/queue partial effects,100 real payload properties, guided native fuzz306 engine executions and three compiled assertion-caught mutants are retained with independent review. Original parser/oracle failures remain preserved. inspect.go changed: prior af7da13a native compiler/hit and embedding mappings are historical; no hit carry-forward is admitted. Exact successor delivery, complete LINE95, cross-family review/main/release remain OPEN.
+
+
+ACL hosted compatibility correction: dev90ed3b5 is pushed but hosted37142544985 FAILED on Redis7-only payload permission wording under Valkey9.1. Test-only successor accepts both observed diagnostics while preserving typedcause/Unknown/op/state requirements. See [ACL report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/rdb-acl-contracts.md). Successor local107 native PASS and guided fuzz284 are candidate evidence; exact hosted delivery remains unproven until successor readback. Project LINE95/main/release remain OPEN.

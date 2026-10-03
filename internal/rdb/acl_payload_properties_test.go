@@ -158,7 +158,7 @@ func aclPayloadProperty(tb testing.TB, payload []byte) {
 	if err == nil || !stderrors.As(err, &ce) || ce.Op != "rdb.UpdateTask" || ce.Code != canonical.Unknown || !stderrors.As(err, &server) {
 		tb.Fatalf("denied HSET lost typed cause/op: %v", err)
 	}
-	if !strings.Contains(server.Error(), "can't run this command") {
+	if !strings.Contains(server.Error(), "can't run this command") && !strings.Contains(server.Error(), "no permissions to run the 'hset' command") {
 		tb.Errorf("expected script Redis permission denial: %v", server)
 	}
 	if !reflect.DeepEqual(before, aclPayloadSnapshot(tb, ctx, admin, q)) {
