@@ -82,3 +82,5 @@ Ref: R-14. [Rejected Start handler preservation](SPEC-008-gap-closeout/changes/C
 | R-14 | Finite owned-browser JS class | Three exact HTML modules/six original executable and hit lines; CDP/import/SVG/210-material readback | Qualified finite class only; helper6exit1/import-counter/CDN caps preserved; all-class LINE95 OPEN |
 
 Ref: R-14 Current Go independent145-source/771-archive/12-replay inventory remains6182 candidates; original native static-storage/panic-init counterexamples prove zeroUNKNOWN is not semantic completeness. Python768/755/13 statement inventory remains INCOMPLETE: actual child exit0 without expected profile fails closed, shell-origin custody and multiline semantics pending. See the CR finite JS class report and hash-bound `scripts/coverage/class-admissions.json` registry; evidence source baseline is distinct from future delivery HEAD.
+
+| R-14 | Current finite Python original-line class |3production scripts+3literal bodies;998 executable/981 hit/17 missing; fresh normal/traced50+8/689 each/3827codeobjects and117 shell closures; independent complete-class PASS | Root-adopted finite class only; ratio null/global LINE95/main/formal held |
