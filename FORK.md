@@ -50,6 +50,7 @@ git config core.hooksPath githooks   # 啟用 pre-push govulncheck
 | Dashboard group navigation | 共用頁面/列邊界、依畫面 offset 選取群組、短末頁與 empty/shrink/tiny-height 防護；resize event 立即重畫 | 七個 original failure observations；source-bound PBT/fuzz/mutation；交付 receipts 見既有 CR |
 | Exporter lifecycle | 私有 registry/mux、SIGINT/SIGTERM 五秒 graceful shutdown、listener/Inspector ownership；HTTP timeout 維持不變 | 新生命週期功能；constructor Redis read 與 forced-close handler 限制見 `tools/metrics_exporter/README.md`；exact 1abf9d3 tools/build/security gates and PR21 parity PASS; integrated into dev, main/release pending |
 | SAST 修正 | gosec 66 → 0:`internal/base` 加 saturating `toInt32`(CWE-190,修 `int32` wrap 導致 retry 計數變負的真 bug)、metrics_exporter 加 HTTP timeouts(CWE-676)、CLI TLS 加 `MinVersion` 1.2(CWE-295)、48 處顯式 error discard(CWE-703);5 個 `#nosec` 皆註明理由並列表於 `docs/SECURITY_LOCAL_CI.md` | upstream 未做 SAST;修正順序依 CWE 對 KEV 的出現頻率排序 |
+| `server.go`, `server_test.go` | Candidate: preserve running handler when Start is rejected; assign only after successful state admission and before workers | hosted37154543825 actual race failure retained; bounded source review PASS; native regression/PBT/fuzz/mutation bounded PASS; fresh three-platform compilation verified / Windows binaries unexecuted; successor delivery PENDING |
 
 
 ## Current validation (2026-10-01)

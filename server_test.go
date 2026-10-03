@@ -109,9 +109,12 @@ func TestServerErrServerRunning(t *testing.T) {
 	if err := srv.Start(handler); err != nil {
 		t.Fatal(err)
 	}
-	err := srv.Start(handler)
+	err := srv.Start(NewServeMux())
 	if err == nil {
 		t.Error("Calling (*Server).Start(handler) on already running server did not return error")
+	}
+	if srv.processor.handler != handler {
+		t.Error("Rejected Start replaced the running server handler")
 	}
 	srv.Shutdown()
 }
