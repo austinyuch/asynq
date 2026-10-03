@@ -1,5 +1,9 @@
 # Source-bound event ledger
 
+Project scope, exclusions and the executable-line target are defined in
+[POLICY.md](POLICY.md). The event ledger remains a consistency consumer and does
+not itself measure that project denominator.
+
 Run the standalone Python3 standard-library tests with `make coverage-events-test`. No Go instrumenter or scanner is installed by this target.
 
 Consume a closed registry and execution manifest:
@@ -12,7 +16,7 @@ python3 scripts/coverage/event_ledger.py \
   --output /path/to/evidence/ledger.json
 ```
 
-The registry maps canonical site IDs to module/version/context, original source SHA256, workspace-relative file, Go UTF-8 byte line/column, adapter and phase. Site IDs are SHA256 over canonical JSON. Phases are `entry`, `completion` and `effect`; their line sets are separate, with no adopted project executable-line denominator or coverage ratio. A zero native-effect set must remain visible.
+The registry maps canonical site IDs to module/version/context, original source SHA256, workspace-relative file, Go UTF-8 byte line/column, adapter and phase. Site IDs are SHA256 over canonical JSON. Phases are `entry`, `completion` and `effect`; their line sets are separate, without a complete measured project executable-line denominator or coverage ratio. A zero native-effect set must remain visible.
 
 The manifest binds the registry hash, declared compiled contexts and go.mod bytes, terminal process identities and expected dispositions, allowed site IDs, producer material hashes, journal files and their hashes, and unsupported categories. A normal process expects exit0; a `base-fatal` fixture expects exit7. Journals contain only `id`, `pid` and `kind`. Duplicate process identities, duplicate canonical journal paths (including symlink aliases), unknown sites, wrong contexts, malformed shapes and mismatched bytes fail with exit2 and fixed stderr. Invalid input creates no new ledger. Successful JSON values are stable; object-key ordering is not a reproducibility contract.
 
