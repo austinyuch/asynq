@@ -1,7 +1,7 @@
 {
   "schema": "finite-source-class-admission/v1",
   "state": "ROOT_ADOPTED_FINITE_CLASS",
-  "decision_authority": "Root coordinator adopts exact finite owned-browser JS class; root sole tracked apply",
+  "decision_authority": "Root coordinator adopts current finite owned JS and Python classes; root sole tracked apply",
   "ref": "R-14",
   "classes": {
     "owned_browser_javascript": {
@@ -131,7 +131,140 @@
       ]
     },
     "go": "OPEN",
-    "python": "INCOMPLETE_NOT_ADMITTED",
+    "python": {
+      "status": "QUALIFIED_FINITE_COMPLETE_CLASS",
+      "selected_metric": "Pinned CPython3.12.3 original-source line events; coverage.py7.14.0 CTracer standalone + exact original stdin body frame events, typed recursive code/source identity and expected/wait/profile closure",
+      "scope": {
+        "production_scripts": 3,
+        "literal_bodies": 3,
+        "tracked_python_tests_excluded": 8,
+        "literal_original_start_lines": [
+          161,
+          455,
+          501
+        ]
+      },
+      "original_executable_lines": 998,
+      "original_hit_lines": 981,
+      "original_missing_lines": 17,
+      "evidence_source_baseline": {
+        "head": "9375109e5c967bf40fc1a92ffa36c53e08422a76",
+        "tree": "83606ecdb99b7a4d87670fade7dcb60d556d0496",
+        "meaning": "Exact evidence source baseline only; future delivery commit is not asserted measured by this registry"
+      },
+      "whole_source_sha256": {
+        "scripts/coverage/event_ledger.py": "c02ccde52ebe30bbc27a9d2c9dedbc81e873500d9e4ef9b58a1724c8d57656ae",
+        "scripts/security/security_local_ci.py": "6be571e26e178ea6ecd368364fdfc9d4d44bf5944632d6d2b883c4e9d43b0ea8",
+        "scripts/security/source_sast.py": "9101cf8ea5be79f7d57e4d18c66bba9556eda70fb69b5ccead7655811cb4114b",
+        "scripts/security/run.sh": "4d0537dbdfd2e2e7251716bae0b2de0de4e32a12cfe551248ee574c9e71a5104"
+      },
+      "original_role_inventory_receipt": ".security/python-inventory-semantic-join-20261004/receipt.json",
+      "proof_receipts_sha256": {
+        ".security/python-standalone-child-closure-v2-20261004/receipt.json": "97c278a0d8de0179442d7f0f326fd99df129c5b07467bd21822223d85551c4d4",
+        ".security/python-standalone-child-closure-v2-20261004/native-profile-line-readback.json": "cf556dc4590bf8a8a9d859eadec7fe4c6793b4f264813ef9d06313fdd9ca574f",
+        ".security/python-original-operation-independent-20261004/original-line-role-map.json": "5e1ca9bf74bcc6bfe65798681d97bbfb317312ae22d9d9d29b5e75e87802536f",
+        ".security/python-original-operation-independent-20261004/qualification-receipt.json": "95cb9b4ca31d7e66d7896e6c046cbf99e5598a7cb20a8ef01fb307f05e6a3a47",
+        ".security/python-inventory-semantic-join-20261004/receipt.json": "cc9a93b0a9b6fd89518982c9f7fc3580cad5d876152bc7f1c73bb619954f3df3",
+        ".security/python-class-scope-20261004/receipt.json": "f9803c7926604cc0fe0c713ad6cdb70f7cc76e795f0e77636d9ecc7896a7ccf7",
+        ".security/python-original-operation-independent-20261004/full-class-qualification.json": "554c771884ca2aef90d71eeeb3eecf4b43448d3506b7c8180358c9b920c9b8d7",
+        ".security/python-original-operation-independent-20261004/full-class-disposition-readback.json": "f906e55b4478ce3880df7de3354fbae4c53407140bc1f90b7a50c51c30933a84",
+        ".security/python-inventory-cli-candidate-20261004/receipt.json": "f893fc7a28636890f577658d5e975c13154130bf31848b91590e16d945cea96f",
+        ".security/python-inventory-cli-candidate-20261004/normal-contracts/result.json": "f980db24b1403c40151b651623a3f5a3e52640c8f1d7822a23442ec82cbe4ea2",
+        ".security/python-inventory-cli-candidate-v2-20261004/execution-receipt.json": "8c148331d60f42b59d43dda1d62d6d87e732a227db1d2ac25bc1f4fd5d3d1a55"
+      },
+      "normal_traced": {
+        "each_expected_children": 689,
+        "each_actual_codeobjects_verified": 3827,
+        "each_security_tests": 50,
+        "each_event_tests": 8,
+        "ordered_assertions_and_stdout_equal": true
+      },
+      "shell_literal_campaign": {
+        "expected_native_children": 117,
+        "wait0": 116,
+        "expected_wait1_with_profile": 1,
+        "observed_original_lines": 48
+      },
+      "missing_sites": [
+        {
+          "path": "scripts/security/security_local_ci.py",
+          "line": 274
+        },
+        {
+          "path": "scripts/security/security_local_ci.py",
+          "line": 470
+        },
+        {
+          "path": "scripts/security/security_local_ci.py",
+          "line": 572
+        },
+        {
+          "path": "scripts/security/security_local_ci.py",
+          "line": 575
+        },
+        {
+          "path": "scripts/security/security_local_ci.py",
+          "line": 685
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 109
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 110
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 119
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 120
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 122
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 155
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 156
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 157
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 158
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 159
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 160
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 161
+        }
+      ],
+      "caps": [
+        "Ordinary controlled campaigns only; first v1 timeout/marshal mismatch preserved",
+        "Source-before actually captured in parent memory before campaigns and child startup; no pre-spawn durablefile or future crash-recovery assertion",
+        "stderr elapsed/path/coverage warnings retained; no byte-equality assertion for stderr",
+        "Early10 nativewait0/no10profiles and parent nonterminal/nonzero negatives failclosed, not treated as current ordinary measurement gap",
+        "Exact13 compiler-folded metadata roles and functiondocstrings explicitly disposed; module __doc__ runtime line included; no generic Constant/NOP/NO_PC exclusion",
+        "CLI100 properties/24411 domain-guided mutation fuzz executions/two viable compiled assertion kills do not claim coverage-guided fuzz or project adequacy",
+        "Any owned source/syntax/runtime/observer change requires requalification; no fullproject ratio or formal promotion verdict"
+      ]
+    },
     "shell_and_local_recipe_config": "OPEN",
     "embedded_lua": "OPEN"
   },
@@ -140,7 +273,7 @@
   "global_LINE95": "OPEN",
   "main": "HELD",
   "formal_review": "immutable existing R-14 authority",
-  "registry_role": "Hash-bound finite coordinator disposition registry; not an executable gate and not evidence of future commit measurement",
+  "registry_role": "Hash-bound finite coordinator disposition registry, not executable gate; class-specific evidence baselines never assert future commit measurement",
   "evidence_source_baseline": {
     "head": "4f7f6d500c3956eb4fc4cf53319d1283a619d5f9",
     "tree": "86dbe9e2f0da7d3eb4ffc2982d7d31035c69469e",
@@ -150,5 +283,17 @@
     ".security/go-operation-completeness-20261004/final-receipt.json": "bf29c229d7eed4fee28444e3610c321fd5208acc7cbf4e1f997b34501ec0d831",
     ".security/go-current-start-contexts-20261004/independent.json": "f16d72966ad2ba32e93878105c62e0d21b6c9977d4c99bd0235980c7e3647ffd",
     ".security/python-full-class-inventory-20261004/receipt.json": "b6938c4525a74b410a25bcee293f858879b145377fd0a7c2bacfb220f5c45e70"
+  },
+  "evidence_source_baselines": {
+    "owned_browser_javascript": {
+      "head": "4f7f6d500c3956eb4fc4cf53319d1283a619d5f9",
+      "tree": "86dbe9e2f0da7d3eb4ffc2982d7d31035c69469e",
+      "meaning": "Source baseline of evidence; does not assert new delivery commit has been measured"
+    },
+    "python": {
+      "head": "9375109e5c967bf40fc1a92ffa36c53e08422a76",
+      "tree": "83606ecdb99b7a4d87670fade7dcb60d556d0496",
+      "meaning": "Exact evidence source baseline only; future delivery commit is not asserted measured by this registry"
+    }
   }
 }

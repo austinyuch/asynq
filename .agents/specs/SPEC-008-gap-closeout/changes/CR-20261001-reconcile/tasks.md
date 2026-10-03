@@ -207,3 +207,6 @@ Current source-scope delivery status follows its report’s conditional exact ga
 - [ ] Ref: R-14 Complete Python standalone+heredoc original executable/missing-line inventory and fail-closed child-profile completeness; keep Go6182/zeroUNKNOWN semantic-completeness gap and global LINE95/main OPEN.
 
 Ref: R-14 Current Go independent145-source/771-archive/12-replay inventory remains6182 candidates; original native static-storage/panic-init counterexamples prove zeroUNKNOWN is not semantic completeness. Python768/755/13 statement inventory remains INCOMPLETE: actual child exit0 without expected profile fails closed, shell-origin custody and multiline semantics pending. See the CR finite JS class report and hash-bound `scripts/coverage/class-admissions.json` registry; evidence source baseline is distinct from future delivery HEAD.
+
+- [x] Ref: R-14 Adopt current complete finite Python class under CPython3.12.3 original-line-event model:998 executable/981 hit/17 missing, closed fresh normal/traced689 each and canonical identity, independent full-class PASS; original failures/failclosed negatives retained.
+- [ ] Ref: R-14 Complete Go Linux/Windows original semantic/operator inventory and native campaigns, then Shell/local recipe and Lua classes before global LINE95/main/formal promotion.
