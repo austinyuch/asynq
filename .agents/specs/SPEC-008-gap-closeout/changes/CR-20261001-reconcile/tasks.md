@@ -133,3 +133,9 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 - [x] Execute six cached Go1.26.6 linux/windows arm64 export/type contexts and corrected typed-v3 attempt04;45 source bindings stable,30 actual typed-fixture role assertions pass. Windows runtime and project95 are not inferred.
 - [x] Implement experimental typed-v4 case/source-initializer attribution with44 native contracts,100 position properties,243041 raw fuzz executions and3 assertion-caught producer mutants; preserve initializer/body sites and explicit invalid-input limits.
 - [ ] Qualify full original-line executable inventories and observers for every included language/platform. Typed-v4 6211 candidate/0 unresolved lines remain experimental, not a complete denominator or ratio.
+
+
+- [x] Retain typed-v6 unevaluated-builtin and independent const/var/case closure-body fixes;19 independent native contracts,4 caught viable producer mutants,100 position properties and131331 raw method fuzz executions. Current45-file candidate sets remain source-equivalent and experimental.
+- [x] Observe base/log/timeutil original Go inferiors with per-hit process identity, actual exits and bounded own-session cleanup;232/232,47/49,12/12 candidate hits, unobserved descendants retained uncovered.
+- [x] Preserve pinned standalone Python line profiles,689 original input copies and independent recombination; actual run.sh three-heredoc runtime mapping48 lines/840 process profiles with explicit interpreter/output/custody limits.
+- [ ] Qualify full language/platform inventories and observers, collect full exact-source profiles and form the deduplicated project executable LINE denominator; project95 remains OPEN.

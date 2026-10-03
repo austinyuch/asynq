@@ -101,3 +101,18 @@ Final root instrumentation is split: run root and rdb with Redis flags serially 
 | T-REC-RELEASE-CONSUMER | exact3da Git snapshots and root-authored public consumer | local fileproxy/versioned install/module identity/seeded closed-client oracle | sequential root/x/tools consumer packaging | reports/release-consumer-rehearsal.md | R-12 / release preparation | no replacements, root4/x4 binary dependencies and typed cancellation cause consumed | mapped | unpublished attempt03 all28 phases0; peer830materials/ZIP PASS;32 baseline causes0/candidate32; closed root/x race PASS | python3 .security/release-readiness-20261002/rehearsal/run-v3.py --out NEW_TASK_OWNED_DIR | .security/release-readiness-20261002/rehearsal/attempt-03/receipt.json; .security/release-consumer-feasibility/peer-review/attempt03-20261001T192009161020Z/receipt.json | coordinator | Linuxarm64/CGO1; fileonly/GOSUMDBoff simulation; no public release/adoption/main/global95 claim; unique output required |
 
 | T-REC-GOSEC-EVIDENCE-SCOPE | test_security_shell.py and native controlled Go fixture | contract / native regression / mutation | scripts/security/run.sh gosec traversal | reports/release-consumer-rehearsal.md | CR tasks: evidence scope | exclude exact .security component while retaining application inputs | mapped | native scoped PASS; exact50/8 and full exact gates PASS at dev25 via final-release-rehearsal ledger4f1e971 | make security-contracts-test; native recipe bound by receipt | `.security/final-release-rehearsal/scope-regression/20261001T193732Z/receipt.json` SHA `6145b4f69efc72dd6ab4f5041d096b7be7ccd3d0dce038185b1ce899ceb9eb56` | coordinator / scoped peer | Candidate2 files6 lines2 G101 visible/.securityish; omission3 files9 lines3 findings caught by ordinary assertion; both scanner exits1; no fullscan/absence claim |
+
+
+## Original-line observer successor
+
+[Observer completeness report](reports/observer-completeness.md) records typed-v6
+19 independent native contracts/4 caught mutants/100 position properties/131331
+raw method fuzz executions, selected base/log/timeutil process-bound profiles,
+pinned coverage.py three-file results and three actual run.sh heredoc observations.
+These are bounded measurement-producer/profile evidence, not full project LINE95.
+Commands, original inputs, failures, exact source hashes and same-family reviews
+are retained in the report's3805-material closeout. Normal/traced58 Python tests
+and50 stdin-observed security tests keep their separate runtime contexts. Do not
+count689 profile inputs or840 process profiles as distinct children. Source-before
+reconstruction, missing full stdin sys.flags and nonidentical shell output remain
+explicit; full shell/Lua/browser/Go/platform qualification is OPEN.

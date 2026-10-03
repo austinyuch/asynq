@@ -101,3 +101,18 @@ context23 candidates match prior native hits, not a complete denominator. Eviden
 `e9a6e71cbc31f6415ecf16907b1c2b0d8519cfbff868782e04520ac898d60ebc`.
 Next: qualify complete original executable-line inventories and runtime observers
 across all policy languages/platforms. Project LINE95/main/release/cleanup remain held.
+
+
+Observer completeness follow-up: [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/observer-completeness.md).
+Source-equivalent dev987 has six typed-v6 contexts45files/6211 experimental
+candidates/0 unknown;19 native contracts,4 caught viable mutants and131331 raw
+method fuzz executions. Additional original-inferior profiles retain base232/232,
+log47/49 (two child lines uncovered),timeutil12/12 candidate hits. Three Python
+files have pinned coverage.py focused108/108,451/456,178/186;689 retained inputs
+independently recombine. Three run.sh heredocs have48 original hit lines from
+actual shell-contract runtime;840 retained process profiles, not child count.
+Prior marshal/proc/profile-custody failures and source-before/interpreter/output
+limits remain explicit. Closeout3805 materials SHA
+7da1f5a3b64124bbd702505d4293e1695fde83679e5d479078dd08ec4d33c011.
+Next: qualify full Go runtime and remaining shell/Lua/browser inventories/observers;
+these focused counts do not admit project LINE95, main, real release or cleanup.
