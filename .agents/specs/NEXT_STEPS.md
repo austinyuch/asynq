@@ -87,3 +87,17 @@ remain distinct. This evidence reconciliation does not change SPEC-008 verdict,
 strict review/main/release gates or cleanup custody. Its dev-delivery authority is
 `.security/line-observer-delivery-20261003/gate-ledger.json` only when that receipt
 exists in DEV_DELIVERED_MAIN_HELD state with actual gate/remote/hosted bindings.
+
+
+Typed-v4 source-operation follow-up: six native contexts preserve45 owned source
+hashes;6211 experimental candidate lines/0 unresolved. All122 initializer lines
+remain executable;239 case-label unknown lines now have explicit switch-attributed
+metadata/dynamic-expression semantics, with bodies preserved. Actual44 typed
+contracts,100 leading-blank properties and243041 raw native fuzz executions pass;
+invalid/type-invalid inputs are skipped and accepted typed count is not measured.
+Three independently asserted v4 omission mutants are caught. Selected errors76/
+context23 candidates match prior native hits, not a complete denominator. Evidence:
+`.security/typed-semantics-delivery-20261003/semantic-closeout.json`, SHA
+`e9a6e71cbc31f6415ecf16907b1c2b0d8519cfbff868782e04520ac898d60ebc`.
+Next: qualify complete original executable-line inventories and runtime observers
+across all policy languages/platforms. Project LINE95/main/release/cleanup remain held.
