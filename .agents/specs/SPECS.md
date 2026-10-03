@@ -27,3 +27,5 @@
 - 下游專案以 `go get github.com/austinyuch/asynq@v0.26.0-team.1` 消費;tag 一經發佈不可移動/刪除
 - `master` 分支 = upstream 鏡像 contract:只能 `--ff-only`,任何團隊 commit 都是污染
 - CI required check 名稱 `build`(branch protection 引用);改 workflow job 名要同步改 protection
+
+SPEC-008 CR-20261001-reconcile current-source measurement evidence: [refresh](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/current-source-measurement-refresh.md). This is spec-local-only; formal review/readiness and architecture foundations are unchanged. No full project coverage or protected promotion is inferred.

@@ -148,3 +148,6 @@ remain OPEN; SPEC-008 formal review unchanged.
 
 
 Published-queue transport cause: [report](reports/published-queue-transport-cause.md). Actual eight-case RED/GREEN, four compiled assertion-caught mutants across helper/preload paths,100 seeded opaque-argument properties and10-second native fuzz retain causes and old classifications/diagnostics. Dirty full RDB race PASS precedes the later property file; exact frozen successor gates remain delivery authority. Project LINE95/main/release and formal SPEC-008 readiness remain OPEN.
+
+
+Current source refresh: [report](reports/current-source-measurement-refresh.md). Actual50body identities/5139fresh byte mappings/25literal shifts and six fresh Go type contexts/45files/6211candidate lines are independently checked. Source-token classifiers remain experimental; zero unresolved classifications is not denominator admission. Current RDB binaries/profiles still need rebuilding and source-operation qualification. Windows runtime/fullLINE95/main/release remain OPEN.

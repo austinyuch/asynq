@@ -165,3 +165,7 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 
 - [x] Reproduce downstream published-queue transport cause loss with independent owned Redis state oracle, preserve cause at four helper/preload sites, and check four viable mutation catches plus bounded PBT/fuzz.
 - [ ] Bind published-queue cause fix to clean exact build/make/security/RDB-race gates, remote parity and actual hosted checkout proof before dev delivery; protected main and project LINE95 remain OPEN.
+
+- [x] Regenerate original Lua embedding after the four wrapping-site source changes; verify25offset shifts,5139mapped nodes,1000PBT/two viable mutants and unchanged50body identities without alias hit expansion.
+- [x] Rebuild six current Go type/export contexts and independently replay classifier/source/archive bindings; disclose type-only buildvcs workaround and original failures.
+- [ ] Rebuild current native profiles and admit complete original-line semantics/denominators across all maintained language/platform classes before LINE95 or protected promotion.
