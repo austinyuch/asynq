@@ -121,3 +121,7 @@
 - [ ] Complete coverage-proof/promotion admission and actual cross-family review; fixed payload authorization does not bypass those gates.
 
 This bounded closeout only records delivery and actual preflight facts. `.reviewer-output/` is ignored for durable local reviewer custody; findings are retained, with no production-source or global-tool change. `.security/final-admission-closeout/gate-ledger.json` becomes successor delivery authority only if it exists in DEV_DELIVERED_MAIN_HELD state with verified exact gate/source/remote/hosted bindings. Main, cross-family review completion, project-wide true-line95, real sequential release and cleanup remain held; SPEC-008 verdict is unchanged.
+
+- [x] Select executable-line source/exclusion policy under2026-10-03 delegated authority; `scripts/coverage/POLICY.md`.
+- [x] Prepare local managed-owner ACP promotion capability handoff with actual failure and native refusal evidence; no external dispatch or owner implementation.
+- [ ] Qualify all included language observers and complete exact-source executable-line inventories under the selected policy.

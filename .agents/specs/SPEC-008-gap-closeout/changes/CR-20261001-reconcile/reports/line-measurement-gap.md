@@ -78,7 +78,7 @@ Registry IDs bind module/version/source bytes/original UTF8 byte position/contex
 
 ## Measurement policy boundary
 
-The user target is project-wide line coverage >=95%. Native Go NumStmt counts statements and cannot be relabeled as lines. No human-selected denominator/source-class/exclusion policy is recorded. Cross-language, test-source and document-executable inventories retain gaps for review; they do not independently impose a new all-source denominator or require a generic custom Go instrumenter. Existing bounded entry/completion/effect pilots remain evidence of those exact semantics, without making every phase a new acceptance threshold.
+The user target is project-wide line coverage >=95%. Native Go NumStmt counts statements and cannot be relabeled as lines. At the historical measurement boundary no selected denominator/source-class/exclusion policy was recorded. On2026-10-03 the user delegated these choices; `scripts/coverage/POLICY.md` now defines them. Complete measured executable inventories and qualified observers remain unavailable. Cross-language, test-source and document-executable inventories retain gaps for review; they do not independently impose a new all-source denominator or require a generic custom Go instrumenter. Existing bounded entry/completion/effect pilots remain evidence of those exact semantics, without making every phase a new acceptance threshold.
 
 
 ## Security orchestration native successor
@@ -92,3 +92,7 @@ The actual same-module missing-version bug is repaired in security_local_ci.py; 
 ## Current candidate source-SAST child-own observation
 
 Current dirty candidate source-bound receipt `.security/main-admission-current/source-sast-native/20261001T180026204024Z/receipt.json` SHA `8d315706333d481cb1b1343adf51e00485d99ebb8477b64820114b4d229cfbdd` records source_sast.py195/203 positive native lines (96.0591%) and18 actual PID child journals with normal/traced semantic match. This is only source_sast.py, not project-wide95 or committed delivery. Current46 maintained security contracts PASS; native scan covers13 tracked source files plus five extracted inputs and retains44 LOW/9 MEDIUM findings (53 total),0 HIGH, policy0 with raw_clean=false. Earlier a040 counters stay historical and are not unioned with changed-source counters.
+
+## Delegated policy successor (2026-10-03)
+
+`scripts/coverage/POLICY.md` now adopts owned maintained production executable LINE scope and explicit exclusions under user delegation. This supersedes the historical unselected-policy status, not the dated measurement observations. Current checkout source is the denominator; released team.3 consumer dependencies retain separate contexts. Unmeasured languages/platforms remain incomplete, and neither physical inventory counts nor statement profiles produce a project ratio. `docs/REVIEWER_ADMISSION_HANDOFF.md` records the separate native ACP promotion capability gap and proposed owner acceptance work.
