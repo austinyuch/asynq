@@ -145,3 +145,9 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 - [x] Qualify the current three-document six-line owned JS class with actual Chromium/CDP, exact UTF16/source maps and independent bounded readback; retain helper exit1 and floating CDN limits.
 - [x] Validate selected Go probe grouping; retain all50 embedded Lua source maps/compile results and verified owner registry-client concurrency checks.
 - [ ] Complete owned Redis runtime, Lua observer qualification and full Go/platform profiles; full executable LINE95/main/release/cleanup remain OPEN.
+
+
+- [x] Retain full native campaign failures and owned sandbox/socket abort; driver0 does not imply all-package PASS.
+- [x] Correct set snapshot ordering and stale-token scope isolation with native repeated tests and viable membership/payload mutation catches.
+- [x] Replace inverted time oracle and volatile labels with fixed UTC whole-second equality; add bounded100-case PBT/native fuzz, retain old false-green mutants.
+- [ ] Complete fresh full native/race and original-line campaigns, qualify Lua Proto observer and all language inventories; project95/main/release/cleanup remain OPEN.

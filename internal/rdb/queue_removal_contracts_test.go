@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 	"reflect"
+	"sort"
 	"strings"
 	"testing"
 	"time"
@@ -109,7 +110,22 @@ func removalSnapshot(t *testing.T, r *RDB, keys []string) map[string]string {
 		} else if err != nil {
 			t.Fatal(err)
 		} else {
-			out[key] = value
+			kind, err := r.client.Type(context.Background(), key).Result()
+			if err != nil {
+				t.Fatal(err)
+			}
+			// DUMP can change set iteration order without changing persisted members.
+			// Quote sorted strings so arbitrary member bytes remain distinguishable.
+			if kind == "set" {
+				members, err := r.client.SMembers(context.Background(), key).Result()
+				if err != nil {
+					t.Fatal(err)
+				}
+				sort.Strings(members)
+				out[key] = "set:" + fmt.Sprintf("%q", members)
+			} else {
+				out[key] = value
+			}
 		}
 	}
 	return out

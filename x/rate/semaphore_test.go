@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/austinyuch/asynq"
 	"github.com/austinyuch/asynq/internal/base"
 	asynqcontext "github.com/austinyuch/asynq/internal/context"
+	"github.com/google/uuid"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -207,16 +207,24 @@ func TestNewSemaphore_Acquire_StaleToken(t *testing.T) {
 	rc := opt.MakeRedisClient().(redis.UniversalClient)
 	defer func() { _ = rc.Close() }()
 
+	scope := "stale-token-" + uuid.NewString()
+	defer func() {
+		if err := rc.Del(context.Background(), semaphoreKey(scope)).Err(); err != nil {
+			t.Error(err)
+		}
+	}()
 	taskID := uuid.NewString()
 
 	// adding a set member to mimic the case where token is acquired but the goroutine crashed,
 	// in which case, the token will not be explicitly removed and should be present already
-	rc.ZAdd(context.Background(), semaphoreKey("stale-token"), redis.Z{
+	if err := rc.ZAdd(context.Background(), semaphoreKey(scope), redis.Z{
 		Score:  float64(time.Now().Add(-10 * time.Second).Unix()),
 		Member: taskID,
-	})
+	}).Err(); err != nil {
+		t.Fatal(err)
+	}
 
-	sema := NewSemaphore(opt, "stale-token", 1)
+	sema := NewSemaphore(opt, scope, 1)
 	defer func() { _ = sema.Close() }()
 
 	ctx, cancel := asynqcontext.New(context.Background(), &base.TaskMessage{
