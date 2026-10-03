@@ -308,6 +308,11 @@ func TestLifecycleRunSignals(t *testing.T) {
 		guard := make(chan os.Signal, 1)
 		signal.Notify(guard, syscall.SIGTERM, syscall.SIGINT)
 		defer signal.Stop(guard)
+		process, findErr := os.FindProcess(os.Getpid())
+		if findErr != nil {
+			t.Fatal(findErr)
+		}
+		defer process.Release()
 		done := make(chan struct{})
 		senderStopped := make(chan struct{})
 		signalErrors := make(chan error, 1)
@@ -329,7 +334,7 @@ func TestLifecycleRunSignals(t *testing.T) {
 				case <-done:
 					return
 				case <-ticker.C:
-					if err := syscall.Kill(os.Getpid(), sig); err != nil {
+					if err := process.Signal(sig); err != nil {
 						signalErrors <- err
 						return
 					}

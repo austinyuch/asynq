@@ -8,12 +8,9 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"os"
-	"os/signal"
 	"time"
 
 	"github.com/austinyuch/asynq"
-	"golang.org/x/sys/unix"
 )
 
 func ExampleServer_Run() {
@@ -29,55 +26,6 @@ func ExampleServer_Run() {
 	if err := srv.Run(h); err != nil {
 		log.Fatal(err)
 	}
-}
-
-func ExampleServer_Shutdown() {
-	srv := asynq.NewServer(
-		asynq.RedisClientOpt{Addr: ":6379"},
-		asynq.Config{Concurrency: 20},
-	)
-
-	h := asynq.NewServeMux()
-	// ... Register handlers
-
-	if err := srv.Start(h); err != nil {
-		log.Fatal(err)
-	}
-
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, unix.SIGTERM, unix.SIGINT)
-	<-sigs // wait for termination signal
-
-	srv.Shutdown()
-}
-
-func ExampleServer_Stop() {
-	srv := asynq.NewServer(
-		asynq.RedisClientOpt{Addr: ":6379"},
-		asynq.Config{Concurrency: 20},
-	)
-
-	h := asynq.NewServeMux()
-	// ... Register handlers
-
-	if err := srv.Start(h); err != nil {
-		log.Fatal(err)
-	}
-
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, unix.SIGTERM, unix.SIGINT, unix.SIGTSTP)
-	// Handle SIGTERM, SIGINT to exit the program.
-	// Handle SIGTSTP to stop processing new tasks.
-	for {
-		s := <-sigs
-		if s == unix.SIGTSTP {
-			srv.Stop() // stop processing new tasks
-			continue
-		}
-		break // received SIGTERM or SIGINT signal
-	}
-
-	srv.Shutdown()
 }
 
 func ExampleScheduler() {
