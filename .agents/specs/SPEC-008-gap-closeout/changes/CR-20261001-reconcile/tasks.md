@@ -164,8 +164,10 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 - [ ] Extend compiler emission mappings to all owned Lua operation roles and integrate exact production Redis Proto profiles; two guarded standalone classes do not admit all50 scripts.
 
 - [x] Reproduce downstream published-queue transport cause loss with independent owned Redis state oracle, preserve cause at four helper/preload sites, and check four viable mutation catches plus bounded PBT/fuzz.
-- [ ] Bind published-queue cause fix to clean exact build/make/security/RDB-race gates, remote parity and actual hosted checkout proof before dev delivery; protected main and project LINE95 remain OPEN.
+- [x] Bind published-queue cause fix to exact build/make/security/RDB-race gates, remote parity and actual hosted checkout proof:dev f14,7461-material ledger and hosted37131520819 SUCCESS; protected main and project LINE95 remain OPEN.
 
 - [x] Regenerate original Lua embedding after the four wrapping-site source changes; verify25offset shifts,5139mapped nodes,1000PBT/two viable mutants and unchanged50body identities without alias hit expansion.
 - [x] Rebuild six current Go type/export contexts and independently replay classifier/source/archive bindings; disclose type-only buildvcs workaround and original failures.
-- [ ] Rebuild current native profiles and admit complete original-line semantics/denominators across all maintained language/platform classes before LINE95 or protected promotion.
+- [x] Rebuild current two-file RDB native compiler profiles and retain independently checked349/348/1 outcomes,1517 compiler lines/1440 hits with139 original-source bindings.
+- [x] Retain the no-DWARF original-operand counterexample, five-site103-pair typed-string pilot/two caught mutants, and three production operand56-event overlay pair with exact mapping and native custody.
+- [ ] Admit complete original-line semantics/denominators across all maintained language/platform classes before LINE95 or protected promotion; bounded compiler and operand observations do not close this requirement.
