@@ -157,3 +157,35 @@ initialization still require semantic qualification. Other maintained languages
 and actual platform observations remain open. Project ratio stays null; the
 user LINE>=95% target, SPEC-008 readiness, strict cross-family review, protected
 main, real sequential release and cleanup custody remain unfinished.
+
+
+### Typed-v4 source-operation successor (2026-10-03)
+
+Six actual native type contexts now preserve45 unique original Go source hashes
+at source-equivalent dev4288695. Experimental v4 returns6211 unique candidate
+lines and0 unresolved lines. Prior361 unknown lines partition into239 case-label
+and122 package-initializer lines; every initializer remains executable. Case/type/
+constant/nil labels are attributed to the switch source operation, while dynamic
+case expressions and every case body remain included. This is an explicit source
+attribution choice; runtime comparisons still occur. Compiler static-data lowering
+is not an exclusion reason for nonconstant source initialization. Independent
+conservation checks retain15664 contextual prior statement/control sites.
+
+Actual native typed-fixture contracts pass30 updated plus14 new assertions.
+The exact v4 classifier source passes100 leading-blank position properties and
+243041 raw coverage-guided fuzz executions in11.048 seconds. Invalid parse/type
+inputs are skipped; the accepted typed-input count is not instrumented. This
+fuzz exercises successfully typechecked classification methods, not main's export
+importer/hash protocol. The earlier environment setup failure remains retained.
+Three viable omission mutants (package initializer, dynamic case, case body)
+are caught by independent ordinary assertions;0 missed,0 unviable,0 setup failures.
+These are typed-v4 producer tests, not production mutation/coverage evidence.
+
+The selected errors76/context23 candidate lines all match existing source-bound
+native observer hit sets. No complete executable denominator or platform runtime
+qualification follows. Other maintained-language inventories/observers and complete
+project line evidence remain required; project ratio is null and LINE>=95% is open.
+Bounded semantic closeout `.security/typed-semantics-delivery-20261003/semantic-closeout.json`
+SHA `e9a6e71cbc31f6415ecf16907b1c2b0d8519cfbff868782e04520ac898d60ebc`
+closes85 explicit materials. Ignored experiment producers are not installed tooling;
+SPEC-008 readiness, strict cross-family approval and protected-main hold remain.
