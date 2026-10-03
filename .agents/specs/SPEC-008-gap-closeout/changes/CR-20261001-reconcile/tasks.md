@@ -125,3 +125,10 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 - [x] Select executable-line source/exclusion policy under2026-10-03 delegated authority; `scripts/coverage/POLICY.md`.
 - [x] Prepare local managed-owner ACP promotion capability handoff with actual failure and native refusal evidence; no external dispatch or owner implementation.
 - [ ] Qualify all included language observers and complete exact-source executable-line inventories under the selected policy.
+
+
+- [x] Retain bounded own-session native witnesses and errors/context10/5 Test observations with actual GDB/child/parent exits, no truncated output and explicit SID-escape limitation; compiler-attributed subsets only.
+- [x] Inventory45 unique production Go files/63118 parent-aware AST nodes; retain3 mixed Go/Lua memberships and reject the erroneous48-unique declaration. No missing-PC/platform exclusion.
+- [x] Qualify untyped semantic-v3 marked contracts/100 seeded properties and133680 actual native fuzz executions; preserve repaired nil-body counterexample and four v2-only mutation catches.
+- [x] Execute six cached Go1.26.6 linux/windows arm64 export/type contexts and corrected typed-v3 attempt04;45 source bindings stable,30 actual typed-fixture role assertions pass. Windows runtime and project95 are not inferred.
+- [ ] Settle case-dispatch and nonconstant package-initializer semantics; qualify full original-line executable inventories and observers for every included language/platform. Typed6164 candidate/361 unresolved lines remain incomplete, not a ratio.
