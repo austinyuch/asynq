@@ -61,4 +61,10 @@ R-REC-PUBLISHED-TRANSPORT maps to [report](SPEC-008-gap-closeout/changes/CR-2026
 
 R-14 current-source refresh maps to [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/current-source-measurement-refresh.md): current45Go/6211candidate/0unresolved plus50Lua/5139fresh mappings; equal line sets do not permit changed-source hit transfer. Both inventories remain experimental; fullLINE95 and runtime source-operation qualification remain unfinished.
 
-R-REC-ACL maps real ACL memory typed-cause preservation and metadata partial effects to SPEC-008 / CR-20261001-reconcile / [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/rdb-acl-contracts.md). RED-v3/GREEN retain eight native contracts,100 payload properties, guided fuzz306 and three compiled mutants. One memoryUsage %w change preserves existing codes/ops. Exact dev delivery and protected main remain pending; no project LINE95 claim.
+R-REC-ACL maps real ACL memory typed-cause preservation and metadata partial effects to SPEC-008 / CR-20261001-reconcile / [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/rdb-acl-contracts.md). RED-v3/GREEN retain eight native contracts,100 payload properties, guided fuzz306 and three compiled mutants. One memoryUsage %w change preserves existing codes/ops. ACL compatibility dev baf2 exact delivery is verified by hosted37143717073 and its 570-material ledger; successor guided fuzz284 is separate from the earlier306. Protected main and project LINE95 remain pending.
+
+## Current measurement evidence
+
+| Requirement | Slice | Evidence | State |
+|---|---|---|---|
+| R-REC-STATE-CURRENT | Private guard plus current source measurement | [Report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/rdb-state-current-measurement.md) | Native/PBT/fuzz/mutation and fresh compiler subset independently verified; exact delivery pending; complete denominator/LINE95 remains OPEN |

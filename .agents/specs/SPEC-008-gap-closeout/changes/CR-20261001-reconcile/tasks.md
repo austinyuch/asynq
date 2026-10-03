@@ -173,4 +173,7 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 - [ ] Admit complete original-line semantics/denominators across all maintained language/platform classes before LINE95 or protected promotion; bounded compiler and operand observations do not close this requirement.
 
 - [x] Reproduce real ACL memory typed-cause loss, preserve cause with one wrapper change, and verify unchanged partial-effect contracts plus100 payload properties/guided native fuzz/three compiled mutants.
-- [ ] Bind ACL successor to exact frozen build/make/security/RDB-race gates, remote parity and hosted checkout proof; refresh changed inspect.go source measurements before any carry-forward.
+- [x] Bind ACL compatibility dev baf2 to exact frozen gates, remote parity and hosted37143717073 checkout proof; preserve failed90ed.
+- [x] Refresh current Lua/type contexts and clean4edf799 original RDB compiler observations; independently verify six selected paths including private guard692 without historical hit carry.
+- [x] Verify private guard with100PBT/120094guided fuzz/two viable assertion catches and independent source/custody review.
+- [ ] Deliver current measurement slice through exact final gates, remote parity and hosted checkout proof; retain candidate race receipt failure.
