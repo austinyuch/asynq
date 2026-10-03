@@ -33,3 +33,13 @@ IL-026 is folded into CR-20261001-reconcile. These are source-bound candidate co
 - `.security/rdb-acl-contracts-20261004/fuzz/receipt.json` — SHA `5f8c3b21695cbaabbb67bc7775c24ffd040f3c6a0b4e8d28413bbd2b7a485e0f`.
 - `.security/rdb-acl-contracts-20261004/fuzz-guided/receipt.json` — SHA `722b2d0cf0ba3339ac4cb7ca149c9590c04d35b30171297f433f93319d7da717`.
 - `.security/rdb-acl-contracts-20261004/independent-property-fuzz-review.json` — SHA `f451a85e786d5ff6df275db0bf6ee268b8a5d725622caf630a54a65d6249c5d0`.
+
+## Hosted Valkey compatibility successor
+
+Dev90ed3b5 was pushed, but hosted37142544985 FAILED: Valkey9.1.0 emits "no permissions to run the 'hset' command" for the same Lua ACL denial. The payload property oracle accepted only Redis7's "can't run this command" wording. The typed cause and state assertions remain intact; a test-only OR predicate now admits the observed Valkey wording as well. This does not relax the required redis.Error, exact operation/Unknown, successful opaque control or complete state preservation. Production source is unchanged from90ed. The original failing hosted logs, receipt and original test bytes remain retained; no successful hosted delivery is inferred from that attempt.
+
+Updated local native properties have107 RUN/PASS. Updated instrumented fuzz has284 engine executions, four deduplicated baseline inputs and one worker; native exit0, requested10seconds. This is current Redis7 runtime evidence; Valkey9.1 acceptance requires the successor actual hosted run. Exact successor gates/remote/hosted readback remain separate authority; whole-project LINE95, main, formal review and release remain OPEN.
+
+- `.security/rdb-acl-delivery-20261004/hosted/receipt.json` — SHA `4814d1947334a2352562646f05f4ba1aac2315c047881763c87a01eac0e7e011`.
+- `.security/rdb-acl-valkey-delivery-20261004/properties/receipt.json` — SHA `b73e0be49d58b198f033455c9187c41c55d9e7e3ddf9ed432a6f7e9ac8239532`.
+- `.security/rdb-acl-valkey-delivery-20261004/fuzz-guided/receipt.json` — SHA `d499f2c314dc2327499738f0b04ade13c9a089da0331729df303f6261d8b4a7c`.
