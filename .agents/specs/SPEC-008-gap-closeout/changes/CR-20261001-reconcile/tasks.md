@@ -150,4 +150,15 @@ This bounded closeout only records delivery and actual preflight facts. `.review
 - [x] Retain full native campaign failures and owned sandbox/socket abort; driver0 does not imply all-package PASS.
 - [x] Correct set snapshot ordering and stale-token scope isolation with native repeated tests and viable membership/payload mutation catches.
 - [x] Replace inverted time oracle and volatile labels with fixed UTC whole-second equality; add bounded100-case PBT/native fuzz, retain old false-green mutants.
-- [ ] Complete fresh full native/race and original-line campaigns, qualify Lua Proto observer and all language inventories; project95/main/release/cleanup remain OPEN.
+- [x] Deliver exact8c8 build/make/security and16 normal/debug native packages, preserving one testless package and released tools dependency contexts.
+- [ ] Complete race/original-line campaigns and all language/platform executable inventories; project95/main/release remain OPEN.
+
+- [x] Retain Lua v1 role defect and v2 bounded9contracts/100PBT/two ordinary mutation catches; preserve helper drift with exact-original archive closure.
+- [x] Join all50 Lua original source bytes mechanically, retaining262UNKNOWN roles,46obligation nodes/91clauses and identical-body aliases; no hit expansion or denominator claim.
+- [x] Verify reversible task-cache cleanup and owned fixture closeout with independent receipts; no foreign cleanup or exclusive shared-space attribution.
+- [x] Verify retained RDB GDB/child/parent terminal0,303normal/debug/traced verdicts, exact four-child permutation exception/24properties/four caught mutants and current137source bindings.
+- [x] Retain six native Lua VM/token attribution counterexamples; require original-operation sidecar, without claiming all50 observer qualification.
+- [ ] Admit complete executable-line denominators and collect remaining Go/platform/Lua/Shell/Python profiles; compiler-attributed subset and mechanical candidate pairs do not close project95.
+
+- [x] Retain the rejected final-LOADK guard and qualify the selected constant-binding/named-function after-operation successor with seven paired native witnesses,100 properties, three viable ordinary mutation catches and independent review.
+- [ ] Extend compiler emission mappings to all owned Lua operation roles and integrate exact production Redis Proto profiles; two guarded standalone classes do not admit all50 scripts.
