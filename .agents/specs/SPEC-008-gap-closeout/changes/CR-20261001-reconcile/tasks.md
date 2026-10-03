@@ -196,3 +196,9 @@ Current source-scope delivery status follows its report’s conditional exact ga
 - [x] Ref: R-14 Qualify bounded v8 aggregate element/pair roles with100+100PBT/76477guided fuzz/two viable catches and independent six-context exact-sites replay;6182 candidates are not an admitted denominator.
 - [ ] Ref: R-14 Complete exact portability/governance delivery; Linux native race signal regression has passed.
 - [ ] Ref: R-14 Qualify original aggregate materialization execution, package initializer/panic/evaluation order and all-platform/language denominator before LINE95/main.
+
+
+- [x] Ref: R-14 Preserve dev126254b4 actual hosted core race failure/four skipped steps and independently review candidate handler ordering.
+- [x] Ref: R-14 Verify candidate100PBT/16669fuzz/five reader+five barrier race repeats/one compiled assertion kill and root-package live focused20/full315RUN313PASS2SKIP; custody and fixture stopped/released independently verified.
+- [x] Ref: R-14 Verify fresh current-source three-platform compilation; Windows runtime remains OPEN.
+- [ ] Ref: R-14 Deliver exact successor through gates/nonforce push/hosted checkout/remote parity; predecessor failure remains retained.

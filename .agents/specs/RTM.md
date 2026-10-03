@@ -75,3 +75,6 @@ R-14 maintained-source cohort and local recipe scope maps to [report](SPEC-008-g
 
 
 R-14 Windows test portability/aggregate candidate roles map to [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/windows-test-portability-and-aggregate-roles.md). Cross-compilation/current-byte review and bounded v8 semantic roles are verified; Linux regression/final delivery pending, Windows runtime and full executable denominator incomplete. Ref: R-14.
+
+
+Ref: R-14. [Rejected Start handler preservation](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/server-start-handler-preservation.md) retains dev126254b4 hosted37154543825 core race failure/four skipped gates; candidate assigns handler only after successful state admission and before workers, with distinct-handler rejection preservation assertion. Bounded source review PASS; native/PBT/fuzz/mutation bounded PASS; fresh three-platform compilation PASS; successor delivery PENDING. Windows runtime/complete denominator/LINE95/formal/main/release remain OPEN; ratio null.
