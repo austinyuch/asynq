@@ -54,6 +54,8 @@ The following original issue rows are owned by the active CR. Their recorded can
 |---|---|---|---|---|
 | IL-024 | 2026-10-01 | 同一CVE/module先有名稱但缺version時，後續同module SBOM版本遭忽略 | 最小修正只補同module空version，保留既有版本且不借不同module版本；KEV policy不變 | folded CR-20261001-reconcile；original64真CLI assertions FAIL，candidate128 CLI/65 direct-map cases與5fresh mutants/nonauthor PASS，29tests native632/637；reports/security-metadata-enrichment.md；dev059c delivered，historical final-security-enrichment fc4836／hosted36879646569 checkout-tree PASS；main pending；successor readback13 temporary materials missing |
 
+| IL-025 | 2026-10-03 | Successfully published queue bypasses SADD, then downstream script/preload formatting loses Redis transport cause | Four %w sites retain Unknown/Internal/op/diagnostics; eight native cause RED→GREEN, independent owned-state oracle, four viable mutants and bounded PBT/fuzz | folded CR-20261001-reconcile; [candidate](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/published-queue-transport-cause.md); exact dev delivery/main pending |
+
 ## Resolved
 
 | ID | 記錄日 | 描述 | 解法 / 證據 |

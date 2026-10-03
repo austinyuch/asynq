@@ -41,3 +41,6 @@ permutation contract verified;1433 compiler hits/1517mapped lines are not a deno
 Six native Lua witnesses require VM-to-original-operation sidecar mapping.
 Project LINE95, Windows/Shell/Python completeness, cross-family review/main/release
 remain OPEN; SPEC-008 formal review unchanged.
+
+
+Published-queue transport cause: [report](specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/published-queue-transport-cause.md). Actual eight-case RED/GREEN, four compiled assertion-caught mutants across helper/preload paths,100 seeded opaque-argument properties and10-second native fuzz retain causes and old classifications/diagnostics. Dirty full RDB race PASS precedes the later property file; exact frozen successor gates remain delivery authority. Project LINE95/main/release and formal SPEC-008 readiness remain OPEN.
