@@ -288,7 +288,8 @@ func (p *processor) markAsComplete(l *base.Lease, msg *base.TaskMessage) {
 		// If lease is not valid, do not write to redis; Let recoverer take care of it.
 		return
 	}
-	ctx, cancel := context.WithDeadline(context.Background(), l.Deadline())
+	deadline := l.Deadline()
+	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
 	err := p.broker.MarkAsComplete(ctx, msg)
 	if err != nil {
@@ -297,10 +298,12 @@ func (p *processor) markAsComplete(l *base.Lease, msg *base.TaskMessage) {
 		p.logger.Warnf("%s; Will retry syncing", errMsg)
 		p.syncRequestCh <- &syncRequest{
 			fn: func() error {
+				ctx, cancel := context.WithDeadline(context.Background(), deadline)
+				defer cancel()
 				return p.broker.MarkAsComplete(ctx, msg)
 			},
 			errMsg:   errMsg,
-			deadline: l.Deadline(),
+			deadline: deadline,
 		}
 	}
 }
@@ -310,7 +313,8 @@ func (p *processor) markAsDone(l *base.Lease, msg *base.TaskMessage) {
 		// If lease is not valid, do not write to redis; Let recoverer take care of it.
 		return
 	}
-	ctx, cancel := context.WithDeadline(context.Background(), l.Deadline())
+	deadline := l.Deadline()
+	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
 	err := p.broker.Done(ctx, msg)
 	if err != nil {
@@ -318,10 +322,12 @@ func (p *processor) markAsDone(l *base.Lease, msg *base.TaskMessage) {
 		p.logger.Warnf("%s; Will retry syncing", errMsg)
 		p.syncRequestCh <- &syncRequest{
 			fn: func() error {
+				ctx, cancel := context.WithDeadline(context.Background(), deadline)
+				defer cancel()
 				return p.broker.Done(ctx, msg)
 			},
 			errMsg:   errMsg,
-			deadline: l.Deadline(),
+			deadline: deadline,
 		}
 	}
 }
@@ -355,7 +361,8 @@ func (p *processor) retry(l *base.Lease, msg *base.TaskMessage, e error, isFailu
 		// If lease is not valid, do not write to redis; Let recoverer take care of it.
 		return
 	}
-	ctx, cancel := context.WithDeadline(context.Background(), l.Deadline())
+	deadline := l.Deadline()
+	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
 	d := p.retryDelayFunc(msg.Retried, e, NewTaskWithHeaders(msg.Type, msg.Payload, msg.Headers))
 	retryAt := time.Now().Add(d)
@@ -365,10 +372,12 @@ func (p *processor) retry(l *base.Lease, msg *base.TaskMessage, e error, isFailu
 		p.logger.Warnf("%s; Will retry syncing", errMsg)
 		p.syncRequestCh <- &syncRequest{
 			fn: func() error {
+				ctx, cancel := context.WithDeadline(context.Background(), deadline)
+				defer cancel()
 				return p.broker.Retry(ctx, msg, retryAt, e.Error(), isFailure)
 			},
 			errMsg:   errMsg,
-			deadline: l.Deadline(),
+			deadline: deadline,
 		}
 	}
 }
@@ -378,7 +387,8 @@ func (p *processor) archive(l *base.Lease, msg *base.TaskMessage, e error) {
 		// If lease is not valid, do not write to redis; Let recoverer take care of it.
 		return
 	}
-	ctx, cancel := context.WithDeadline(context.Background(), l.Deadline())
+	deadline := l.Deadline()
+	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
 	err := p.broker.Archive(ctx, msg, e.Error())
 	if err != nil {
@@ -386,10 +396,12 @@ func (p *processor) archive(l *base.Lease, msg *base.TaskMessage, e error) {
 		p.logger.Warnf("%s; Will retry syncing", errMsg)
 		p.syncRequestCh <- &syncRequest{
 			fn: func() error {
+				ctx, cancel := context.WithDeadline(context.Background(), deadline)
+				defer cancel()
 				return p.broker.Archive(ctx, msg, e.Error())
 			},
 			errMsg:   errMsg,
-			deadline: l.Deadline(),
+			deadline: deadline,
 		}
 	}
 }

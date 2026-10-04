@@ -106,6 +106,10 @@ make security-upgrade  # upgrade ALL deps to latest within major, build+vet, re-
   stays within the current major version, so it will not silently take a breaking
   major upgrade.
 
+`stdlib` and `toolchain` findings require selecting a fixed Go runtime and rerunning the gate, rather than `go get stdlib@...`. A generated plan containing those findings stops with exit 2 before applying dependency updates. Ordinary dependency plans continue to use `go get` and `go mod tidy`.
+
+The 2026-10-01 three-module baseline passed with Go 1.26.6 (Go 1.26.5 was blocked): zero blocking findings, zero KEV-listed candidates, and one G118 MEDIUM SAST warning at the context factory. The caller receives and defers the returned cancel in `processor.go`; the warning remains visible pending independent review. Scanner evidence is local, and absence of candidates does not prove global vulnerability absence. See CR-20261001-reconcile for exact scope and remaining gates.
+
 Both print a `go.mod`/`go.sum` diffstat and re-run the pipeline, so you always
 see the before/after. Review the diff and commit it yourself.
 
@@ -215,7 +219,59 @@ evidence, never an empty one, so it can never produce a false clean verdict.
 
 ## Relationship to hosted CI
 
-This gate is local and pre-push. `.github/workflows/` still owns build and test
-across the module matrix. The two are complementary: hosted CI proves the code
-works, the local gate proves the dependency graph is not knowingly exploitable
-before the push leaves your machine.
+Scanner gates remain local and pre-push. The single hosted build job builds and race-tests root, x and tools, then runs offline event-ledger and security decision contracts. Local scanner/catalog evidence and hosted behavioral checks cover different scopes; neither proves global vulnerability absence or production readiness.
+
+## Evidence input contracts
+
+Invalid UTF-8 or malformed JSON inputs produce path-bearing diagnostics and exit2. CVE identities use ASCII digits, consistent with the [official CVE record schema](https://cveproject.github.io/cve-schema/schema/docs/); Unicode numeral lookalikes are rejected. Normalize/stream/CLI contracts exercise real temporary files and outputs. Run `make security-contracts-test` for all29 offline security tests. Sparse SBOM metadata can be filled from a later record for the same module; missing version is filled only when module identity matches, without overwriting an existing version. The current source-bound Python native trace observes29 tests plus128 real CLI and65 direct-map children from zero after this repair; seeded JSON generators are not coverage-guided fuzzing. No provider/scanner subprocess-line coverage or project-wide95% claim follows from the per-file result.
+
+
+## Shell provenance contracts (2026-10-01)
+
+`make security-contracts-test` also discovers `test_security_shell.py`.
+Six offline groups exercise 27 real Bash subprocesses with controlled scanner
+fixtures and the real Python policy helper. They cover clean/quiet output,
+tooling/evidence failure, HIGH policy blocks, missing offline catalog, invalid
+arguments and generated benign literal paths/catalog versions. Complete JSON
+and catalog byte SHA-256 equality catches both quoted-path serialization errors
+and GNU sha256sum filename escaping. The runner passes metadata through argv to
+a quoted heredoc and hashes file contents through stdin.
+
+These fixtures prove process/serialization contracts, not scanner findings,
+network acquisition, provider adoption or project-wide line coverage. Default
+runs clean their temporary directories; an explicit `ASYNQ_SHELL_TEST_WORK`
+retains campaign evidence. Four source mutants and the old hash helper regression
+were caught by ordinary assertions. Fresh durable evidence is in
+`.security/shell-successor/receipt.json`; the previous temporary shell campaign
+is historical and currently has missing materials.
+
+
+## Application SBOM scan boundary
+
+Each module scan excludes its own `./.security` evidence directory; the root
+also excludes the separate `./x` and `./tools` modules. Evidence snapshots,
+fixture manifests and isolated scanner environments are not application inputs.
+Other visible application manifests remain in scope, even when they are not Go
+manifests. Tooling inventories must be scanned separately under a tooling label.
+Older recursive-root SBOMs that included ignored tooling fixtures remain dated
+working-tree evidence and are not rewritten as pure application inventories.
+
+## Maintained Python/Bash source SAST
+
+Changes to maintained Python/Bash require `make security-source` before dev
+promotion, in addition to `make security-contracts-test` and the three-module
+SBOM/CVE/KEV gate. This runs native Bandit1.9.4 and ShellCheck0.11.0 against
+tracked `.py`/`.sh` files, quoted Python heredocs and the known literal FAKE test
+fixtures. It does not analyze extensionless hooks or arbitrary generated code.
+The existing hosted job only runs its contract tests; a hosted native scan is
+not claimed. Missing/version-mismatched tools, invalid reports, unsupported
+extraction or changed inputs fail with exit2; HIGH Bandit/error ShellCheck
+findings block with exit1. Other findings retain full reports and require
+non-author applicability review. Policy exit0 with warnings is `raw_clean=false`,
+not a clean analyzer result.
+
+Isolated tool preparation and the complete hashed Linux aarch64/Python3.12
+wheel lock are documented in [source SAST tools](SOURCE_SAST_TOOLS.md).
+Each gate requires a new output under `.security`, records raw analyzer exits,
+source maps, tool/environment hashes and source before/after hashes. It never
+installs tools, uploads source or modifies the machine security-data registry.

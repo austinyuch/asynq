@@ -1,8 +1,7 @@
 # PROJECT KNOWLEDGE BASE
 
-**Generated:** 2026-06-05T01:31:50+08:00(governance memo updated 2026-06-07)
-**Commit:** 34305f9
-**Branch:** main
+**Generated baseline:** 2026-06-05T01:31:50+08:00 at `34305f9` on main
+**Governance reviewed:** 2026-10-01; current reconciliation is tracked in `.agents/specs/NEXT_STEPS.md`
 
 ## OVERVIEW
 Asynq is a Redis-backed Go task queue library. This repo is multi-module: the root module is the core library, `x/` contains extensions, and `tools/` contains user-facing binaries.
@@ -14,7 +13,7 @@ asynq/
 ├── internal/            # private implementation packages and test helpers
 ├── tools/               # separate Go module for CLI and metrics exporter
 ├── x/                   # separate Go module for extensions
-├── .github/workflows/   # split CI for root, x, and tools modules
+├── .github/workflows/   # one build job validates root, x, and tools modules
 └── Makefile             # proto regeneration and lint entrypoints
 ```
 
@@ -96,3 +95,10 @@ make lint
 - All three modules declare `go 1.26` (minor series, no patch pin and no `toolchain` line); CI sets `go-version: 1.26.x`. Docs still state a “last two Go versions” support policy, which `go 1.26` does not satisfy for 1.25 consumers — that is a known, accepted divergence, not an oversight.
 - `README.md` explicitly warns that some Lua scripts may not be compatible with Redis Cluster.
 - The highest-coupling code lives in `internal/rdb/`, `inspector.go`, `processor.go`, and `server.go`.
+
+## CURRENT RECONCILIATION
+
+- Promotion route is topic → dev → protected main PR; keep master a pure upstream mirror. Never push imported upstream bare tags.
+- Go 1.26.5 had reachable stdlib CVE blockers in the 2026-10-01 scan; use a supported patched runtime (local Go 1.26.6 passed). The three modules retain the floating `go 1.26` series.
+- Base PBT/fuzz/mutation evidence and local statement coverage do not establish >=95% project-wide line coverage. Keep actual profiles and candidate SHA with every claim.
+- Cross-family reviewer dispatch was refused by automatic approval review pending explicit destination authorization; no review PASS or promotion is inferred.

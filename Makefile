@@ -80,3 +80,19 @@ security-hooks: ## Point git at githooks/ so pre-push runs the local security CI
 .PHONY: security-clean
 security-clean: ## Remove all generated security evidence
 	rm -rf $(ROOT_DIR)/.security
+
+# Source-bound event journal validation; does not assert project line coverage.
+.PHONY: coverage-events-test
+coverage-events-test:
+	python3 -m unittest discover -s "$(ROOT_DIR)/scripts/coverage" -p 'test_*.py' -v
+
+# Offline security gate contracts; scanners and dependency mutations are stubbed.
+.PHONY: security-contracts-test
+security-contracts-test:
+	python3 -m unittest discover -s "$(ROOT_DIR)/scripts/security" -p 'test_*.py' -v
+
+# Required local pre-merge gate for changes to maintained Python/Bash sources.
+# Tools are isolated/version-pinned; no automatic installation or source upload.
+.PHONY: security-source
+security-source:
+	python3 scripts/security/source_sast.py --out "$${ASYNQ_SOURCE_SAST_DIR:-.security/source-sast-$$(date -u +%Y%m%dT%H%M%S)-$$$$}"

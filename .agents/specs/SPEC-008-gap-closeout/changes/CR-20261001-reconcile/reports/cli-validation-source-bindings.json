@@ -1,0 +1,6 @@
+{
+  "tools/asynq/cmd/root.go": "e8d6184be762bb9dd99db12dbad7c5913cb2c9770a4a6976c186a53873ad993e",
+  "tools/asynq/cmd/task.go": "eabf79f51904fe40f1d2a98ef7e7de0333aa99e6edcd3c93d1a3c21adef976f7",
+  "tools/asynq/cmd/config_contract_test.go": "65b31cad652d4743d6190a92e2e7c8f4043edc7e8ac361c06c5fd9ffa7de15b9",
+  "tools/asynq/cmd/task_failure_contract_test.go": "0dce2e5158f6bf721b31ce01d5d4ca1f2a766778144a01d93bb7659e94a4fa3d"
+}

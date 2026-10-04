@@ -6,9 +6,10 @@ package dash
 
 import (
 	"sort"
+	"sync"
 
-	"github.com/gdamore/tcell/v2"
 	"github.com/austinyuch/asynq"
+	"github.com/gdamore/tcell/v2"
 )
 
 type fetcher interface {
@@ -16,52 +17,170 @@ type fetcher interface {
 	Fetch(state *State)
 }
 
+// fetchContext is captured by the event-loop owner, never by a worker.
+// Polls share an epoch; leaving and returning to a view creates a new epoch.
+type fetchContext struct {
+	view                 viewType
+	queue, group, taskID string
+	taskState            asynq.TaskState
+	page, pageSize       int
+	epoch                uint64
+}
+type fetchResult[T any] struct {
+	request fetchContext
+	value   T
+}
+
+func captureFetchContext(state *State, screen tcell.Screen) fetchContext {
+	next := fetchContext{view: state.view}
+	if state.view == viewTypeQueueDetails {
+		if state.selectedQueue != nil {
+			next.queue = state.selectedQueue.Queue
+		}
+		if state.selectedGroup != nil {
+			next.group = state.selectedGroup.Group
+		}
+		next.taskState, next.taskID = state.taskState, state.taskID
+		next.page, next.pageSize = state.pageNum, taskPageSize(screen)
+	}
+	previous := state.request
+	next.epoch = previous.epoch
+	if next != previous {
+		next.epoch++
+	}
+	state.request = next
+	return next
+}
+
+type contextualFetcher struct {
+	next   fetcher
+	screen tcell.Screen
+}
+
+func (f contextualFetcher) Fetch(state *State) {
+	captureFetchContext(state, f.screen)
+	f.next.Fetch(state)
+}
+
+// Storage helpers publish one payload or one error into private buffered
+// channels. This adapter preserves their storage contract and tags both paths
+// with the immutable admission identity before public result publication.
+func launchFetch[T any](f *dataFetcher, request fetchContext, result chan<- fetchResult[T], work func(chan<- T, chan<- error)) {
+	f.launch(func() {
+		values, failures := make(chan T, 1), make(chan error, 1)
+		work(values, failures)
+		select {
+		case value := <-values:
+			publish(result, fetchResult[T]{request, value}, f.done)
+		case err := <-failures:
+			publish(f.errorCh, fetchResult[error]{request, err}, f.done)
+		default: // Shutdown prevented the storage helper from publishing.
+		}
+	})
+}
+
 type dataFetcher struct {
 	inspector *asynq.Inspector
 	opts      Options
 	s         tcell.Screen
 
-	errorCh  chan<- error
-	queueCh  chan<- *asynq.QueueInfo
-	taskCh   chan<- *asynq.TaskInfo
-	queuesCh chan<- []*asynq.QueueInfo
-	groupsCh chan<- []*asynq.GroupInfo
-	tasksCh  chan<- []*asynq.TaskInfo
+	errorCh  chan<- fetchResult[error]
+	queueCh  chan<- fetchResult[*asynq.QueueInfo]
+	taskCh   chan<- fetchResult[*asynq.TaskInfo]
+	queuesCh chan<- fetchResult[[]*asynq.QueueInfo]
+	groupsCh chan<- fetchResult[[]*asynq.GroupInfo]
+	tasksCh  chan<- fetchResult[[]*asynq.TaskInfo]
+
+	done    <-chan struct{}
+	slots   chan struct{}
+	workers sync.WaitGroup
+}
+
+// Fetch admission is confined to the event loop. Saturated refreshes are
+// best-effort: skip this operation and retry on a later refresh. Never block
+// the result consumer waiting for a worker slot.
+func (f *dataFetcher) launch(work func()) {
+	select {
+	case <-f.done:
+		return
+	default:
+	}
+	if f.slots != nil {
+		select {
+		case f.slots <- struct{}{}:
+		default:
+			return
+		}
+	}
+	f.workers.Add(1)
+	go func() {
+		defer f.workers.Done()
+		if f.slots != nil {
+			defer func() { <-f.slots }()
+		}
+		work()
+	}()
+}
+
+// Called only after the event loop stops admitting work.
+func (f *dataFetcher) wait() { f.workers.Wait() }
+
+func fetchDone(done []<-chan struct{}) <-chan struct{} {
+	if len(done) == 0 {
+		return nil
+	}
+	return done[0]
+}
+
+// Never close result channels: senders can finish after shutdown begins.
+func publish[T any](ch chan<- T, value T, done <-chan struct{}) {
+	select {
+	case <-done:
+		return
+	default:
+	}
+	select {
+	case ch <- value:
+	case <-done:
+	}
 }
 
 func (f *dataFetcher) Fetch(state *State) {
-	switch state.view {
+	request := captureFetchContext(state, f.s)
+	switch request.view {
 	case viewTypeQueues:
-		f.fetchQueues()
+		launchFetch(f, request, f.queuesCh, func(values chan<- []*asynq.QueueInfo, failures chan<- error) {
+			fetchQueues(f.inspector, values, failures, f.opts, f.done)
+		})
 	case viewTypeQueueDetails:
 		if shouldShowGroupTable(state) {
-			f.fetchGroups(state.selectedQueue.Queue)
-		} else if state.taskState == asynq.TaskStateAggregating {
-			f.fetchAggregatingTasks(state.selectedQueue.Queue, state.selectedGroup.Group, taskPageSize(f.s), state.pageNum)
+			launchFetch(f, request, f.groupsCh, func(values chan<- []*asynq.GroupInfo, failures chan<- error) {
+				fetchGroups(f.inspector, request.queue, values, failures, f.done)
+			})
+		} else if request.taskState == asynq.TaskStateAggregating {
+			launchFetch(f, request, f.tasksCh, func(values chan<- []*asynq.TaskInfo, failures chan<- error) {
+				fetchAggregatingTasks(f.inspector, request.queue, request.group, request.pageSize, request.page, values, failures, f.done)
+			})
 		} else {
-			f.fetchTasks(state.selectedQueue.Queue, state.taskState, taskPageSize(f.s), state.pageNum)
+			launchFetch(f, request, f.tasksCh, func(values chan<- []*asynq.TaskInfo, failures chan<- error) {
+				fetchTasks(f.inspector, request.queue, request.taskState, request.pageSize, request.page, values, failures, f.done)
+			})
 		}
-		// if the task modal is open, additionally fetch the selected task's info
-		if state.taskID != "" {
-			f.fetchTaskInfo(state.selectedQueue.Queue, state.taskID)
+		launchFetch(f, request, f.queueCh, func(values chan<- *asynq.QueueInfo, failures chan<- error) {
+			fetchQueueInfo(f.inspector, request.queue, values, failures, f.done)
+		})
+		if request.taskID != "" {
+			launchFetch(f, request, f.taskCh, func(values chan<- *asynq.TaskInfo, failures chan<- error) {
+				fetchTaskInfo(f.inspector, request.queue, request.taskID, values, failures, f.done)
+			})
 		}
 	}
 }
 
-func (f *dataFetcher) fetchQueues() {
-	var (
-		inspector = f.inspector
-		queuesCh  = f.queuesCh
-		errorCh   = f.errorCh
-		opts      = f.opts
-	)
-	go fetchQueues(inspector, queuesCh, errorCh, opts)
-}
-
-func fetchQueues(i *asynq.Inspector, queuesCh chan<- []*asynq.QueueInfo, errorCh chan<- error, opts Options) {
+func fetchQueues(i *asynq.Inspector, queuesCh chan<- []*asynq.QueueInfo, errorCh chan<- error, opts Options, done ...<-chan struct{}) {
 	queues, err := i.Queues()
 	if err != nil {
-		errorCh <- err
+		publish(errorCh, err, fetchDone(done))
 		return
 	}
 	sort.Strings(queues)
@@ -69,77 +188,44 @@ func fetchQueues(i *asynq.Inspector, queuesCh chan<- []*asynq.QueueInfo, errorCh
 	for _, q := range queues {
 		info, err := i.GetQueueInfo(q)
 		if err != nil {
-			errorCh <- err
+			publish(errorCh, err, fetchDone(done))
 			return
 		}
 		res = append(res, info)
 	}
-	queuesCh <- res
+	publish(queuesCh, res, fetchDone(done))
 }
 
-func fetchQueueInfo(i *asynq.Inspector, qname string, queueCh chan<- *asynq.QueueInfo, errorCh chan<- error) {
+func fetchQueueInfo(i *asynq.Inspector, qname string, queueCh chan<- *asynq.QueueInfo, errorCh chan<- error, done ...<-chan struct{}) {
 	q, err := i.GetQueueInfo(qname)
 	if err != nil {
-		errorCh <- err
+		publish(errorCh, err, fetchDone(done))
 		return
 	}
-	queueCh <- q
+	publish(queueCh, q, fetchDone(done))
 }
 
-func (f *dataFetcher) fetchGroups(qname string) {
-	var (
-		i        = f.inspector
-		groupsCh = f.groupsCh
-		errorCh  = f.errorCh
-		queueCh  = f.queueCh
-	)
-	go fetchGroups(i, qname, groupsCh, errorCh)
-	go fetchQueueInfo(i, qname, queueCh, errorCh)
-}
-
-func fetchGroups(i *asynq.Inspector, qname string, groupsCh chan<- []*asynq.GroupInfo, errorCh chan<- error) {
+func fetchGroups(i *asynq.Inspector, qname string, groupsCh chan<- []*asynq.GroupInfo, errorCh chan<- error, done ...<-chan struct{}) {
 	groups, err := i.Groups(qname)
 	if err != nil {
-		errorCh <- err
+		publish(errorCh, err, fetchDone(done))
 		return
 	}
-	groupsCh <- groups
-}
-
-func (f *dataFetcher) fetchAggregatingTasks(qname, group string, pageSize, pageNum int) {
-	var (
-		i       = f.inspector
-		tasksCh = f.tasksCh
-		errorCh = f.errorCh
-		queueCh = f.queueCh
-	)
-	go fetchAggregatingTasks(i, qname, group, pageSize, pageNum, tasksCh, errorCh)
-	go fetchQueueInfo(i, qname, queueCh, errorCh)
+	publish(groupsCh, groups, fetchDone(done))
 }
 
 func fetchAggregatingTasks(i *asynq.Inspector, qname, group string, pageSize, pageNum int,
-	tasksCh chan<- []*asynq.TaskInfo, errorCh chan<- error) {
+	tasksCh chan<- []*asynq.TaskInfo, errorCh chan<- error, done ...<-chan struct{}) {
 	tasks, err := i.ListAggregatingTasks(qname, group, asynq.PageSize(pageSize), asynq.Page(pageNum))
 	if err != nil {
-		errorCh <- err
+		publish(errorCh, err, fetchDone(done))
 		return
 	}
-	tasksCh <- tasks
-}
-
-func (f *dataFetcher) fetchTasks(qname string, taskState asynq.TaskState, pageSize, pageNum int) {
-	var (
-		i       = f.inspector
-		tasksCh = f.tasksCh
-		errorCh = f.errorCh
-		queueCh = f.queueCh
-	)
-	go fetchTasks(i, qname, taskState, pageSize, pageNum, tasksCh, errorCh)
-	go fetchQueueInfo(i, qname, queueCh, errorCh)
+	publish(tasksCh, tasks, fetchDone(done))
 }
 
 func fetchTasks(i *asynq.Inspector, qname string, taskState asynq.TaskState, pageSize, pageNum int,
-	tasksCh chan<- []*asynq.TaskInfo, errorCh chan<- error) {
+	tasksCh chan<- []*asynq.TaskInfo, errorCh chan<- error, done ...<-chan struct{}) {
 	var (
 		tasks []*asynq.TaskInfo
 		err   error
@@ -160,26 +246,17 @@ func fetchTasks(i *asynq.Inspector, qname string, taskState asynq.TaskState, pag
 		tasks, err = i.ListCompletedTasks(qname, opts...)
 	}
 	if err != nil {
-		errorCh <- err
+		publish(errorCh, err, fetchDone(done))
 		return
 	}
-	tasksCh <- tasks
+	publish(tasksCh, tasks, fetchDone(done))
 }
 
-func (f *dataFetcher) fetchTaskInfo(qname, taskID string) {
-	var (
-		i       = f.inspector
-		taskCh  = f.taskCh
-		errorCh = f.errorCh
-	)
-	go fetchTaskInfo(i, qname, taskID, taskCh, errorCh)
-}
-
-func fetchTaskInfo(i *asynq.Inspector, qname, taskID string, taskCh chan<- *asynq.TaskInfo, errorCh chan<- error) {
+func fetchTaskInfo(i *asynq.Inspector, qname, taskID string, taskCh chan<- *asynq.TaskInfo, errorCh chan<- error, done ...<-chan struct{}) {
 	info, err := i.GetTaskInfo(qname, taskID)
 	if err != nil {
-		errorCh <- err
+		publish(errorCh, err, fetchDone(done))
 		return
 	}
-	taskCh <- info
+	publish(taskCh, info, fetchDone(done))
 }

@@ -59,7 +59,8 @@ log()  { [ "$QUIET" -eq 1 ] || printf '  %s\n' "$*"; }
 fail() { printf 'security-ci: %s\n' "$*" >&2; exit 2; }
 
 # GUI/IDE git clients and fresh shells may not have these on PATH.
-export PATH="$PATH:$HOME/.local/bin:$(go env GOPATH 2>/dev/null || echo "$HOME/go")/bin"
+PATH="$PATH:$HOME/.local/bin:$(go env GOPATH 2>/dev/null || echo "$HOME/go")/bin"
+export PATH
 
 need() { command -v "$1" >/dev/null 2>&1 || fail "$1 not found. Run: make security-tools"; }
 need trivy
@@ -112,7 +113,7 @@ KEV_FILE="$EV_DIR/known_exploited_vulnerabilities.json"
 CVE_CATALOG="$EV_DIR/cve-catalog.json"
 PROVENANCE="$EV_DIR/provenance.json"
 
-sha256() { sha256sum "$1" | cut -d' ' -f1; }
+sha256() { sha256sum < "$1" | cut -d' ' -f1; }
 now_utc() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 today_utc() { date -u +%Y-%m-%d; }
 
@@ -143,9 +144,9 @@ for spec in "${MODULES[@]}"; do
 
   # trivy scans recursively, so exclude the sibling module directories from the
   # root scan to keep one SBOM per Go module.
-  skip=()
+  skip=(--skip-dirs ./.security)
   if [ "$dir" = "." ]; then
-    skip=(--skip-dirs ./x --skip-dirs ./tools)
+    skip+=(--skip-dirs ./x --skip-dirs ./tools)
   fi
 
   log "[$label] SBOM (trivy)"
@@ -157,7 +158,8 @@ for spec in "${MODULES[@]}"; do
   # is a completed scan with zero findings, not missing evidence -- make that
   # explicit so the correlation engine does not read it as unavailable.
   python3 - "$sbom" <<'PY' || fail "could not normalize $label SBOM"
-import json, sys
+import json
+import sys
 from pathlib import Path
 path = Path(sys.argv[1])
 data = json.loads(path.read_text(encoding="utf-8"))
@@ -190,7 +192,8 @@ PY
   # genuine tool failure (no parseable JSON) is fatal here. Deliberately NOT
   # -quiet: that suppresses output entirely on a clean scan, which would throw
   # away the files/lines/nosec stats that make "0 findings" auditable.
-  ( cd "$mod_path" && gosec -fmt=json -exclude-generated ./... > "$sast_raw" 2>/dev/null ) || true
+  # gosec walks ignored directories; exclude only the evidence path component.
+  ( cd "$mod_path" && gosec -fmt=json -exclude-generated -exclude-dir '(^|/)\.security(/|$)' ./... > "$sast_raw" 2>/dev/null ) || true
   jq -e 'has("Issues") or has("Stats")' "$sast_raw" >/dev/null 2>&1 \
     || fail "gosec produced unparseable output for $label (see $sast_raw)"
 
@@ -426,7 +429,8 @@ Run once with network access: scripts/security/run.sh --refresh"
 A missing record is unavailable evidence, not an absent CVE."
     fi
   done
-  log "[cve] fetched $fetched new record(s), $(ls -1 "$CVE_RECORDS" | wc -l) cached total"
+  cached_records="$(find "$CVE_RECORDS" -maxdepth 1 -type f -name '*.json' -printf '.' | wc -c)"
+  log "[cve] fetched $fetched new record(s), $cached_records cached JSON record(s)"
 
   log "[cve] building cve-catalog-snapshot/v1 (skill builder)"
   python3 "$BUILD_CATALOG" "$CVE_RECORDS" \
@@ -448,7 +452,8 @@ if [ "${#DISCOVERED_CVES[@]}" -eq 0 ]; then
   # Nothing to correlate. Record that explicitly instead of fabricating a
   # clean correlation receipt from catalogs that were never consulted.
   python3 - "$CORRELATION" "$KEV_VERSION" "$KEV_RELEASED" "$KEV_COUNT" "$KEV_SHA" <<'PY'
-import json, sys
+import json
+import sys
 from pathlib import Path
 out, version, released, count, sha = sys.argv[1:6]
 Path(out).write_text(json.dumps({
@@ -492,29 +497,31 @@ else
 'not_present_in_supplied_snapshot' is therefore uninformative and never a global absence claim."
 fi
 
-python3 - "$PROVENANCE" <<PY
+python3 - "$(now_utc)" "$PROVENANCE" "$KEV_URL" "$KEV_SOURCE" "$PROVIDER_MODE" "$KEV_RETRIEVED" "$KEV_SHA" "$KEV_VERSION" "$KEV_RELEASED" "$KEV_COUNT" "$CVE_SOURCE_URI" "$CVE_SOURCE" "$CVE_CATALOG_MODE" "$CVE_SHA" "$CVE_CATALOG_NOTE" <<'PY'
 import json
+import sys
 from pathlib import Path
-Path("$PROVENANCE").write_text(json.dumps({
+values = dict(zip(['PROVENANCE', 'KEV_URL', 'KEV_SOURCE', 'PROVIDER_MODE', 'KEV_RETRIEVED', 'KEV_SHA', 'KEV_VERSION', 'KEV_RELEASED', 'KEV_COUNT', 'CVE_SOURCE_URI', 'CVE_SOURCE', 'CVE_CATALOG_MODE', 'CVE_SHA', 'CVE_CATALOG_NOTE'], sys.argv[2:]))
+Path(values['PROVENANCE']).write_text(json.dumps({
     "schema": "asynq-catalog-provenance/v1",
-    "generated_at": "$(now_utc)",
+    "generated_at": sys.argv[1],
     "kev_catalog": {
-        "source_uri": "$KEV_URL",
-        "acquisition": "$KEV_SOURCE",
-        "provider_mode": "$PROVIDER_MODE",
-        "retrieved_at": "$KEV_RETRIEVED",
-        "sha256": "$KEV_SHA",
-        "catalog_version": "$KEV_VERSION",
-        "date_released": "$KEV_RELEASED",
-        "count": $KEV_COUNT,
+        "source_uri": values['KEV_URL'],
+        "acquisition": values['KEV_SOURCE'],
+        "provider_mode": values['PROVIDER_MODE'],
+        "retrieved_at": values['KEV_RETRIEVED'],
+        "sha256": values['KEV_SHA'],
+        "catalog_version": values['KEV_VERSION'],
+        "date_released": values['KEV_RELEASED'],
+        "count": int(values['KEV_COUNT']),
         "completeness": "not-asserted-by-source-schema",
     },
     "cve_catalog": {
-        "source_uri": "$CVE_SOURCE_URI",
-        "acquisition": "$CVE_SOURCE",
-        "mode": "$CVE_CATALOG_MODE",
-        "sha256": "$CVE_SHA",
-        "note": "$CVE_CATALOG_NOTE",
+        "source_uri": values['CVE_SOURCE_URI'],
+        "acquisition": values['CVE_SOURCE'],
+        "mode": values['CVE_CATALOG_MODE'],
+        "sha256": values['CVE_SHA'],
+        "note": values['CVE_CATALOG_NOTE'],
     },
 }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 PY
@@ -535,5 +542,5 @@ python3 "$CI" gate \
 gate_status=$?
 set -e
 
-printf '  evidence: %s\n\n' "${OUT_DIR#$REPO_ROOT/}"
+printf '  evidence: %s\n\n' "${OUT_DIR#"$REPO_ROOT"/}"
 exit "$gate_status"

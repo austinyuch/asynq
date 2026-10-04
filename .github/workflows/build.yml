@@ -42,3 +42,9 @@ jobs:
 
       - name: Test tools module
         run: cd tools && go test -race ./...
+
+      - name: Test event ledger contracts
+        run: make coverage-events-test
+
+      - name: Test security decision contracts
+        run: make security-contracts-test

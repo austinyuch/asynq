@@ -7,6 +7,7 @@ package cmd
 
 import (
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -17,10 +18,10 @@ import (
 	"unicode/utf8"
 
 	"github.com/MakeNowJust/heredoc/v2"
-	"github.com/fatih/color"
 	"github.com/austinyuch/asynq"
 	"github.com/austinyuch/asynq/internal/base"
 	"github.com/austinyuch/asynq/internal/rdb"
+	"github.com/fatih/color"
 	"github.com/redis/go-redis/v9"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -31,6 +32,9 @@ import (
 )
 
 var cfgFile string
+
+// Set by the initializer and checked before any command body executes.
+var configLoadErr error
 
 // Global flag variables
 var (
@@ -55,6 +59,9 @@ var rootCmd = &cobra.Command{
 
 	SilenceUsage:  true,
 	SilenceErrors: true,
+	PersistentPreRunE: func(_ *cobra.Command, _ []string) error {
+		return configLoadErr
+	},
 
 	Example: heredoc.Doc(`
 		$ asynq stats
@@ -319,6 +326,7 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+	configLoadErr = nil
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
@@ -326,8 +334,8 @@ func initConfig() {
 		// Find home directory.
 		home, err := homedir.Dir()
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			configLoadErr = fmt.Errorf("locate config home: %w", err)
+			return
 		}
 
 		// Search config in home directory with name ".asynq" (without extension).
@@ -338,9 +346,15 @@ func initConfig() {
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	if err := viper.ReadInConfig(); err != nil {
+		var notFound viper.ConfigFileNotFoundError
+		if cfgFile == "" && errors.As(err, &notFound) {
+			return // The default home config is optional.
+		}
+		configLoadErr = fmt.Errorf("read config %q: %w", viper.ConfigFileUsed(), err)
+		return
 	}
+	fmt.Println("Using config file:", viper.ConfigFileUsed())
 }
 
 // createRDB creates a RDB instance using flag values and returns it.

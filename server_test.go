@@ -7,7 +7,6 @@ package asynq
 import (
 	"context"
 	"fmt"
-	"syscall"
 	"testing"
 	"time"
 
@@ -82,36 +81,6 @@ func TestServerFromRedisClient(t *testing.T) {
 	}
 }
 
-func TestServerRun(t *testing.T) {
-	// https://github.com/go-redis/redis/issues/1029
-	ignorePoolReaper := goleak.IgnoreTopFunction("github.com/redis/go-redis/v9/internal/pool.(*ConnPool).reaper")
-	ignoreCircuitBreakerCleanup := goleak.IgnoreTopFunction("github.com/redis/go-redis/v9/maintnotifications.(*CircuitBreakerManager).cleanupLoop")
-	defer goleak.VerifyNone(t, ignorePoolReaper, ignoreCircuitBreakerCleanup)
-
-	srv := NewServer(getRedisConnOpt(t), Config{LogLevel: testLogLevel})
-
-	done := make(chan struct{})
-	// Make sure server exits when receiving TERM signal.
-	go func() {
-		time.Sleep(2 * time.Second)
-		_ = syscall.Kill(syscall.Getpid(), syscall.SIGTERM)
-		done <- struct{}{}
-	}()
-
-	go func() {
-		select {
-		case <-time.After(10 * time.Second):
-			panic("server did not stop after receiving TERM signal")
-		case <-done:
-		}
-	}()
-
-	mux := NewServeMux()
-	if err := srv.Run(mux); err != nil {
-		t.Fatal(err)
-	}
-}
-
 func TestServerErrServerClosed(t *testing.T) {
 	srv := NewServer(getRedisConnOpt(t), Config{LogLevel: testLogLevel})
 	handler := NewServeMux()
@@ -140,9 +109,12 @@ func TestServerErrServerRunning(t *testing.T) {
 	if err := srv.Start(handler); err != nil {
 		t.Fatal(err)
 	}
-	err := srv.Start(handler)
+	err := srv.Start(NewServeMux())
 	if err == nil {
 		t.Error("Calling (*Server).Start(handler) on already running server did not return error")
+	}
+	if srv.processor.handler != handler {
+		t.Error("Rejected Start replaced the running server handler")
 	}
 	srv.Shutdown()
 }

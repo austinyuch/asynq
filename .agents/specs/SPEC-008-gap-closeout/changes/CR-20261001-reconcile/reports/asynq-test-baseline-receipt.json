@@ -1,0 +1,42 @@
+{
+  "toolchain": "go1.26.6 linux/arm64",
+  "final_head": "0b28a723c65562131d3dc0921e2acdd28e3287ed",
+  "upstream_master": "d135f1439bee74e989b7f9b41ecd542cc87f024a",
+  "upstream_ancestor": true,
+  "runtime": {
+    "name": "asynq-reconcile-20261001-v2",
+    "address": "127.0.0.1:16382",
+    "test_db": 14,
+    "custody": "/tmp/asynq-valkey-custody.json"
+  },
+  "root": {
+    "status": "PASS",
+    "seconds": 204.328,
+    "statement_coverage_percent": 81.3,
+    "start_head": "dc9733ba2691b366b6fd3011fdacedfa0b3b22da",
+    "end_head": "0b28a723c65562131d3dc0921e2acdd28e3287ed",
+    "claim": "working-tree runtime baseline; source changed while running, not an exact-final-commit gate",
+    "log": "/tmp/asynq-root-runtime-v2.log",
+    "profile": "/tmp/asynq-root-runtime-v2.cover"
+  },
+  "rdb": {
+    "status": "PASS",
+    "seconds": 11.458,
+    "statement_coverage_percent": 79.2,
+    "start_head": "0b28a723c65562131d3dc0921e2acdd28e3287ed",
+    "end_head": "0b28a723c65562131d3dc0921e2acdd28e3287ed",
+    "source_sha256": "1e38d8fe3c28e2f7693977a79bc2509bfb1516a0dc068b3e1c1046500371c2db",
+    "log": "/tmp/asynq-rdb-runtime-v2.log",
+    "profile": "/tmp/asynq-rdb-runtime-v2.cover"
+  },
+  "base": {
+    "status": "PASS",
+    "statement_coverage_percent": 100.0,
+    "pbt": "10000 fixed-seed quick.Check samples",
+    "wire_fuzz_executions": 673842,
+    "retry_fuzz_executions": 679476,
+    "fuzz_seconds_each": 30,
+    "mutation_receipt": "/tmp/asynq-base-mutation/receipt.json"
+  },
+  "global_95_percent_line_coverage": "not achieved or proven"
+}

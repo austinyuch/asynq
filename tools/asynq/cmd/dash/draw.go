@@ -13,8 +13,8 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/gdamore/tcell/v2"
 	"github.com/austinyuch/asynq"
+	"github.com/gdamore/tcell/v2"
 	"github.com/mattn/go-runewidth"
 )
 
@@ -253,12 +253,43 @@ func drawQueueSummary(d *ScreenDrawer, state *State) {
 // Returns the max number of groups that can be displayed.
 func groupPageSize(s tcell.Screen) int {
 	_, h := s.Size()
+	if h <= 16 {
+		return 1 // Keep navigation valid when the table is clipped.
+	}
 	return h - 16 // height - (# of rows used)
+}
+
+// groupPageRange reconciles page and row selection with the current viewport
+// and group snapshot. Rows are page-local, with zero selecting the header.
+func groupPageRange(s tcell.Screen, state *State) (start, end int) {
+	size, total := groupPageSize(s), len(state.groups)
+	last := 1
+	if total > 0 {
+		last = (total-1)/size + 1
+	}
+	if state.pageNum < 1 {
+		state.pageNum = 1
+	}
+	if state.pageNum > last {
+		state.pageNum = last
+	}
+	start = (state.pageNum - 1) * size
+	end = start + min(size, total-start)
+	if state.groupTableRowIdx < 0 {
+		state.groupTableRowIdx = 0
+	}
+	if state.groupTableRowIdx > end-start {
+		state.groupTableRowIdx = end - start
+	}
+	return start, end
 }
 
 // Returns the number of tasks to fetch.
 func taskPageSize(s tcell.Screen) int {
 	_, h := s.Size()
+	if h <= 15 {
+		return 1 // A zero SDK page size would fetch the entire task list.
+	}
 	return h - 15 // height - (# of rows used)
 }
 
@@ -359,11 +390,7 @@ func drawTaskTable(d *ScreenDrawer, state *State) {
 
 	// Pagination
 	pageSize := taskPageSize(d.Screen())
-	totalCount := getTaskCount(state.selectedQueue, state.taskState)
-	if state.taskState == asynq.TaskStateAggregating {
-		// aggregating tasks are scoped to each group when shown in the table.
-		totalCount = state.selectedGroup.Size
-	}
+	totalCount := selectedTaskCount(state)
 	if pageSize < totalCount {
 		start := (state.pageNum-1)*pageSize + 1
 		end := start + len(state.tasks) - 1
@@ -379,13 +406,30 @@ func drawTaskTable(d *ScreenDrawer, state *State) {
 	}
 }
 
+// Navigation follows the selected domain count, including while a page is
+// loading. Division before multiplication avoids overflow at extreme counts.
+func lastTaskPage(s tcell.Screen, state *State) int {
+	total := selectedTaskCount(state)
+	if total <= 0 {
+		return 1
+	}
+	return (total-1)/taskPageSize(s) + 1
+}
+
 func isNextTaskPageAvailable(s tcell.Screen, state *State) bool {
-	totalCount := getTaskCount(state.selectedQueue, state.taskState)
-	end := (state.pageNum-1)*taskPageSize(s) + len(state.tasks)
-	return end < totalCount
+	return state.pageNum < lastTaskPage(s, state)
+}
+
+// Aggregating task pages represent the selected group, not the whole queue.
+func selectedTaskCount(state *State) int {
+	if state.taskState == asynq.TaskStateAggregating && state.selectedGroup != nil {
+		return state.selectedGroup.Size
+	}
+	return getTaskCount(state.selectedQueue, state.taskState)
 }
 
 func drawGroupTable(d *ScreenDrawer, state *State) {
+	start, end := groupPageRange(d.Screen(), state)
 	if len(state.groups) == 0 {
 		return // print nothing
 	}
@@ -397,8 +441,6 @@ func drawGroupTable(d *ScreenDrawer, state *State) {
 	// pagination
 	pageSize := groupPageSize(d.Screen())
 	total := len(state.groups)
-	start := (state.pageNum - 1) * pageSize
-	end := min(start+pageSize, total)
 	drawTable(d, baseStyle, colConfigs, state.groups[start:end], state.groupTableRowIdx-1)
 
 	if pageSize < total {
@@ -613,6 +655,7 @@ func (d *modalRowDrawer) Print(s string, style tcell.Style) {
 		s = truncate(s, d.maxWidth-d.width)
 	}
 	d.d.Print(s, style)
+	d.width += runewidth.StringWidth(s)
 }
 
 // withModal draws a modal with the given functions row by row.
@@ -624,8 +667,8 @@ func withModal(d *ScreenDrawer, rowPrintFns []func(d *modalRowDrawer)) {
 		rowOffset   = int(math.Floor(float64(h) * 0.2)) // 20% from the top
 		colOffset   = int(math.Floor(float64(w) * 0.2)) // 20% from the left
 	)
-	if modalHeight < 3 {
-		return // no content can be shown
+	if modalHeight < 3 || modalWidth < 4 {
+		return // borders and padding leave no content area
 	}
 	d.Goto(colOffset, rowOffset)
 	d.Print(string(tcell.RuneULCorner), baseStyle)
@@ -638,6 +681,7 @@ func withModal(d *ScreenDrawer, rowPrintFns []func(d *modalRowDrawer)) {
 		maxWidth: modalWidth - 4, /* borders + paddings */
 	}
 	for i := 1; i < modalHeight-1; i++ {
+		rowDrawer.width = 0
 		d.Goto(colOffset, rowOffset+i)
 		d.Print(fmt.Sprintf("%c ", tcell.RuneVLine), baseStyle)
 		if i <= len(rowPrintFns) {
@@ -670,12 +714,19 @@ func titleCase(s string) string {
 	return string(r)
 }
 
-// truncates s if s exceeds max length.
+// truncate limits text to max terminal cells, preserving grapheme boundaries.
 func truncate(s string, max int) string {
+	if max <= 0 {
+		return ""
+	}
 	if runewidth.StringWidth(s) <= max {
 		return s
 	}
-	return string([]rune(s)[:max-1]) + "…"
+	tail := "…"
+	if runewidth.StringWidth(tail) > max {
+		tail = ""
+	}
+	return runewidth.Truncate(s, max, tail)
 }
 
 func drawDebugInfo(d *ScreenDrawer, state *State) {

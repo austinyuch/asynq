@@ -225,7 +225,7 @@ The archived counter matches Flow B's Inspector stats, Flow C's CLI output, and 
 **Gaps resolved since last check** (this run: 2026-06-07 regen #3 / gap closeout):
 
 - ✅ **dash TUI graphics layer**: real ANSI color sequences captured via `tmux capture-pane -e` and rendered to PNG ×2 — the dash part of IL-003 fully resolved
-- ✅ **Per-file disposition of `docs/assets/`**: 9 files unreferenced (legacy, kept for sync cleanliness), `dash.gif` is README's upstream animated demo (fork-authoritative visuals live in this manual) — IL-003 closed
+- ✅ **Per-file disposition of `docs/assets/`**: 9 files unreferenced (legacy, kept for sync cleanliness), `dash.gif` was re-shot in the fork environment (6 frames of real navigation) — IL-003 closed
 - ✅ Stale `go_package` string in `internal/proto/asynq.pb.go` (IL-001) → regenerated via `make proto`, descriptor now carries the austinyuch path
 
 **Earlier (2026-06-07 regen #2)**:
@@ -233,7 +233,7 @@ The archived counter matches Flow B's Inspector stats, Flow C's CLI output, and 
 - ✅ **`assets/*.txt` evidence files had never been committed** (manual links were dead) — this run adds 7 git-tracked assets; every evidence link now downloads
 - ✅ **First live fork-environment captures of the `asynq dash` TUI** (tmux capture-pane ×2: Queues main screen + Queue Summary) — the dash part of IL-003 narrows from "no capture at all" to "graphics layer only"
 - ✅ All numbers regenerated 2026-06-07 under the governed allocation; four surfaces (seed/CLI/dash/exporter) are mutually consistent
-- ⏳ Still open: IL-003 remainder (`docs/assets/` upstream media not re-shot; dash graphics layer)
+- Historical state (regen #2): IL-003 was still open then; regen #3 resolved the graphics capture, fork animation re-shoot, and legacy disposition (see closure record above)
 
 ---
 

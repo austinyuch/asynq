@@ -1,0 +1,450 @@
+{
+  "schema": "finite-source-class-admission/v1",
+  "state": "ROOT_ADOPTED_FINITE_CLASS",
+  "decision_authority": "Root coordinator adopts current finite owned JS and Python classes; root sole tracked apply; Go bounded local inventory contract is recorded without full Go class admission",
+  "ref": "R-14",
+  "classes": {
+    "owned_browser_javascript": {
+      "status": "QUALIFIED_FINITE_COMPLETE_CLASS",
+      "original_executable_lines": 6,
+      "original_hit_lines": 6,
+      "selected_metric": "native CDP V8 precise coverage + actual import resolution/module-entry and initialize/SVG behavior for exact two straightline forms",
+      "whole_source_sha256": {
+        "docs/manual/en/index.html": "e7c8c903c0dd342d7a544ae4a77e1789eaacd619755a5f98921904638ce8194f",
+        "docs/manual/zh-tw/index.html": "cdb07bf0982611948cf53f0990a6e8b6b277791b32f6f65d12c0a2eb666cbed0",
+        "docs/review/index.html": "0d80785a35992ab8f1a52901f92c6d6b2e6dc85a5bf0ae365476eba77cd3444e"
+      },
+      "sites": [
+        {
+          "path": "docs/manual/en/index.html",
+          "original_source_sha256": "e7c8c903c0dd342d7a544ae4a77e1789eaacd619755a5f98921904638ce8194f",
+          "line": 8,
+          "token": "import mermaid from",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 3,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        },
+        {
+          "path": "docs/manual/en/index.html",
+          "original_source_sha256": "e7c8c903c0dd342d7a544ae4a77e1789eaacd619755a5f98921904638ce8194f",
+          "line": 9,
+          "token": "mermaid.initialize",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 93,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        },
+        {
+          "path": "docs/manual/zh-tw/index.html",
+          "original_source_sha256": "cdb07bf0982611948cf53f0990a6e8b6b277791b32f6f65d12c0a2eb666cbed0",
+          "line": 8,
+          "token": "import mermaid from",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 3,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        },
+        {
+          "path": "docs/manual/zh-tw/index.html",
+          "original_source_sha256": "cdb07bf0982611948cf53f0990a6e8b6b277791b32f6f65d12c0a2eb666cbed0",
+          "line": 9,
+          "token": "mermaid.initialize",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 93,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        },
+        {
+          "path": "docs/review/index.html",
+          "original_source_sha256": "0d80785a35992ab8f1a52901f92c6d6b2e6dc85a5bf0ae365476eba77cd3444e",
+          "line": 8,
+          "token": "import mermaid from",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 3,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        },
+        {
+          "path": "docs/review/index.html",
+          "original_source_sha256": "0d80785a35992ab8f1a52901f92c6d6b2e6dc85a5bf0ae365476eba77cd3444e",
+          "line": 9,
+          "token": "mermaid.initialize",
+          "body_sha256": "c2149759477e0a4f986e3c8097c7204eb375b2929cd761369f06b66c4567d8b0",
+          "script_id": "5",
+          "body_UTF16_offset": 93,
+          "native_range": {
+            "startOffset": 0,
+            "endOffset": 192,
+            "count": 1
+          },
+          "mapping": "Exact inline body getScriptSource bytes and scriptParsed file origin; UTF16 token offset back to containing immutable original HTML."
+        }
+      ],
+      "syntax_inventory": {
+        "inline_modules": 3,
+        "event_handlers": 0,
+        "javascript_urls": 0,
+        "owned_external_js": 0
+      },
+      "native_peer_materials_verified": 210,
+      "receipt_bindings": {
+        ".security/browser-lines-20261003/source-inventory/receipt.json": "5960bef94a3c8497e97c25481f4f7072f9148b60de6e445c3b95fe0a360837ea",
+        ".security/browser-lines-20261003/peer-review/receipt.json": "8fb9c0828e51885b97b78ae8efeeed7d899aafcef95c7728b1f8c1ede9475520",
+        ".security/browser-lines-20261003/maintained-pages/receipt.json": "7cd45b1768597a877eb6766cdf1eebdfd7175499a7800799db7d762187150a6d",
+        ".security/browser-lines-20261003/maintained-pages/mapping-readback/readback.json": "88382fdfcae0572f3235cf9458e25798bed79fd3dfe11f777eac12a0a84ed26e",
+        ".security/browser-lines-20261003/mapping-contracts-successor/receipt.json": "070773d14e7964588f337a4a92a6e0f97eaf350bd117c4cbbc2d6c194c305f98",
+        ".security/current-js-finite-admission-20261004/independent.json": "c4874bb07e98f9b6bcf15bb6dc22aabc78fdd8507125f3a992967687f3d156ba",
+        ".security/current-js-finite-admission-20261004/native-range-readback.json": "81e659b445e12cfacb01036e202418ae3061abf62f6a94d2011f344b130cd2dc"
+      },
+      "caps": [
+        "six adopted browser helper exit1 retained; leader0/owned cleanup qualified, no all-descendants0 claim",
+        "no independent native import-line counter",
+        "mermaid CDN dependency exact point-in-time hashes; future CDN bytes not admitted",
+        "change to any whole HTML source or admitted syntactic form requires requalification",
+        "arbitrary future JS syntax, formal cross-family review and promotion not admitted"
+      ]
+    },
+    "go": {
+      "status": "INCOMPLETE",
+      "bounded_inventory_contract": "V10_LOCAL_INITIALIZATION_OWNER_CONTRACT_QUALIFIED",
+      "candidate_original_lines": 6182,
+      "candidate_line_delta_from_v8": 0,
+      "owned_files": 45,
+      "source_bindings": 145,
+      "local_owners": 214,
+      "package_owners": 141,
+      "source_head": "7198309c55ba835b9b367ae858cffd07ce8bb78a",
+      "source_tree": "66fffbfe5c8369cab43e6396334bf34b60bd2805",
+      "classifier_source_sha256": "91fcb38f5ea20a0bf162ef70bcbbb802334af445a31ff12cc183003cf466720f",
+      "evidence_receipts": {
+        ".security/go-classifier-v10-20261004/receipt.json": "9ec65f3f6141db2417467cb09c694f8ce434dabb4c95efda8dd403a4ad6893c4",
+        ".security/go-classifier-v10-20261004/metadata-correction.json": "efae7123cc5da2bad59fa848a44dab2cd17482249051295142947050284acc6b",
+        ".security/go-classifier-v10-20261004/replay/receipt.json": "90eca884d56c7f280be976b37dbfd66105d8a463846952c92d4d516aaa9bb33c",
+        ".security/go-classifier-v10-20261004/final-readback.json": "4fc2ab7d014f24f9720cea82b657ecea8cf7ce900c9a59aa786ab96aa0296d29",
+        ".security/go-classifier-v10-20261004/independent-v10/review-receipt.json": "f829a9254e06eaf90ae30ef03a4d07bfc0e50c8bbef28b60e709427fce4d10eb",
+        ".security/go-classifier-v10-20261004/independent-v10/terminal-confirm.json": "cc05c41c94d6426d9f5d7de7ebafc8c7558cad1a5e632df03c42a60e9062b4a2"
+      },
+      "native_quality": {
+        "PBT": 200,
+        "coverage_guided_fuzz_executions": 163215,
+        "fuzz_seconds": 10,
+        "viable_compiled_mutants_caught_by_ordinary_assertions": 2
+      },
+      "pending": [
+        "Windows 8 original sites unmeasured",
+        "Full original Go semantic inventory/observer/profile admission remains open"
+      ],
+      "runtime_hit_carry": false,
+      "project_line_ratio": null,
+      "caps": [
+        "Source equality permits dated type/export context replay only; no fresh current-HEAD runtime claim",
+        "Every local name is owned; blank-only declaration parent does not fabricate executable source line",
+        "Exact typednil interface metadata negative is bounded; dynamic calls/receive/panic/conversion retained",
+        "Same-family bounded review is not formal cross-family readiness PASS",
+        "No every-target effect or entry/completion phase coverage threshold added",
+        "Exact19 positive source/type/ELF/entry-memory storage roles retain initialization owners; other runtime initializers remain in scope; source changes require refresh"
+      ],
+      "finite_static_storage_roles": {
+        "status": "QUALIFIED_EXACT_STATIC_ROLE_COHORT",
+        "source_head": "8cb130e58ea3e7c63a4bc42131ab8f888a2ad99b",
+        "source_tree": "611af4fa5472345bcbd9e8928b7295ee6fd0edef",
+        "original_owners": 19,
+        "implicit_zero_storage_declarations": 17,
+        "scalar_constant_initializers": 2,
+        "positive_pre_runtime_initial_memory_owners": 19,
+        "retained_language_initialization_owners": true,
+        "candidate_delta": 0,
+        "original_line_hit_delta": 0,
+        "no_NO_PC_exclusion": true,
+        "controlled_inferior_minus9_not_normal_test_PASS": true,
+        "evidence_receipts": {
+          ".security/go-package19-positive-provenance-20261004/final-receipt.json": "f3e292e6ae5b7734ddc2677c2fbb3eefcbde70a7313dccef4e5d9f5c22f3ab00",
+          ".security/go-package19-positive-provenance-20261004/independent-review.json": "f2cbf487238375d576c56fa7649636a859dc5cd635b521a07e867669cc0d9901",
+          ".security/go-package19-positive-provenance-20261004/root-finite-disposition.json": "2c3fcf6286d9e71be6124de9eb97376f7549a9b883630a391dd536a3e66b1721",
+          ".security/go-v10-operator-role-triage-20261004/receipt.json": "fff777a288b8fac1ef3aa342479ab74e3052a99a4f2767a951de048aa0bc6081",
+          ".security/go-v10-operator-role-triage-20261004/union-owner/receipt.json": "7d086ca22060d32b94e880135013d40e53c112aa3ebdab32bd2bb263811009ff",
+          ".security/go-v10-operator-role-triage-20261004/union-owner/source-binding-readback.json": "b896f5c0e4c5d36c020cce1d27af0a07b3d2e63fe5679550b95cf9925da9ad3b",
+          ".security/next-finite-disposition-review-20261004/receipt.json": "8a202e77202e479f20b2635cb621b1839a68a03fdf63ec16d13f9162b2adfeb6"
+        }
+      },
+      "bounded_operator_offset_role_reconciliation": {
+        "unmatched_offsets": 1613,
+        "already_EXEC_candidate_original_line_offsets": 1593,
+        "remaining_offsets": 20,
+        "remaining_unique_original_lines": 18,
+        "typed_constant_lines": 16,
+        "positive_type_union_lines": 1,
+        "package_scalar_constant_storage_lines": 1,
+        "new_confirmed_runtime_candidate_line_gaps": 0,
+        "scope": "Current finite operator-offset cohort only; no complete Go semantic/profile admission inferred"
+      }
+    },
+    "python": {
+      "status": "QUALIFIED_FINITE_COMPLETE_CLASS",
+      "selected_metric": "Pinned CPython3.12.3 original-source line events; coverage.py7.14.0 CTracer standalone + exact original stdin body frame events, typed recursive code/source identity and expected/wait/profile closure",
+      "scope": {
+        "production_scripts": 3,
+        "literal_bodies": 3,
+        "tracked_python_tests_excluded": 8,
+        "literal_original_start_lines": [
+          161,
+          455,
+          501
+        ]
+      },
+      "original_executable_lines": 998,
+      "original_hit_lines": 981,
+      "original_missing_lines": 17,
+      "evidence_source_baseline": {
+        "head": "9375109e5c967bf40fc1a92ffa36c53e08422a76",
+        "tree": "83606ecdb99b7a4d87670fade7dcb60d556d0496",
+        "meaning": "Exact evidence source baseline only; future delivery commit is not asserted measured by this registry"
+      },
+      "whole_source_sha256": {
+        "scripts/coverage/event_ledger.py": "c02ccde52ebe30bbc27a9d2c9dedbc81e873500d9e4ef9b58a1724c8d57656ae",
+        "scripts/security/security_local_ci.py": "6be571e26e178ea6ecd368364fdfc9d4d44bf5944632d6d2b883c4e9d43b0ea8",
+        "scripts/security/source_sast.py": "9101cf8ea5be79f7d57e4d18c66bba9556eda70fb69b5ccead7655811cb4114b",
+        "scripts/security/run.sh": "4d0537dbdfd2e2e7251716bae0b2de0de4e32a12cfe551248ee574c9e71a5104"
+      },
+      "original_role_inventory_receipt": ".security/python-inventory-semantic-join-20261004/receipt.json",
+      "proof_receipts_sha256": {
+        ".security/python-standalone-child-closure-v2-20261004/receipt.json": "97c278a0d8de0179442d7f0f326fd99df129c5b07467bd21822223d85551c4d4",
+        ".security/python-standalone-child-closure-v2-20261004/native-profile-line-readback.json": "cf556dc4590bf8a8a9d859eadec7fe4c6793b4f264813ef9d06313fdd9ca574f",
+        ".security/python-original-operation-independent-20261004/original-line-role-map.json": "5e1ca9bf74bcc6bfe65798681d97bbfb317312ae22d9d9d29b5e75e87802536f",
+        ".security/python-original-operation-independent-20261004/qualification-receipt.json": "95cb9b4ca31d7e66d7896e6c046cbf99e5598a7cb20a8ef01fb307f05e6a3a47",
+        ".security/python-inventory-semantic-join-20261004/receipt.json": "cc9a93b0a9b6fd89518982c9f7fc3580cad5d876152bc7f1c73bb619954f3df3",
+        ".security/python-class-scope-20261004/receipt.json": "f9803c7926604cc0fe0c713ad6cdb70f7cc76e795f0e77636d9ecc7896a7ccf7",
+        ".security/python-original-operation-independent-20261004/full-class-qualification.json": "554c771884ca2aef90d71eeeb3eecf4b43448d3506b7c8180358c9b920c9b8d7",
+        ".security/python-original-operation-independent-20261004/full-class-disposition-readback.json": "f906e55b4478ce3880df7de3354fbae4c53407140bc1f90b7a50c51c30933a84",
+        ".security/python-inventory-cli-candidate-20261004/receipt.json": "f893fc7a28636890f577658d5e975c13154130bf31848b91590e16d945cea96f",
+        ".security/python-inventory-cli-candidate-20261004/normal-contracts/result.json": "f980db24b1403c40151b651623a3f5a3e52640c8f1d7822a23442ec82cbe4ea2",
+        ".security/python-inventory-cli-candidate-v2-20261004/execution-receipt.json": "8c148331d60f42b59d43dda1d62d6d87e732a227db1d2ac25bc1f4fd5d3d1a55"
+      },
+      "normal_traced": {
+        "each_expected_children": 689,
+        "each_actual_codeobjects_verified": 3827,
+        "each_security_tests": 50,
+        "each_event_tests": 8,
+        "ordered_assertions_and_stdout_equal": true
+      },
+      "shell_literal_campaign": {
+        "expected_native_children": 117,
+        "wait0": 116,
+        "expected_wait1_with_profile": 1,
+        "observed_original_lines": 48
+      },
+      "missing_sites": [
+        {
+          "path": "scripts/security/security_local_ci.py",
+          "line": 274
+        },
+        {
+          "path": "scripts/security/security_local_ci.py",
+          "line": 470
+        },
+        {
+          "path": "scripts/security/security_local_ci.py",
+          "line": 572
+        },
+        {
+          "path": "scripts/security/security_local_ci.py",
+          "line": 575
+        },
+        {
+          "path": "scripts/security/security_local_ci.py",
+          "line": 685
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 109
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 110
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 119
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 120
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 122
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 155
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 156
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 157
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 158
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 159
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 160
+        },
+        {
+          "path": "scripts/security/source_sast.py",
+          "line": 161
+        }
+      ],
+      "caps": [
+        "Ordinary controlled campaigns only; first v1 timeout/marshal mismatch preserved",
+        "Source-before actually captured in parent memory before campaigns and child startup; no pre-spawn durablefile or future crash-recovery assertion",
+        "stderr elapsed/path/coverage warnings retained; no byte-equality assertion for stderr",
+        "Early10 nativewait0/no10profiles and parent nonterminal/nonzero negatives failclosed, not treated as current ordinary measurement gap",
+        "Exact13 compiler-folded metadata roles and functiondocstrings explicitly disposed; module __doc__ runtime line included; no generic Constant/NOP/NO_PC exclusion",
+        "CLI100 properties/24411 domain-guided mutation fuzz executions/two viable compiled assertion kills do not claim coverage-guided fuzz or project adequacy",
+        "Any owned source/syntax/runtime/observer change requires requalification; no fullproject ratio or formal promotion verdict"
+      ]
+    },
+    "shell_and_local_recipe_config": "OPEN",
+    "embedded_lua": {
+      "status": "INCOMPLETE",
+      "source_baseline": {
+        "head": "567f019b5359a05b18aa7b278a8196c67ccb20d9",
+        "tree": "2bc3b86bc5b977abe06c1b9dcf4e91f7d5c512d4",
+        "meaning": "Exact unchanged three original Go source bodies; no future delivery HEAD runtime-hit claim"
+      },
+      "original_scripts": 50,
+      "original_AST_nodes": 5139,
+      "whole_source_sha256": {
+        "internal/rdb/rdb.go": "420da3db25e5e9d13abb4ef83519072e96b4acf50c554e790049d1ff9a544a22",
+        "internal/rdb/inspect.go": "4dcfdd51226f0ee93100ddd1e9bd47aeaef65cce92920837204fcb750fd29a8e",
+        "x/rate/semaphore.go": "dd93ecba083da2932fd03b05cd122950f0583a148c0e85bd0dc37fd7506c11a7"
+      },
+      "finite_operator_cohort": {
+        "status": "QUALIFIED_EXACT_SOURCE_ROLE_COHORT",
+        "nodes": 262,
+        "runtime_candidate_operators": 234,
+        "folded_operator_metadata": 28,
+        "materialization_owners_retained": 28,
+        "remaining_operator_UNKNOWN": 0,
+        "unique_operator_PC_ambiguity": "Retained metadata; not an extra LINE threshold"
+      },
+      "finite_binding_boundary_cohort": {
+        "owners": 46,
+        "loop_binding_clauses": 45,
+        "binding_name_tokens": 80,
+        "footer_delimiter_tokens": 46,
+        "loop_header_decision_owners_retained": 45,
+        "implicit_function_return_candidate_retained": {
+          "source": "internal/rdb/inspect.go",
+          "line": 1799
+        },
+        "whole_footer_line_exclusion": false
+      },
+      "finite_literal_materialization_cohort": {
+        "nodes": 16,
+        "physical_lines": 8,
+        "original_encoding": "LOADK exact string constant-pool/lineinfo positive witnesses",
+        "whole_literal_class_generalization": false
+      },
+      "current_exact_definition_map": {
+        "scripts": 50,
+        "nodes": 5139,
+        "mechanical_mapping_only": true
+      },
+      "identical_body_aliases": {
+        "definitions": 3,
+        "status": "STATIC_CUSTODY_ONLY_RUNTIME_INVOCATION_JOIN_PENDING",
+        "clone_hits": false
+      },
+      "production_runtime_hits_added": 0,
+      "complete_semantic_inventory": "OPEN",
+      "source_line_observer_and_production_profile_closure": "OPEN",
+      "project_ratio": null,
+      "evidence_receipts": {
+        ".security/lua-all-operator-role-disposition-20261004/root-cumulative-overlay.json": "ede38defc0003300adfccf51dd2304bc7de5dff7ccbb62702f8ac6861fa6988a",
+        ".security/lua-all-operator-role-disposition-20261004/overlay-independent.json": "834a21680d63ebc1d70b44b45e88ef5d9fc09b3c9118c99d594310a2e38901c7",
+        ".security/lua-boundary-role-qualification-20261004/receipt.json": "e5ce921de2efe40a6e32b2d5e0c2f3dbfad008bf2ec844cf3ac16823dad63e66",
+        ".security/lua-boundary-role-qualification-20261004/independent/receipt.json": "416504cdf88ee81744cb7248ed2dc07ebb1ee2830c891c048381a97fae9dd5de",
+        ".security/lua-boundary-role-qualification-20261004/positive-disposition/receipt.json": "980dc9be07f06b70294e0658c45eb5cfde5a40f135a1efe81792103f9aa0d30f",
+        ".security/lua-boundary-role-qualification-20261004/independent/positive-disposition-review.json": "56e17309fb4aed75166f18c910a4f387a93020674f3f3bd04891578140d4141f",
+        ".security/lua-boundary-controls-20261004/receipt.json": "b9053b2c6e85e6fecb30939c96fed60984a051bf991faf581f233b7457dda557",
+        ".security/lua-boundary-controls-20261004/independent/receipt.json": "dd5788f60e3c8b1cff04ba9935cffa82c0e2f45b324764ea8ab0cb924e104054",
+        ".security/lua-current-exact-definition-map-20261004/receipt.json": "790d1f4830e5f7354513fd54d5679a849a8d7f63b7ceab60cd11f3ecadcf4868",
+        ".security/lua-current-exact-definition-map-20261004/independent-receipt.json": "8dc945d46e0e6078687864fc9187f828a6fb6614f0f8a0f24f25c46b8c559a6a",
+        ".security/lua-literal-line-gap-audit-20261004/receipt.json": "8ba6d68b834c063c48d7f5542e7083078f59a9f169e7465753272411ebe81da5",
+        ".security/lua-literal-materialization-qualification-20261004/receipt.json": "7b6f358003f975117d42a6e73e47a08b959ba3fe26378865fa1090b7b83d33a9",
+        ".security/lua-literal-materialization-qualification-20261004/line-control-readback.json": "6db3d142f22d4cda7b0be494f40b6fb6115a32c91a46b4f833c088b3bc1fbf88",
+        ".security/lua-alias-custody-audit-20261004/receipt.json": "4ea49447bd4bf4f84206b0dabf506b3db28f14db56c83fa6657d7db71b0fd750",
+        ".security/lua-literal-materialization-qualification-20261004/independent/receipt.json": "391b1df30ba90fc562cd404c88e70183c778e7af69c4b8055338e088c8ea9c70"
+      }
+    }
+  },
+  "project_line_ratio": null,
+  "full_goal": "active",
+  "global_LINE95": "OPEN",
+  "main": "HELD",
+  "formal_review": "immutable existing R-14 authority",
+  "registry_role": "Hash-bound finite coordinator disposition registry, not executable gate; class-specific evidence baselines never assert future commit measurement",
+  "evidence_source_baseline": {
+    "head": "4f7f6d500c3956eb4fc4cf53319d1283a619d5f9",
+    "tree": "86dbe9e2f0da7d3eb4ffc2982d7d31035c69469e",
+    "meaning": "Source baseline of evidence; does not assert new delivery commit has been measured"
+  },
+  "other_class_evidence_receipts": {
+    ".security/go-operation-completeness-20261004/final-receipt.json": "bf29c229d7eed4fee28444e3610c321fd5208acc7cbf4e1f997b34501ec0d831",
+    ".security/go-current-start-contexts-20261004/independent.json": "f16d72966ad2ba32e93878105c62e0d21b6c9977d4c99bd0235980c7e3647ffd",
+    ".security/python-full-class-inventory-20261004/receipt.json": "b6938c4525a74b410a25bcee293f858879b145377fd0a7c2bacfb220f5c45e70"
+  },
+  "evidence_source_baselines": {
+    "owned_browser_javascript": {
+      "head": "4f7f6d500c3956eb4fc4cf53319d1283a619d5f9",
+      "tree": "86dbe9e2f0da7d3eb4ffc2982d7d31035c69469e",
+      "meaning": "Source baseline of evidence; does not assert new delivery commit has been measured"
+    },
+    "python": {
+      "head": "9375109e5c967bf40fc1a92ffa36c53e08422a76",
+      "tree": "83606ecdb99b7a4d87670fade7dcb60d556d0496",
+      "meaning": "Exact evidence source baseline only; future delivery commit is not asserted measured by this registry"
+    },
+    "embedded_lua": {
+      "head": "567f019b5359a05b18aa7b278a8196c67ccb20d9",
+      "tree": "2bc3b86bc5b977abe06c1b9dcf4e91f7d5c512d4",
+      "meaning": "Finite semantic/source evidence baseline only; current production Lua execution profiles remain unqualified"
+    }
+  }
+}

@@ -48,10 +48,11 @@ A "stopped" server is no longer pulling new tasks from queues`,
 
 func serverList(cmd *cobra.Command, args []string) error {
 	r := createRDB()
+	defer r.Close()
 
 	servers, err := r.ListServers()
 	if err != nil {
-		return fmt.Errorf("could not fetch list of servers: %v", err)
+		return fmt.Errorf("could not fetch list of servers: %w", err)
 	}
 	if len(servers) == 0 {
 		fmt.Println("No running servers")

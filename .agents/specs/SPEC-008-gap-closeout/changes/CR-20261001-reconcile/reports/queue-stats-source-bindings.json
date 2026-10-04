@@ -1,0 +1,7 @@
+{
+  "tools/asynq/cmd/queue.go": "f4667e1b51c4254e645dfc9fae347acb48f6edc82cca2c24f1e827205bd8fee0",
+  "tools/asynq/cmd/stats.go": "6d5395f2c0568dd5efc4edd9cc5a52fc3d103dfed10995d129882fe8c56adb45",
+  "tools/asynq/cmd/administration_contract_test.go": "69d8902298797161493b1466d595364dc6007b776b522c203b059341ecab92f7",
+  "tools/asynq/cmd/queue_stats_failure_contract_test.go": "ccee681db2b7930883db1501dbcf187019ec826fe41e714334bf52a08afb7ec9",
+  "tools/asynq/cmd/cluster_queue_stats_contract_test.go": "b7cbe682ca44b2c53c4d06e9bb859b1f3721d6ff247d378b15efa98e76a9f9e6"
+}
