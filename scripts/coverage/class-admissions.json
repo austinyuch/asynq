@@ -132,16 +132,16 @@
     },
     "go": {
       "status": "INCOMPLETE",
-      "bounded_inventory_contract": "V11_NAMED_PACKAGE_INITIALIZATION_OWNER_CONTRACT_QUALIFIED_WITH_V10_LOCAL_CONTRACT_RETAINED",
-      "candidate_original_lines": 6201,
+      "bounded_inventory_contract": "V12_FINITE_TYPED_ZERO_RESULT_FOOTER_OWNER_CONTRACT_QUALIFIED_WITH_V11_PACKAGE_AND_V10_LOCAL_CONTRACTS_RETAINED",
+      "candidate_original_lines": 6307,
       "candidate_line_delta_from_v8": 0,
       "owned_files": 45,
       "source_bindings": 147,
       "local_owners": 214,
       "package_owners": 141,
-      "source_head": "465870859f084fb371dd3ed075a1b4d02c4db8fa",
-      "source_tree": "c2a003f72b8b85455719982efb61e3cf15ad9b11",
-      "classifier_source_sha256": "093545c109cde9ead13adaf96928868ef9fdd0fb88ae9ec59e8364e899dd2915",
+      "source_head": "f8b2152ac034afb8596268522df1fde256b08d76",
+      "source_tree": "adc6e3fc0a5fddf5f95ece60bbb6fa93d47ace5b",
+      "classifier_source_sha256": "645ef6e1c8cde7ff2863523e6e0095a362606fa0fc2eb88ee851c1f8f259c9d3",
       "evidence_receipts": {
         ".security/go-classifier-v10-20261004/receipt.json": "9ec65f3f6141db2417467cb09c694f8ce434dabb4c95efda8dd403a4ad6893c4",
         ".security/go-classifier-v10-20261004/metadata-correction.json": "efae7123cc5da2bad59fa848a44dab2cd17482249051295142947050284acc6b",
@@ -211,9 +211,9 @@
         "new_confirmed_runtime_candidate_line_gaps": 0,
         "scope": "Current finite operator-offset cohort only; no complete Go semantic/profile admission inferred"
       },
-      "candidate_line_delta_from_v10": 19,
-      "candidate_line_delta_from_v8_scope": "Historical v10 delta0; current v11 versus v10 adds19.",
-      "native_quality_evidence_subject": "Historical v10 cohort; current package quality in bounded_v11.native_quality.",
+      "candidate_line_delta_from_v10": 125,
+      "candidate_line_delta_from_v8_scope": "Historical v10 delta0; v11 versus v10 adds19; current v12 versus v11 adds106/0 removed.",
+      "native_quality_evidence_subject": "Current finite footer quality in bounded_v12.native_quality; bounded_v11 and prior v10 quality remain historical cohorts.",
       "bounded_v11": {
         "candidate_original_lines": 6201,
         "predecessor_v10_candidates": 6182,
@@ -310,6 +310,43 @@
         "runtime_hits": null,
         "project_ratio": null,
         "scope": "Static custody only; Windows8 bounded native proof remains separate; missing/unresolved owners retained."
+      },
+      "bounded_v12": {
+        "state": "FINITE_FOOTER_CANDIDATE_QUALIFICATION_NOT_FULL_GO_ADMISSION",
+        "candidate_original_lines": 6307,
+        "delta_from_v11": {
+          "added": 106,
+          "removed": 0
+        },
+        "unresolved_footer_unique_original_offsets": 122,
+        "source_baseline_head": "f8b2152ac034afb8596268522df1fde256b08d76",
+        "source_baseline_tree": "adc6e3fc0a5fddf5f95ece60bbb6fa93d47ace5b",
+        "classifier_sha256": "645ef6e1c8cde7ff2863523e6e0095a362606fa0fc2eb88ee851c1f8f259c9d3",
+        "native_quality": {
+          "seeded_property_completed": 100,
+          "fuzz_initial_baseline": 17,
+          "guided_fuzz_actual_execs": 263054,
+          "fuzz_request_seconds": 10,
+          "workers": 1,
+          "ordinary_compiled_assertion_mutants_killed": 2
+        },
+        "runtime_hits": null,
+        "receipts": {
+          ".security/go-classifier-v12-qualification-20261005/native-v2/receipt.json": "7d5b90570994d56e7ffa5ebccc599ada05a8fae4ec652f7d83bdc9a64f455030",
+          ".security/go-classifier-v12-qualification-20261005/native-v3-independent.json": "0ebe3402b563c94a57c33236bf95e838d0c669935da9e8dbbc7d52c6d7fac689",
+          ".security/go-classifier-v12-replay-v2-20261005/receipt.json": "6653e85b2bbb3f41fba8a5b5b5c80c1b85a56a98074677f60603b7b2ab35df33",
+          ".security/go-classifier-v12-replay-v2-independent-20261005/receipt.json": "a2bd40dd2c701d78e8e6465205d8372bee36482c06e0547e9b43b2ba15ea4e25",
+          ".security/go-classifier-v12-footer-semantic-report-20261005/report.json": "3498381ae3f2b5c64860eb7588539f237180fffb2b7f247a57409272c44093e8",
+          ".security/go-classifier-v12-counterexample-20261005/actual-v1/receipt.json": "55bb5381f0f7d952cb821199f027843d158cab36596a03633f4b77b24285a648",
+          ".security/go-classifier-v12-replay-20261005/receipt.json": "ca29552b19c665999ed31936ebb143576df96f09e9fd0117ff089d6d11f4e822"
+        },
+        "limits": [
+          "Dated six source-equal contexts; not fresh type contexts.",
+          "SetClock internal/rdb/rdb.go:58 exact footer added candidate, not observed hit.",
+          "Original parenthesized-panic counterexample and first replay set(None) wrapper FAIL retained.",
+          "Parameter typing probe only; does not qualify runtime or complete class.",
+          "Result-function and complex CFG limits retained;122 unresolved footer owners pending."
+        ]
       }
     },
     "python": {
