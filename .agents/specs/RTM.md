@@ -1,5 +1,7 @@
 # RTM — Requirements Traceability Matrix(austinyuch/asynq fork governance)
 
+> 本表 R-01~R-11 是 2026-06-07 歷史baseline,不得當作現行依賴或本輪gate。2026-10-01 reconciliation見下列R-12~R-14及CR證據。
+
 > 需求 → spec → 實作 → 驗證證據 的橋接。只列 fork 治理層需求;library 本身的功能矩陣見 upstream 測試套件。
 
 | Req ID | 需求(使用者原話摘要) | Spec | 實作 | 驗證證據 |
@@ -15,3 +17,130 @@
 | R-09 | 「govulncheck 加入 pre-push hook」 | —(direct change,PR #9) | `githooks/pre-push`(root/x/tools 三 module)+ `core.hooksPath` 啟用法載於 FORK.md | PR #9 merge `45c2a2f`;hook 於 push 時實際觸發,三 module 均 No vulnerabilities found |
 | R-10 | 「fix them」(open gaps:IL-001、IL-003、review 裁決機制) | SPEC-008 | `make proto` 重生、dash ANSI→PNG 實擷、`docs/assets/` disposition、首份 review.md | PR #11 merge `acae113`;SPEC-008 review.md;ISSUE_LOG IL-R05/R06 |
 | R-11 | 「fix gaps」(cluster not_assessed、dash.gif upstream 素材、CI flake) | SPEC-008(round 2) | 3-node cluster 驗證、`client_test.go` EquateInt64Approx、dash.gif fork 重攝 | PR #11(`1870aa2`);cluster root 套件綠 209.96s;CI pass 3m59s;IL-004 記錄 rdb cluster 例外 |
+| R-12 | ROI vertical slices整合後經dev promote main | SPEC-003 / CR-20261001-reconcile | upstream merge + topic commits | [CR](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reconciliation.md);historical dev5f461d9 integrated; latest shell provenance dev83e0e62/final-shell-contracts258938/3935-material closure and hosted36886544773 SUCCESS; cancellation behavior dev295999 retained; main/release/review work未完成 |
+| R-13 | 三module SBOM + CVE/KEV更新 | SPEC-001 / CR-20261001-reconcile | runtime-aware fix plan + existing security gate + sparse-metadata enrichment contracts | .security/security-<candidate>/execution-receipt.json;Go1.26.6 PASS,候選SHA須對照receipt; reports/security-metadata-enrichment.md / T-REC-SECURITY-ENRICHMENT records128 real CLI cases/65 direct-map cases and5 fresh caught semantic mutants; native Python632/637, not global line coverage; shell T-REC-SHELL-PROVENANCE dev83 delivered, real three-module scanner/catalog receipt947d83 PASS; fixture contracts separately labeled |
+| R-14 | >=95% line coverage、PBT/mutation/fuzz | SPEC-008 / CR-20261001-reconcile | public/internal/metrics/CLI/rdb contracts + bounded properties/fuzz/mutants | [Lua/RDB evidence](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/parent-role-and-rdb-observation.md): bounded Lua role contracts/PBT/mutation/fuzz and actual RDB original-inferior observations; [current native/operand evidence](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/current-rdb-native-observation.md):139 source bindings,349/348/1 native outcomes,1517/1440 compiler subset and three original operand56-event overlay pair; compiler-attributed hits and candidate token lines are not the executable denominator; global target未達成 |
+
+| R-15 | reconcile queue/stats config, error status and transport ownership | SPEC-008 / CR-20261001-reconcile | effective Viper mode, first-error result, owned Close and readable node output | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/queue-stats-cluster.md); de88475 exact gates PASS; integrated dev5f461d9; main pending |
+
+| R-16 | 完整垂直切片與 exporter lifecycle 交付 | SPEC-008 / CR-20261001-reconcile | private instance ownership, graceful signals and shared shutdown barrier | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/exporter-lifecycle.md); exact1abf9d3 tools/build/security/entrypoint PASS; integrated dev5f461d9; main pending |
+
+| R-17 | 修復實際 dashboard group 選取與 viewport 失效 | SPEC-008 / CR-20261001-reconcile | shared page/row range and immediate resize redraw | [contracts](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/group-navigation.md); source-bound PBT/fuzz/mutation, frozen delivery subject in ledger; integrated dev5f461d9; main pending |
+
+| R-REC-18 | CLI nonempty task output / pagination wiring / ProcessIn bounds | CR-20261001-reconcile | nonempty table, pagination parameters and relative schedule validation | reports/task-visibility.md; T-REC-TASK-VISIBILITY; .security/final-task-visibility/gate-ledger.json; delivered in dev5f461d9, main pending |
+
+| R-REC-19 | Loading Enter must not select an old queue row | SPEC-008 / CR-20261001-reconcile | queue-entry row reset | reports/queue-selection.md; T-REC-QUEUE-SELECTION; original panic + source-bound property/mutation PASS; delivery ledger verified; integrated dev5f461d9; main pending |
+
+| R-REC-20 | Obsolete asynchronous responses must not update a newer dashboard view | SPEC-008 / CR-20261001-reconcile | immutable request context/epoch on all results and errors | reports/fetch-identity.md; T-REC-FETCH-IDENTITY; original assertion failures + source-bound candidate contracts; exact final-fetch-identity delivered via devda67f2d; main pending |
+
+| R-REC-21 | Task viewport/page transitions must not expose obsolete loading rows | SPEC-008 / CR-20261001-reconcile | clear/reset before immutable fetch; count-based page bounds; preserved modal identity | reports/task-viewport.md; T-REC-TASK-VIEWPORT; seven original assertion failures and reviewed successor contracts; exact final-task-viewport delivered via dev5f461d9, hosted36844671038 PASS; main pending |
+
+| R-REC-22 | Reverse dashboard state/row navigation and stale-result streams | SPEC-008 / CR-20261001-reconcile | user key cycle and immutable response identity contracts | reports/reverse-navigation.md; T-REC-REVERSE-NAVIGATION; successor source-bound gates; exact delivery in .security/final-reverse-navigation/ |
+
+| R-REC-23 | Cron/server errors must preserve cause/status and close owned clients | SPEC-008 / CR-20261001-reconcile | Close/%w/first-error with healthy partial output | reports/cli-entry-boundaries.md; T-REC-CRON-SERVER; original runtime FAIL and corrected candidate-v3 PASS; exact delivery .security/final-cli-entry/ |
+
+| R-REC-24 | Public dashboard TTY entry must return and restore owned resources | SPEC-008 / CR-20261001-reconcile | real controlling-PTY child and live-owner pipe ACK | reports/cli-entry-boundaries.md; T-REC-TTY-ENTRY; true-entry race/three assertion mutants, unknown-TERM actual error |
+
+| R-REC-25 | Cancellation transport causes and signal/Release integrity | SPEC-008 / CR-20261001-reconcile | root %w/canonical operation; CLI real AUTH/no-publication/order; rate closed-transport metadata | reports/cancellation-error-boundaries.md; T-REC-CANCEL-CAUSE / T-REC-CANCEL-SIGNALS / T-REC-RATE-RELEASE; final-cancellation ledger270 closed materials, dev295999/hosted36855658080 SUCCESS; tools released-root adoption/main pending |
+
+| R-REC-26 | Heartbeat transport failures and expired leases preserve healthy task state | SPEC-008 / CR-20261001-reconcile | genuine closed RDB/clock boundary with canonical Redis fixtures; no production changes | reports/heartbeat-error-boundaries.md; T-REC-HEARTBEAT; focused PBT/fuzz/four assertion mutants PASS; final-heartbeat212-material ledger f69a747/dev2d3bad29/hosted36860064417 SUCCESS; main/global true-line95 unchanged |
+
+| R-REC-27 | Public cluster inspection must preserve canonical slot/node and closed-transport integrity | SPEC-008 / CR-20261001-reconcile | new real-cluster readonly and independent CRC/node-set contracts | reports/inspector-cluster-contracts.md; T-REC-INSPECTOR-CLUSTER; frozen root2d07568 source137 PASS; dev7538 delivered/main pending |
+
+R-13/R-14 source-SAST/oracle/prefix delivery: dev5eb88a5/final-security-sast-oracle d47ccbd/6363 materials, exact42 tests/nativeSAST/security and hosted36895501681 checkout verified. Source-bound dated campaign evidence remains in [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/source-sast-and-oracle.md); formal readiness unchanged.
+
+R-13 application SBOM scope correction: [SBOM evidence boundary](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/sbom-evidence-boundary.md) / T-REC-SBOM-BOUNDARY binds13 native fragment scans, visible application-input and sibling-isolation oracles, ordinary mutant failure and maintained RED/GREEN. Candidate evidence does not establish exact full-pipeline delivery. Successor delivery state is authoritative only when `.security/final-sbom-boundary/gate-ledger.json` exists with DEV_DELIVERED_MAIN_HELD state and verified head/tree/material/remote/hosted bindings; this report does not freeze that future state as pending forever. No readiness or global coverage verdict changes.
+
+R-13 SBOM boundary delivery is dev a04040d/final-sbom-boundary fd663dd/6596 materials with hosted36899407152 checkout proof. Guarded-source successor maps to T-REC-SAST-GUARDED-INPUT/[report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/source-sast-guards.md); focused9-method normal/-O and46 full security tests PASS; source_sast.py195/203 child-own native evidence is narrow, not project line95 or main readiness.
+
+R-13/R-14 guarded-source delivered devf619/final-source-guards921f89d/6777/hosted36904587170. Integrity-contract successor maps to T-REC-SAST-INTEGRITY/[report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/source-sast-integrity.md):12 methods/10 new CLI cases with3 valid controls, four distinct assertion mutants in fresh normal/inherited optimized CLI modes (receipt08d79d; initial -O harness-only) and adopted49 tests PASS. Production source unchanged; dated195/203 is original-test-bound and not refreshed by new tests. The integrity successor is adopted working-tree evidence. Its delivery authority is `.security/final-sast-integrity/gate-ledger.json` only if that ledger exists in DEV_DELIVERED_MAIN_HELD state with verified exact head/tree/materials/remote/hosted bindings; a future valid ledger supersedes the working-tree status here. No readiness/global95 verdict changes.
+
+R-12 release-preparation evidence maps to T-REC-RELEASE-CONSUMER/[rehearsal](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/release-consumer-rehearsal.md): unpublished root→x→tools snapshots, actual versioned binary dependencies and32 public closed-client properties. Source-integrity dev3da/9a9dd520/6949/hosted36908639580 is delivered; actual protected main and sequential public releases remain unfinished.
+
+R-REC-PUBLISHED-TRANSPORT maps to [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/published-queue-transport-cause.md): actual successful publication then same-client Close, canonical cause/code/op and independent owned-key state oracle; eight native cases, four viable mutation catches,100 opaque-argument properties/10-second fuzz. Frozen successor gates are required for delivery; this does not establish full LINE95, cluster or formal readiness.
+
+R-14 current-source refresh maps to [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/current-source-measurement-refresh.md): current45Go/6211candidate/0unresolved plus50Lua/5139fresh mappings; equal line sets do not permit changed-source hit transfer. Both inventories remain experimental; fullLINE95 and runtime source-operation qualification remain unfinished.
+
+R-REC-ACL maps real ACL memory typed-cause preservation and metadata partial effects to SPEC-008 / CR-20261001-reconcile / [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/rdb-acl-contracts.md). RED-v3/GREEN retain eight native contracts,100 payload properties, guided fuzz306 and three compiled mutants. One memoryUsage %w change preserves existing codes/ops. ACL compatibility dev baf2 exact delivery is verified by hosted37143717073 and its 570-material ledger; successor guided fuzz284 is separate from the earlier306. Protected main and project LINE95 remain pending.
+
+## Current measurement evidence
+
+| Requirement | Slice | Evidence | State |
+|---|---|---|---|
+| R-REC-STATE-CURRENT | Private guard plus current source measurement | [Report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/rdb-state-current-measurement.md) | Native/PBT/fuzz/mutation and fresh compiler subset independently verified; dev8c706620 exact delivery and hosted37146797472 verified; complete denominator/LINE95 remains OPEN |
+
+R-14 zero/folded measurement refinement maps to [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-zero-folded-qualification.md). Bounded typed/native phase evidence and143-source contexts remain experimental; bounded six-context independent review PASS; complete executable denominator and LINE95 remain OPEN. Ref: R-14.
+
+R-14 maintained-source cohort and local recipe scope maps to [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/source-scope-manifest.md).293 tracked classifications/byte-map-v2/recipe source blocks are independently bounded evidence; complete operation inventories/observers and denominator remain INCOMPLETE. Ref: R-14.
+
+
+R-14 Windows test portability/aggregate candidate roles map to [report](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/windows-test-portability-and-aggregate-roles.md). Cross-compilation/current-byte review and bounded v8 semantic roles are verified; Linux regression/final delivery pending, Windows runtime and full executable denominator incomplete. Ref: R-14.
+
+
+Ref: R-14. [Rejected Start handler preservation](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/server-start-handler-preservation.md) retains dev126254b4 hosted37154543825 core race failure/four skipped gates; candidate assigns handler only after successful state admission and before workers, with distinct-handler rejection preservation assertion. Bounded source review PASS; native/PBT/fuzz/mutation bounded PASS; fresh three-platform compilation PASS; successor delivery PENDING. Windows runtime/complete denominator/LINE95/formal/main/release remain OPEN; ratio null.
+
+| R-14 | Finite owned-browser JS class | Three exact HTML modules/six original executable and hit lines; CDP/import/SVG/210-material readback | Qualified finite class only; helper6exit1/import-counter/CDN caps preserved; all-class LINE95 OPEN |
+
+Ref: R-14 Current Go independent145-source/771-archive/12-replay inventory remains6182 candidates; original native static-storage/panic-init counterexamples prove zeroUNKNOWN is not semantic completeness. Python768/755/13 statement inventory remains INCOMPLETE: actual child exit0 without expected profile fails closed, shell-origin custody and multiline semantics pending. See the CR finite JS class report and hash-bound `scripts/coverage/class-admissions.json` registry; evidence source baseline is distinct from future delivery HEAD.
+
+| R-14 | Current finite Python original-line class |3production scripts+3literal bodies;998 executable/981 hit/17 missing; fresh normal/traced50+8/689 each/3827codeobjects and117 shell closures; independent complete-class PASS | Root-adopted finite class only; ratio null/global LINE95/main/formal held |
+
+
+## Go v10 inventory contract — 2026-10-04
+
+Ref: R-14. Adopt only the local-initialization ownership contract: blank parent false candidates repaired; dynamic RHS retained. Current baseline7198309/tree66fffbfe has45 owned files and6182 candidates (delta0); source/type context replay supplies no runtime hits. Native200 PBT/163215 fuzz executions in10 seconds/two ordinary assertion mutant kills and bounded independent review passed. Package19 binding lines and Windows8 sites remain unqualified; full Go/global LINE95/main/formal verdict remain OPEN. [Exact evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-v10-original-operation-inventory.md).
+
+
+## Go exact static-storage role disposition — 2026-10-04
+
+Ref: R-14. This disposition supersedes the earlier v10 package19 pending handoff; its dated evidence remains historical. Qualify19 exact positive source/type/ELF/pre-runtime-memory storage metadata roles (17 zero declarations,2 scalar constant initializers), retaining complete language initialization owners. No candidate/hit delta or NO_PC exclusion; controlled inferior -9 is not normal native PASS. The1613 operator-offset cohort has no new confirmed runtime line gap after typed constant/Union and storage ownership reconciliation. Go6182 remain candidates; Windows8 and full Go observer/profile/semantic admission remain open. JS/Python/global ratio/main/formal verdict remain unchanged. [Evidence and scope](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-static-storage-role-qualification.md).
+
+
+## Embedded Lua finite source-role disposition — 2026-10-04
+
+Ref: R-14. Adopt only finite embedded-Lua source roles:262 original operators (234 runtime candidates,28 folded operator metadata with all28 materialization owners retained);45 loop binding clauses/80 exact name tokens and46 delimiter tokens with45 loop-header owners plus the original function fallthrough RETURN at inspect.go:1799 retained;16 exact string materialization nodes across8 original lines positively match LOADK/constant-pool/lineinfo. The50-definition/5139-node current GoAST byte/LF join is mechanical evidence, not full semantic admission. Preserve all original executable owners; no NO_PC exclusion, parent-span hit fill or per-operator/phase coverage threshold.
+
+Same-core boundary campaign has100 independently expected PBT cases,13,771,646 seeded single-process case iterations in10 CPU seconds and2 viable compiled ordinary-assertion mutant kills. Literal cohort uses separate cold/hot/error source-line controls; it does not claim another100 PBT or production Lua hits.
+
+Complete Lua semantic inventory, validated original source-line observer and normal native production profile closure remain OPEN. Three identical-body aliases have static definition/callsite custody but need actual invocation joins; never clone hits. JS/Python/Go records, project ratio null/global LINE95/main/formal verdict remain unchanged. [Evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-finite-source-role-qualification.md).
+
+
+## Lua bounded Proto/PC observer — 2026-10-04
+
+Ref: R-14. Bind bounded Lua Proto/PC source-position evidence to nine synthetic cases plus one original script-index44 API witness (registration1795/implicit return1799); COUNT positive1 and observed KILL2/rejected-tail census1 have independent custody/readback. Normal KILL equivalence remains NOT_ESTABLISHED. This records contract qualification, not whole-class denominator/profile admission. [Evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-proto-pc-observer-qualification.md).
+
+
+## Lua finite original-line class — 2026-10-04
+
+Ref: R-14. Current finite embedded-Lua class maps50 definitions/48 bodies to621 eligible lines; native source-equivalent union hits621,missing0 after actual supplemental37. Positive870-line lexical/compiler partition and closed Proto/PC replay are separate authorities; three aliases use dedicated method intervals, never broad-body hit cloning. Fullproject ratio stays null. [Evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-original-line-class-admission.md).
+
+
+R-14 Windows native signal candidate: PENDING_NATIVE_WINDOWS_EXECUTION. Add only scoped Windows native qualification job; preserve original Ubuntu job/triggers/matrix. Test/PS1 positive verification intent is proposed scope evidence, not automatic production exclusion. Crosscompile/PS1 parsing is preparation only; Windows8 runtime/fullGo6182 admission/global LINE95/main/formal remain OPEN, project ratio null.
+
+[Windows candidate scope and pending evidence](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/windows-native-signals-candidate.md).
+
+Candidate v7 requires each baseline/mutant owned child to persist terminal.txt from defer. PowerShell verifies normal child closure and distinguishes ordinary assertion mutant kills from infrastructure failure. Native Windows execution remains PENDING.
+
+Adoption pins v7 final formatted test950b504b03497534539beb35abc0e21da9f403ee89e5c22660c88fc20bc5dec1, PS1 3cbad5e9edad1280301ac72c0c0c4634ea8687e665acf82632d8d17a03b78341 and workflow04e20b473a28b6ec95023277f7999c14a19c7139e553d8bf88a6860fcd5538e0; the two compiled mutants must also have distinct source and binary hashes. These hashes are candidate inputs, not Windows native PASS.
+
+
+### Bounded Windows native original-source evidence (Ref: R-14)
+
+Actual fixed run 37217285911 binds eight original Windows signal operations, 100 lifecycle properties with closed owned children/profiles, two viable ordinary assertion mutants, and the native Redis-free CLI job. Evidence baseline is H27de5b4f6e4a275a229288c2e6a209c24ca59e88/Tc18b4a20c124d08406f03bad1c2fb40996dd2fe4; future governance commit is not asserted measured. All five earlier runs remain retained, including native100+2ordinarykills PASS with wrapper job FAIL/CLI skipped and the later native campaign PASS with CLI quoted-path oracle FAIL. This bounded evidence leaves full Go INCOMPLETE, project ratio null, main HELD, and formal review unchanged.
+
+Proofs: .security/windows-native-delivery-20261004/hosted-pass-37217285911/receipt.json SHA256 acc54243f191142e92e629bf9c139bf08094329f2a0e5bd64c2e1372e27b3705, .security/windows-native-delivery-20261004/hosted-v13-independent-control/receipt.json SHA256 4ee05875df614596cf2c17b1847a624842314558da9205c48fcb6094f1454298, .security/windows-native-delivery-20261004/windows8-root-disposition-v13.json SHA256 2c559aa9bd19d5e351496b18436d0e63ca7b79e46421fb7cef08a894dc3b15e1.
+
+This current bounded Windows disposition supersedes prior current Windows pending clauses only; dated historical failure/pending observations remain retained, and full Go admission remains OPEN.
+
+
+### Current bounded Go package-initialization inventory (Ref: R-14)
+
+Actual v11 at H4658708/Tc2a003f7 retains45 files/147 bindings/771 archives and6201 candidates (+19/0 removed). Native100 package PBT/240887 guided fuzz executions in10 seconds/two ordinary compiled assertion kills qualify only finite inventory; outer FAIL_RETAINED preserved. Static15261 physical lines retain235 NO_PC and1041 noncandidate PC lines pending qualification, no runtime hits. Historical package19 storage metadata does not exclude complete initialization owners; current Windows8 native proofs remain bounded. Full Go/global LINE95/project ratio null/main HELD/formal unchanged. [Exact evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-v11-package-initialization-owner-inventory.md). Next qualify footer CFG and complete original-operation/profile coverage; dated6182 clauses remain historical.
+
+### Current bounded Go finite-footer candidate inventory (Ref: R-14)
+
+Current v12 at evidence source Hf8b2152/Tadc6e3f has 6307 candidate original lines (+106/0 removed versus historical v11), 45 files/147 bindings/771 dated exports. Finite contracts completed100 PBT/263054 guided fuzz executions/10-second request/one worker/two ordinary compiled assertion kills; seven replay steps and independent exact raw delta readback passed. `SetClock` rdb.go:58 is an added candidate;122 complex footer owners remain unresolved. Original panic counterexample and first set(None) replay wrapper FAIL are preserved. No runtime hits/full Go admission are inferred; project ratio null/global LINE95 OPEN/main HELD/formal unchanged. [Exact evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-v12-finite-footer-owner-inventory.md). The v11 paragraph above is historical candidate inventory; its bounded evidence remains valid. Next complete semantic/native-profile closure, not repeat finite quality campaigns.
+
+### Current Go original-PC finite cohorts (Ref: R-14)
+
+All13 static maps completed27 native steps (7007 compiler-line union;6070 mapped candidates/237 unmapped retained). Errors105 and canonical timeutil/base/context/log finite observations have same-family independent readback; four-package path+line+SHA union453/five files, with52 finite static-union unhit after cross-package join. Census16/116/10/26 and canonical normal/debug baselines are closed. Earlier cwd/corpus wrapper FAIL and arithmetic draft error remain dated history. Next complete remaining eight owned Redis/subprocess/main scopes and whole semantic/profile closure. Full Go INCOMPLETE/global ratio null/LINE95 OPEN/main HELD/formal unchanged; registry untouched. [Current evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-original-pc-runtime-handoff.md).

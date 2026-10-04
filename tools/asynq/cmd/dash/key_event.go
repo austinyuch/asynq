@@ -5,11 +5,10 @@
 package dash
 
 import (
-	"os"
 	"time"
 
-	"github.com/gdamore/tcell/v2"
 	"github.com/austinyuch/asynq"
+	"github.com/gdamore/tcell/v2"
 )
 
 // keyEventHandler handles keyboard events and updates the state.
@@ -27,9 +26,7 @@ type keyEventHandler struct {
 }
 
 func (h *keyEventHandler) quit() {
-	h.s.Fini()
-	close(h.done)
-	os.Exit(0)
+	stopDashboard(h.done)
 }
 
 func (h *keyEventHandler) HandleKeyEvent(ev *tcell.EventKey) {
@@ -75,6 +72,8 @@ func (h *keyEventHandler) goBack() {
 		if state.taskID != "" {
 			state.taskID = ""
 			state.selectedTask = nil
+			f.Fetch(state)
+			h.resetTicker()
 			d.Draw(state)
 		} else {
 			state.view = viewTypeQueues
@@ -108,7 +107,8 @@ func (h *keyEventHandler) downKeyQueues() {
 func (h *keyEventHandler) downKeyQueueDetails() {
 	s, state := h.s, h.state
 	if shouldShowGroupTable(state) {
-		if state.groupTableRowIdx < groupPageSize(s) {
+		start, end := groupPageRange(s, state)
+		if state.groupTableRowIdx < end-start {
 			state.groupTableRowIdx++
 		} else {
 			state.groupTableRowIdx = 0 // loop back
@@ -145,8 +145,9 @@ func (h *keyEventHandler) upKeyQueues() {
 func (h *keyEventHandler) upKeyQueueDetails() {
 	s, state := h.s, h.state
 	if shouldShowGroupTable(state) {
+		start, end := groupPageRange(s, state)
 		if state.groupTableRowIdx == 0 {
-			state.groupTableRowIdx = groupPageSize(s)
+			state.groupTableRowIdx = end - start
 		} else {
 			state.groupTableRowIdx--
 		}
@@ -184,6 +185,7 @@ func (h *keyEventHandler) enterKeyQueues() {
 		state.view = viewTypeQueueDetails
 		state.taskState = asynq.TaskStateActive
 		state.tasks = nil
+		state.taskTableRowIdx = 0
 		state.pageNum = 1
 		f.Fetch(state)
 		h.resetTicker()
@@ -197,14 +199,19 @@ func (h *keyEventHandler) enterKeyQueueDetails() {
 		f     = h.fetcher
 		d     = h.drawer
 	)
-	if shouldShowGroupTable(state) && state.groupTableRowIdx != 0 {
-		state.selectedGroup = state.groups[state.groupTableRowIdx-1]
+	if shouldShowGroupTable(state) {
+		start, _ := groupPageRange(h.s, state)
+		if state.groupTableRowIdx == 0 {
+			return
+		}
+		state.selectedGroup = state.groups[start+state.groupTableRowIdx-1]
 		state.tasks = nil
+		state.taskTableRowIdx = 0
 		state.pageNum = 1
 		f.Fetch(state)
 		h.resetTicker()
 		d.Draw(state)
-	} else if !shouldShowGroupTable(state) && state.taskTableRowIdx != 0 {
+	} else if state.taskTableRowIdx != 0 {
 		task := state.tasks[state.taskTableRowIdx-1]
 		state.selectedTask = task
 		state.taskID = task.ID
@@ -251,30 +258,38 @@ func (h *keyEventHandler) handleRightKey() {
 	}
 }
 
+// Clear selection before admission so loading Enter cannot open an old row.
+func (h *keyEventHandler) fetchTaskPage(page int) {
+	h.state.pageNum = page
+	h.state.tasks = nil
+	h.state.taskTableRowIdx = 0
+	h.fetcher.Fetch(h.state)
+	h.resetTicker()
+	h.drawer.Draw(h.state)
+}
+
 func (h *keyEventHandler) nextPage() {
 	var (
 		s     = h.s
 		state = h.state
-		f     = h.fetcher
 		d     = h.drawer
 	)
 	if state.view == viewTypeQueueDetails {
 		if shouldShowGroupTable(state) {
-			pageSize := groupPageSize(s)
-			total := len(state.groups)
-			start := (state.pageNum - 1) * pageSize
-			end := start + pageSize
-			if end <= total {
+			_, end := groupPageRange(s, state)
+			if end < len(state.groups) {
 				state.pageNum++
+				state.groupTableRowIdx = 0
 				d.Draw(state)
 			}
-		} else {
-			pageSize := taskPageSize(s)
-			totalCount := getTaskCount(state.selectedQueue, state.taskState)
-			if (state.pageNum-1)*pageSize+len(state.tasks) < totalCount {
-				state.pageNum++
-				f.Fetch(state)
-				h.resetTicker()
+		} else if state.taskID == "" {
+			last := lastTaskPage(s, state)
+			page := min(max(state.pageNum, 1), last)
+			if page < last {
+				page++
+			}
+			if page != state.pageNum {
+				h.fetchTaskPage(page)
 			}
 		}
 	}
@@ -284,22 +299,23 @@ func (h *keyEventHandler) prevPage() {
 	var (
 		s     = h.s
 		state = h.state
-		f     = h.fetcher
 		d     = h.drawer
 	)
 	if state.view == viewTypeQueueDetails {
 		if shouldShowGroupTable(state) {
-			pageSize := groupPageSize(s)
-			start := (state.pageNum - 1) * pageSize
+			start, _ := groupPageRange(s, state)
 			if start > 0 {
 				state.pageNum--
+				state.groupTableRowIdx = 0
 				d.Draw(state)
 			}
-		} else {
-			if state.pageNum > 1 {
-				state.pageNum--
-				f.Fetch(state)
-				h.resetTicker()
+		} else if state.taskID == "" {
+			page := min(max(state.pageNum, 1), lastTaskPage(s, state))
+			if page > 1 {
+				page--
+			}
+			if page != state.pageNum {
+				h.fetchTaskPage(page)
 			}
 		}
 	}

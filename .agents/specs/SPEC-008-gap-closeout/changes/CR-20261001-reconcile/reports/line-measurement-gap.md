@@ -1,0 +1,191 @@
+# Project line measurement gap — source-backed inventory
+
+Authority: user project-wide>=95% line target and the existing CR coverage task. Status: measurement remains incomplete; this report introduces no exclusion policy, threshold change, cross-language score or acceptance verdict.
+
+| Source class | Observed owned surface | Current executable evidence | Measurement gap |
+| --- | --- | --- | --- |
+| Go core/extensions/tools | root, internal, x, tools; generated protobuf, demo and test helpers retained | Native compiler block counters; module/source-bound statement profiles and explicit child unions | Inclusive block-line union is a proxy. A complete executable-line interpretation has not been approved or verified. Preserve distinct dependency contexts. |
+| Python | scripts/security/security_local_ci.py | Python3.12.3 stdlib trace actual counters; compiled recursive code line table, docstrings excluded by stdlib helper | Historical six-test inventory94/632 included nonpositive line-table metadata. Historical323 successor measured426/631. New production/four-suite trace executes all25 tests from zero:622/635 positive source lines97.95%; no different-source carry, no child scanner/process-line claim. |
+| Test source | Go *_test.go; scripts/security/test_security_local_ci.py | Tests/PBT/fuzz/mutants; Python test source86/88 observed lines97.73% recorded separately | Denominator disposition must be explicit; this report does not silently admit or exclude test-source lines from the project target. |
+| Shell / hook | scripts/security/run.sh; .agents/skills/upstream-sync/scripts/reapply-module-path.sh; githooks/pre-push | Executable regression/scanner commands and safety fixtures | No native per-line execution profile or complete executable-line inventory. |
+| Embedded Lua | internal/rdb/rdb.go; internal/rdb/inspect.go; x/rate/semaphore.go | Real standalone/cluster Redis contracts and semantic mutants | Go counters do not instrument embedded Lua. No Lua line execution profile. |
+| Embedded JavaScript | docs/manual/en/index.html; docs/manual/zh-tw/index.html; docs/review/index.html | Tracked documentation UI source inventory | Actual Node26.7.0 precise V8 ranges for three own inline modules are source-bound; synthetic Mermaid interface only. Browser render, third-party CDN execution and complete executable-line denominator remain unmeasured. |
+
+Raw inventory `.security/coverage-inventory-5e98135.json` enumerates tracked source classes and source hashes at the working-tree observation. Physical line counts are explicitly not executable denominators. New successor tests are additionally identified by the CR test catalog. Python receipt `.security/security-python-native/receipt.json` retains actual(filename,lineno,count), inventory/missing lines, observer hash and Python version. The observer lives in/tmp; no global package installation or provider write occurred. The stdlib executable-inventory helper is private and version-bound, so it is evidence of this interpreter's native table rather than an unqualified tool-independent metric.
+
+Native Python decision contracts now pass13 combined tests,250 seeded properties,1000 bounded generated inputs and6 assertion-caught semantic mutants. The seeded generator is not coverage-guided fuzzing. Same-family review corrected line0 metadata and a vacuous empty-policy assertion; original inventories/receipts are hash-archived. Successor receipt `.security/security-python-contracts/receipt.json` retains positive/raw line tables separately. Next action: source-bound measurement of remaining Python orchestration and shell/Lua/embedded-JS surfaces. Keep all unmeasured classes visible. Neither a Go statement95% nor an arithmetic three-module proxy can close this project's line requirement. Formal spec/review authority and historical readiness remain unchanged.
+
+Latest successor details: [failure-recovery-security-ingress.md](failure-recovery-security-ingress.md). Native Python622/635 and Node V8 ranges do not aggregate with Go statement profiles into a project-line score.
+
+## Native Go semantic witness (2026-10-01)
+
+`.security/native-line-design/receipt.json` retains a source-bound pure fixture and toolchain evidence. A block containing two calls records both statements as covered after the first call panics, while the second call counter remains0. A false short-circuit expression also records the enclosing statement as covered without evaluating its RHS. Go1.26.6 cmd/cover documents approximate basic-block coverage and lacks short-circuit probes. Neither block hits nor AST statement-start mapping independently proves actual per-line execution. No installed verified Go line-event instrumenter was found. Windows-only source and non-executable documentation declarations remain explicitly inventoried; no source class is silently excluded. Metric clarification is pending; no global95% acceptance follows from the native statement union.
+
+## Real-package instruction-to-line pilot
+
+`internal/timeutil` existing four normal Tests passed in normal, debug (`all=-N -l`) and own-child GDB execution. DWARF ranges were intersected with actual aarch64 instructions, probing all 337 mapped PCs rather than only each line's first PC. Observed 258 distinct PCs cover 19/19 compiler-attributed lines. All 59 physical source lines, including 40 unmapped lines, remain inventoried; compiler mappings include entry/closing-brace locations and are not an adopted executable-line denominator. The prior first-PC short-circuit failure remains preserved.
+
+Receipt `.security/native-project-timeutil-pilot/receipt.json` binds five package/source/dependency subjects and nine material files. Its HEAD/tree are70cbfc6/9ab5750 with an unrelated untracked metadata test in before/after status; this is package-source-stable WIP evidence, not a clean-repo attestation. Debug stopping alters scheduling and does not establish normal optimized production execution, race safety, other packages/languages or global95. Policy clarification on native Go coverage versus true line events remains pending. No cross-metric aggregate is adopted.
+
+Real errors/context package PC-attribution pilots also passed unchanged normal/debug/GDB tests (10+5). Errors:1650 mapped PCs/1360 actual hits/105 attributed lines,304 physical/199 unmapped; context:474/443/28,87 physical/59 unmapped. Approved receipt .security/native-project-errors-context-pilot/approved/receipt.json SHAfbcda75340a403f736577b3af5e625b15dc1d9164dfabb68c2a14fb2179e1cc0; original sandbox ptrace denial retained separately. Execution subject e66a44d plus adjacent dashboard WIP, seven package/dependency sources stable and15 material hashes closed. This extends real-package measurement, not global denominator adoption or project95; debugger timing and compiler attribution limits remain explicit.
+
+## Real-source event observer successor
+
+A restricted isolated AST observer instruments actual internal/timeutil source with statement-entry and whitelisted deferred-call events. Four existing Tests pass in unchanged/instrumented normal/race runs; counters match for15 events spanning12 supported lines. All59 physical lines remain inventoried, with47 outside this supported inventory. Statement-entry does not prove completion of expressions. Logical short-circuit, multiline and unsupported syntax are rejected; this is not a generic executable-line denominator or project95.
+
+Fresh closure `.security/native-real-line-observer/source-closure-successor/receipt.json`, SHA `732b05458c9f06c553044f5d66540f794ba190c175a4b7856fa02716405d8acd`, closes33 materials including unique original/plain/instrumented source, recorder, generator and position inventory. Initial receiptc4d26eaa retains the source-copy collision diagnostic. Two mutants are caught by independent event-set/source-position assertions; omit-probe still passes existing Tests. observer_oracle_exit:1 records the runner's caught AssertionError classification, not a separate subprocess exit. Nonauthor review confirmed closure. No root dependency consumption, generic syntax support, global95 or formal adoption follows from this isolated minimal-module observation.
+
+## Expanded real-base event inventory
+
+Isolated actual internal/base source now has138 statement-entry events/start lines observed by36 existing Tests in plain/instrumented normal/race runs. Receipt `.security/native-base-line-observer/expanded/receipt.json`, SHA `32ddd12ba7a6a19cb211a2e127fc07072e0c99c7058b8e9b5bcacfd8aabf1b06`, closes39 materials and8 unchanged source/dependency subjects. All770 physical lines,227 statement nodes and3205 total AST nodes are retained in the inventory. Independent omit-probe/wrong-map oracle assertions catch two mutants while normal Tests/generator still exit0; this is detector evidence, not failed-process mutation. Nonauthor review found no actionable issue for this exact source.
+
+The supported inventory increases133 start lines over restricted toInt32 observation. It still measures statement entry: Within that expanded statement-entry observer, IsValid short-circuit operands, multiline expression continuation/completion and actual deferred Unlock execution are unmeasured; later restricted typed pilots below provide separate evidence. No generic instrumentation adoption, global executable-line denominator or project95 follows. Root package-content equivalence is explicit; surrounding tools WIP is not a clean-head root execution claim.
+
+## Full token-classification inventory
+
+Experimental source-bound classifier .security/native-line-classification/receipt.json SHA5c6d24e13913b7c14769d540e8275fb6036ae3d255bd0616cec548fc0c99f5a7 closes11 materials for126 observed Go sources (before this successor metadata test edit and three new contracts). Independent token offsets/bytes and all51,500 physical lines are retained; production50files have8173 candidate/unknown lines, not an executable denominator.45 lazy operators,4655 call/argument nodes,110 defer,17 go and146 raw strings identify unsupported evaluation classes. Wrong-offset and dropped-continuation detector assertions catch two mutants. Static candidate roles do not measure runtime; tests76 remain separately retained. The next ROI at that historical observation was Lease.IsValid short-circuit operands, now completed as the restricted witness below. Generic call/argument completion, remaining syntax and whole-project cross-language measurement remain open.
+
+## Real Lease short-circuit operand witness
+
+Restricted actual Lease.IsValid adapter .security/native-lease-operands/receipt.json SHAd4df3de5c10119609d76c55059394e71a294744f5c5f15537f218f8ebb9ae0cd closes22 materials and8 unchanged package/dependency sources. Four plain/instrumented normal/race suites run36 existing Tests and2 independent witnesses. Future expires-after-now observes left1/right0; equal/past observe left1/right1 with independent domain truth. Clock.Now executes once and sees direct IsValid caller; nil receiver/Clock and original Clock panic preserve identity with zero operand events. Missing-RHS and forced-RHS mutants are caught by independent exact operand count/value assertions.
+
+This typed source-shape adapter retains the original method stack and does not wrap operands in closures. It observes two sites on the same original line710, not two lines or generic multiline/completion events. Actual time.Time After/Equal operands provide no injectable arbitrary operand side effects/panics; no inference to other45 lazy sites or global executable-line denominator. Prototype Go sources remain local text evidence, not production instrumentation. Peer readback and actual delivery evidence belong in final-cancellation ledger.
+
+## Actual EncodeMessage initializer completion
+
+Receipt .security/native-encode-initializer/receipt.json SHA f89afbff1bb3e4de8c1139070eb95f735c7d68d1fbff7b2e3372b08f0e7cfcba closes24 materials/8 sources. Four plain/instrumented normal/race runs execute36 existing Tests and2 independent witnesses. Fifteen pure-field completion sites, initializer completion and actual Marshal success/error return are distinct. Independent no-map hand-written wire golden and generated-protobuf decoded-field oracles cover negative/saturated retry, nil/binary payload, map headers, nil message and real invalid UTF8 error. Original aliases/function stack remain; race-free-input equivalence only. Missing-field event is caught by a native assertion; wrong-position mapping is caught by independent source-map assertion. Original guarded field selectors/conversions offer no reachable mid-field panic: that class is typed unsupported, not fabricated. All770 physical lines remain inventoried; no generic initializer or line denominator adoption. Nonauthor review PASS, final-heartbeat ledger includes this restricted experiment.
+
+## Actual ServeMux middleware panic and unwind
+
+Independent experimental receipt .security/native-servemux-handler-temporal/closed-receipt.json SHA0fba1b9160f938ff093593b998738551274eea982eadcc397c65229ccec3513b closes115 materials/86 stable root source/dependency subjects. This is separate from the212-material heartbeat ledger. Actual Handler span65–77 retains original direct defer/return/middleware call. Six existing Tests plus four normal/first-middle-last panic witnesses pass in plain/instrumented normal/race runs, with identical independent behavior records. Callback entry is observed before a genuine middleware panic; assignment completion and normal return are not recorded after panic. Caller recover preserves sentinel identity; TryLock independently verifies final lock release. Three observer mutants are directly caught by native phase assertions. All160 physical source lines remain inventoried. TryLock proves unwind effect, not native RUnlock-body PC attribution; dynamic caller stack was not separately observed. This function has no go statement and makes no goroutine/general-call/global95 claim. Nonauthor review PASS.
+
+## Remaining integration gap
+
+Supported source-specific event inventories do not form a whole-project executable-line denominator. Generic calls/arguments with panic completion, general multiline initializer evaluation, actual defer-body attribution, go argument vs goroutine execution, other lazy operands, Windows sources and shell/Lua/JS measurement remain explicit. Historical126-source static candidate inventory8173 unknown/candidate lines cannot be reduced by subtracting15 field sites, combined with statement proxies, or presented as current project denominator. Next work is a source-bound measurement pipeline with unsupported categories retained and independent oracles; global true-line95 remains OPEN.
+
+## Native Bash hook entry and controlled routing
+
+Closed receipt .security/native-bash-hook/closed-receipt.json SHA90085d0736f60b9d48908b6695d56f78e87eb759755934e1f73161309367493a retains77 materials/64 original-to-durable input copies. Seven actual exact pre-push hook processes cover skip, full-tool pipeline routing, missing govulncheck and fallback success/first-second-last module failure. Independent recorders verify exit codes, exact call order/arguments/cwd, pipeline/fallback exclusivity and failure short-circuit. Dependencies are controlled fake boundaries: no scanner/Git-push execution or actual security result is claimed. Real HOME is inherited. Bash PS4 native source/line trace passes through an anonymous pipe; the parser stores only fixed canonical source allowlist/valid line counters and immediately discards raw command suffixes and unknown traces. Three postprocessed observer omission/map mutants are directly assertion-caught; original routing success is retained and not called production mutation evidence. Nonauthor peer verified material and source closure. All65 hook physical lines retain continuation/lazy-AND/subshell unknown categories: command entry is not expression completion or a complete executable-line denominator. Original runner timeout cleanup was not exercised and lacks finally kill/join; all seven current runs are terminal, without claiming future-timeout safety. run.sh and upstream reapply script remain unmeasured; existing six Python fix-plan regressions do not cover those scripts.
+
+## Reusable source-bound journal consumer
+
+The repository now includes scripts/coverage/event_ledger.py and its standalone tests; make coverage-events-test runs them without local ignored evidence. The reusable consumer is delivered at dev7538 with final-event-ledger1178 material closure and hosted36872746124 SUCCESS; the user line-coverage target remains unverified. The source-specific assembler still requires local experimental materials and is not a fresh-clone generic Go instrumenter. Original pipeline closed-complete receipt c8689da16106181495ee070d9fbc166e580bc93d86bbf04185adb70d18ce81c2 closes194 materials, including195 registered sites, three packages in normal/race/plain/binary-bound runs and actual fatalExit7 append journals. Observed original positions are154 entry/36 completion/0 native effect, reported separately; DecodeMessage15 typed getter completion positions extend the source-specific adapters. Its130-file physical Go inventory is dated before the new Inspector test, not the current131-Go-file source inventory or an executable-line denominator.
+
+Peer found duplicate process identity overwriting allowed sites/duplicate journal double-counting and valid JSON wrong shapes causing traceback/exit1. Actual original CLI failures are preserved; successor receipt .security/native-observer-pipeline/tool-successor/receipt.json SHA238937368b49e2a2aa6a85cb1ddfad3625c195547d7997f076237b1145716ddb closes135 materials. Explicit boundary types and duplicate canonical-path/identity rejection now give fixed stderr/exit2, without creating output. Eight tests include92 actual CLI cases,500 immutable-identity properties,500 Unicode/tab byte-column properties,1005 bounded malformed JSON inputs and two guard mutants. Earlier three-tool/three-generator mutants remain dated source-specific evidence, not a new full-module campaign. Native Python trace successor receipt a8f7fe1316efefe3b98b4f0d191fdac07cb6a9ca2045414fd0022c220e44512e closes100 materials:92 normal/traced CLI pairs retain actual exits/stdout/stderr and JSON value equivalence; object-key ordering is not a byte-repeatability claim. Positive native consumer lines107/108=99.074%, including module definitions and CLI children, retains missing UTF8 exception line30. The historical95/108 profile excluded children and is not called95%.
+
+Registry IDs bind module/version/source bytes/original UTF8 byte position/context/phase/adapter. Process allowed-site sets, expected normal/fatal dispositions and producer material hashes constrain journal consumption. CLI copied byte-identical into tracked paths was tested again and applied to closed historical selected-package journals; that is fresh consumption, not new Go execution. Source/evidence roots and manifest producers are trusted and immutable; no external authentication/adversarial TOCTOU guarantee. Same-family nonauthor review closed the two findings; no cross-family approval. Complete project instrumentation, executable-line SSOT and unmeasured languages remain open.
+
+
+## Measurement policy boundary
+
+The user target is project-wide line coverage >=95%. Native Go NumStmt counts statements and cannot be relabeled as lines. At the historical measurement boundary no selected denominator/source-class/exclusion policy was recorded. On2026-10-03 the user delegated these choices; `scripts/coverage/POLICY.md` now defines them. Complete measured executable inventories and qualified observers remain unavailable. Cross-language, test-source and document-executable inventories retain gaps for review; they do not independently impose a new all-source denominator or require a generic custom Go instrumenter. Existing bounded entry/completion/effect pilots remain evidence of those exact semantics, without making every phase a new acceptance threshold.
+
+
+## Security orchestration native successor
+
+The actual same-module missing-version bug is repaired in security_local_ci.py; reports/security-metadata-enrichment.md binds original failure and minimal guarded repair. Fresh29-tests parent/193actualchildren native line evidence is632/637 for production SHA6be571, with all five unseen positions retained; receipt .security/security-python-enrichment-v4-full/receipt.json SHA90ed7c275350762a25be031e074f92becab677a4bfb29e35386cbb2bb2f36d72 closes208 materials. Earlier42cd source full26-tests630/635 and v3 repaired-source28-tests632/637 remain dated; their counters are not merged into this current v4 result. This strengthens actual runtime/PBT/mutation coverage without adopting a whole-project denominator.
+
+## Dated source-SAST native observation (a04040d)
+
+`.security/main-admission-current/source-sast-native/20261001T174213914018Z/receipt.json` binds clean a04040d source0d6ea1e and six maintained tests to normal/traced native runs:182/203 positive compiled lines (89.6552%). This is the actual prior-source measurement; the subsequent empty-inventory repair/new guard tests change source/test bindings. Do not carry these counters as current guard-source coverage. The current-source trace is recorded below; project-wide line95 remains unproven.
+
+## Current candidate source-SAST child-own observation
+
+Current dirty candidate source-bound receipt `.security/main-admission-current/source-sast-native/20261001T180026204024Z/receipt.json` SHA `8d315706333d481cb1b1343adf51e00485d99ebb8477b64820114b4d229cfbdd` records source_sast.py195/203 positive native lines (96.0591%) and18 actual PID child journals with normal/traced semantic match. This is only source_sast.py, not project-wide95 or committed delivery. Current46 maintained security contracts PASS; native scan covers13 tracked source files plus five extracted inputs and retains44 LOW/9 MEDIUM findings (53 total),0 HIGH, policy0 with raw_clean=false. Earlier a040 counters stay historical and are not unioned with changed-source counters.
+
+## Delegated policy successor (2026-10-03)
+
+`scripts/coverage/POLICY.md` now adopts owned maintained production executable LINE scope and explicit exclusions under user delegation. This supersedes the historical unselected-policy status, not the dated measurement observations. Current checkout source is the denominator; released team.3 consumer dependencies retain separate contexts. Unmeasured languages/platforms remain incomplete, and neither physical inventory counts nor statement profiles produce a project ratio. `docs/REVIEWER_ADMISSION_HANDOFF.md` records the separate native ACP promotion capability gap and proposed owner acceptance work.
+
+
+## Source-bound observer and typed inventory follow-up (2026-10-03)
+
+Policy delivery is dev `c28062492bc5602173f2807d97f76c8cc8456501`, tree
+`d07e6ec8fa7c09d35e7792bd53023f44db65be01`. Hosted run37100672109 SUCCESS
+checked out96ff1b593358963f1b9753a75dcc9ce23699e664 with main57/devc280 parents
+and the same tree. This is the policy predecessor, not delivery of the following
+ignored experimental producers or a project coverage verdict.
+
+The independent-parent, bounded own-session native observer records actual GDB,
+child wait and parent kernel status. All five panic/short-circuit witnesses have
+matching selected-site outcomes. Actual errors/context package v4 observations
+retain10/5 existing Tests with unchanged normal/debug verdicts, all three exits0,
+no output truncation and complete own-session cleanup. Errors105 and context28
+compiler-attributed hit lines are subsets; unmapped physical lines199/59 remain
+visible. Each instruction PC is disabled only after its first actual hit. A
+negative SID-escape contract proves the escaped child is outside the cleanup
+scope and ends naturally; it does not prove whole-process-tree containment.
+Earlier argv/no-test, logging/timeout and negative-breakpoint failures are retained.
+Package closeout `.security/line-packages-20261003/closeout.json`, SHA
+`2d9459b123ef0aa28073e810b46645782872fae0cca24c8f491392c44bff38e2`,
+closes118 materials. No debugger timing/concurrency equivalence is inferred.
+
+The syntax inventory includes45 unique owned production Go files and63118 AST
+nodes, with original positions and parent ancestry. The original inventory already
+includes all three Go/Lua mixed files. A later erroneous48-unique declaration
+counted their duplicate language memberships; its bytes are retained and rejected
+by the native count guard. Correct scope is45 unique files,3 mixed files and48
+Go/Lua membership records. Cross-language original path/line/source identities
+must be deduplicated rather than counted twice. Test-only helpers, demo and
+protobuf exclusions retain the policy reasons; no unmapped or platform file is
+excluded because it lacks observed execution.
+
+The untyped semantic-v3 prototype passes27 marked contracts and100 seeded
+line-position properties. Actual Go1.26.6 coverage-guided fuzz completes133680
+executions after finding and repairing a nil-body function-declaration panic;
+the minimized input and failed campaign remain retained. Four assertion-caught
+semantic mutants belong to untyped v2 only. These tests qualify their bounded
+contracts; they are not current typed-producer fuzz/mutation or production-line
+evidence. Closeout `.security/semantic-lines-20261003/closeout.json`, SHA
+`39552f0d7c6187c3d75a11e42c50a708bde4cce6aaf2a19600e47a32cc5feb47`.
+
+Six actual cached-only Go1.26.6 export and native go/types contexts cover
+root/x/tools on linux/windows arm64. Corrected typed-v3 attempt04 retains all45
+source hashes and returns0 in every context;30 actual typed-fixture role
+assertions pass. Conversion/type arguments, named composite keys, imported
+package qualifiers and assignment targets are distinguished. Root/x use current
+root; tools imports released team.3. Windows export/type checking is not Windows
+runtime execution. Export-cache locators are hash-checked inputs, not durable
+copies or future cache-custody claims.
+
+Typed closeout `.security/typed-lines-20261003/closeout.json`, SHA
+`9e548f13336d1be5652dc288c2f128df7eeffbdc0521f68a6352825a30180c0f`,
+retains6164 candidate and361 unresolved unique source lines across contexts.
+Candidate/unknown overlap is permitted; neither is a complete executable
+denominator or a hit count. Case dispatch and nonconstant package static/runtime
+initialization still require semantic qualification. Other maintained languages
+and actual platform observations remain open. Project ratio stays null; the
+user LINE>=95% target, SPEC-008 readiness, strict cross-family review, protected
+main, real sequential release and cleanup custody remain unfinished.
+
+
+### Typed-v4 source-operation successor (2026-10-03)
+
+Six actual native type contexts now preserve45 unique original Go source hashes
+at source-equivalent dev4288695. Experimental v4 returns6211 unique candidate
+lines and0 unresolved lines. Prior361 unknown lines partition into239 case-label
+and122 package-initializer lines; every initializer remains executable. Case/type/
+constant/nil labels are attributed to the switch source operation, while dynamic
+case expressions and every case body remain included. This is an explicit source
+attribution choice; runtime comparisons still occur. Compiler static-data lowering
+is not an exclusion reason for nonconstant source initialization. Independent
+conservation checks retain15664 contextual prior statement/control sites.
+
+Actual native typed-fixture contracts pass30 updated plus14 new assertions.
+The exact v4 classifier source passes100 leading-blank position properties and
+243041 raw coverage-guided fuzz executions in11.048 seconds. Invalid parse/type
+inputs are skipped; the accepted typed-input count is not instrumented. This
+fuzz exercises successfully typechecked classification methods, not main's export
+importer/hash protocol. The earlier environment setup failure remains retained.
+Three viable omission mutants (package initializer, dynamic case, case body)
+are caught by independent ordinary assertions;0 missed,0 unviable,0 setup failures.
+These are typed-v4 producer tests, not production mutation/coverage evidence.
+
+The selected errors76/context23 candidate lines all match existing source-bound
+native observer hit sets. No complete executable denominator or platform runtime
+qualification follows. Other maintained-language inventories/observers and complete
+project line evidence remain required; project ratio is null and LINE>=95% is open.
+Bounded semantic closeout `.security/typed-semantics-delivery-20261003/semantic-closeout.json`
+SHA `e9a6e71cbc31f6415ecf16907b1c2b0d8519cfbff868782e04520ac898d60ebc`
+closes85 explicit materials. Ignored experiment producers are not installed tooling;
+SPEC-008 readiness, strict cross-family approval and protected-main hold remain.

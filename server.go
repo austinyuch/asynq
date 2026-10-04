@@ -683,11 +683,10 @@ func (srv *Server) Start(handler Handler) error {
 	if handler == nil {
 		return fmt.Errorf("asynq: server cannot run with nil handler")
 	}
-	srv.processor.handler = handler
-
 	if err := srv.start(); err != nil {
 		return err
 	}
+	srv.processor.handler = handler
 	srv.logger.Info("Starting processing")
 
 	srv.heartbeater.start(&srv.wg)

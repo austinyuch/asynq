@@ -1,7 +1,7 @@
 name: build
 
 # CI 最小化策略:權威測試 gate 在 local(Valkey 全套,見 .agents/skills/upstream-sync/)。
-# CI 只在 PR → main 時做最後防線;單一 Go 版本、單一 job。
+# CI 只在 PR → main 時做最後防線;Ubuntu 既有 job 加 Windows 原生 signal job。
 on:
   pull_request:
     branches: [main]
@@ -42,3 +42,46 @@ jobs:
 
       - name: Test tools module
         run: cd tools && go test -race ./...
+
+      - name: Test event ledger contracts
+        run: make coverage-events-test
+
+      - name: Test security decision contracts
+        run: make security-contracts-test
+
+  windows-native-signals:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    env:
+      GOENV: "off"
+      GOWORK: "off"
+      GOTOOLCHAIN: local
+      GOFLAGS: -mod=readonly
+      GOOS: windows
+      GOARCH: amd64
+      CGO_ENABLED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.26.6
+          cache: true
+      - name: Native Windows original signal contracts and mutants
+        shell: pwsh
+        run: ./scripts/coverage/windows-native-signals.ps1
+      - name: Windows CLI explicit configuration regressions without Redis
+        shell: pwsh
+        working-directory: tools
+        run: |
+          $env:HOME = Join-Path $env:RUNNER_TEMP 'asynq-owned-home'
+          $env:USERPROFILE = $env:HOME
+          New-Item -ItemType Directory -Force $env:HOME | Out-Null
+          go test ./asynq/cmd '-run=^(TestCLIExplicitConfigFailClosedContracts|TestCLIExplicitConfigErrorResetContracts|TestExplicitConfigAndFlagPrecedence|TestCommandHelpAndSuggestions|TestCLIExitAndValidationContracts)$' -count=1 -v
+          if ($LASTEXITCODE -ne 0) { throw 'Windows CLI regressions failed' }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-native-signals-${{ github.sha }}
+          path: .security/windows-native-ci
+          if-no-files-found: error
+          include-hidden-files: true

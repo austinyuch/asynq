@@ -44,5 +44,5 @@ cd tools && go test -race -count=1 ./...
 ## 對應解決的 ISSUE_LOG 項目
 
 - **IL-001**:`make proto` 重生(protoc 3.21.12 + protoc-gen-go 1.36.11),舊 `hibiken` go_package 字串清除,測試全綠。
-- **IL-003**:dash TUI 文字+圖形層皆已 fork 環境實擷;`docs/assets/` 逐檔 disposition(9 檔零引用 legacy 保留、`dash.gif` 為 README upstream 動畫示意、asynqmon-* 屬外部專案)。
+- **IL-003**:dash TUI 文字+圖形層皆已 fork 環境實擷;`docs/assets/` 逐檔 disposition(9 檔零引用 legacy 保留、`dash.gif` 已以 fork 環境重攝(6 frames 真實導覽)、asynqmon-* 屬外部專案)。
 - **review 裁決機制缺口**:本檔即機制落地;後續 spec 依同格式於 `.agents/specs/<SPEC-ID>/review.md` 出具裁決。

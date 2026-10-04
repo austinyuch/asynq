@@ -744,7 +744,7 @@ func (i *Inspector) ArchiveAllAggregatingTasks(queue, group string) (int, error)
 // If the task is in already archived, it returns a non-nil error.
 func (i *Inspector) ArchiveTask(queue, id string) error {
 	if err := base.ValidateQueueName(queue); err != nil {
-		return fmt.Errorf("asynq: err")
+		return err
 	}
 	err := i.rdb.ArchiveTask(queue, id)
 	switch {
@@ -953,7 +953,13 @@ func (i *Inspector) SchedulerEntries() ([]*SchedulerEntry, error) {
 // parseOption interprets a string s as an Option and returns the Option if parsing is successful,
 // otherwise returns non-nil error.
 func parseOption(s string) (Option, error) {
-	fn, arg := parseOptionFunc(s), parseOptionArg(s)
+	fn, arg, ok := strings.Cut(s, "(")
+	if !ok || !strings.HasSuffix(arg, ")") {
+		return nil, fmt.Errorf("cannot parse option string %q", s)
+	}
+	// Option.String wraps the entire argument. Parentheses inside quoted queue
+	// names and JSON headers belong to the argument, not to the outer frame.
+	arg = strings.TrimSuffix(arg, ")")
 	switch fn {
 	case "Queue":
 		queue, err := strconv.Unquote(arg)
@@ -1013,22 +1019,6 @@ func parseOption(s string) (Option, error) {
 	default:
 		return nil, fmt.Errorf("cannot not parse option string %q", s)
 	}
-}
-
-func parseOptionFunc(s string) string {
-	i := strings.Index(s, "(")
-	return s[:i]
-}
-
-func parseOptionArg(s string) string {
-	i := strings.Index(s, "(")
-	if i >= 0 {
-		j := strings.Index(s, ")")
-		if j > i {
-			return s[i+1 : j]
-		}
-	}
-	return ""
 }
 
 // SchedulerEnqueueEvent holds information about an enqueue event by a scheduler.

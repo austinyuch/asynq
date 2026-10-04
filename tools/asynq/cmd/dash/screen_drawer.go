@@ -9,6 +9,7 @@ import (
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/mattn/go-runewidth"
+	"github.com/rivo/uniseg"
 )
 
 /*** Screen Drawer ***/
@@ -94,8 +95,10 @@ func NewLineDrawer(row int, s tcell.Screen) *LineDrawer {
 }
 
 func (d *LineDrawer) Draw(s string, style tcell.Style) {
-	for _, r := range s {
-		d.s.SetContent(d.col, d.row, r, nil, style)
-		d.col += runewidth.RuneWidth(r)
+	graphemes := uniseg.NewGraphemes(s)
+	for graphemes.Next() {
+		runes := graphemes.Runes()
+		d.s.SetContent(d.col, d.row, runes[0], runes[1:], style)
+		d.col += runewidth.StringWidth(graphemes.Str())
 	}
 }

@@ -14,7 +14,7 @@
 | 項目 | 位置 | 用途 |
 |---|---|---|
 | Seed 程式(真實 API) | `docs/manual/demo/main.go` | 唯一權威 demo 資料來源;產生 enqueue/worker/unique/retry→archive/scheduled 全流程 |
-| Demo DB | Valkey/Redis **DB 13** | 與測試套件(DB 14)隔離;seed 程式啟動時 flush,可重複執行 |
+| Demo DB | Valkey/Redis **DB 13** | 與測試套件(DB 14)隔離;seed 僅接受空的專用 DB 13,非空或無法驗證即停止;不清除既有資料。重新生成時配置新的空專用 instance |
 | 任務樣本 | `email:welcome`(critical)、`image:resize`(default)、`report:generate`(low, scheduled +2h)、`cleanup:tmp`(unique)、`billing:charge`(MaxRetry 0 → archived) | 覆蓋 weighted queues 與五種狀態 |
 
 ## Runtime(registry-governed,不可 ad-hoc 起服務)

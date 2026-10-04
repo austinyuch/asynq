@@ -64,7 +64,7 @@ func (r *RDB) Ping() error {
 
 func (r *RDB) runScript(ctx context.Context, op errors.Op, script *redis.Script, keys []string, args ...interface{}) error {
 	if err := script.Run(ctx, r.client, keys, args...).Err(); err != nil {
-		return errors.E(op, errors.Internal, fmt.Sprintf("redis eval error: %v", err))
+		return errors.E(op, errors.Internal, fmt.Errorf("redis eval error: %w", err))
 	}
 	return nil
 }
@@ -73,7 +73,7 @@ func (r *RDB) runScript(ctx context.Context, op errors.Op, script *redis.Script,
 func (r *RDB) runScriptWithErrorCode(ctx context.Context, op errors.Op, script *redis.Script, keys []string, args ...interface{}) (int64, error) {
 	res, err := script.Run(ctx, r.client, keys, args...).Result()
 	if err != nil {
-		return 0, errors.E(op, errors.Unknown, fmt.Sprintf("redis eval error: %v", err))
+		return 0, errors.E(op, errors.Unknown, fmt.Errorf("redis eval error: %w", err))
 	}
 	n, ok := res.(int64)
 	if !ok {
@@ -175,12 +175,12 @@ func (r *RDB) BatchEnqueue(ctx context.Context, items []base.BatchEnqueueItem) (
 	}
 	if needsEnqueue {
 		if err := enqueueCmd.Load(ctx, r.client).Err(); err != nil {
-			return 0, errors.E(op, errors.Unknown, fmt.Sprintf("failed to load enqueue script: %v", err))
+			return 0, errors.E(op, errors.Unknown, fmt.Errorf("failed to load enqueue script: %w", err))
 		}
 	}
 	if needsSchedule {
 		if err := scheduleCmd.Load(ctx, r.client).Err(); err != nil {
-			return 0, errors.E(op, errors.Unknown, fmt.Sprintf("failed to load schedule script: %v", err))
+			return 0, errors.E(op, errors.Unknown, fmt.Errorf("failed to load schedule script: %w", err))
 		}
 	}
 
@@ -1613,7 +1613,7 @@ func (r *RDB) PublishCancelation(id string) error {
 	var op errors.Op = "rdb.PublishCancelation"
 	ctx := context.Background()
 	if err := r.client.Publish(ctx, base.CancelChannel, id).Err(); err != nil {
-		return errors.E(op, errors.Unknown, fmt.Sprintf("redis pubsub publish error: %v", err))
+		return errors.E(op, errors.Unknown, fmt.Errorf("redis pubsub publish error: %w", err))
 	}
 	return nil
 }

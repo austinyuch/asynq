@@ -232,13 +232,13 @@ asynq_queue_memory_usage_approx_bytes{queue="critical"} 488</code></pre>
 </table>
 <div class="ok"><b>Gaps resolved since last check</b>(本次:2026-06-07 再生 #3 / gap closeout):<br>
 ✅ <b>dash TUI 圖形層</b>:tmux capture-pane -e 取真實 ANSI 色彩 → PNG ×2,IL-003 dash 部分完全解決<br>
-✅ <b><code>docs/assets/</code> 逐檔 disposition</b>:9 檔零引用(legacy)、dash.gif 為 upstream 動畫示意 — IL-003 結案<br>
+✅ <b><code>docs/assets/</code> 逐檔 disposition</b>:9 檔零引用(legacy)、dash.gif 已以 fork 環境重攝(6 frames 真實導覽) — IL-003 結案<br>
 ✅ <b>IL-001</b>:<code>make proto</code> 重生 pb.go,descriptor 已為 austinyuch path(全套測試綠)<br>
 <b>較早(再生 #2)</b>:<br>
 ✅ <b><code>assets/*.txt</code> evidence 檔此前從未 commit</b>(手冊連結為死連結)— 本次補齊 7 個 git-tracked assets,所有下載連結可用<br>
 ✅ <b><code>asynq dash</code> TUI 首次取得 fork 環境真實擷取</b>(tmux ×2:Queues 主畫面 + Queue Summary)— IL-003 的 dash 部分縮小為「僅圖形層未擷取」<br>
 ✅ 全部數據以 2026-06-07 governed allocation 重產,四個 surface(seed/CLI/dash/exporter)互相一致<br>
-⏳ 仍 open:IL-003 殘餘(<code>docs/assets/</code> upstream 素材未重攝;dash 圖形層)</div>
+歷史狀態(再生 #2):當時 IL-003 尚未解;再生 #3 已完成圖形層、fork 動畫重攝與 legacy disposition</div>
 <div class="gap">⚠️ 本頁 Mermaid 圖由 CDN 渲染;離線開啟時生命週期圖不顯示(文字內容不受影響)。Markdown 版(<a href="index.md">index.md</a>)為純文字備查來源。</div>
 </div>
 

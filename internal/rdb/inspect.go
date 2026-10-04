@@ -7,6 +7,7 @@ package rdb
 import (
 	"context"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 
@@ -137,6 +138,8 @@ table.insert(res, aggregating_count)
 return res`)
 
 // CurrentStats returns a current state of the queues.
+// Setting DISABLE_MEMORY_USAGE_PROFILING to any non-empty value other than "false"
+// disables memory usage profiling. Unset, empty, and "false" keep it enabled.
 func (r *RDB) CurrentStats(qname string) (*Stats, error) {
 	var op errors.Op = "rdb.CurrentStats"
 	exists, err := r.queueExists(qname)
@@ -228,11 +231,15 @@ func (r *RDB) CurrentStats(qname string) (*Stats, error) {
 		}
 	}
 	stats.Size = size
-	memusg, err := r.memoryUsage(qname)
-	if err != nil {
-		return nil, errors.E(op, errors.CanonicalCode(err), err)
+	disableMemUsageProfiling := os.Getenv("DISABLE_MEMORY_USAGE_PROFILING")
+	if disableMemUsageProfiling == "false" || disableMemUsageProfiling == "" {
+		memusg, err := r.memoryUsage(qname)
+		if err != nil {
+			return nil, errors.E(op, errors.CanonicalCode(err), err)
+		}
+
+		stats.MemoryUsage = memusg
 	}
-	stats.MemoryUsage = memusg
 	return stats, nil
 }
 
@@ -347,7 +354,7 @@ func (r *RDB) memoryUsage(qname string) (int64, error) {
 	}
 	res, err := memoryUsageCmd.Run(context.Background(), r.client, keys, argv...).Result()
 	if err != nil {
-		return 0, errors.E(op, errors.Unknown, fmt.Sprintf("redis eval error: %v", err))
+		return 0, errors.E(op, errors.Unknown, fmt.Errorf("redis eval error: %w", err))
 	}
 	usg, err := cast.ToInt64E(res)
 	if err != nil {
@@ -1773,116 +1780,78 @@ func (r *RDB) DeleteAllPendingTasks(qname string) (int64, error) {
 	return n, nil
 }
 
-// removeQueueForceCmd removes the given queue regardless of
-// whether the queue is empty.
-// It only check whether active queue is empty before removing.
-//
-// Input:
-// KEYS[1] -> asynq:{<qname>}
-// KEYS[2] -> asynq:{<qname>}:active
-// KEYS[3] -> asynq:{<qname>}:scheduled
-// KEYS[4] -> asynq:{<qname>}:retry
-// KEYS[5] -> asynq:{<qname>}:archived
-// KEYS[6] -> asynq:{<qname>}:lease
-// --
-// ARGV[1] -> task key prefix
-//
-// Output:
-// Numeric code to indicate the status.
-// Returns 1 if successfully removed.
-// Returns -2 if the queue has active tasks.
+// removeQueueForceCmd removes all index-reachable tasks while preserving active
+// task refusal. Every dynamic key belongs to the queue's hash slot; aggregation
+// set references and unique locks are checked before accessing dynamic keys.
+// KEYS: pending, active, scheduled, retry, archived, lease, completed,
+// all groups (group names), all aggregation sets (full set keys).
+// ARGV: task key prefix, group key prefix, canonical unique-lock prefix.
 var removeQueueForceCmd = redis.NewScript(`
-local active = redis.call("LLEN", KEYS[2])
-if active > 0 then
+if redis.call("LLEN", KEYS[2]) > 0 then
     return -2
 end
-for _, id in ipairs(redis.call("LRANGE", KEYS[1], 0, -1)) do
-	redis.call("DEL", ARGV[1] .. id)
+local ids = {}
+local group_keys = {}
+local function collect(key, command)
+    for _, id in ipairs(redis.call(command, key, 0, -1)) do
+        ids[id] = true
+    end
 end
-for _, id in ipairs(redis.call("LRANGE", KEYS[2], 0, -1)) do
-	redis.call("DEL", ARGV[1] .. id)
+collect(KEYS[1], "LRANGE")
+for _, i in ipairs({3, 4, 5, 7}) do
+    collect(KEYS[i], "ZRANGE")
 end
-for _, id in ipairs(redis.call("ZRANGE", KEYS[3], 0, -1)) do
-	redis.call("DEL", ARGV[1] .. id)
+for _, group in ipairs(redis.call("SMEMBERS", KEYS[8])) do
+    local key = ARGV[2] .. group
+    table.insert(group_keys, key)
+    collect(key, "ZRANGE")
 end
-for _, id in ipairs(redis.call("ZRANGE", KEYS[4], 0, -1)) do
-	redis.call("DEL", ARGV[1] .. id)
+for _, key in ipairs(redis.call("ZRANGE", KEYS[9], 0, -1)) do
+    if string.sub(key, 1, string.len(ARGV[2])) == ARGV[2] then
+        table.insert(group_keys, key)
+        collect(key, "ZRANGE")
+    end
 end
-for _, id in ipairs(redis.call("ZRANGE", KEYS[5], 0, -1)) do
-	redis.call("DEL", ARGV[1] .. id)
+local locks = {}
+for id, _ in pairs(ids) do
+    local unique_key = redis.call("HGET", ARGV[1] .. id, "unique_key")
+    if unique_key and unique_key ~= "" and
+       string.sub(unique_key, 1, string.len(ARGV[3])) == ARGV[3] and
+       redis.call("GET", unique_key) == id then
+        table.insert(locks, unique_key)
+    end
 end
-for _, id in ipairs(redis.call("LRANGE", KEYS[1], 0, -1)) do
-	redis.call("DEL", ARGV[1] .. id)
+for _, key in ipairs(locks) do
+    redis.call("DEL", key)
 end
-for _, id in ipairs(redis.call("LRANGE", KEYS[2], 0, -1)) do
-	redis.call("DEL", ARGV[1] .. id)
+for id, _ in pairs(ids) do
+    redis.call("DEL", ARGV[1] .. id)
 end
-for _, id in ipairs(redis.call("ZRANGE", KEYS[3], 0, -1)) do
-	redis.call("DEL", ARGV[1] .. id)
+for _, key in ipairs(group_keys) do
+    redis.call("DEL", key)
 end
-for _, id in ipairs(redis.call("ZRANGE", KEYS[4], 0, -1)) do
-	redis.call("DEL", ARGV[1] .. id)
+for _, key in ipairs(KEYS) do
+    redis.call("DEL", key)
 end
-for _, id in ipairs(redis.call("ZRANGE", KEYS[5], 0, -1)) do
-	redis.call("DEL", ARGV[1] .. id)
-end
-redis.call("DEL", KEYS[1])
-redis.call("DEL", KEYS[2])
-redis.call("DEL", KEYS[3])
-redis.call("DEL", KEYS[4])
-redis.call("DEL", KEYS[5])
-redis.call("DEL", KEYS[6])
 return 1`)
 
-// removeQueueCmd removes the given queue.
-// It checks whether queue is empty before removing.
-//
-// Input:
-// KEYS[1] -> asynq:{<qname>}:pending
-// KEYS[2] -> asynq:{<qname>}:active
-// KEYS[3] -> asynq:{<qname>}:scheduled
-// KEYS[4] -> asynq:{<qname>}:retry
-// KEYS[5] -> asynq:{<qname>}:archived
-// KEYS[6] -> asynq:{<qname>}:lease
-// --
-// ARGV[1] -> task key prefix
-//
-// Output:
-// Numeric code to indicate the status
-// Returns 1 if successfully removed.
-// Returns -1 if queue is not empty
+// removeQueueCmd rejects every nonempty task-state index before any mutation.
+// Its key layout is the same as removeQueueForceCmd.
 var removeQueueCmd = redis.NewScript(`
-local ids = {}
-for _, id in ipairs(redis.call("LRANGE", KEYS[1], 0, -1)) do
-	table.insert(ids, id)
+if redis.call("LLEN", KEYS[1]) > 0 or redis.call("LLEN", KEYS[2]) > 0 then
+    return -1
 end
-for _, id in ipairs(redis.call("LRANGE", KEYS[2], 0, -1)) do
-	table.insert(ids, id)
+for _, i in ipairs({3, 4, 5, 7, 9}) do
+    if redis.call("ZCARD", KEYS[i]) > 0 then
+        return -1
+    end
 end
-for _, id in ipairs(redis.call("ZRANGE", KEYS[3], 0, -1)) do
-	table.insert(ids, id)
+if redis.call("SCARD", KEYS[8]) > 0 then
+    return -1
 end
-for _, id in ipairs(redis.call("ZRANGE", KEYS[4], 0, -1)) do
-	table.insert(ids, id)
+for _, key in ipairs(KEYS) do
+    redis.call("DEL", key)
 end
-for _, id in ipairs(redis.call("ZRANGE", KEYS[5], 0, -1)) do
-	table.insert(ids, id)
-end
-if table.getn(ids) > 0 then
-	return -1
-end
-for _, id in ipairs(ids) do
-	redis.call("DEL", ARGV[1] .. id)
-end
-for _, id in ipairs(ids) do
-	redis.call("DEL", ARGV[1] .. id)
-end
-redis.call("DEL", KEYS[1])
-redis.call("DEL", KEYS[2])
-redis.call("DEL", KEYS[3])
-redis.call("DEL", KEYS[4])
-redis.call("DEL", KEYS[5])
-redis.call("DEL", KEYS[6])
 return 1`)
 
 // RemoveQueue removes the specified queue.
@@ -1913,8 +1882,11 @@ func (r *RDB) RemoveQueue(qname string, force bool) error {
 		base.RetryKey(qname),
 		base.ArchivedKey(qname),
 		base.LeaseKey(qname),
+		base.CompletedKey(qname),
+		base.AllGroups(qname),
+		base.AllAggregationSets(qname),
 	}
-	res, err := script.Run(context.Background(), r.client, keys, base.TaskKeyPrefix(qname)).Result()
+	res, err := script.Run(context.Background(), r.client, keys, base.TaskKeyPrefix(qname), base.GroupKeyPrefix(qname), strings.TrimSuffix(base.UniqueKey(qname, "", nil), ":")).Result()
 	if err != nil {
 		return errors.E(op, errors.Unknown, err)
 	}

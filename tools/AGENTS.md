@@ -17,12 +17,13 @@ tools/
 | CLI install/usage/config | `asynq/README.md` | Canonical user-facing command docs |
 | CLI entrypoint | `asynq/main.go` | Delegates directly to `cmd.Execute()` |
 | CLI subcommands and global flags | `asynq/cmd/` | Main contributor surface |
-| Exporter behavior | `metrics_exporter/main.go` | HTTP `/metrics` binary with Redis flags |
+| Exporter behavior | `metrics_exporter/main.go`, `metrics_exporter/README.md` | Private registry/routes, HTTP `/metrics`, graceful signals and Redis flags |
 
 ## CONVENTIONS
 - Run builds and tests from within `tools/` or via `cd tools && ...`.
 - Keep CLI Redis/TLS/config behavior centralized in the `asynq/cmd` package.
-- Treat `metrics_exporter` as a separate operational surface from the CLI.
+- Treat `metrics_exporter` as a separate operational surface from the CLI; runtime contracts opt in with `ASYNQ_EXPORTER_TEST_REDIS_ADDR` and exclusively own empty DB12. Serialize with CLI/dashboard suites using DB12.
+- Exporter instances are single-use. Successful HTTP Shutdown joins active handlers; forced Close does not. Constructor collector registration performs synchronous Redis reads.
 
 ## ANTI-PATTERNS
 - Do not assume root-module commands validate this module.

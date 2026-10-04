@@ -20,9 +20,12 @@
 | CR ID | 對象 baseline | 描述 | 狀態 | 繼承的 evidence 義務 |
 |---|---|---|---|---|
 | CR-2026-08-19-deps-provider | SPEC-001(Security hardening + dependency upgrade) | 三 module 相依升級(go-redis 9.22.0、protobuf 1.36.12、x/text 0.41.0 等);`scripts/security/run.sh` 改由治理 aclab-middlewares security-data provider 取得 KEV/CVE catalog,provider 證據不符即擋下,不再靜默 fallback | ✅ completed (2026-08-19) | 已滿足 SPEC-001 的「全套 Valkey 測試綠」:root 206.4s / `internal/rdb` 17.0s / `x/rate` 1.1s 全 ok(`-race`,專用 Valkey 8 @ 127.0.0.1:16381);另 build+vet 三 module、lint 三 module 各 0 issues、非 Redis 套件全綠、security CI PASS(KEV-listed 0、gosec 0)。commits `7e4b010`、`a3083e5`、`9431103`,branch `chore/deps-security-20260819`;release tags `v0.26.0-team.3`、`x/v0.1.0-team.3`、`tools/v0.26.0-team.3` |
+| CR-20261001-reconcile | SPEC-003 / SPEC-008 / SPEC-001 | ROI-ranked security fix-plan, upstream memory profiling, public/internal/metrics/CLI/rdb contracts, scheduler parser repair and dated docs reconciliation | in progress; review, promotion and global coverage remain open | [reconciliation](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reconciliation.md), [tasks](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/tasks.md) |
 
 ## External contract 依賴
 
 - 下游專案以 `go get github.com/austinyuch/asynq@v0.26.0-team.1` 消費;tag 一經發佈不可移動/刪除
 - `master` 分支 = upstream 鏡像 contract:只能 `--ff-only`,任何團隊 commit 都是污染
 - CI required check 名稱 `build`(branch protection 引用);改 workflow job 名要同步改 protection
+
+SPEC-008 CR-20261001-reconcile current-source measurement evidence: [refresh](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/current-source-measurement-refresh.md). This is spec-local-only; formal review/readiness and architecture foundations are unchanged. No full project coverage or protected promotion is inferred.

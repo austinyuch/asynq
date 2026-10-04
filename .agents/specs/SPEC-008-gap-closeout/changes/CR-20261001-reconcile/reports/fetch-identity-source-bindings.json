@@ -1,0 +1,10 @@
+{
+  "tools/asynq/cmd/dash/dash.go": "e22311df03b5cedeb8af5c45acd8b0d52bf0f3493969b919b508034173f886b6",
+  "tools/asynq/cmd/dash/fetch.go": "79000615fc8cb2f465f02cf7ac00a8fcd4f55ed5b0ebef61eb7e6f6ff4c1273b",
+  "tools/asynq/cmd/dash/key_event.go": "a288213c1bf8285f7b32e13165230ac8bb80773276492c51a77053d5e286dc16",
+  "tools/asynq/cmd/dash/fetch_identity_contract_test.go": "ac2ec3c008a54470517081501ad3bcea40f48399bb9179629b9c6517178d62b0",
+  "tools/asynq/cmd/dash/fetch_contract_test.go": "d977d8d6d4a339ca8065d2fde045f814ee5a3626ee47471f4c9f46e16f7b09d5",
+  "tools/asynq/cmd/dash/group_navigation_contract_test.go": "a07c027bcc7fd6acc281dfcd16324844a16d0028acbf0c411c0192575c6b73b6",
+  "tools/asynq/cmd/dash/lifecycle_contract_test.go": "7ff33f4ac83923c16779063f206e489281ff343cc36b0d0b6727f03553623f7c",
+  "tools/asynq/cmd/dash/key_event_test.go": "b5e64de101f483c9ad7dba0cb40746fecab5b833a29230d799d47d0908ea8f0c"
+}

@@ -1,0 +1,86 @@
+# Test slice evidence — 2026-10-01
+
+Historical sections retain their original execution/source bindings. Latest published immutable baseline is e61d596; the final section records the new source-bound successor. No section confers project-line95% or formal promotion authority.
+
+- internal/errors, internal/log, internal/timeutil: race/vet PASS, each 100% statement coverage; seeded properties, two 30-second fuzz runs and five viable mutants caught. Source-bound local receipt: `.security/slice2/receipt.json`.
+- x/metrics: real Redis Inspector fixtures and seeded properties, race PASS, 31/31 statements and derived profile line union 113/113; four viable mutants caught. Source-bound local receipt: `.security/reconcile-20261001/metrics-test-receipt.json`.
+- Root public contracts: 69 target methods at 100% statements; targeted race/vet PASS, 10,000 property trials, 30-second metadata fuzz 623,850 executions, five viable mutants caught. This partial profile is not whole-root coverage. Receipt: `.security/public-contracts/receipt.json`.
+- IL-004: six conflict fixtures now carry the canonical queue and unique keys. Before correction all six failed with CROSSSLOT on the isolated three-master cluster. After correction all six passed. ArchiveTrim now collects keys from every master rather than one randomly selected shard. Full standalone and cluster rdb race suites PASS; source SHA256 `60989400af12c220d047d04cecb4fb394724ae1747c97ccf150968a025a0912b`.
+- Tools full module race PASS: cmd 49.3%, dash 12.5%, aggregate 33.9% statements (baseline aggregate 3.7%). Runtime fixture DB returned to its empty baseline. Local source-bound receipt: `.security/tools-contracts/receipt.json`.
+- Root/rdb/tools coverage expansion remains in progress. Project-wide >=95% line coverage is unproven. Historical full root statement coverage was 81.6%; a statement percentage must not be relabelled as line coverage.
+- Managed coverage-gap metrics returned degraded/graph_store_unavailable, not a pass. No graph was initialized as part of this read-only check.
+- Queue/Header closing-parenthesis parser defect repaired in a frozen successor production slice. Focused race/vet PASS, seeded 10,000 property trials, 30-second fuzz 435,731 executions, four viable mutants caught. Missing frames/trailing garbage return errors; existing argument semantics retained. Local source-bound receipt: `.security/option-parser/receipt.json`; full root gate pending.
+- Bounded same-family peer review found one P2 metrics/rate shared Redis flag isolation issue. Correction and refreshed metrics evidence pending; this review does not satisfy cross-family approval.
+
+Local receipts are gitignored reproducibility evidence, not portable CI attestations. Freeze the successor tree, refresh all module SBOM/scans and full gates, and obtain the pending cross-family review before promotion.
+
+## Successor full gates and review corrections
+
+Full root race PASS in 206.275 seconds at 84.0% statements (frozen root source, pre-commit tree evidence). This does not achieve the project line target. The successor full cluster run caught two missing canonical UniqueKey fixtures in the newly added publication-failure tests; repair and rerun are required. The earlier IL-004-only fixture repair remains supported by its separate baseline/candidate full suites.
+
+Peer review also identified test-process Viper baseline flag bindings lost by cleanup and a nonraw closed-client oracle accepting arbitrary domain error codes. Both are being tightened before the candidate commit. Same-family reviews are bounded peer evidence, not pending cross-family approval.
+
+## Follow-on coverage ROI
+
+Frozen root baseline: 1,280/1,524 statements (84.0%). The following are bounded coverage opportunities, not promised increments: Inspector grouped-task transitions/control up to19 statements; lifecycle/Ping including bounded signal subprocesses up to33; Inspector server/scheduler/cluster observations up to36. Even full completion totals at most88 and leaves at least80 further statements to reach95% root statements. Project-wide line coverage requires complete three-module instrumentation, retaining generated code and dependency boundaries explicitly; no denominator exclusions are approved by this report.
+
+Cluster retry safety review was satisfied by live node identity, non-persistence/no mounts, registry claim, synthetic fixture key inventory and fixture reconstruction custody. It does not certify other local services or production infrastructure.
+
+## Frozen successor slice closure
+
+All three peer findings are corrected and retested: metrics dedicated DB isolation rejects missing/colliding overrides before Redis; CLI cleanup restores baseline Viper flag bindings; closed-client cases assert exact canonical codes and retained transport causes. New unique publication fixtures now use canonical queue-scoped keys. Final source-bound standalone rdb race PASS10.444s and cluster PASS8.075s; compatible profile union is1,016/1,083 statements (93.81%) and1,667/1,798 block-derived line union (92.71%). The cluster introspection test is explicitly skipped in standalone; the separate real-cluster run supplies its success evidence. Global95% remains OPEN. Immutable successor commit gates will be stored separately after commit; these are candidate-tree results.
+
+
+## Runtime administration successor — reviewed working tree
+
+The b7f572d immutable candidate remains the last published gate baseline. New successor results below bind source hashes, not that commit's tree; final gates will be refreshed after a new freeze.
+
+- Queue removal: force now includes completed, grouped and staged aggregation tasks; nonforce rejects these nonempty states. Active tasks prevent writes. Unique locks require canonical queue-local unique namespace and matching owner ID; foreign references, newer lock owners and same-queue nonlock metadata targets are preserved. Seven semantic Lua overlay mutants caught; focused standalone and real three-master cluster race PASS. DB11's eleven pre-existing fixture keys retain byte digests. Lua is not instrumented by Go coverage; queueExists and AllQueues SREM remain outside the single-queue script, so whole-operation atomicity is not claimed. Receipt `.security/queue-removal/receipt.json`.
+- Inspector runtime: grouped transitions, pause/cancel, worker metadata and scheduler history contracts pass with 36 seeded transition trials and four caught mutants. Shared cancellation channel is cross-database: receivers filter owned IDs and final root/rdb gate serializes packages. Receipt `.security/inspector-runtime/receipt.json`.
+- Lifecycle: six bounded child-only TERM/INT Run cases pass, including noninstrumented execution. Child signal guard never forwards to Run; retries prevent readiness races, and missing production signal registration still times out. Instrumented child profiles are exported only through explicit ASYNQ_LIFECYCLE_COVERAGE_DIR and must be included in the compatible final profile union. Two mutants caught; fuzz33,851 executions. Receipt `.security/lifecycle-contracts/receipt.json`.
+- Protobuf: fixed persisted TaskMessage wire bytes, legacy descriptor/text adapters and unknown-field preservation pass with10,000 seeded property trials and447,601 fuzz executions. No generated source was edited. This is bounded field/adapter compatibility, not a full historical schema-version matrix; mutation was not run for this slice. Receipt `.security/proto-compatibility/receipt.json`.
+- CLI administration: real isolated queue transitions, control, stats, cron/server metadata, authentication and TLS error paths pass full tools race. Dedicated DB12 returns empty. Tools imports the published root dependency, so these results do not validate the uncommitted local Lua implementation. Receipt `.security/cli-administration/receipt.json`.
+- Dashboard: Unicode/grapheme truncation, fragmented modal row budgets, group-specific final-page drawing/navigation and grapheme cell preservation now pass SimulationScreen oracles. Existing uniseg handles combining/ZWJ clusters consistently with StringWidth. Four compiled mutants caught;800 seeded property trials, full tools race PASS. Canonical block-deduplicated tools statement coverage1307/1696=77.06%, dash499/734=67.98%; these are partial working-tree statements, not project line coverage. Receipt `.security/dashboard-rendering/asynq-rendering-receipt.json`.
+
+Same-family peer review caught and closed the same-queue nonlock deletion and ZWJ modal overflow regressions. It does not replace pending cross-family approval. Generated code, demo and test helpers remain in root instrumentation; project-wide95% line coverage remains OPEN. Refresh SBOM/CVE/KEV and build/race receipts on the next immutable candidate before push/promotion.
+
+
+## Immutable72dbcd0 evidence and narrow-screen successor
+
+Exact72dbcd0/tree83d080e0 three-module build/vet, split root/rdb/other packages, x/tools runtime race and real-cluster rdb race all PASS. Root profile union includes six signal-child profiles:3134/3618 statements86.62%; inclusive block-line union5506/6277=87.72% is a proxy, not independent line instrumentation. Receipts and complete source subjects are in `.security/final-72dbcd0/`; root73 source/dependency hashes remain a lineage contract, never an exact gate claim for a different commit. Three CycloneDX1.7 SBOMs contain13 root/18 x/45 tools components. Exact72dbcd0 CVE/KEV/SAST PASS: blocking0, supplied KEV matches0, existingG118 warning1. CISA catalog2026.09.30 has1730 entries. Raw bundle `.security/sbom-72dbcd0.tar.gz` SHA256563b31c81eeb4c142bb897819f40fa65ae7d0b3a461ac22500e7fcb832f4f48e; this snapshot proves neither global vulnerability absence nor production readiness.
+
+A further P2 was reproduced after freeze: help/modal on3x15 screen panicked because modalWidth1 led to Repeat(-1). The successor adds a modalWidth<4 guard and actual help/footer/frame tests across widths1–12. Frozen72dbcd0 retains its OPEN finding receipt; closure requires successor tools race and fresh exact-head security/build receipts. Root/x sources are unchanged by this tools-only correction: any carried gate must explicitly prove source equivalence and preserve the original72dbcd0 execution binding.
+
+Next ROI: internal/testbroker fault-injection/delegation contracts, followed by safe demo resource ownership. Read-only review found demo's FlushDB structural interface return type incompatible with go-redis *StatusCmd; no demo or FlushDB was executed. Do not turn the silent no-op into a destructive default merely to gain coverage; design safe ownership/error propagation first. Formal global95% and cross-family approval remain open.
+
+
+## Reviewed fault-injection, Inspector errors and safe demo successor
+
+Published5e98135 has exact three-module security/build/vet and tools race plus source-equal root/x/cluster execution lineage from72dbcd0; PR21 head/title/body and origin topic parity were read back. Origin dev/main remain57b9e964. Narrow help panic is closed by exact5e98135 tools race, preserving the original72dbcd0 OPEN finding as historical evidence.
+
+- Testbroker: all29 delegated API contracts exercise sleeping nil downstream, awake parameter/result/error identity,10,000 seeded state-sequence properties and4 workers ×200 concurrent iterations. Focused race PASS,152/152 package statements;30-second fuzz372,376 executions. Three viable semantic mutants caught: two assertion failures and one deliberate nil-downstream sentinel panic (not a compile failure). Concurrent testing proves bounded race-safety/recovery, not full linearizability. Source-bound receipt `.security/testbroker-contracts/receipt.json`.
+- Inspector errors:18 public method transport contracts, five operations ×12 missing-ID trials, four wrong-state isolation cases and the second-stage lease type-error path pass focused race. Four semantic mutants caught;18 additional covered statements versus the previous compatible root source. DB11 original11 key digests remain identical, exact owned-key cleanup only. Shared worker-index corruption is intentionally not attempted; its gap remains open. Receipt `.security/inspector-errors/receipt.json`.
+- Demo admission: the incompatible FlushDB structural return interface is removed. Main verifies a dedicated empty DB13 before enqueue, rejects nonempty/unverifiable state, and never resets existing data. The disposable connection closes exactly once; both admission/query and Close error identities survive. Helper contracts pass race,10,000 seeded properties and30-second fuzz1,533,768 executions; three compiled mutants caught. Admission helper100% statements is not whole demo coverage. Receipt `.security/demo-admission/receipt.json`.
+- Demo runtime: opt-in isolated DB13 and25-second parent deadlines exercise actual main in a child. Independent Inspector checks validate three queues, six processed tasks, duplicate rejection, archived billing and scheduled report. Nonempty child exits before enqueue and preserves its owned sentinel; os.Exit does not emit a coverage profile, and none is fabricated. Positive child main statement coverage91.0%; parent/child profiles retain source/binary identities. Two semantic mutants caught. Task-owned exact-key DUMP/PTTL custody and conditional deletion restore empty DB13; no FlushDB, foreign index or shared cancellation channel mutation. Receipt `.security/demo-runtime/receipt.json`.
+
+All three bounded same-family peer reviews found no actionable finding. Demo admission is not an atomic lock against other writers: the dedicated runtime ownership/custody is required. The above working-tree receipts are not immutable successor gates; freeze and refresh root/demo child profile unions, security and build/vet before the next push. Project line95% and cross-family approval remain open.
+
+
+## Published e61d596 and reviewed policy/helper/timestamp successor
+
+Exact e61d596/tree4dbf056e root/x/tools race and six build/vet commands PASS. Root canonical unique-block statement union3329/3622=91.91%; inclusive block-line proxy5787/6280=92.15%, not independent executable-line instrumentation. X56/57 statements98.25%; tools1311/1696 canonical block statements77.30%. Cluster remains source-equivalent carried72dbcd0 execution, not a fresh exact e61 cluster run. `.security/final-e61d596/gate-ledger.json` separates bindings.
+
+Exact e61 three CycloneDX1.7 SBOMs have root13/x18/tools45 components; CVE/KEV/SAST blocking0, supplied KEVmatches0, existingG118 warning1, no new suppressions. CISA2026.09.30 catalog1730 entries. Bundle `.security/sbom-e61d596.tar.gz` SHA2569205d1a14d73ca0efa64c63c44f383ae6aecdf5d0867451996c64ba5329cfa47. Supplied snapshot absence is not global vulnerability absence. Topic/PR21 head/title/body parity verified; dev/main remain57b9e964.
+
+Successor Python:13 combined unit tests PASS; new7 decision-table/schema/property contracts,250 seeded permutations/membership/stable-fix cases,1000 bounded generated JSON inputs (not coverage-guided fuzz),6 assertion-caught semantic mutants. Source-identical native counters merged426/631 positive production source lines67.51%; test source separately178/179 and86/87. Same-family peer review found and closed nonexistent line0 denominator metadata and vacuous empty-policy acceptance. Original receipt/raw tables are hash-archived; raw compiler table and positive source inventory remain separate. `.security/security-python-contracts/receipt.json`.
+
+Successor testutil: full package race and30-second fuzz795515 executions PASS,4 semantic mutants caught. Independent comparison permutation/nonmutation and protobuf decoder oracles plus real10-second fatal child contracts add9 statements versus compatible e61 profile. Parent and two instrumented fatal-child profiles are verified separately before union. No Redis used. `.security/testutil-contracts/receipt.json`; same-family independent peer review found no actionable findings.
+
+Successor inspection: standalone DB11 real race PASS; scheduled/retry ±Inf/overflow boundaries and80 fixed-seed domain properties require canonicalInternal, nil partial results, unchanged owned DUMP bytes and readable healthy neighbors.3 semantic mutants caught;2 new statements versus e61. Original11 baseline keys preserved; no FlushDB or PubSub mutation. `.security/rdb-inspection-contracts/receipt.json`.
+
+These new slice receipts bind actual sources, not an immutable successor gate. Freeze and refresh relevant root/build/security gates before push. Project-wide line95%, remaining language measurement and cross-family destination authorization remain OPEN; dev/main/release HOLD. Recoverable task-owned Go cache cleanup at e61 reclaimed2,088,853,978 bytes; new test execution rebuilds it. Runtime containers and registry claims remain active.
+
+
+## Reviewed recovery and evidence-ingress successor
+
+See [failure-recovery-security-ingress.md](failure-recovery-security-ingress.md) for pre-fix FAIL, four deadline-bounded processor dispositions, UTF-8/ASCII-CVE corrections and exact-source native Python622/635=97.95%. Published323d5d1 had all exact gates including fresh cluster; these new production/test sources require a new immutable freeze. Native V8 inline-config ranges do not establish browser rendering or project-line95%.
