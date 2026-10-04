@@ -234,3 +234,8 @@ Complete Lua semantic inventory, validated original source-line observer and nor
 ## Lua bounded Proto/PC observer — 2026-10-04
 
 Ref: R-14. [x] Qualify finite native Proto/PC observer contract, nine synthetic fixtures, one script-index44 API source witness and positive COUNT control with independent readback. [ ] Establish normal/observed KILL equivalence (normal bounded race unobserved), complete50-definition/48-body semantic/profile custody and three alias invocation joins. Global LINE95/main/formal remain OPEN/held. [Evidence and limits](reports/lua-proto-pc-observer-qualification.md).
+
+
+## Lua finite original-line class — 2026-10-04
+
+Ref: R-14. [x] Complete current finite Lua original-line denominator870→621 and source-bound union621/621, preserving positive grammar/dummy roles and actual alias caller joins. [x] Supplemental normal/observed census closure and100PBT/native coverage-guided fuzz. [x] Record root actual two-mutant producer evidence. [x] Complete bounded independent393-check mutation/cleanup review. [ ] Close whole Go/platform/Shell and project LINE95 before protected main/formal promotion. [Evidence and limits](reports/lua-original-line-class-admission.md).

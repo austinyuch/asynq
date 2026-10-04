@@ -96,3 +96,8 @@ Complete Lua semantic inventory, validated original source-line observer and nor
 Ref: R-14. Bounded Lua observer evidence: nine synthetic fixtures/EVALSHA identity; one script-index44 RemoveQueue(force) pair with exits0/0 and state parity. Separate finite COUNT normal/observed positive parity emits observed COUNT1; observed KILL COUNT2 rejects one tail, while normal KILL is NOT_OBSERVED (equivalence NOT_ESTABLISHED). Four clients are reaped, configuration restored and root fixtures released; CLI0 alone is not script success. [Evidence and limits](specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-proto-pc-observer-qualification.md).
 
 The PC wire-decoder contract campaign separately passed 100 synthetic PBT cases, 674,905 seeded parser-fuzz cases in10 CPU seconds, and two py_compile-viable mutants caught by ordinary assertions. These are synthetic parser controls, not coverage-guided fuzzing, production fixtures, or full-class coverage.
+
+
+## Lua finite original-line class — 2026-10-04
+
+Ref: R-14. Complete finite Lua source-bound profile union621/621 (old584/621 plus actual37 supplemental observations), 50 definitions/48 bodies. Supplemental normal/observed waits0/0 share276 ordered census entries;100 seeded payload properties and3107 coverage-guided Go fuzz executions are distinct evidence. Two actual viable ordinary-assertion mutant kills are recorded; bounded independent393-check mutation/cleanup review passes. Raw cross-role DB14 state equality is not claimed. [Evidence and limits](specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-original-line-class-admission.md).

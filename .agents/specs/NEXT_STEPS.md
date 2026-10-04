@@ -181,7 +181,7 @@ Historical v10 handoff, superseded by the finite static-storage disposition belo
 
 Ref: R-14. This disposition supersedes the earlier v10 package19 pending handoff; its dated evidence remains historical. Qualify19 exact positive source/type/ELF/pre-runtime-memory storage metadata roles (17 zero declarations,2 scalar constant initializers), retaining complete language initialization owners. No candidate/hit delta or NO_PC exclusion; controlled inferior -9 is not normal native PASS. The1613 operator-offset cohort has no new confirmed runtime line gap after typed constant/Union and storage ownership reconciliation. Go6182 remain candidates; Windows8 and full Go observer/profile/semantic admission remain open. JS/Python/global ratio/main/formal verdict remain unchanged. [Evidence and scope](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-static-storage-role-qualification.md).
 
-Historical Go19 handoff above is superseded by the finite Lua source-role disposition below; complete Go/platform profiles remain required.
+The Go19 bounded static-role authority above remains valid; complete Go/platform semantic and native profiles remain pending. The Lua disposition below is an independent class and supersedes only its earlier Lua pending handoff.
 
 
 ## Embedded Lua finite source-role disposition — 2026-10-04
@@ -196,3 +196,8 @@ Complete Lua semantic inventory, validated original source-line observer and nor
 ## Lua bounded Proto/PC observer — 2026-10-04
 
 Ref: R-14. Supersedes the earlier pending bounded-observer/positive-COUNT handoff only: native Proto/PC contract, nine synthetic fixtures, one script-index44 API witness and finite positive COUNT are qualified. Observed KILL has COUNT2/one rejected tail; normal KILL race remains NOT_OBSERVED, so equivalence is NOT_ESTABLISHED. Next highest ROI: complete original Lua semantic owners, three alias actual-invocation joins and normal production profile custody for50 definitions/48 distinct bodies. Whole Lua/global LINE95/main/formal remain held. [Evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-proto-pc-observer-qualification.md).
+
+
+## Lua finite original-line class — 2026-10-04
+
+Ref: R-14. Supersedes earlier full-Lua semantic/profile OPEN handoff for this unchanged finite source cohort: positive870-line partition and source-bound native profile union621/621 are complete, including dedicated three-alias actual caller joins. Retain old584/621 and normal KILL NOT_OBSERVED/equivalence NOT_ESTABLISHED boundaries. Two actual viable ordinary-assertion mutant kills have bounded independent393-check mutation/cleanup PASS. Next: full Go/Linux-Windows native semantic/profile closure, then maintained Shell recipes; global LINE95/main/formal remain held. [Evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-original-line-class-admission.md).

@@ -198,3 +198,8 @@ Complete Lua semantic inventory, validated original source-line observer and nor
 Ref: R-14. Actual bounded observer checks retain first failures and normal v1 guard supersession; nine fixture/EVALSHA checks and one index44 API pair pass their finite assertions. COUNT positive parity is actual (observed1); observed SCRIPT KILL emits2 callbacks/one unqualified tail, normal KILL is NOT_OBSERVED and equivalence NOT_ESTABLISHED. No full-Lua production hits or phase coverage threshold is inferred. [Evidence and limits](reports/lua-proto-pc-observer-qualification.md).
 
 The PC wire-decoder contract campaign separately passed 100 synthetic PBT cases, 674,905 seeded parser-fuzz cases in10 CPU seconds, and two py_compile-viable mutants caught by ordinary assertions. These are synthetic parser controls, not coverage-guided fuzzing, production fixtures, or full-class coverage.
+
+
+## Lua finite original-line class — 2026-10-04
+
+Ref: R-14. Actual37-target normal/observed native waits0/0 share276 census entries; source/PC union raises finite Lua584/621 to621/621. Tests cover error partial writes, counter reset, full canonical TaskMessage/metadata, bounded TTL and owned cleanup.100 seeded properties and3107 actual coverage-guided fuzz executions are separate; two actual viable ordinary-assertion mutants have bounded independent393-check mutation/cleanup PASS. No raw UUID/time state normalization or fullproject coverage claim. [Evidence and limits](reports/lua-original-line-class-admission.md).
