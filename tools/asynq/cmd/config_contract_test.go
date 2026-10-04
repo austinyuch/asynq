@@ -131,7 +131,7 @@ func TestCLIExplicitConfigFailClosedContracts(t *testing.T) {
 			if tc.valid && (!got.BodyCalled || got.ExecuteError != "" || got.Addr != "config-fixture.invalid:7319" || got.DB != 6) {
 				t.Fatalf("documented defaults lost: %+v", got)
 			}
-			if !tc.valid && (got.BodyCalled || got.ExecuteError == "" || !strings.Contains(got.ExecuteError, tc.path)) {
+			if !tc.valid && (got.BodyCalled || got.ExecuteError == "" || !strings.HasPrefix(got.ExecuteError, fmt.Sprintf("read config %q: ", tc.path))) {
 				t.Fatalf("invalid explicit config did not stop command before connection option use: %+v", got)
 			}
 			t.Logf("case=%s loader_error=%v execute_status=%d observation=%+v", tc.name, parseErr, status, got)
@@ -140,7 +140,7 @@ func TestCLIExplicitConfigFailClosedContracts(t *testing.T) {
 				if status != 0 || !strings.Contains(output, "asynq version") {
 					t.Fatalf("valid version rejected: exit%d %s", status, output)
 				}
-			} else if status != 1 || !strings.Contains(output, tc.path) || strings.Contains(output, "asynq version") {
+			} else if status != 1 || !strings.Contains(output, fmt.Sprintf("read config %q: ", tc.path)) || strings.Contains(output, "asynq version") {
 				t.Fatalf("invalid explicit config did not stop real version: exit%d %s", status, output)
 			}
 		})

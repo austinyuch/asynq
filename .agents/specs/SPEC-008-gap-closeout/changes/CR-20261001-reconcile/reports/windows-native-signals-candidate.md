@@ -1,4 +1,4 @@
-# Windows native signal qualification candidate v12
+# Windows native signal qualification candidate v13
 
 Windows native signal candidate: add only a scoped `windows-native-signals` job beside the existing Ubuntu `build` job. Preserve the existing Ubuntu job body, triggers and matrix exactly. This scoped addition follows the user's authorized parallel CI work and delegated handling choices; it supersedes the earlier blanket “jobs unchanged” instruction only for this Windows job.
 
@@ -41,3 +41,10 @@ The v11 PS1 successor changes only the two nil-wait guard literals; collector v4
 Run `37215379491` retained a native PASS receipt: 100 closed and profile-validated lifecycle properties, baseline compile/run 0, and two viable compiled ordinary assertion mutants with native exit 1 and distinct binaries. The Windows job still failed and its CLI step was skipped. GitHub built-in pwsh appends an exit using LASTEXITCODE; the last expected mutant exit 1 therefore propagated after successful validation. This is a wrapper status failure, not a native campaign failure or complete hosted PASS. Prior three failures remain retained.
 
 The v12 successor adds an explicit exit 0 only after finally and the existing success/sourceStable/no-failure guards. Actual pwsh wrapper controls handle a real native Python exit 1: validated success exits 0, while source mismatch and missing ordinary oracle exit nonzero. No workflow shell override or caller policy change is introduced. Official normative reference: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#exit-codes-and-error-action-preference . PS1 SHA256 `8dde09ddc0ff97af3bfff291369c33c093ef6f806edd53514c4967a5b78130a9`; CLI and full hosted closure remain pending.
+
+
+## Native step PASS and Windows CLI quoted-path oracle correction (Ref: R-14)
+
+Fixed dev `efc59723b4d4fa1b5b7bb59ee14d4e6c11899069`, tree `95aca5efe7ab59cb36deb0e68e9fcfd30bf789be`, run `37216330042` completed Ubuntu successfully and the Windows native signal step successfully. The Windows CLI step failed at config_contract_test.go:134: its malformed explicit-config observation correctly has BodyCalled=false and a read-config error, but the test searched the raw Windows path while production formats it with `%q`, escaping backslashes. Missing-config cases happened to include the raw path again in the nested OS error. Native campaign success does not establish complete hosted success. The retained raw Windows job log is `.security/windows-native-delivery-20261004/cli-failure-37216330042.log`.
+
+The v13 test-only successor checks the exact quoted read-config diagnostic prefix for observer errors and the same full diagnostic in real CLI output. BodyCalled=false, nonempty error, exit1 and absence of the version banner remain required. Production, signal tests, PowerShell and workflow bytes are unchanged. Finite Go format controls cover POSIX and Windows paths plus embedded quotes and reject wrong paths, irrelevant raw-path mentions and missing formatting; these controls do not replace a fresh native Windows CLI run. Full Go/project LINE95/formal readiness/main/release remain OPEN.
