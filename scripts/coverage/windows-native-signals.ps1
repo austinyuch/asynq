@@ -128,3 +128,7 @@ try {
   @{status=if($success){'BOUNDED_WINDOWS_NATIVE_SIGNALS_PASS'}else{'FAIL_RETAINED'};head=$head;tree=$tree;go_version=$version;go_sha256=(Get-FileHash $go -Algorithm SHA256).Hash;source_before=$before;source_after=$after;steps=$steps;properties_requested=100;properties_completed_closed=$closedChildren;properties_profile_validated=$propertiesValidated;failure=$failure;source_bindings_before=$sourceBefore;source_bindings_after=$sourceAfter;env_allowlist=@{GOENV=$env:GOENV;GOWORK=$env:GOWORK;GOTOOLCHAIN=$env:GOTOOLCHAIN;GOFLAGS=$env:GOFLAGS;GOOS=$env:GOOS;GOARCH=$env:GOARCH;CGO_ENABLED=$env:CGO_ENABLED;GOROOT_unset=(-not(Test-Path Env:GOROOT))};profile_model='known8 straight-line statements plus child receive-return oracle; not generic span filling';project_ratio=$null;materials=$files}|ConvertTo-Json -Depth 10|Set-Content (Join-Path $out 'receipt.json')
   if (-not $sourceStable) { throw 'tracked source bindings changed; FAIL receipt retained' }
 }
+
+# Expected mutant exits are handled above; only validated success reaches this epilogue.
+if (-not $success -or -not $sourceStable -or $null -ne $failure) { throw 'validated campaign success required' }
+exit 0

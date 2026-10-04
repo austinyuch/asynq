@@ -1,4 +1,4 @@
-# Windows native signal qualification candidate v11
+# Windows native signal qualification candidate v12
 
 Windows native signal candidate: add only a scoped `windows-native-signals` job beside the existing Ubuntu `build` job. Preserve the existing Ubuntu job body, triggers and matrix exactly. This scoped addition follows the user's authorized parallel CI work and delegated handling choices; it supersedes the earlier blanket “jobs unchanged” instruction only for this Windows job.
 
@@ -34,3 +34,10 @@ The v10 successor quotes every Go/test-binary literal argument, preserving dynam
 Run `37214515765` compiled and executed the baseline successfully: native exit 0, 100 ordinary subtests PASS, 100 owned PID/identity/custody/terminal joins and atomic profiles retained. The recipe then failed because its guard expected `wait= closed=true`, while the Go nil error is actually serialized as `wait=<nil> closed=true`. Its completed counter stayed zero. Two mutants were not executed and the CLI job was skipped; full qualification remains pending. This is not a Windows runtime failure or complete hosted PASS. Earlier two argv failures remain retained.
 
 The v11 PS1 successor changes only the two nil-wait guard literals; collector v4 applies the same exact normal-custody parser correction. Neither accepts arbitrary wait errors. PS1 SHA256 `7fa4e5299e9c971fb079c9bdc2743496a7e0891a8e87058e78889136ca3b2f0c`; collector SHA256 `425a893f2b553f5eb1980b3b675878113ae428caf263b4d6cf09c3d97515aa62`. Production/test body bytes remain unchanged; new candidate execution is still pending.
+
+
+## Native campaign PASS, wrapper job FAIL, and validated v12 epilogue (Ref: R-14)
+
+Run `37215379491` retained a native PASS receipt: 100 closed and profile-validated lifecycle properties, baseline compile/run 0, and two viable compiled ordinary assertion mutants with native exit 1 and distinct binaries. The Windows job still failed and its CLI step was skipped. GitHub built-in pwsh appends an exit using LASTEXITCODE; the last expected mutant exit 1 therefore propagated after successful validation. This is a wrapper status failure, not a native campaign failure or complete hosted PASS. Prior three failures remain retained.
+
+The v12 successor adds an explicit exit 0 only after finally and the existing success/sourceStable/no-failure guards. Actual pwsh wrapper controls handle a real native Python exit 1: validated success exits 0, while source mismatch and missing ordinary oracle exit nonzero. No workflow shell override or caller policy change is introduced. Official normative reference: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#exit-codes-and-error-action-preference . PS1 SHA256 `8dde09ddc0ff97af3bfff291369c33c093ef6f806edd53514c4967a5b78130a9`; CLI and full hosted closure remain pending.
