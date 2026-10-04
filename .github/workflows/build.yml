@@ -84,3 +84,4 @@ jobs:
           name: windows-native-signals-${{ github.sha }}
           path: .security/windows-native-ci
           if-no-files-found: error
+          include-hidden-files: true
