@@ -89,3 +89,10 @@ Ref: R-14. Adopt only finite embedded-Lua source roles:262 original operators (2
 Same-core boundary campaign has100 independently expected PBT cases,13,771,646 seeded single-process case iterations in10 CPU seconds and2 viable compiled ordinary-assertion mutant kills. Literal cohort uses separate cold/hot/error source-line controls; it does not claim another100 PBT or production Lua hits.
 
 Complete Lua semantic inventory, validated original source-line observer and normal native production profile closure remain OPEN. Three identical-body aliases have static definition/callsite custody but need actual invocation joins; never clone hits. JS/Python/Go records, project ratio null/global LINE95/main/formal verdict remain unchanged. [Evidence and limits](specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-finite-source-role-qualification.md).
+
+
+## Lua bounded Proto/PC observer — 2026-10-04
+
+Ref: R-14. Bounded Lua observer evidence: nine synthetic fixtures/EVALSHA identity; one script-index44 RemoveQueue(force) pair with exits0/0 and state parity. Separate finite COUNT normal/observed positive parity emits observed COUNT1; observed KILL COUNT2 rejects one tail, while normal KILL is NOT_OBSERVED (equivalence NOT_ESTABLISHED). Four clients are reaped, configuration restored and root fixtures released; CLI0 alone is not script success. [Evidence and limits](specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-proto-pc-observer-qualification.md).
+
+The PC wire-decoder contract campaign separately passed 100 synthetic PBT cases, 674,905 seeded parser-fuzz cases in10 CPU seconds, and two py_compile-viable mutants caught by ordinary assertions. These are synthetic parser controls, not coverage-guided fuzzing, production fixtures, or full-class coverage.

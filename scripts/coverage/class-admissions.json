@@ -411,6 +411,86 @@
         ".security/lua-literal-materialization-qualification-20261004/line-control-readback.json": "6db3d142f22d4cda7b0be494f40b6fb6115a32c91a46b4f833c088b3bc1fbf88",
         ".security/lua-alias-custody-audit-20261004/receipt.json": "4ea49447bd4bf4f84206b0dabf506b3db28f14db56c83fa6657d7db71b0fd750",
         ".security/lua-literal-materialization-qualification-20261004/independent/receipt.json": "391b1df30ba90fc562cd404c88e70183c778e7af69c4b8055338e088c8ea9c70"
+      },
+      "bounded_proto_pc_observer_qualification": {
+        "status": "QUALIFIED_BOUNDED_NATIVE_FIXTURE_AND_ONE_SOURCE_BOUND_API_WITNESS",
+        "observer_model": "LINE about-to-execute validated admittedProtoDFS/PC/instructionWord/lineinfo/sourceidentity; exact semantic-owner sidecar required",
+        "synthetic_cases": 9,
+        "EVALSHA_identity_qualified": true,
+        "COUNT_callback_actual": 1,
+        "COUNT_qualification": "FINITE_POSITIVE_COUNT_AND_OBSERVED_KILL_QUALIFIED_NORMAL_KILL_RACE_RETAINED",
+        "source_bound_API_witness": {
+          "script_index": 44,
+          "script_name": "removeQueueForceCmd",
+          "API": "RDB.RemoveQueue(force)",
+          "native_pair_exits": [
+            0,
+            0
+          ],
+          "paired_state_parity": true,
+          "original_registration_owner": {
+            "line": 1795,
+            "proto_DFS": 0,
+            "pc0": 12,
+            "pc1": 13,
+            "opcode": "CLOSURE"
+          },
+          "original_function_completion_owner": {
+            "line": 1799,
+            "proto_DFS": 1,
+            "pc0": 14,
+            "pc1": 15,
+            "opcode": "RETURN"
+          },
+          "normal_v1_superseded_guard_not_admitted": true,
+          "production_profile_admitted": false
+        },
+        "whole_class_admitted": false,
+        "production_runtime_hits_added_to_registry": 0,
+        "identical_body_alias_actual_invocation_join": "PENDING",
+        "complete50_body_profile_closure": "OPEN",
+        "evidence_receipts": {
+          ".security/lua-pc-observer-qualification-20261004/independent-runtime-v2/receipt.json": "809945a453d723fc8571a9d04fc1bfa6a01a061df3ce03485bd41bf4bd85be4c",
+          ".security/lua-original44-witness-20261004/runtime-pair-independent.json": "1ca2a43d558d242f24f3d75e5c744d6fa489ea7afd523c0404a38174ff19e8a3",
+          ".security/lua-original44-witness-20261004/root-pair-readback.json": "b6dfd937e6f373e2bd927d04787519a1c411c4352a1c985effda7c232c0cb6f6",
+          ".security/lua-count-kill-probe-20261004/actual/receipt.json": "1740880342f6399712422647d8a5dc3229015774db5cdb8002ba3e4a96fb2d9c",
+          ".security/lua-count-kill-probe-20261004/independent/receipt.json": "18628332bb05c81246645d42a2873a5e7825678c96ee89543967aa9b791730fa",
+          ".security/lua-count-kill-probe-20261004/independent/root-readback.json": "e3581556266e3a198204584e911486502e127376950f2e03aab0999bd7488bb6",
+          ".security/lua-pc-observer-qualification-20261004/prepare-receipt.json": "e4a836e30f90ddffe77c36e6c711f96ca79c7ace2f7e06d9606fa0d2105b7b10"
+        },
+        "source_baseline": {
+          "head": "d54a10065bbcb9eec1d4c4d13838ab3f7ce0eb51",
+          "tree": "cfd0ceae230f9e6a8d7e59fccabb45530ddcba11",
+          "meaning": "Evidence source baseline; future governance delivery commit is not newly measured"
+        },
+        "original_definitions": 50,
+        "distinct_bodies": 48,
+        "COUNT_controls": {
+          "callback_schedule": 100000,
+          "positive_normal_observed_result_parity": true,
+          "positive_observed_COUNT": 1,
+          "positive_observed_LINE": 50001,
+          "observed_KILL_COUNT": 2,
+          "observed_KILL_LINE": 99998,
+          "observed_KILL_tail_rejected_census": 1,
+          "normal_KILL": "NOT_OBSERVED_BOUNDED_RACE",
+          "normal_observed_KILL_equivalence": "NOT_ESTABLISHED",
+          "dropped": 0,
+          "overflow": 0,
+          "native_clients_reaped": 4,
+          "config_restored": true,
+          "fixtures_released": true,
+          "CLI_exit_zero_is_not_script_success": true
+        },
+        "parser_quality": {
+          "synthetic_PBT": 100,
+          "seeded_fuzz_cases": 674905,
+          "fuzz_CPU_seconds": 10,
+          "viable_pycompile_mutants": 2,
+          "ordinary_assertion_kills": 2,
+          "coverage_guided": false,
+          "production_profile": false
+        }
       }
     }
   },
