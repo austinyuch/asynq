@@ -131,3 +131,8 @@ Actual fixed run 37217285911 binds eight original Windows signal operations, 100
 Proofs: .security/windows-native-delivery-20261004/hosted-pass-37217285911/receipt.json SHA256 acc54243f191142e92e629bf9c139bf08094329f2a0e5bd64c2e1372e27b3705, .security/windows-native-delivery-20261004/hosted-v13-independent-control/receipt.json SHA256 4ee05875df614596cf2c17b1847a624842314558da9205c48fcb6094f1454298, .security/windows-native-delivery-20261004/windows8-root-disposition-v13.json SHA256 2c559aa9bd19d5e351496b18436d0e63ca7b79e46421fb7cef08a894dc3b15e1.
 
 This current bounded Windows disposition supersedes prior current Windows pending clauses only; dated historical failure/pending observations remain retained, and full Go admission remains OPEN.
+
+
+### Current bounded Go package-initialization inventory (Ref: R-14)
+
+Actual v11 at H4658708/Tc2a003f7 retains45 files/147 bindings/771 archives and6201 candidates (+19/0 removed). Native100 package PBT/240887 guided fuzz executions in10 seconds/two ordinary compiled assertion kills qualify only finite inventory; outer FAIL_RETAINED preserved. Static15261 physical lines retain235 NO_PC and1041 noncandidate PC lines pending qualification, no runtime hits. Historical package19 storage metadata does not exclude complete initialization owners; current Windows8 native proofs remain bounded. Full Go/global LINE95/project ratio null/main HELD/formal unchanged. [Exact evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-v11-package-initialization-owner-inventory.md). Next qualify footer CFG and complete original-operation/profile coverage; dated6182 clauses remain historical.
