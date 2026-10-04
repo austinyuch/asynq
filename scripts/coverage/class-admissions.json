@@ -341,11 +341,11 @@
     },
     "shell_and_local_recipe_config": "OPEN",
     "embedded_lua": {
-      "status": "INCOMPLETE",
+      "status": "QUALIFIED_FINITE_COMPLETE_CLASS",
       "source_baseline": {
-        "head": "567f019b5359a05b18aa7b278a8196c67ccb20d9",
-        "tree": "2bc3b86bc5b977abe06c1b9dcf4e91f7d5c512d4",
-        "meaning": "Exact unchanged three original Go source bodies; no future delivery HEAD runtime-hit claim"
+        "head": "eb495c8cc46fa0c32b066b9dc4efb91bdcc8502c",
+        "tree": "078849ec40c43d7965271a881a29e7c0d05d994a",
+        "meaning": "Current unchanged original Lua source bytes; profile union combines dated973 baseline with eb495 supplemental tests. Future delivery commit is not newly measured."
       },
       "original_scripts": 50,
       "original_AST_nodes": 5139,
@@ -388,12 +388,13 @@
       },
       "identical_body_aliases": {
         "definitions": 3,
-        "status": "STATIC_CUSTODY_ONLY_RUNTIME_INVOCATION_JOIN_PENDING",
-        "clone_hits": false
+        "status": "QUALIFIED_DEDICATED_ACTUAL_SOURCE_CALLER_INVOCATION_JOINS",
+        "clone_hits": false,
+        "broad_test_ambiguous_invocations": "RETAINED_NOT_CLONED"
       },
-      "production_runtime_hits_added": 0,
-      "complete_semantic_inventory": "OPEN",
-      "source_line_observer_and_production_profile_closure": "OPEN",
+      "production_runtime_hits_added": 621,
+      "complete_semantic_inventory": "QUALIFIED_CURRENT_FINITE_ORIGINAL_LINE_PARTITION",
+      "source_line_observer_and_production_profile_closure": "QUALIFIED_EXACT_SOURCE_NATIVE_PROFILE_UNION",
       "project_ratio": null,
       "evidence_receipts": {
         ".security/lua-all-operator-role-disposition-20261004/root-cumulative-overlay.json": "ede38defc0003300adfccf51dd2304bc7de5dff7ccbb62702f8ac6861fa6988a",
@@ -491,6 +492,55 @@
           "coverage_guided": false,
           "production_profile": false
         }
+      },
+      "original_definitions": 50,
+      "distinct_bodies": 48,
+      "selected_metric": "Validated original physical LINE any-operation witness; pinned Redis7.0.15 Lua5.1 Proto/PC/source identity and exact semantic owners; no per-phase threshold",
+      "qualified_line_profile": {
+        "physical_definition_lines": 870,
+        "eligible_original_lines": 621,
+        "hit_original_lines": 621,
+        "missing_original_lines": 0,
+        "finite_class_line_ratio": 1.0,
+        "partition": {
+          "qualified": 621,
+          "end_delimiters": 154,
+          "else_delimiters": 12,
+          "blank_boundaries": 82,
+          "comments": 1
+        },
+        "all51_appended_RETURNs": {
+          "retained_eligible": 50,
+          "positive_CFG_dummy": 1
+        },
+        "source_equivalent_baseline_profile": {
+          "hit": 584,
+          "missing": 37,
+          "ratio": 0.9404186795491143
+        },
+        "supplemental_original_missing37_all_observed": true,
+        "profile_scope": "Production source-bound Lua profile union, not full Go/project denominator",
+        "native_quality": {
+          "normal_observed_ordered_census_entries": 276,
+          "seeded_payload_PBT": 100,
+          "coverage_guided_Go_fuzz": "actual3107execs11.025s; max4096bytes singleworker; separate from prior10CPU seeded Lua fuzz",
+          "mutation_current_status": "BOUNDED_INDEPENDENT_393_CHECKS_PASS_TWO_VIABLE_ORDINARY_ASSERTION_KILLS",
+          "mutation_independent_receipt_sha256": "f01a4aac740e96f0d95db1000f7548e94a39516b94465f2278f65fd2cfc14974"
+        },
+        "state_claim": "Actual test assertions and dedicated alias member-removal/result oracles; raw UUID/time/PTTL DUMP snapshots not normalized or declared equal"
+      },
+      "finite_class_evidence_receipts": {
+        ".security/lua-whole-line-denominator-audit-20261004/receipt.json": "fac2c07a3b392c65d05d25d79fb3daa5f3464d575a5850eaea2fca973a438171",
+        ".security/lua-whole-line-profile-independent-20261004/receipt.json": "7e85654b35ee77c4965d7ce079afbc064e004a1c12b90a0f513d964b9dbf73e2",
+        ".security/lua-original37-contract-delivery-20261004/independent-closed-v2/receipt.json": "0455fe4d03b4c888207cf2a644d44ad99599b22951bdb2af38193bb7352f13fd",
+        ".security/lua-original37-contract-delivery-20261004/paired-closed-v2/root-native-closure.json": "d8d50bff43a9e5adbc9bdbe1c5d0d604c5b958840f29d686971082e8c6bc8e14",
+        ".security/lua-original37-contract-delivery-20261004/decoded-supplemental-v2/receipt.json": "92e638bb72ecdaa06c2492f235b5dfb6b2643839ba2e4058f79448f9c439f87d",
+        ".security/lua-original37-contract-delivery-20261004/union-actual/receipt.json": "6b87214f3c4faf30ebb444dc51eadc081b2cb8823d5b36eb3863d3a64e77c447",
+        ".security/lua-original37-contract-delivery-20261004/fuzz-actual/fuzz.custody.json": "43dd470dd488281898ced911777ddf07e469bbbf06a039c2a34adfd4d98da6e1",
+        ".security/lua-original37-contract-delivery-20261004/mutation-actual/receipt.json": "bb0a57bd77fcd8bbb2edf2058c74f0697bda9983b5202e360fb527dac884b3aa",
+        ".security/owned-lua-supplemental37-runtime-v2-20261004/cleanup.json": "85c1c7d0db80167ea534b8e52eb5a3ee727c9eeb1d1a41a74ba786f097ba51d3",
+        ".security/owned-lua-supplemental37-runtime-v2-20261004/root-release-readback.json": "c3d85a22b00aa970dce00fae1906e11da713d8b5819283a985a8b1839ef837f7",
+        ".security/lua-original37-contract-delivery-20261004/mutation-cleanup-independent/receipt.json": "f01a4aac740e96f0d95db1000f7548e94a39516b94465f2278f65fd2cfc14974"
       }
     }
   },

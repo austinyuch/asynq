@@ -108,3 +108,8 @@ Complete Lua semantic inventory, validated original source-line observer and nor
 ## Lua bounded Proto/PC observer — 2026-10-04
 
 Ref: R-14. Bind bounded Lua Proto/PC source-position evidence to nine synthetic cases plus one original script-index44 API witness (registration1795/implicit return1799); COUNT positive1 and observed KILL2/rejected-tail census1 have independent custody/readback. Normal KILL equivalence remains NOT_ESTABLISHED. This records contract qualification, not whole-class denominator/profile admission. [Evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-proto-pc-observer-qualification.md).
+
+
+## Lua finite original-line class — 2026-10-04
+
+Ref: R-14. Current finite embedded-Lua class maps50 definitions/48 bodies to621 eligible lines; native source-equivalent union hits621,missing0 after actual supplemental37. Positive870-line lexical/compiler partition and closed Proto/PC replay are separate authorities; three aliases use dedicated method intervals, never broad-body hit cloning. Fullproject ratio stays null. [Evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-original-line-class-admission.md).

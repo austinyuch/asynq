@@ -130,3 +130,8 @@ Complete Lua semantic inventory, validated original source-line observer and nor
 ## Lua bounded Proto/PC observer — 2026-10-04
 
 Ref: R-14. The finite Proto/PC observer validates admitted source identity and actual instruction/lineinfo for about-to-execute LINE witnesses; exact semantic-owner sidecars preserve registration and implicit-return owners. Nine synthetic fixtures and one original script-index44 API witness qualify only this bounded contract. COUNT positive1 and observed KILL2/one rejected tail are actual; normal KILL race is NOT_OBSERVED and KILL equivalence NOT_ESTABLISHED. No per-phase threshold, whole-Lua admission or production hit addition follows. [Evidence and limits](../../.agents/specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-proto-pc-observer-qualification.md).
+
+
+## Lua finite original-line class — 2026-10-04
+
+Ref: R-14. Adopt the hash-bound current finite embedded-Lua original-LINE class:870 physical lines partition positively into621 executable-owner lines plus154 END/12 ELSE/82 blank/1 comment; source-equivalent native union observes621/621. All51 appended RETURNs preserve50 eligible owners and one positive CFG dummy, not NO_PC exclusion. Any validated original operation qualifies LINE; KILL equivalence and each operator phase are not new thresholds. Project ratio remains null. [Evidence and limits](../../.agents/specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-original-line-class-admission.md).
