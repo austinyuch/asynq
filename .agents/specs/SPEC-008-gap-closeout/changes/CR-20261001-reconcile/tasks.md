@@ -220,3 +220,12 @@ Ref: R-14. Adopt only the local-initialization ownership contract: blank parent 
 ## Go exact static-storage role disposition — 2026-10-04
 
 Ref: R-14. This disposition supersedes the earlier v10 package19 pending handoff; its dated evidence remains historical. Qualify19 exact positive source/type/ELF/pre-runtime-memory storage metadata roles (17 zero declarations,2 scalar constant initializers), retaining complete language initialization owners. No candidate/hit delta or NO_PC exclusion; controlled inferior -9 is not normal native PASS. The1613 operator-offset cohort has no new confirmed runtime line gap after typed constant/Union and storage ownership reconciliation. Go6182 remain candidates; Windows8 and full Go observer/profile/semantic admission remain open. JS/Python/global ratio/main/formal verdict remain unchanged. [Evidence and scope](reports/go-static-storage-role-qualification.md).
+
+
+## Embedded Lua finite source-role disposition — 2026-10-04
+
+Ref: R-14. Adopt only finite embedded-Lua source roles:262 original operators (234 runtime candidates,28 folded operator metadata with all28 materialization owners retained);45 loop binding clauses/80 exact name tokens and46 delimiter tokens with45 loop-header owners plus the original function fallthrough RETURN at inspect.go:1799 retained;16 exact string materialization nodes across8 original lines positively match LOADK/constant-pool/lineinfo. The50-definition/5139-node current GoAST byte/LF join is mechanical evidence, not full semantic admission. Preserve all original executable owners; no NO_PC exclusion, parent-span hit fill or per-operator/phase coverage threshold.
+
+Same-core boundary campaign has100 independently expected PBT cases,13,771,646 seeded single-process case iterations in10 CPU seconds and2 viable compiled ordinary-assertion mutant kills. Literal cohort uses separate cold/hot/error source-line controls; it does not claim another100 PBT or production Lua hits.
+
+Complete Lua semantic inventory, validated original source-line observer and normal native production profile closure remain OPEN. Three identical-body aliases have static definition/callsite custody but need actual invocation joins; never clone hits. JS/Python/Go records, project ratio null/global LINE95/main/formal verdict remain unchanged. [Evidence and limits](reports/lua-finite-source-role-qualification.md).
