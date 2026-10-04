@@ -42,7 +42,7 @@ try {
     $identity=Get-Content (Join-Path $child.FullName 'identity.txt') -Raw
     if ($identity -notmatch 'pid=\d+ creation_hi=\d+ creation_lo=\d+ kind=(server|scheduler) owned_job=true new_process_group=true') { throw 'missing owned process start/job identity' }
     $custody=Get-Content (Join-Path $child.FullName 'custody.txt') -Raw
-    if ($custody -notmatch 'wait= closed=true') { throw 'missing normal owned child terminal' }
+    if ($custody -notmatch 'wait=<nil> closed=true') { throw 'missing normal owned child terminal' }
     $profile=Get-Content (Join-Path $child.FullName 'child.cover')
     if ($profile[0] -notmatch '^mode:') { throw 'missing own child profile' }
     $targets=if ($child.Name -match 'server$') {@(18,19,20,21)} else {@(25,26,27,28)}
@@ -118,7 +118,7 @@ try {
   if (Test-Path $baselineChildren) {
     foreach ($child in @(Get-ChildItem $baselineChildren -Directory)) {
       $custody=Join-Path $child.FullName 'custody.txt'
-      if ((Test-Path $custody) -and (Get-Content $custody -Raw) -match 'wait= closed=true') { $closedChildren++ }
+      if ((Test-Path $custody) -and (Get-Content $custody -Raw) -match 'wait=<nil> closed=true') { $closedChildren++ }
     }
   }
   $after=(Get-FileHash signals_windows.go -Algorithm SHA256).Hash
