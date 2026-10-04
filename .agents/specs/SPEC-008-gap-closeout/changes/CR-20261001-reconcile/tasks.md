@@ -257,3 +257,13 @@ Actual fixed run 37217285911 binds eight original Windows signal operations, 100
 Proofs: .security/windows-native-delivery-20261004/hosted-pass-37217285911/receipt.json SHA256 acc54243f191142e92e629bf9c139bf08094329f2a0e5bd64c2e1372e27b3705, .security/windows-native-delivery-20261004/hosted-v13-independent-control/receipt.json SHA256 4ee05875df614596cf2c17b1847a624842314558da9205c48fcb6094f1454298, .security/windows-native-delivery-20261004/windows8-root-disposition-v13.json SHA256 2c559aa9bd19d5e351496b18436d0e63ca7b79e46421fb7cef08a894dc3b15e1.
 
 This current bounded Windows disposition supersedes prior current Windows pending clauses only; dated historical failure/pending observations remain retained, and full Go admission remains OPEN.
+
+### Current Go original-PC finite cohorts (Ref: R-14)
+
+- [x] Record all13 static instruction maps and bounded independent readback; no runtime hits inferred from static maps.
+- [x] Record errors105 compiler-attributed-line finite observation and independent native closure.
+- [x] Record canonical package-cwd four Redis-free normal/debug baselines with exact full census16/116/10/26.
+- [x] Record canonical four-package observed union453/five source files and same-family independent raw custody/source/census/PC review; retain dated wrapper failure and correction.
+- [ ] Complete remaining eight owned Redis/subprocess/main scopes and whole Go semantic/profile closure before global LINE95/main/formal promotion.
+
+Project ratio null/full Go INCOMPLETE; existing registry unchanged. [Exact current evidence and dated history](reports/go-original-pc-runtime-handoff.md).
