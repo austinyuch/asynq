@@ -101,3 +101,12 @@ The PC wire-decoder contract campaign separately passed 100 synthetic PBT cases,
 ## Lua finite original-line class — 2026-10-04
 
 Ref: R-14. Complete finite Lua source-bound profile union621/621 (old584/621 plus actual37 supplemental observations), 50 definitions/48 bodies. Supplemental normal/observed waits0/0 share276 ordered census entries;100 seeded payload properties and3107 coverage-guided Go fuzz executions are distinct evidence. Two actual viable ordinary-assertion mutant kills are recorded; bounded independent393-check mutation/cleanup review passes. Raw cross-role DB14 state equality is not claimed. [Evidence and limits](specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-original-line-class-admission.md).
+
+
+R-14 Windows native signal candidate remains PENDING_NATIVE_WINDOWS_EXECUTION. Add only the scoped Windows native job while preserving original Ubuntu body/triggers/matrix. Positive test/PS1 verification intent is recorded; no automatic production exclusion. Cross-compilation/PS1 parsing is preparation, not Windows8 runtime PASS. Go6182 candidates, project ratio null/global LINE95/main/formal readiness remain unchanged.
+
+[Windows candidate scope and pending evidence](specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/windows-native-signals-candidate.md).
+
+Candidate v7 requires each baseline/mutant owned child to persist terminal.txt from defer. PowerShell verifies normal child closure and distinguishes ordinary assertion mutant kills from infrastructure failure. Native Windows execution remains PENDING.
+
+Adoption pins v7 final formatted test950b504b03497534539beb35abc0e21da9f403ee89e5c22660c88fc20bc5dec1, PS1 3cbad5e9edad1280301ac72c0c0c4634ea8687e665acf82632d8d17a03b78341 and workflow04e20b473a28b6ec95023277f7999c14a19c7139e553d8bf88a6860fcd5538e0; the two compiled mutants must also have distinct source and binary hashes. These hashes are candidate inputs, not Windows native PASS.

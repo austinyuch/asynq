@@ -239,3 +239,12 @@ Ref: R-14. [x] Qualify finite native Proto/PC observer contract, nine synthetic 
 ## Lua finite original-line class — 2026-10-04
 
 Ref: R-14. [x] Complete current finite Lua original-line denominator870→621 and source-bound union621/621, preserving positive grammar/dummy roles and actual alias caller joins. [x] Supplemental normal/observed census closure and100PBT/native coverage-guided fuzz. [x] Record root actual two-mutant producer evidence. [x] Complete bounded independent393-check mutation/cleanup review. [ ] Close whole Go/platform/Shell and project LINE95 before protected main/formal promotion. [Evidence and limits](reports/lua-original-line-class-admission.md).
+
+
+- [ ] R-14 Windows native signal qualification: add scoped native job preserving existing Ubuntu job/triggers/matrix; actual native baseline/100 children/source profiles/compiled mutation kills and cleanup PENDING. Windows8 and full Go6182 admission remain OPEN; project ratio null/main HELD. Test/helper verification intent requires positive scope review.
+
+[Windows candidate scope and pending evidence](reports/windows-native-signals-candidate.md).
+
+Candidate v7 requires each baseline/mutant owned child to persist terminal.txt from defer. PowerShell verifies normal child closure and distinguishes ordinary assertion mutant kills from infrastructure failure. Native Windows execution remains PENDING.
+
+Adoption pins v7 final formatted test950b504b03497534539beb35abc0e21da9f403ee89e5c22660c88fc20bc5dec1, PS1 3cbad5e9edad1280301ac72c0c0c4634ea8687e665acf82632d8d17a03b78341 and workflow04e20b473a28b6ec95023277f7999c14a19c7139e553d8bf88a6860fcd5538e0; the two compiled mutants must also have distinct source and binary hashes. These hashes are candidate inputs, not Windows native PASS.
