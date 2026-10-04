@@ -27,7 +27,7 @@ try {
   $env:ASYNQ_WINDOWS_SIGNAL_REQUIRE_COVER='1'; $env:ASYNQ_WINDOWS_SIGNAL_CASES='100'
   $stage='baseline-build'
   $exe=Join-Path $out 'baseline.test.exe'
-  go test -c -cover -covermode=atomic -coverpkg=github.com/austinyuch/asynq -o $exe . *> (Join-Path $out 'baseline-build.log')
+  go test -c -cover '-covermode=atomic' '-coverpkg=github.com/austinyuch/asynq' -o $exe . *> (Join-Path $out 'baseline-build.log')
   $buildExit=$LASTEXITCODE; if ($buildExit -ne 0) { throw 'native baseline compile failed' }
   $env:ASYNQ_WINDOWS_SIGNAL_ARTIFACTS=Join-Path $out 'baseline-children'
   $stage='baseline-native'
