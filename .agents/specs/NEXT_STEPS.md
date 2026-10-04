@@ -50,7 +50,7 @@ Local unpublished root→x→tools file-proxy rehearsal passed28 phases with exa
 ## Recurring and parked boundaries
 
 - Upstream d135f143 and its three-commit delta are integrated into dev; future upstream changes use `.agents/skills/upstream-sync/`, with main PR-only and master mirror policy from FORK.md.
-- Keep CI triggers/jobs/matrix unchanged; authoritative local gates cover root, x and tools separately.
+- Preserve existing Ubuntu CI triggers, build-job body and matrix exactly. Under the user-authorized parallel CI work/delegated handling choices, add only the scoped Windows native signal qualification job; authoritative local gates still cover root, x and tools separately.
 - Do not automatically clean `temp/skill-evals/`; Asynqmon remains outside this repo.
 - Project steering owner/profile is unresolved; do not invent strategy or architecture adoption. SPEC-008 historical review.md remains the readiness authority.
 
@@ -201,3 +201,12 @@ Ref: R-14. Supersedes the earlier pending bounded-observer/positive-COUNT handof
 ## Lua finite original-line class — 2026-10-04
 
 Ref: R-14. Supersedes earlier full-Lua semantic/profile OPEN handoff for this unchanged finite source cohort: positive870-line partition and source-bound native profile union621/621 are complete, including dedicated three-alias actual caller joins. Retain old584/621 and normal KILL NOT_OBSERVED/equivalence NOT_ESTABLISHED boundaries. Two actual viable ordinary-assertion mutant kills have bounded independent393-check mutation/cleanup PASS. Next: full Go/Linux-Windows native semantic/profile closure, then maintained Shell recipes; global LINE95/main/formal remain held. [Evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-original-line-class-admission.md).
+
+
+R-14 Windows native signal candidate remains PENDING_NATIVE_WINDOWS_EXECUTION. Add only the scoped Windows native job while preserving original Ubuntu body/triggers/matrix. Positive test/PS1 verification intent is recorded; no automatic production exclusion. Cross-compilation/PS1 parsing is preparation, not Windows8 runtime PASS. Go6182 candidates, project ratio null/global LINE95/main/formal readiness remain unchanged.
+
+[Windows candidate scope and pending evidence](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/windows-native-signals-candidate.md).
+
+Candidate v7 requires each baseline/mutant owned child to persist terminal.txt from defer. PowerShell verifies normal child closure and distinguishes ordinary assertion mutant kills from infrastructure failure. Native Windows execution remains PENDING.
+
+Adoption pins v7 final formatted test950b504b03497534539beb35abc0e21da9f403ee89e5c22660c88fc20bc5dec1, PS1 3cbad5e9edad1280301ac72c0c0c4634ea8687e665acf82632d8d17a03b78341 and workflow04e20b473a28b6ec95023277f7999c14a19c7139e553d8bf88a6860fcd5538e0; the two compiled mutants must also have distinct source and binary hashes. These hashes are candidate inputs, not Windows native PASS.

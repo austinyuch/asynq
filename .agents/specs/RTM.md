@@ -113,3 +113,12 @@ Ref: R-14. Bind bounded Lua Proto/PC source-position evidence to nine synthetic 
 ## Lua finite original-line class — 2026-10-04
 
 Ref: R-14. Current finite embedded-Lua class maps50 definitions/48 bodies to621 eligible lines; native source-equivalent union hits621,missing0 after actual supplemental37. Positive870-line lexical/compiler partition and closed Proto/PC replay are separate authorities; three aliases use dedicated method intervals, never broad-body hit cloning. Fullproject ratio stays null. [Evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-original-line-class-admission.md).
+
+
+R-14 Windows native signal candidate: PENDING_NATIVE_WINDOWS_EXECUTION. Add only scoped Windows native qualification job; preserve original Ubuntu job/triggers/matrix. Test/PS1 positive verification intent is proposed scope evidence, not automatic production exclusion. Crosscompile/PS1 parsing is preparation only; Windows8 runtime/fullGo6182 admission/global LINE95/main/formal remain OPEN, project ratio null.
+
+[Windows candidate scope and pending evidence](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/windows-native-signals-candidate.md).
+
+Candidate v7 requires each baseline/mutant owned child to persist terminal.txt from defer. PowerShell verifies normal child closure and distinguishes ordinary assertion mutant kills from infrastructure failure. Native Windows execution remains PENDING.
+
+Adoption pins v7 final formatted test950b504b03497534539beb35abc0e21da9f403ee89e5c22660c88fc20bc5dec1, PS1 3cbad5e9edad1280301ac72c0c0c4634ea8687e665acf82632d8d17a03b78341 and workflow04e20b473a28b6ec95023277f7999c14a19c7139e553d8bf88a6860fcd5538e0; the two compiled mutants must also have distinct source and binary hashes. These hashes are candidate inputs, not Windows native PASS.
