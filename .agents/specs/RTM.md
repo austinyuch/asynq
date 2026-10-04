@@ -84,3 +84,8 @@ Ref: R-14. [Rejected Start handler preservation](SPEC-008-gap-closeout/changes/C
 Ref: R-14 Current Go independent145-source/771-archive/12-replay inventory remains6182 candidates; original native static-storage/panic-init counterexamples prove zeroUNKNOWN is not semantic completeness. Python768/755/13 statement inventory remains INCOMPLETE: actual child exit0 without expected profile fails closed, shell-origin custody and multiline semantics pending. See the CR finite JS class report and hash-bound `scripts/coverage/class-admissions.json` registry; evidence source baseline is distinct from future delivery HEAD.
 
 | R-14 | Current finite Python original-line class |3production scripts+3literal bodies;998 executable/981 hit/17 missing; fresh normal/traced50+8/689 each/3827codeobjects and117 shell closures; independent complete-class PASS | Root-adopted finite class only; ratio null/global LINE95/main/formal held |
+
+
+## Go v10 inventory contract — 2026-10-04
+
+Ref: R-14. Adopt only the local-initialization ownership contract: blank parent false candidates repaired; dynamic RHS retained. Current baseline7198309/tree66fffbfe has45 owned files and6182 candidates (delta0); source/type context replay supplies no runtime hits. Native200 PBT/163215 fuzz executions in10 seconds/two ordinary assertion mutant kills and bounded independent review passed. Package19 binding lines and Windows8 sites remain unqualified; full Go/global LINE95/main/formal verdict remain OPEN. [Exact evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-v10-original-operation-inventory.md).
