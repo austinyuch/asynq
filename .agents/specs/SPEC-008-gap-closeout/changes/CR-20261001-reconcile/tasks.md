@@ -210,3 +210,8 @@ Ref: R-14 Current Go independent145-source/771-archive/12-replay inventory remai
 
 - [x] Ref: R-14 Adopt current complete finite Python class under CPython3.12.3 original-line-event model:998 executable/981 hit/17 missing, closed fresh normal/traced689 each and canonical identity, independent full-class PASS; original failures/failclosed negatives retained.
 - [ ] Ref: R-14 Complete Go Linux/Windows original semantic/operator inventory and native campaigns, then Shell/local recipe and Lua classes before global LINE95/main/formal promotion.
+
+
+## Go v10 inventory contract — 2026-10-04
+
+Ref: R-14. Adopt only the local-initialization ownership contract: blank parent false candidates repaired; dynamic RHS retained. Current baseline7198309/tree66fffbfe has45 owned files and6182 candidates (delta0); source/type context replay supplies no runtime hits. Native200 PBT/163215 fuzz executions in10 seconds/two ordinary assertion mutant kills and bounded independent review passed. Package19 binding lines and Windows8 sites remain unqualified; full Go/global LINE95/main/formal verdict remain OPEN. [Exact evidence and limits](reports/go-v10-original-operation-inventory.md).

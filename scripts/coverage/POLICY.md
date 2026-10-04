@@ -102,3 +102,12 @@ Ref: R-14 Current Go independent145-source/771-archive/12-replay inventory remai
 ## Current finite Python class disposition — 2026-10-04
 
 Ref: R-14. Adopt pinned CPython3.12.3 original-line-event attribution with coverage.py7.14.0/source+typedcode identity and normal terminal-parent expected/wait/profile closure for the current three production Python scripts plus three literal run.sh bodies. Complete original ownership reconciles998 executable/981 hit/17 missing lines; analysis2 omission never excludes multiline operations. Exact13 folded metadata and function-docstring roles are qualified separately; module __doc__ and NOP try sites remain included, with no generic Constant/NOP/NO_PC exclusion. Preserve ordinary scope, stderr warnings, early/fatal missing-profile failclosed negatives and no pre-spawn durable/crash-recovery assertion. See the CR Python report and registry; other classes/global ratio/main/formal remain held.
+
+
+## Go v10 bounded original-operation inventory contract — 2026-10-04
+
+Ref: R-14. The coordinator adopts the v10 local-initialization ownership contract only. Each named local ValueSpec target is retained independently. Blank-only declarations do not create named binding operations; dynamic initializer calls, receives, division/panic and conversions remain executable candidates. The exact all-blank typed-nil interface assignability witness is compile-time metadata, with no generic conversion or NO_PC exclusion. The v9 unconditional-parent counterexample and failures are preserved.
+
+Six root/x/tools Linux/Windows type-context replays at source baseline7198309/tree66fffbfe retain45 owned files/6182 candidate original lines,214 local and141 package owners;145 current source hashes equal the dated4f source bindings and771 export archives remain verified. This proves source/type context compatibility, not current runtime hits. Native quality evidence is200 PBT properties,163215 executions in10 seconds of Go coverage-guided fuzz and two viable compiled mutants caught by ordinary assertions.
+
+Go full qualification remains INCOMPLETE:19 package binding lines need positive storage/initialization provenance, Windows8 original sites are unmeasured and original-operation observer/profile admission remains open. Entry/completion metadata does not add a phase coverage threshold. JS/Python class records remain unchanged; project LINE95/global ratio/main/release/formal verdict remain open. Receipts and exact hashes are in scripts/coverage/class-admissions.json.
