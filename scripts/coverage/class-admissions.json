@@ -340,7 +340,79 @@
       ]
     },
     "shell_and_local_recipe_config": "OPEN",
-    "embedded_lua": "OPEN"
+    "embedded_lua": {
+      "status": "INCOMPLETE",
+      "source_baseline": {
+        "head": "567f019b5359a05b18aa7b278a8196c67ccb20d9",
+        "tree": "2bc3b86bc5b977abe06c1b9dcf4e91f7d5c512d4",
+        "meaning": "Exact unchanged three original Go source bodies; no future delivery HEAD runtime-hit claim"
+      },
+      "original_scripts": 50,
+      "original_AST_nodes": 5139,
+      "whole_source_sha256": {
+        "internal/rdb/rdb.go": "420da3db25e5e9d13abb4ef83519072e96b4acf50c554e790049d1ff9a544a22",
+        "internal/rdb/inspect.go": "4dcfdd51226f0ee93100ddd1e9bd47aeaef65cce92920837204fcb750fd29a8e",
+        "x/rate/semaphore.go": "dd93ecba083da2932fd03b05cd122950f0583a148c0e85bd0dc37fd7506c11a7"
+      },
+      "finite_operator_cohort": {
+        "status": "QUALIFIED_EXACT_SOURCE_ROLE_COHORT",
+        "nodes": 262,
+        "runtime_candidate_operators": 234,
+        "folded_operator_metadata": 28,
+        "materialization_owners_retained": 28,
+        "remaining_operator_UNKNOWN": 0,
+        "unique_operator_PC_ambiguity": "Retained metadata; not an extra LINE threshold"
+      },
+      "finite_binding_boundary_cohort": {
+        "owners": 46,
+        "loop_binding_clauses": 45,
+        "binding_name_tokens": 80,
+        "footer_delimiter_tokens": 46,
+        "loop_header_decision_owners_retained": 45,
+        "implicit_function_return_candidate_retained": {
+          "source": "internal/rdb/inspect.go",
+          "line": 1799
+        },
+        "whole_footer_line_exclusion": false
+      },
+      "finite_literal_materialization_cohort": {
+        "nodes": 16,
+        "physical_lines": 8,
+        "original_encoding": "LOADK exact string constant-pool/lineinfo positive witnesses",
+        "whole_literal_class_generalization": false
+      },
+      "current_exact_definition_map": {
+        "scripts": 50,
+        "nodes": 5139,
+        "mechanical_mapping_only": true
+      },
+      "identical_body_aliases": {
+        "definitions": 3,
+        "status": "STATIC_CUSTODY_ONLY_RUNTIME_INVOCATION_JOIN_PENDING",
+        "clone_hits": false
+      },
+      "production_runtime_hits_added": 0,
+      "complete_semantic_inventory": "OPEN",
+      "source_line_observer_and_production_profile_closure": "OPEN",
+      "project_ratio": null,
+      "evidence_receipts": {
+        ".security/lua-all-operator-role-disposition-20261004/root-cumulative-overlay.json": "ede38defc0003300adfccf51dd2304bc7de5dff7ccbb62702f8ac6861fa6988a",
+        ".security/lua-all-operator-role-disposition-20261004/overlay-independent.json": "834a21680d63ebc1d70b44b45e88ef5d9fc09b3c9118c99d594310a2e38901c7",
+        ".security/lua-boundary-role-qualification-20261004/receipt.json": "e5ce921de2efe40a6e32b2d5e0c2f3dbfad008bf2ec844cf3ac16823dad63e66",
+        ".security/lua-boundary-role-qualification-20261004/independent/receipt.json": "416504cdf88ee81744cb7248ed2dc07ebb1ee2830c891c048381a97fae9dd5de",
+        ".security/lua-boundary-role-qualification-20261004/positive-disposition/receipt.json": "980dc9be07f06b70294e0658c45eb5cfde5a40f135a1efe81792103f9aa0d30f",
+        ".security/lua-boundary-role-qualification-20261004/independent/positive-disposition-review.json": "56e17309fb4aed75166f18c910a4f387a93020674f3f3bd04891578140d4141f",
+        ".security/lua-boundary-controls-20261004/receipt.json": "b9053b2c6e85e6fecb30939c96fed60984a051bf991faf581f233b7457dda557",
+        ".security/lua-boundary-controls-20261004/independent/receipt.json": "dd5788f60e3c8b1cff04ba9935cffa82c0e2f45b324764ea8ab0cb924e104054",
+        ".security/lua-current-exact-definition-map-20261004/receipt.json": "790d1f4830e5f7354513fd54d5679a849a8d7f63b7ceab60cd11f3ecadcf4868",
+        ".security/lua-current-exact-definition-map-20261004/independent-receipt.json": "8dc945d46e0e6078687864fc9187f828a6fb6614f0f8a0f24f25c46b8c559a6a",
+        ".security/lua-literal-line-gap-audit-20261004/receipt.json": "8ba6d68b834c063c48d7f5542e7083078f59a9f169e7465753272411ebe81da5",
+        ".security/lua-literal-materialization-qualification-20261004/receipt.json": "7b6f358003f975117d42a6e73e47a08b959ba3fe26378865fa1090b7b83d33a9",
+        ".security/lua-literal-materialization-qualification-20261004/line-control-readback.json": "6db3d142f22d4cda7b0be494f40b6fb6115a32c91a46b4f833c088b3bc1fbf88",
+        ".security/lua-alias-custody-audit-20261004/receipt.json": "4ea49447bd4bf4f84206b0dabf506b3db28f14db56c83fa6657d7db71b0fd750",
+        ".security/lua-literal-materialization-qualification-20261004/independent/receipt.json": "391b1df30ba90fc562cd404c88e70183c778e7af69c4b8055338e088c8ea9c70"
+      }
+    }
   },
   "project_line_ratio": null,
   "full_goal": "active",
@@ -368,6 +440,11 @@
       "head": "9375109e5c967bf40fc1a92ffa36c53e08422a76",
       "tree": "83606ecdb99b7a4d87670fade7dcb60d556d0496",
       "meaning": "Exact evidence source baseline only; future delivery commit is not asserted measured by this registry"
+    },
+    "embedded_lua": {
+      "head": "567f019b5359a05b18aa7b278a8196c67ccb20d9",
+      "tree": "2bc3b86bc5b977abe06c1b9dcf4e91f7d5c512d4",
+      "meaning": "Finite semantic/source evidence baseline only; current production Lua execution profiles remain unqualified"
     }
   }
 }
