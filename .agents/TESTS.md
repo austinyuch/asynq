@@ -110,3 +110,12 @@ R-14 Windows native signal candidate remains PENDING_NATIVE_WINDOWS_EXECUTION. A
 Candidate v7 requires each baseline/mutant owned child to persist terminal.txt from defer. PowerShell verifies normal child closure and distinguishes ordinary assertion mutant kills from infrastructure failure. Native Windows execution remains PENDING.
 
 Adoption pins v7 final formatted test950b504b03497534539beb35abc0e21da9f403ee89e5c22660c88fc20bc5dec1, PS1 3cbad5e9edad1280301ac72c0c0c4634ea8687e665acf82632d8d17a03b78341 and workflow04e20b473a28b6ec95023277f7999c14a19c7139e553d8bf88a6860fcd5538e0; the two compiled mutants must also have distinct source and binary hashes. These hashes are candidate inputs, not Windows native PASS.
+
+
+### Bounded Windows native original-source evidence (Ref: R-14)
+
+Actual fixed run 37217285911 binds eight original Windows signal operations, 100 lifecycle properties with closed owned children/profiles, two viable ordinary assertion mutants, and the native Redis-free CLI job. Evidence baseline is H27de5b4f6e4a275a229288c2e6a209c24ca59e88/Tc18b4a20c124d08406f03bad1c2fb40996dd2fe4; future governance commit is not asserted measured. All five earlier runs remain retained, including native100+2ordinarykills PASS with wrapper job FAIL/CLI skipped and the later native campaign PASS with CLI quoted-path oracle FAIL. This bounded evidence leaves full Go INCOMPLETE, project ratio null, main HELD, and formal review unchanged.
+
+Proofs: .security/windows-native-delivery-20261004/hosted-pass-37217285911/receipt.json SHA256 acc54243f191142e92e629bf9c139bf08094329f2a0e5bd64c2e1372e27b3705, .security/windows-native-delivery-20261004/hosted-v13-independent-control/receipt.json SHA256 4ee05875df614596cf2c17b1847a624842314558da9205c48fcb6094f1454298, .security/windows-native-delivery-20261004/windows8-root-disposition-v13.json SHA256 2c559aa9bd19d5e351496b18436d0e63ca7b79e46421fb7cef08a894dc3b15e1.
+
+This current bounded Windows disposition supersedes prior current Windows pending clauses only; dated historical failure/pending observations remain retained, and full Go admission remains OPEN.

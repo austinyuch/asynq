@@ -203,3 +203,12 @@ The PC wire-decoder contract campaign separately passed 100 synthetic PBT cases,
 ## Lua finite original-line class — 2026-10-04
 
 Ref: R-14. Actual37-target normal/observed native waits0/0 share276 census entries; source/PC union raises finite Lua584/621 to621/621. Tests cover error partial writes, counter reset, full canonical TaskMessage/metadata, bounded TTL and owned cleanup.100 seeded properties and3107 actual coverage-guided fuzz executions are separate; two actual viable ordinary-assertion mutants have bounded independent393-check mutation/cleanup PASS. No raw UUID/time state normalization or fullproject coverage claim. [Evidence and limits](reports/lua-original-line-class-admission.md).
+
+
+### Bounded Windows native original-source evidence (Ref: R-14)
+
+Actual fixed run 37217285911 binds eight original Windows signal operations, 100 lifecycle properties with closed owned children/profiles, two viable ordinary assertion mutants, and the native Redis-free CLI job. Evidence baseline is H27de5b4f6e4a275a229288c2e6a209c24ca59e88/Tc18b4a20c124d08406f03bad1c2fb40996dd2fe4; future governance commit is not asserted measured. All five earlier runs remain retained, including native100+2ordinarykills PASS with wrapper job FAIL/CLI skipped and the later native campaign PASS with CLI quoted-path oracle FAIL. This bounded evidence leaves full Go INCOMPLETE, project ratio null, main HELD, and formal review unchanged.
+
+Proofs: .security/windows-native-delivery-20261004/hosted-pass-37217285911/receipt.json SHA256 acc54243f191142e92e629bf9c139bf08094329f2a0e5bd64c2e1372e27b3705, .security/windows-native-delivery-20261004/hosted-v13-independent-control/receipt.json SHA256 4ee05875df614596cf2c17b1847a624842314558da9205c48fcb6094f1454298, .security/windows-native-delivery-20261004/windows8-root-disposition-v13.json SHA256 2c559aa9bd19d5e351496b18436d0e63ca7b79e46421fb7cef08a894dc3b15e1.
+
+This current bounded Windows disposition supersedes prior current Windows pending clauses only; dated historical failure/pending observations remain retained, and full Go admission remains OPEN.

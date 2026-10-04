@@ -558,7 +558,10 @@
   "other_class_evidence_receipts": {
     ".security/go-operation-completeness-20261004/final-receipt.json": "bf29c229d7eed4fee28444e3610c321fd5208acc7cbf4e1f997b34501ec0d831",
     ".security/go-current-start-contexts-20261004/independent.json": "f16d72966ad2ba32e93878105c62e0d21b6c9977d4c99bd0235980c7e3647ffd",
-    ".security/python-full-class-inventory-20261004/receipt.json": "b6938c4525a74b410a25bcee293f858879b145377fd0a7c2bacfb220f5c45e70"
+    ".security/python-full-class-inventory-20261004/receipt.json": "b6938c4525a74b410a25bcee293f858879b145377fd0a7c2bacfb220f5c45e70",
+    ".security/windows-native-delivery-20261004/hosted-pass-37217285911/receipt.json": "acc54243f191142e92e629bf9c139bf08094329f2a0e5bd64c2e1372e27b3705",
+    ".security/windows-native-delivery-20261004/hosted-v13-independent-control/receipt.json": "4ee05875df614596cf2c17b1847a624842314558da9205c48fcb6094f1454298",
+    ".security/windows-native-delivery-20261004/windows8-root-disposition-v13.json": "2c559aa9bd19d5e351496b18436d0e63ca7b79e46421fb7cef08a894dc3b15e1"
   },
   "evidence_source_baselines": {
     "owned_browser_javascript": {
