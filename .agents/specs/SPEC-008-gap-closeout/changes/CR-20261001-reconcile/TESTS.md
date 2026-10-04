@@ -191,3 +191,10 @@ Ref: R-14. Adopt only finite embedded-Lua source roles:262 original operators (2
 Same-core boundary campaign has100 independently expected PBT cases,13,771,646 seeded single-process case iterations in10 CPU seconds and2 viable compiled ordinary-assertion mutant kills. Literal cohort uses separate cold/hot/error source-line controls; it does not claim another100 PBT or production Lua hits.
 
 Complete Lua semantic inventory, validated original source-line observer and normal native production profile closure remain OPEN. Three identical-body aliases have static definition/callsite custody but need actual invocation joins; never clone hits. JS/Python/Go records, project ratio null/global LINE95/main/formal verdict remain unchanged. [Evidence and limits](reports/lua-finite-source-role-qualification.md).
+
+
+## Lua bounded Proto/PC observer — 2026-10-04
+
+Ref: R-14. Actual bounded observer checks retain first failures and normal v1 guard supersession; nine fixture/EVALSHA checks and one index44 API pair pass their finite assertions. COUNT positive parity is actual (observed1); observed SCRIPT KILL emits2 callbacks/one unqualified tail, normal KILL is NOT_OBSERVED and equivalence NOT_ESTABLISHED. No full-Lua production hits or phase coverage threshold is inferred. [Evidence and limits](reports/lua-proto-pc-observer-qualification.md).
+
+The PC wire-decoder contract campaign separately passed 100 synthetic PBT cases, 674,905 seeded parser-fuzz cases in10 CPU seconds, and two py_compile-viable mutants caught by ordinary assertions. These are synthetic parser controls, not coverage-guided fuzzing, production fixtures, or full-class coverage.

@@ -125,3 +125,8 @@ Ref: R-14. Adopt only finite embedded-Lua source roles:262 original operators (2
 Same-core boundary campaign has100 independently expected PBT cases,13,771,646 seeded single-process case iterations in10 CPU seconds and2 viable compiled ordinary-assertion mutant kills. Literal cohort uses separate cold/hot/error source-line controls; it does not claim another100 PBT or production Lua hits.
 
 Complete Lua semantic inventory, validated original source-line observer and normal native production profile closure remain OPEN. Three identical-body aliases have static definition/callsite custody but need actual invocation joins; never clone hits. JS/Python/Go records, project ratio null/global LINE95/main/formal verdict remain unchanged. [Evidence and limits](../../.agents/specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-finite-source-role-qualification.md).
+
+
+## Lua bounded Proto/PC observer — 2026-10-04
+
+Ref: R-14. The finite Proto/PC observer validates admitted source identity and actual instruction/lineinfo for about-to-execute LINE witnesses; exact semantic-owner sidecars preserve registration and implicit-return owners. Nine synthetic fixtures and one original script-index44 API witness qualify only this bounded contract. COUNT positive1 and observed KILL2/one rejected tail are actual; normal KILL race is NOT_OBSERVED and KILL equivalence NOT_ESTABLISHED. No per-phase threshold, whole-Lua admission or production hit addition follows. [Evidence and limits](../../.agents/specs/SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/lua-proto-pc-observer-qualification.md).
