@@ -174,4 +174,11 @@ Ref: R-14 Current Go independent145-source/771-archive/12-replay inventory remai
 
 Ref: R-14. Adopt only the local-initialization ownership contract: blank parent false candidates repaired; dynamic RHS retained. Current baseline7198309/tree66fffbfe has45 owned files and6182 candidates (delta0); source/type context replay supplies no runtime hits. Native200 PBT/163215 fuzz executions in10 seconds/two ordinary assertion mutant kills and bounded independent review passed. Package19 binding lines and Windows8 sites remain unqualified; full Go/global LINE95/main/formal verdict remain OPEN. [Exact evidence and limits](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-v10-original-operation-inventory.md).
 
-Next: qualify package19 positive storage provenance, then Lua relational original-source attribution. No main promotion before full goal gates.
+Historical v10 handoff, superseded by the finite static-storage disposition below. Protected main still requires the full goal gates.
+
+
+## Go exact static-storage role disposition — 2026-10-04
+
+Ref: R-14. This disposition supersedes the earlier v10 package19 pending handoff; its dated evidence remains historical. Qualify19 exact positive source/type/ELF/pre-runtime-memory storage metadata roles (17 zero declarations,2 scalar constant initializers), retaining complete language initialization owners. No candidate/hit delta or NO_PC exclusion; controlled inferior -9 is not normal native PASS. The1613 operator-offset cohort has no new confirmed runtime line gap after typed constant/Union and storage ownership reconciliation. Go6182 remain candidates; Windows8 and full Go observer/profile/semantic admission remain open. JS/Python/global ratio/main/formal verdict remain unchanged. [Evidence and scope](SPEC-008-gap-closeout/changes/CR-20261001-reconcile/reports/go-static-storage-role-qualification.md).
+
+Next bounded slices: publish Lua107 semantic overlay, qualify remaining155 Lua operator nodes, then complete source-bound native Go/platform profiles before project LINE95 or protected main promotion.

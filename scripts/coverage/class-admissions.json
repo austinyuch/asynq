@@ -157,7 +157,6 @@
         "viable_compiled_mutants_caught_by_ordinary_assertions": 2
       },
       "pending": [
-        "19 original package storage binding lines remain unresolved",
         "Windows 8 original sites unmeasured",
         "Full original Go semantic inventory/observer/profile admission remains open"
       ],
@@ -168,8 +167,43 @@
         "Every local name is owned; blank-only declaration parent does not fabricate executable source line",
         "Exact typednil interface metadata negative is bounded; dynamic calls/receive/panic/conversion retained",
         "Same-family bounded review is not formal cross-family readiness PASS",
-        "No every-target effect or entry/completion phase coverage threshold added"
-      ]
+        "No every-target effect or entry/completion phase coverage threshold added",
+        "Exact19 positive source/type/ELF/entry-memory storage roles retain initialization owners; other runtime initializers remain in scope; source changes require refresh"
+      ],
+      "finite_static_storage_roles": {
+        "status": "QUALIFIED_EXACT_STATIC_ROLE_COHORT",
+        "source_head": "8cb130e58ea3e7c63a4bc42131ab8f888a2ad99b",
+        "source_tree": "611af4fa5472345bcbd9e8928b7295ee6fd0edef",
+        "original_owners": 19,
+        "implicit_zero_storage_declarations": 17,
+        "scalar_constant_initializers": 2,
+        "positive_pre_runtime_initial_memory_owners": 19,
+        "retained_language_initialization_owners": true,
+        "candidate_delta": 0,
+        "original_line_hit_delta": 0,
+        "no_NO_PC_exclusion": true,
+        "controlled_inferior_minus9_not_normal_test_PASS": true,
+        "evidence_receipts": {
+          ".security/go-package19-positive-provenance-20261004/final-receipt.json": "f3e292e6ae5b7734ddc2677c2fbb3eefcbde70a7313dccef4e5d9f5c22f3ab00",
+          ".security/go-package19-positive-provenance-20261004/independent-review.json": "f2cbf487238375d576c56fa7649636a859dc5cd635b521a07e867669cc0d9901",
+          ".security/go-package19-positive-provenance-20261004/root-finite-disposition.json": "2c3fcf6286d9e71be6124de9eb97376f7549a9b883630a391dd536a3e66b1721",
+          ".security/go-v10-operator-role-triage-20261004/receipt.json": "fff777a288b8fac1ef3aa342479ab74e3052a99a4f2767a951de048aa0bc6081",
+          ".security/go-v10-operator-role-triage-20261004/union-owner/receipt.json": "7d086ca22060d32b94e880135013d40e53c112aa3ebdab32bd2bb263811009ff",
+          ".security/go-v10-operator-role-triage-20261004/union-owner/source-binding-readback.json": "b896f5c0e4c5d36c020cce1d27af0a07b3d2e63fe5679550b95cf9925da9ad3b",
+          ".security/next-finite-disposition-review-20261004/receipt.json": "8a202e77202e479f20b2635cb621b1839a68a03fdf63ec16d13f9162b2adfeb6"
+        }
+      },
+      "bounded_operator_offset_role_reconciliation": {
+        "unmatched_offsets": 1613,
+        "already_EXEC_candidate_original_line_offsets": 1593,
+        "remaining_offsets": 20,
+        "remaining_unique_original_lines": 18,
+        "typed_constant_lines": 16,
+        "positive_type_union_lines": 1,
+        "package_scalar_constant_storage_lines": 1,
+        "new_confirmed_runtime_candidate_line_gaps": 0,
+        "scope": "Current finite operator-offset cohort only; no complete Go semantic/profile admission inferred"
+      }
     },
     "python": {
       "status": "QUALIFIED_FINITE_COMPLETE_CLASS",
