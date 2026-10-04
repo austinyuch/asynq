@@ -1,4 +1,4 @@
-# Windows native signal qualification candidate v9
+# Windows native signal qualification candidate v10
 
 Windows native signal candidate: add only a scoped `windows-native-signals` job beside the existing Ubuntu `build` job. Preserve the existing Ubuntu job body, triggers and matrix exactly. This scoped addition follows the user's authorized parallel CI work and delegated handling choices; it supersedes the earlier blanket “jobs unchanged” instruction only for this Windows job.
 
@@ -20,3 +20,10 @@ The v8 workflow enables include-hidden-files only for the owned .security/window
 Fixed run `37213292029` failed at baseline-build: PowerShell split the unquoted dotted `-coverpkg=github.com/austinyuch/asynq` into `-coverpkg=github` and positional `.com/austinyuch/asynq`; module readonly resolution then failed. The retained artifact has no completed properties and no native steps. This is a recipe argv failure; Windows runtime evidence remains pending, with zero properties qualified by this attempt.
 
 The v9 successor quotes the entire coverpkg argument and covermode literal. Actual pwsh → native Python argv reproduction (tool chunk `a4c91a`, exit 0) shows the original split and corrected single argument; this parser control is not Windows runtime evidence. Successor PS1 SHA256: `dbefbec2eb6a2848b83d0e14a9e4e4886406dd575e294cf51bb787a8f5c95674`. Original hosted receipt and build log remain at `.security/windows-native-delivery-20261004/hosted-failure-37213292029/`. No global ratio or full Go admission follows.
+
+
+## Retained v9 native-argv failure and v10 full argv correction (Ref: R-14)
+
+Run `37213874288` completed baseline compilation but the test binary exited 2 with `flag provided but not defined: -test`; completed properties remain zero. The v9 unquoted `-test.v` and `-test.timeout=120s` were split by PowerShell into `-test`, `.v`, `-test`, `.timeout=120s`. The mutant timeout had the same defect. Both this failure and the earlier coverpkg baseline-build failure remain retained; neither establishes Windows operation hits.
+
+The v10 successor quotes every Go/test-binary literal argument, preserving dynamic executable/output arguments and already-safe Go child exec strings. Actual pwsh→native Python full argv controls verify exact expected baseline compile, baseline execution, mutant compile and mutant execution arrays; the original dotted test flags reproduce the split. This is finite argv qualification, not Windows runtime evidence. Successor PS1 SHA256 `0ed879ec3f3bad5af19b59e2d6196327d670a75e929f199f7ffd37d00a49d762`; fresh native Windows execution remains pending.
