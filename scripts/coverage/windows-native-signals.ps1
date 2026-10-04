@@ -16,22 +16,22 @@ $sourceBefore=SourceMap
 $before=$sourceBefore['signals_windows.go']
 $head=(git rev-parse HEAD); $tree=(git rev-parse 'HEAD^{tree}')
 $go=(Get-Command go).Source
-$version=(go version)
+$version=(go 'version')
 
 $steps=@();$success=$false; $propertiesValidated=0; $failure=$null; $stage='native-toolchain-preflight'
 try {
   if ($version -ne 'go version go1.26.6 windows/amd64') { throw "wrong native toolchain: $version" }
-  $effective=go env GOOS GOARCH CGO_ENABLED GOTOOLCHAIN GOENV GOWORK
+  $effective=go 'env' 'GOOS' 'GOARCH' 'CGO_ENABLED' 'GOTOOLCHAIN' 'GOENV' 'GOWORK'
   if ($LASTEXITCODE -ne 0 -or $effective[0] -ne 'windows' -or $effective[1] -ne 'amd64' -or $effective[2] -ne '0') { throw 'effective native environment mismatch' }
   Remove-Item Env:ASYNQ_WINDOWS_SIGNAL_MUTANT,Env:ASYNQ_WINDOWS_SIGNAL_CHILD,Env:ASYNQ_WINDOWS_SIGNAL_READY,Env:ASYNQ_WINDOWS_SIGNAL_REQUIRE_COVER,Env:ASYNQ_WINDOWS_SIGNAL_CASES -ErrorAction SilentlyContinue
   $env:ASYNQ_WINDOWS_SIGNAL_REQUIRE_COVER='1'; $env:ASYNQ_WINDOWS_SIGNAL_CASES='100'
   $stage='baseline-build'
   $exe=Join-Path $out 'baseline.test.exe'
-  go test -c -cover '-covermode=atomic' '-coverpkg=github.com/austinyuch/asynq' -o $exe . *> (Join-Path $out 'baseline-build.log')
+  go 'test' '-c' '-cover' '-covermode=atomic' '-coverpkg=github.com/austinyuch/asynq' '-o' $exe '.' *> (Join-Path $out 'baseline-build.log')
   $buildExit=$LASTEXITCODE; if ($buildExit -ne 0) { throw 'native baseline compile failed' }
   $env:ASYNQ_WINDOWS_SIGNAL_ARTIFACTS=Join-Path $out 'baseline-children'
   $stage='baseline-native'
-  & $exe '-test.run=^TestWindowsNativeSignals$' -test.v -test.timeout=120s "-test.coverprofile=$out/parent.cover" *> (Join-Path $out 'baseline.log')
+  & $exe '-test.run=^TestWindowsNativeSignals$' '-test.v' '-test.timeout=120s' "-test.coverprofile=$out/parent.cover" *> (Join-Path $out 'baseline.log')
   $exit=$LASTEXITCODE
   $steps+=@{name='baseline';build_exit=$buildExit;native_exit=$exit;binary_sha256=(Get-FileHash $exe -Algorithm SHA256).Hash}
   if ($exit -ne 0) { throw 'native baseline failed; retained raw logs' }
@@ -82,7 +82,7 @@ try {
     $stage="$name-build"
     $binary=Join-Path $dir 'mutant.test.exe'
     Push-Location $private
-    try { go test -c -o $binary . *> (Join-Path $dir 'build.log') } finally { Pop-Location }
+    try { go 'test' '-c' '-o' $binary '.' *> (Join-Path $dir 'build.log') } finally { Pop-Location }
     $buildExit=$LASTEXITCODE;if ($buildExit -ne 0) { throw 'unviable mutant compile' }
     if ((Get-FileHash $binary -Algorithm SHA256).Hash -eq (Get-FileHash $exe -Algorithm SHA256).Hash) { throw 'mutant binary identical to baseline' }
     $mutantBinaryHash=(Get-FileHash $binary -Algorithm SHA256).Hash
@@ -90,7 +90,7 @@ try {
     $seenMutantBinaryHashes[$mutantBinaryHash]=$name
     $env:ASYNQ_WINDOWS_SIGNAL_ARTIFACTS=Join-Path $dir 'children'
     $stage="$name-native"
-    & $binary '-test.run=^TestWindowsNativeSignals$' -test.v -test.timeout=30s  *> (Join-Path $dir 'native.log')
+    & $binary '-test.run=^TestWindowsNativeSignals$' '-test.v' '-test.timeout=30s'  *> (Join-Path $dir 'native.log')
     $exit=$LASTEXITCODE
     $logPieces=@(Get-Content (Join-Path $dir 'native.log') -Raw)
     $logPieces+=@(Get-ChildItem $env:ASYNQ_WINDOWS_SIGNAL_ARTIFACTS -Filter *.log -Recurse | ForEach-Object { Get-Content $_.FullName -Raw })
