@@ -476,7 +476,9 @@ func (opt RedisClusterClientOpt) MakeRedisClient() interface{} {
 func ParseRedisURI(uri string) (RedisConnOpt, error) {
 	u, err := url.Parse(uri)
 	if err != nil {
-		return nil, fmt.Errorf("asynq: could not parse redis uri: %w", err)
+		// url.Parse errors include the original URI and may include credentials
+		// in their cause. Do not expose either through caller diagnostics.
+		return nil, fmt.Errorf("asynq: could not parse redis uri: invalid URI")
 	}
 	switch u.Scheme {
 	case "redis", "rediss":
